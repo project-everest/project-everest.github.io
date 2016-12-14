@@ -17,6 +17,8 @@ permalink: /people/
         <li><a href="http://research.microsoft.com/en-us/people/nswamy/">Nikhil Swamy</a> (MSR Redmond)</li>
         <li><a href="http://research.microsoft.com/en-us/um/people/fournet/">Cédric Fournet</a> (MSR Cambridge)</li>
         <li><a href="http://prosecco.gforge.inria.fr/personal/karthik/">Karthikeyan Bhargavan</a> (INRIA Paris)</li>
+        <li><a href="https://www.microsoft.com/en-us/research/people/parno/">Bryan Parno</a> </li>
+        <li><a href="">Barry Bong</a> (MSR Redmond)</li>
         <li><a href="http://antoine.delignat-lavaud.fr/">Antoine Delignat-Lavaud</a> (MSR Cambridge)</li>
         <li><a href="http://jonathan.protzenko.fr/">Jonathan Protzenko</a> (MSR Redmond)</li>
         <li><a href="https://www.microsoft.com/en-us/research/people/markulf/">Markulf Kohlweiss</a> (MSR Cambridge)</li>
@@ -26,6 +28,7 @@ permalink: /people/
 
     <div style="float:right; width:20em">
       <ul style="margin:0px 0px 0px 0px">
+        <li><a href="https://www.microsoft.com/en-us/research/people/chrishaw/">Chris Hawblitzel</a> (INRIA Paris)</li>
         <li><a href="http://prosecco.gforge.inria.fr/personal/hritcu/">Cătălin Hriţcu</a> (INRIA Paris)</li>
         <li><a href="https://www.eleves.ens.fr/home/kmaillar/">Kenji Maillard</a> (INRIA Paris and ENS Paris)</li>
         <li><a href="https://www.microsoft.com/en-us/research/people/sishtiaq">Samin Ishtiaq</a> (MSR Cambridge)</li>

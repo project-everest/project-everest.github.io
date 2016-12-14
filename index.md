@@ -14,20 +14,3 @@ layout: home
 <p>The HTTPS ecosystem (HTTPS and TLS protocols, X.509 public key infrastructure, crypto algorithms) is the foundation on which Internet security is built. Unfortunately, this ecosystem is extremely brittle, with headline-grabbing attacks such as FREAK and LogJam <a href="http://mitls.org/pages/attacks/">http://mitls.org/pages/attacks/</a> and emergency patches many times a year. </p>
 
 <p>Project Everest proposes to deﬁnitively solve this problem by constructing a high-performance, standards-compliant, veriﬁed implementation of the full HTTPS ecosystem, from the HTTPS API down to and including cryptographic algorithms such as RSA and AES. At the TLS level, for instance, we will develop new implementations of existing protocol standards and formally prove, by reduction to cryptographic assumptions on their core algorithms, that our implementations provide a secure-channel abstraction between the communicating endpoints. Project Everest aims to be a drop-in replacement for the HTTPS library in mainstream web browsers, servers, and other popular tools.</p>
-
-<h2>
-<a id="team" class="anchor" href="#team" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Team</h2>
-
-<p>Project Everest is developed through a joint collaboration between Microsoft, INRIA and the community at large. </p>
-
-<h2>
-<a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Related Projects</h2>
-
-<ul>
-<li>  miTLS (<a href="https://mitls.org">https://mitls.org</a>) - a verified implementation of TLS 1.2 </li>
-<li>  F* (<a href="https://www.fstar-lang.org/">https://www.fstar-lang.org/</a>) - an ML-like functional programming language aimed at program verification </li>
-<li>  Dafny (<a href="https://github.com/Microsoft/dafny)-">https://github.com/Microsoft/dafny)-</a> a verification-aware programming language</li>
-<li>  Z3 (<a href="https://github.com/Z3Prover/z3">https://github.com/Z3Prover/z3</a>) - a SMT theorem prover</li>
-<li>  Ironclad (<a href="https://github.com/Microsoft/Ironclad">https://github.com/Microsoft/Ironclad</a>) - provably secure and reliable systems</li>
-<li>      Lean (<a href="https://leanprover.github.io">https://leanprover.github.io</a>) - Open source Theorem prover</li>
-</ul>

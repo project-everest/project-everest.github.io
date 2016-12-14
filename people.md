@@ -20,6 +20,7 @@ permalink: /people/
         <li><a href="http://antoine.delignat-lavaud.fr/">Antoine Delignat-Lavaud</a> (MSR Cambridge)</li>
         <li><a href="http://jonathan.protzenko.fr/">Jonathan Protzenko</a> (MSR Redmond)</li>
         <li><a href="https://www.microsoft.com/en-us/research/people/markulf/">Markulf Kohlweiss</a> (MSR Cambridge)</li>
+        <li><a href="http://research.microsoft.com/en-us/people/santiago/">Santiago Zanella-Béguelin</a> (MSR Cambridge)</li>
       </ul>
     </div>
 
@@ -30,7 +31,6 @@ permalink: /people/
         <li><a href="https://www.microsoft.com/en-us/research/people/sishtiaq">Samin Ishtiaq</a> (MSR Cambridge)</li>
         <li><a href="https://www.normalesup.org/~ramanana/">Tahina Ramananandro</a> (MSR Redmond)</li>
         <li><a href="http://www.cs.umd.edu/~aseem/">Aseem Rastogi</a> (MSR Bangalore)</li>
-        <li><a href="http://research.microsoft.com/en-us/people/santiago/">Santiago Zanella-Béguelin</a> (MSR Cambridge)</li>
         <li><a href="https://github.com/jkzinzindohoue">Jean-Karim Zinzindohoue</a> (INRIA Paris)</li>
         <li><a href="https://github.com/beurdouche/">Benjamin Beurdouche</a> (INRIA Paris)</li>
       </ul>

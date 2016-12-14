@@ -1,0 +1,42 @@
+[{
+    "name" : "mitls",
+    "repo" : "https://github.com/mitls/mitls-fstar",
+    "title" : "miTLS",
+    "website" :  "https://mitls.org",
+    "description" : "a verified reference TLS implementation"
+}, 
+{
+     "name" : "FStar",
+    "repo" : "https://github.com/fstarlang/fstar",
+    "title" : "FStar",
+    "website" :  "https://fstar-lang.org",
+    "description" : "an ML-like functional programming language aimed at program verification "
+},
+{
+     "name" : "Dafny",
+    "repo" : "https://github.com/Microsoft/dafny",
+    "title" : "Dafny",
+    "website" :  "https://github.com/Microsoft/dafny",
+    "description" : "a verification-aware programming language"
+},
+{
+     "name" : "Z3",
+    "repo" : "https://github.com/Z3Prover/z3",
+    "title" : "Z3 Theorem Prover",
+    "website" :  "https://github.com/Z3Prover/z3",
+    "description" : "a SMT theorem prover"
+},
+{
+     "name" : "ironclad",
+    "repo" : "https://github.com/Microsoft/Ironclad",
+    "title" : "IronClad",
+    "website" :  "https://github.com/Microsoft/Ironclad",
+    "description" : "provably secure and reliable systems"
+},
+{
+     "name" : "Lean",
+    "repo" : "https://github.com/leanprover/lean",
+    "title" : "Z3 Theorem Prover",
+    "website" :  "https://leanprover.github.io/",
+    "description" : "Open souce theorem prover"
+}]

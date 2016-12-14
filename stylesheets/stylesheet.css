@@ -243,3 +243,13 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.customnav {
+  margin-top : -50px;
+    display: inline-block;
+ height: 50px; 
+}
+
+.customnav ul { 
+    list-style-type: none; 
+}

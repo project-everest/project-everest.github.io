@@ -18,7 +18,7 @@ permalink: /people/
         <li><a href="http://research.microsoft.com/en-us/um/people/fournet/">Cédric Fournet</a> (MSR Cambridge)</li>
         <li><a href="http://prosecco.gforge.inria.fr/personal/karthik/">Karthikeyan Bhargavan</a> (INRIA Paris)</li>
         <li><a href="https://www.microsoft.com/en-us/research/people/parno/">Bryan Parno</a> </li>
-        <li><a href="">Barry Bond</a> (MSR Redmond)</li>
+        <li><a href="https://www.microsoft.com/en-us/research/people/barrybo/">Barry Bond</a> (MSR Redmond)</li>
         <li><a href="http://antoine.delignat-lavaud.fr/">Antoine Delignat-Lavaud</a> (MSR Cambridge)</li>
         <li><a href="http://jonathan.protzenko.fr/">Jonathan Protzenko</a> (MSR Redmond)</li>
         <li><a href="https://www.microsoft.com/en-us/research/people/markulf/">Markulf Kohlweiss</a> (MSR Cambridge)</li>

@@ -9,7 +9,9 @@ layout: home
 <div class="home">
 
  
-<p>Project Everest aims to build and deploy a verified HTTPS stack. </p>
+<blockquote>
+<p class="">Project Everest aims to build and deploy a verified HTTPS stack. </p>
+</blockquote>
 
 <p>The HTTPS ecosystem (HTTPS and TLS protocols, X.509 public key infrastructure, crypto algorithms) is the foundation on which Internet security is built. Unfortunately, this ecosystem is extremely brittle, with headline-grabbing attacks such as FREAK and LogJam <a href="http://mitls.org/pages/attacks/">http://mitls.org/pages/attacks/</a> and emergency patches many times a year. </p>
 

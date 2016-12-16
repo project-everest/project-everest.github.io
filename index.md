@@ -62,23 +62,27 @@ To make things easier for prospective users, the [everest
 script](https://github.com/project-everest/everest) performs high-level project
 management and revision tracking.
 
-**Prerequisite** (Windows only). Open up a Cygwin64 terminal with a Cygwin git client.
+**Prerequisite** (Windows only). Open up a Cygwin64 terminal with a Cygwin git
+client. Our library is a native Windows DLL but we rely on Cygwin to provide the
+Unix tools that many of our projects rely on.
+
+The first step checks out the high-level `everest` command.
 
 ```
 git clone https://github.com/project-everest/everest
 cd everest
 ```
 
-The first step involves checking that your environment is sane. On Windows, this
-will fetch & install a proper version of OCaml and all packages for you.
+This will ensure that your environment is sane. On Windows, this will fetch &
+install a proper version of OCaml and all packages for you.
 
 ```
 ./everest check
 ```
 
-If you just want to read the sources, then you can just perform the step below,
-which is about fetching some blessed versions of all the projects -- these
-versions are known to work together.
+If you just want to read the sources, then the step below is sufficient; it will
+fetch blessed versions of all the projects, which are known to work
+together.
 
 ```
 ./everest pull

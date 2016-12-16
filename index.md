@@ -25,13 +25,13 @@ mainstream web browsers, servers, and other popular tools.
 
 Project Everest is the combination of the following projects:
 
-- [F*](https://fstar-lang.org), a verification-oriented dialect of ML
+- [F\*](https://fstar-lang.org), a verification-oriented dialect of ML
 - [miTLS](https://mitls.org/), our implementation of the TLS protocol, written
   in F*
 - [KreMLin](https://github.com/FStarLang/kremlin/), a compiler from a subset of
   F* to C
-- [HACL*](https://github.com/mitls/hacl-star), a verified library of
-  cryptographic primitives written in F*
+- [HACL\*](https://github.com/mitls/hacl-star), a verified library of
+  cryptographic primitives written in F\*
 - Spartan (codename), a DSL to implement verified cryptographic primitives in assembly
 - [Dafny](https://www.microsoft.com/en-us/research/project/dafny-a-language-and-program-verifier-for-functional-correctness/),
   a program verifier that Spartan currently relies on.
@@ -69,16 +69,27 @@ git clone https://github.com/project-everest/everest
 cd everest
 ```
 
-## Checking that your environment is sane
+The first step involves checking that your environment is sane. On Windows, this
+will fetch & install a proper version of OCaml and all packages for you.
 
 ```
 ./everest check
 ```
 
-You can skip this step if you're only interested in reading the sources.
-
-## Fetching and building all the projects together
+If you just want to read the sources, then you can just perform the step below,
+which is about fetching some blessed versions of all the projects -- these
+versions are known to work together.
 
 ```
-./everest pull make
+./everest pull
 ```
+
+Building all the projects together should work at any time, and be achieved by
+running
+
+```
+./everest make
+```
+
+Please [file bugs](https://github.com/project-everest/everest/issues) if
+something doesn't work!

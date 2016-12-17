@@ -36,7 +36,21 @@
 {
      "name" : "Lean",
     "repo" : "https://github.com/leanprover/lean",
-    "title" : "Z3 Theorem Prover",
+    "title" : "Lean",
     "website" :  "https://leanprover.github.io/",
     "description" : "Open souce theorem prover"
+},
+{
+     "name" : "KreMLin",
+    "repo" : "https://github.com/FStarLang/kremlin/",
+    "title" : "KreMLin",
+    "website" :  "https://github.com/FStarLang/kremlin/",
+    "description" : "a compiler from a subset of F* to C"
+},
+{
+     "name" : "HACL*",
+    "repo" : "https://github.com/mitls/hacl-star",
+    "title" : "HACL*",
+    "website" :  "https://github.com/mitls/hacl-star",
+    "description" : "a verified library of cryptographic primitives written in F*"
 }]

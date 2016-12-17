@@ -21,7 +21,7 @@ provide a secure-channel abstraction between the communicating endpoints.
 Project Everest aims to be a drop-in replacement for the HTTPS library in
 mainstream web browsers, servers, and other popular tools.
 
-# What is Project Everest?
+## What is Project Everest?
 
 Project Everest is the combination of the following projects:
 
@@ -39,7 +39,7 @@ Project Everest is the combination of the following projects:
 When combined together, the projects above will generate a C library that not
 only implements TLS 1.3 but is also proven secure.
 
-# Current status
+## Current status
 
 We generate a C library, but the verification is not complete.
 
@@ -56,7 +56,7 @@ Our test client implements TLS 1.2 + TLS 1.3 Draft 18 and successfully connects
 to TLS 1.3 test servers. We have a prototype integration of miTLS within libcurl
 that one can use to `git clone` a remote repository.
 
-# Getting started with Project Everest
+## Getting started with Project Everest
 
 To make things easier for prospective users, the [everest
 script](https://github.com/project-everest/everest) performs high-level project

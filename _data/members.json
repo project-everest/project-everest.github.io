@@ -28,6 +28,12 @@
     "lastname": "Fournet",
     "lab": "MSR Cambridge",
     "url": "http://research.microsoft.com/en-us/um/people/fournet/"
+  }, 
+  {
+    "firstname": "Darren",
+    "lastname": "Gehring",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/darrenge/"
   },
   {
     "firstname": "Patrice",
@@ -52,6 +58,12 @@
     "lastname": "Ishtiaq",
     "lab": "MSR Cambridge",
     "url": "https://www.microsoft.com/en-us/research/people/sishtiaq"
+  },
+  {
+    "firstname": "Sreekanth",
+    "lastname": "Kannepalli",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/vkanne/"
   },
   {
     "firstname": "Markulf",
@@ -94,6 +106,12 @@
     "lastname": "Rastogi",
     "lab": "MSR Bangalore",
     "url": "http://www.cs.umd.edu/~aseem/"
+  },
+  {
+    "firstname": "Irina",
+    "lastname": "Spiridonova",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/irinasp/"
   },
   {
     "firstname": "Nikhil",

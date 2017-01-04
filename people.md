@@ -11,12 +11,19 @@ permalink: /people/
 
 <div style="margin:0 auto">
   <h3>Current team</h3>
-  <div style="float:left; ">
+  <div style=" ">
     <ul style="padding-left:2em; margin:0px 0px 0px 0px">
       {% for member in site.data.members %}
         <li><a href="{{ member.url}}"> {{member.firstname}} {{member.lastname}}</a> ({{member.lab}})</li>
       {% endfor %}
     </ul>
   </div>
-
+ <h3>Students and Interns</h3>
+  <div style="">
+    <ul style="padding-left:2em; margin:0px 0px 0px 0px">
+      {% for member in site.data.students %}
+        <li><a href="{{ member.url}}"> {{member.firstname}} {{member.lastname}}</a> ({{member.lab}})</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>

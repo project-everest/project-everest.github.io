@@ -1,0 +1,74 @@
+[
+    {
+        "firstname": "Danel",
+        "lastname": "Ahman",
+        "lab": "University of Edingurgh",
+        "url": "http://homepages.inf.ed.ac.uk/s1225336/"
+    },
+    {
+        "firstname": "Benjamin",
+        "lastname": "Beurdouche",
+        "lab": "INRIA Paris",
+        "url": "https://github.com/beurdouche/"
+    },
+    {
+        "firstname": "Ben",
+        "lastname": "Downling",
+        "lab": "Queensland Univeristy of Technology",
+        "url": "http://benjamindowling.com/"
+    },
+    {
+        "firstname": "Anitha",
+        "lastname": "Gollamudi",
+        "lab": "Harvard University",
+        "url": "https://sites.google.com/site/anithagollamudi/"
+    },
+    {
+        "firstname": "Nadim",
+        "lastname": "Kobeissi",
+        "lab": "INRIA Paris",
+        "url": "https://nadim.computer/"
+    },
+    {
+        "firstname": "Kenji",
+        "lastname": "Maillard",
+        "lab": "INRIA Paris and ENS Paris",
+        "url": "https://www.eleves.ens.fr/home/kmaillar/"
+    },
+    {
+        "firstname": "Dan",
+        "lastname": "Matichuk",
+        "lab": "NICTA",
+        "url": "https://ts.data61.csiro.au/people/?cn=Daniel+Matichuk"
+    },
+    {
+        "firstname": "Ashay",
+        "lastname": "Rane",
+        "lab": "University of Texas at Austin",
+        "url": "https://ashay.rane.info/"
+    },
+    {
+        "firstname": "Olivier",
+        "lastname": "Savary Bélanger",
+        "lab": "Princeton University",
+        "url": "http://www.cs.princeton.edu/~olivierb/"
+    },
+    {
+        "firstname": "Laure",
+        "lastname": "Thompson",
+        "lab": "Cornell University",
+        "url": "http://www.cs.cornell.edu/~laurejt/"
+    },
+    {
+        "firstname": "Perry",
+        "lastname": "Wang",
+        "lab": "MIT",
+        "url": "https://people.csail.mit.edu/wangpeng/"
+    },
+    {
+        "firstname": "Jean-Karim",
+        "lastname": "Zinzindohoue",
+        "lab": "INRIA Paris",
+        "url": "https://github.com/jkzinzindohoue"
+    }
+]

@@ -1,0 +1,128 @@
+﻿[
+ {
+   "firstname": "Benjamin",
+   "lastname": "Beurdouche",
+   "lab": "INRIA Paris",
+   "url": "https://github.com/beurdouche/"
+ },
+ {
+   "firstname": "Karthikeyan",
+   "lastname": "Bhargavan",
+   "lab": "INRIA Paris",
+   "url": "http://prosecco.gforge.inria.fr/personal/karthik/"
+ },
+ {
+   "firstname": "Barry",
+   "lastname": "Bond",
+   "lab": "MSR Redmond",
+   "url": "https://www.microsoft.com/en-us/research/people/barrybo/"
+ },
+ {
+   "firstname": "Leonardo ",
+   "lastname": "de Moura",
+   "lab": "MSR Redmond",
+   "url": "https://www.microsoft.com/en-us/research/people/leonardo/"
+ },
+ {
+   "firstname": "Antoine",
+   "lastname": "Delignat-Lavaud",
+   "lab": "MSR Cambridge",
+   "url": "http://antoine.delignat-lavaud.fr/"
+ },
+ {
+   "firstname": "Cédric",
+   "lastname": "Fournet",
+   "lab": "MSR Cambridge",
+   "url": "http://research.microsoft.com/en-us/um/people/fournet/"
+ },
+ {
+   "firstname": "Chris",
+   "lastname": "Hawblitzel",
+   "lab": "MSR Redmond",
+   "url": "https://www.microsoft.com/en-us/research/people/chrishaw/"
+ },
+ {
+   "firstname": "Cătălin",
+   "lastname": "Hriţcu",
+   "lab": "INRIA Paris",
+   "url": "http://prosecco.gforge.inria.fr/personal/hritcu/"
+ },
+ {
+   "firstname": "Samin",
+   "lastname": "Ishtiaq",
+   "lab": "MSR Cambridge",
+   "url": "https://www.microsoft.com/en-us/research/people/sishtiaq"
+ },
+ {
+   "firstname": "Nadim",
+   "lastname": "Kobeissi",
+   "lab": "INRIA Paris",
+   "url": "https://nadim.computer/"
+ },
+ {
+   "firstname": "Markulf",
+   "lastname": "Kohlweiss",
+   "lab": "MSR Cambridge",
+   "url": "https://www.microsoft.com/en-us/research/people/markulf/"
+ },
+ {
+   "firstname": "Rustan",
+   "lastname": "Leino",
+   "lab": "MSR Redmond",
+   "url": "https://www.microsoft.com/en-us/research/people/leino/"
+ },
+ {
+   "firstname": "Jay",
+   "lastname": "Lorch",
+   "lab": "MSR Redmond",
+   "url": "https://www.microsoft.com/en-us/research/people/lorch/"
+ },
+ {
+   "firstname": "Kenji",
+   "lastname": "Maillard",
+   "lab": "INRIA Paris and ENS Paris",
+   "url": "https://www.eleves.ens.fr/home/kmaillar/"
+ },
+ {
+   "firstname": "Bryan",
+   "lastname": "Parno",
+   "lab": "CMU",
+   "url": "https://www.ece.cmu.edu/directory/department/faculty/P/Bryan_Parno_948.html"
+ },
+ {
+   "firstname": "Jonathan",
+   "lastname": "Protzenko",
+   "lab": "MSR Redmond",
+   "url": "http://jonathan.protzenko.fr/"
+ },
+ {
+   "firstname": "Tahina",
+   "lastname": "Ramananandro",
+   "lab": "MSR Redmond",
+   "url": "https://www.normalesup.org/~ramanana/"
+ },
+ {
+   "firstname": "Aseem",
+   "lastname": "Rastogi",
+   "lab": "MSR Bangalore",
+   "url": "http://www.cs.umd.edu/~aseem/"
+ },
+ {
+   "firstname": "Nikhil",
+   "lastname": "Swamy",
+   "lab": "MSR Redmond",
+   "url": "http://research.microsoft.com/en-us/people/nswamy/"
+ },
+ {
+   "firstname": "Santiago",
+   "lastname": "Zanella-Béguelin",
+   "lab": "MSR Cambridge",
+   "url": "http://research.microsoft.com/en-us/people/santiago/"
+ },
+ {
+   "firstname": "Jean-Karim",
+   "lastname": "Zinzindohoue",
+   "lab": "INRIA Paris",
+   "url": "https://github.com/jkzinzindohoue"
+ }
+]

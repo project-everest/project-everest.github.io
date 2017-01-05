@@ -38,3 +38,16 @@ $on-laptop:        900px;
 // Import partials from the `minima` theme.
 @import "minima";
 @import "bootstrap";
+
+
+.sheader {
+  border-bottom: 1px solid gray;
+}
+
+.bibitem { 
+    padding: 10px 10px 0 0;
+}
+
+.bibref {
+    padding-right : 1em;
+}

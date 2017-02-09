@@ -32,9 +32,9 @@ Project Everest is the combination of the following projects:
   F* to C
 - [HACL\*](https://github.com/mitls/hacl-star), a verified library of
   cryptographic primitives written in F\*
-- Spartan (codename), a DSL to implement verified cryptographic primitives in assembly
+- [Vale](https://github.com/project-everest/vale) (formerly codenamed Spartan), a domain-specific language designed to implement verified cryptographic primitives in assembly
 - [Dafny](https://www.microsoft.com/en-us/research/project/dafny-a-language-and-program-verifier-for-functional-correctness/),
-  a program verifier that Spartan currently relies on.
+  a program verifier that Vale currently relies on.
 
 When combined together, the projects above will generate a C library that not
 only implements TLS 1.3 but is also proven secure.
@@ -50,7 +50,7 @@ We generate a C library, but the verification is not complete.
   layer**](https://github.com/FStarLang/FStar/tree/master/examples/low-level/crypto);
   it currently extracts to C.
 - The AES and SHA cryptographic **assembly routines** are verified and extract
-  to assembly via Spartan.
+  to assembly via Vale.
 
 Our test client implements TLS 1.2 + TLS 1.3 Draft 18 and successfully connects
 to TLS 1.3 test servers. We have a prototype integration of miTLS within libcurl

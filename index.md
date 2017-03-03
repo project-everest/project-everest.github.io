@@ -95,5 +95,40 @@ running
 ./everest make
 ```
 
+Testing the generated binaries can be achieved by running:
+
+```
+./everest test
+```
+
+But, remember that the whole point of the Everest project is that our
+code is entirely verified. Verification (which can be as slow as 2
+hours on recent machines) can be performed by running:
+
+```
+./everest verify
+```
+
+Finally, if you want to revert to a clean state, you can run:
+
+```
+./everest clean
+```
+
+## For the lazy: the `projecteverest/everest` Docker image
+
+Every night, we automatically build the `projecteverest/everest`
+Docker image with everything already built and verified, for you to
+directly pull from
+the [Docker Hub](https://hub.docker.com/r/projecteverest/everest/). If
+you have Docker installed on your machine, then you can pull the image
+using the usual command:
+
+```
+docker pull projecteverest/everest
+```
+
+## Filing bugs
+
 Please [file bugs](https://github.com/project-everest/everest/issues) if
 something doesn't work!

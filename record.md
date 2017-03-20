@@ -7,85 +7,62 @@ hide_header_link: true
 
 This website contains supplemental material for the paper
 
-<p>
-<i>Implementing and Proving the TLS 1.3 Record Layer</i>.
+_Implementing and Proving the TLS 1.3 Record Layer_.
 K. Bhargavan, A. Delignat-Lavaud, C. Fournet, M. Kohlweiss, J. Pan,
 J. Protzenko, A. Rastogi, N. Swamy, S. Zanella-Béguelin,
 J. K. Zinzindohoué. In 38th IEEE Symposium on Security and
 Privacy, IEEE Computer Society 2017.
-</p>
 
-<h2> Technical Report </h2>
+## Technical Report
 
 The following report includes additional materials and proofs of the
 results in Sections III-V of the paper:
 
-<a href="https://eprint.iacr.org/2016/1178"><i>Implementing and
-Proving the TLS 1.3 Record Layer</i></a>, K. Bhargavan,
-A. Delignat-Lavaud, C. Fournet, M. Kohlweiss, J. Pan, J. Protzenko,
-A. Rastogi, N. Swamy, S. Zanella-Béguelin, J. K. Zinzindohoué.
-Cryptology ePrint Archive, Report 2016/1178.
+[_Implementing and Proving the TLS 1.3 Record Layer_](https://eprint.iacr.org/2016/1178),
+K. Bhargavan, A. Delignat-Lavaud, C. Fournet, M. Kohlweiss, J. Pan,
+J. Protzenko, A. Rastogi, N. Swamy, S. Zanella-Béguelin,
+J. K. Zinzindohoué. Cryptology ePrint Archive, Report 2016/1178.
 
-<h2> Source code </h2>
+## Source code
 
-<p>
-All verified code we report on in the paper can be obtained by cloning
-the <a href="https://github.com/project-everest/everest"
-target="_blank">Everest project repository in GitHub</a>. For
-convenience we have created <a
-href="https://github.com/project-everest/everest/tree/record-layer-tr">a
-branch called <i>record-layer-tr</i></a> that contains a snapshot at
-the time of this writing.
-</p>
+All verified code we report on in the paper can be obtained by cloning the
+[Everest project repository in GitHub](https://github.com/project-everest/everest).
 
-<p>
+For convenience we have created [a branch called _record-layer-tr_](https://github.com/project-everest/everest/tree/record-layer-tr) that contains
+a snapshot at the time of this writing.
+
 To obtain the code, run
 
-<pre>
+```
 $ git clone https://github.com/project-everest/everest --branch record-layer-tr
 $ cd everest
 $ ./everest pull
-</pre>
+```
 
-The specifications, implementations and proofs of the record-layer
-constructions are located in the <tt>hacl-star/spec</tt>,
-<tt>hacl-star/code</tt> and <tt>hacl-star/secure_api</tt> folders,
-respectively
+The specifications, implementations and proofs of the record-layer constructions
+are located in the `hacl-star/spec`, `hacl-star/code` and `hacl-star/secure_api`
+folders, respectively
 
 The code can be built and run using
-<pre>
-$ ./everest make
-</pre>
-</p>
 
-<p>
+```
+$ ./everest make
+```
+
 The code encompases several open-source projects, namely:
 
-<ul>
-<li>
-  The <a href="https://github.com/FStarLang/FStar/">F*
-  programming language</a>, including libraries for fixed-size integer
-  arithmetic and buffers.
-</li>
 
-<li>
-  The <a href="https://github.com/FStarLang/kremlin/">KreMLin
-  compiler</a> from F* to C.
-</li>
+- The [F*](https://github.com/FStarLang/FStar/), including libraries for
+  fixed-size integer arithmetic and buffers.
 
-<li>
-  The development version of <a
-  href="https://github.com/mitls/mitls-fstar/">miTLS</a>, extended to
-  TLS 1.3, implemented in F*. While verification of
-  the full codebase is in progress, the repository contains verified
-  protocol-specific code for the record layer fragment reported in
-  the paper.
-</li>
+- The [KreMLin compiler](https://github.com/FStarLang/kremlin/) from F* to C.
 
-<li>
-  The <a href="https://github.com/mitls/hacl-star/">HACL*
-  cryptographic library</a>, notably including our verified code for
-  cryptographic algorithms and the AEAD construction.
-</li>
-</ul>
-</p>
+- The development version of [miTLS](https://github.com/mitls/mitls-fstar/),
+  extended to TLS 1.3, implemented in F*. While verification of the full
+  codebase is in progress, the repository contains verified protocol-specific
+  code for the record layer fragment reported in the paper.
+
+- The [HACL* cryptographic library](https://github.com/mitls/hacl-star/">),
+  notably including our verified code for cryptographic algorithms and the AEAD
+  construction.
+  

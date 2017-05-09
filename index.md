@@ -23,7 +23,8 @@ mainstream web browsers, servers, and other popular tools.
 
 ## What is Project Everest?
 
-Project Everest is the combination of the following projects:
+Project Everest is the combination of the following projects. Read below for an
+easy way to install all these projects together.
 
 - [F\*](https://fstar-lang.org), a verification-oriented dialect of ML
 - [miTLS](https://mitls.org/), our implementation of the TLS protocol, written

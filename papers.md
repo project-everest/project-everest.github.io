@@ -13,8 +13,17 @@ permalink: /papers/
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale2017.pdf">
       <span class="bibtitle" itemprop="name">Vale: Verifying High-Performance Cryptographic Assembly Code (draft)</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Barry Bond</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Manos Kapritsos</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">K. Rustan M. Leino</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Jacob R. Lorch</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Ashay Rane</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Srinath Setty</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Laure Thompson</span></span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">Submitted</span>
+        <span itemprop="isPartOf">In Proceedings of the USENIX Security Symposium (To appear)</span>
       </span>
       <span itemprop="datePublished">2017</span>.
     </span>

@@ -42,8 +42,7 @@ permalink: /papers/
 <span class="bibtitle" itemprop="name">
 Everest: Towards a Verified, Drop-in Replacement of HTTPS</span>
 </a>
- (<span class="bibauthor">
-<span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan</span>,
+ (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Barry Bond</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Antoine Delignat-Lavaud</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Cédric Fournet</span>,
@@ -64,11 +63,9 @@ Everest: Towards a Verified, Drop-in Replacement of HTTPS</span>
 <span itemprop="author" itemtype="http://schema.org/Person">Laure Thompson</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Peng Wang</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Santiago Zanella-Béguelin</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Jean-Karim Zinzindohoué</span>
-</span>
-) <span class="bibbooktitle">
+<span itemprop="author" itemtype="http://schema.org/Person">Jean-Karim Zinzindohoué</span></span>) <span class="bibbooktitle">
  <span itemprop="isPartOf">
-In Proceedings of the Summit on Advanced in Programming Languages (SNAPL).</span>
+In Proceedings of the Summit on Advances in Programming Languages (SNAPL).</span>
 </span>
  <span itemprop="datePublished">
 2017</span>

@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>Security Verification in F*</title>
+</head>
+<body>
+  <center>
+    Lectures on <a href="https://asimod.in.tum.de/2017/">
+Logical Methods for Safety and Security of Software Systems</a>,
+Marktoberdorf Summer School, August 2-11 2017.
+
+<h1>Security Verification in F*</h1>
+
+
+<h3><a href="http://prosecco.gforge.inria.fr/personal/hritcu/">C&#233;dric Fournet</a> Microsoft Research</h3>
+
+</center>
+
+<p>F* is a verification-oriented programming language equipped with dependent types, programmable monadic effects, and a weakest precondition calculus. These features allow us to express precise and compact specifications for programs. The F* type-checker then tries to prove that programs meet their specifications using a combination of SMT solving and manual proofs. Programs written in F* can be compiled to OCaml, F#, and (more recently) to C for execution.</p>
+
+<p>
+The main ongoing use case of F* is to build a verified, efficient, drop-in replacement for the HTTPS stack. So far, this includes implementations of the TLS Internet Standard and of its underlying cryptographic algorithms and constructions. 
+In these lectures, I will give an overview of programming & verification in F* based on security examples, ranging from functional correctness for optimized implementations of cryptographic algorithms to cryptographic proofs of security for (fragments of) TLS 1.3. 
+</p>
+
+<h2>Slides (TBC)</h2> 
+<ul>
+  <li><a href="slides/out/02/slides02.html">Program Verification using F*</a> (<a href="code/02">pure examples</a>) (<a href="code/03">stateful examples</a>)</li>
+  <li>Verifying standardized components for the HTTPS ecosystem</li>
+  <li>Low-level cryptographic algorithm implementations</li>
+  <li>Type-based cryptographic security</li>
+  <li> Application to the TLS record layer</li>
+  
+<!-- 
+     <li><a href="">Verifying standardized components for the HTTPS ecosystem</a></li>
+  <li><a href="">Low-level cryptographic algorithms</a></li>
+  <li><a href="">Type-based cryptographic security; the TLS record layer</a></li>
+
+     <li>Lecture 1: <a href="">Verifying TLS in F*; Everest Project</a>
+     <li>Lecture 3: <a href="slides/out/03/slides03.html">Verifying Stateful Programs with F*</a> (<a href="code/03">code</a>)
+     <li>Lecture 4: <a href="">Code-Based Cryptographic Verification in F*</a>
+    -->
+</ul>
+
+<h2>Code</h2>
+<ul>
+  <li><a href="code">Code from F* slides</a></li>
+  <li><a href="ex">Exercises from F* slides</a>; <a href="sol">solutions</a></li>
+  <li><a href="https://www.fstar-lang.org/tutorial/">F* interactive
+  tutorial</a> with many programming examples</li>
+  <!-- <li><a href="https://github.com/FStarLang/FStar/blob/master/examples/crypto/EtM.AE.fst">Encrypt then mac example</a></li> -->
+</ul>
+
+<h2>Setup</h2>
+<ul>
+  <li><a href="https://www.fstar-lang.org/run.php">Online editor ant typechecker</a> for experimenting with small F* programs.</li> 
+  <li><a href="https://project-everest.github.io/">Installing Everest</a> including its verification toolchain (F*, Kremlin, VALE, Z3) and security components (miTLS, HACL*).</li>
+  <li><a href="https://github.com/FStarLang/FStar/blob/master/INSTALL.md">Other ways to install F*</a></li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://project-everest.github.io/">Everest: verified
+  drop-in replacements for the TLS/HTTPS ecosystem</a> with research papers</li>
+  <li><a href="https://www.fstar-lang.org">F* website</a> with research papers and
+  <a href="https://github.com/FStarLang/FStar">source code</a> with more programming examples</li>
+</ul>
+
+</html>

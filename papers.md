@@ -12,7 +12,7 @@ permalink: /papers/
 <tr class="bibline"><td class="bibref">[5]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale2017.pdf">
-      <span class="bibtitle" itemprop="name">Vale: Verifying High-Performance Cryptographic Assembly Code (draft)</span></a>
+      <span class="bibtitle" itemprop="name">Vale: Verifying High-Performance Cryptographic Assembly Code</span></a>
       (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Barry Bond</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Manos Kapritsos</span>,
@@ -27,7 +27,6 @@ permalink: /papers/
       </span>
       <span itemprop="datePublished">2017</span>.
     </span>
-    <span class="bibmenu"> <a href="/assets/vale2017.pdf">[pdf]</a></span>
   </td>
 </tr>
 

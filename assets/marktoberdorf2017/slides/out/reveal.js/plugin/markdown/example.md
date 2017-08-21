@@ -1,3 +1,6 @@
+---
+hide_header_link: true
+---
 # Markdown Demo
 
 

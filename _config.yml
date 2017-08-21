@@ -30,3 +30,4 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - assets/marktoberdorf2017

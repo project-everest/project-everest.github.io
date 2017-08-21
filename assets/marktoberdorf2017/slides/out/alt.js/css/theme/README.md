@@ -1,3 +1,6 @@
+---
+hide_header_link: true
+---
 ## Dependencies
 
 Themes are written using Sass to keep things modular and reduce the need for repeated selectors across files. Make sure that you have the reveal.js development environment including the Grunt dependencies installed before proceding: https://github.com/hakimel/reveal.js#full-setup

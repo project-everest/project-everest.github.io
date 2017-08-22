@@ -129,6 +129,10 @@ using the usual command:
 docker pull projecteverest/everest
 ```
 
+## F* Blog 
+
+See [F* for the masses](https://fstarlang.github.io/) for news on F* and Everest!
+
 ## Filing bugs
 
 Please [file bugs](https://github.com/project-everest/everest/issues) if

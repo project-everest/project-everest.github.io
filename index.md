@@ -129,7 +129,7 @@ using the usual command:
 docker pull projecteverest/everest
 ```
 
-## F* Blog 
+## F* blog 
 
 See [F* for the masses](https://fstarlang.github.io/) for news on F* and Everest!
 

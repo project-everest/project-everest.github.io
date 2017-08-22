@@ -1,4 +1,4 @@
----
+--
 layout: post
 title:  "Welcome to F*!"
 date:   2016-08-26 13:36:05 -0700
@@ -8,7 +8,7 @@ author: Jonathan Protzenko
 ---
 After many discussions, and in the spirit of the [Gallium
 Blog](http://gallium.inria.fr/blog/) (where I was a regular), the F* team is
-happy to announce the F*-blog! Expect a variety of posts, ranging from technical
+happy to announce the [F*-blog](https://fstarlang.github.io/)! Expect a variety of posts, ranging from technical
 digressions about Dijkstra Monads to engineering discussions about parsing
 technology, and pretty much anything in between.
 

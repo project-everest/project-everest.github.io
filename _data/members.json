@@ -30,12 +30,6 @@
     "url": "http://research.microsoft.com/en-us/um/people/fournet/"
   }, 
   {
-    "firstname": "Darren",
-    "lastname": "Gehring",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/darrenge/"
-  },
-  {
     "firstname": "Patrice",
     "lastname": "Godefroid",
     "lab": "MSR Redmond",
@@ -54,34 +48,10 @@
     "url": "http://prosecco.gforge.inria.fr/personal/hritcu/"
   },
   {
-    "firstname": "Samin",
-    "lastname": "Ishtiaq",
-    "lab": "MSR Cambridge",
-    "url": "https://www.microsoft.com/en-us/research/people/sishtiaq"
-  },
-  {
-    "firstname": "Sreekanth",
-    "lastname": "Kannepalli",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/vkanne/"
-  },
-  {
     "firstname": "Markulf",
     "lastname": "Kohlweiss",
     "lab": "MSR Cambridge",
     "url": "https://www.microsoft.com/en-us/research/people/markulf/"
-  },
-  {
-    "firstname": "Rustan",
-    "lastname": "Leino",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/leino/"
-  },
-  {
-    "firstname": "Jay",
-    "lastname": "Lorch",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/lorch/"
   },
   {
     "firstname": "Bryan",
@@ -105,25 +75,19 @@
     "firstname": "Aseem",
     "lastname": "Rastogi",
     "lab": "MSR Bangalore",
-    "url": "http://www.cs.umd.edu/~aseem/"
-  },
-  {
-    "firstname": "Srinath",
-    "lastname": "Setty",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/srinath/"
-  },
-  {
-    "firstname": "Irina",
-    "lastname": "Spiridonova",
-    "lab": "MSR Redmond",
-    "url": "https://www.microsoft.com/en-us/research/people/irinasp/"
+    "url": "https://www.microsoft.com/en-us/research/people/aseemr/"
   },
   {
     "firstname": "Nikhil",
     "lastname": "Swamy",
     "lab": "MSR Redmond",
     "url": "http://research.microsoft.com/en-us/people/nswamy/"
+  },
+  {
+    "firstname": "Christoph",
+    "lastname": "Wintersteiger",
+    "lab": "MSR Cambridge",
+    "url": "http://research.microsoft.com/en-us/people/cwinter/"
   },
   {
     "firstname": "Santiago",

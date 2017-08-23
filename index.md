@@ -2,15 +2,15 @@
 layout: home
 ---
 
-> Project Everest aims to build and deploy a verified HTTPS stack.
+> Project Everest aims to build and deploy a formally verified HTTPS stack.
 
-We are a a [team of
-researchers](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/)
+We are a [team of researchers and engineers](https://project-everest.github.io/people/) regrouping
+[people](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/)
 from [Microsoft Research](https://www.microsoft.com/en-us/research/),
-the
-[MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
-joint center, the [Prosecco](http://prosecco.gforge.inria.fr/) team at
-[INRIA](https://www.inria.fr/), and [Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/).
+[Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/),
+the [Prosecco](http://prosecco.gforge.inria.fr/) team at [INRIA](https://www.inria.fr/) and,
+the [MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
+joint center.
 
 Everest is a recursive acronym: It stands for the "Everest VERified
 End-to-end Secure Transport".
@@ -25,11 +25,11 @@ headline-grabbing attacks such as FREAK and LogJam
 emergency patches many times a year.
 
 Project Everest addresses this problem by constructing a
-high-performance, standards-compliant, verified implementation of
+high-performance, standards-compliant, formally verified implementation of
 components in HTTPS ecosystem, including
-[TLS](https://tools.ietf.org/html/draft-ietf-tls-tls13-20), the main
+[TLS](https://tools.ietf.org/html/draft-ietf-tls-tls13-21), the main
 protocol at the heart of HTTPS, as well as the main underlying
-cryptographic algorithms such as RSA and AES.
+cryptographic algorithms such as AES, SHA2 or X25519.
 
 At the TLS level, for instance, we are developing new implementations
 of existing and forthcoming protocol standards and formally proving,
@@ -37,8 +37,14 @@ by reduction to cryptographic assumptions on their core algorithms,
 that our implementations provide a secure-channel abstraction between
 the communicating endpoints.
 
+We also are developing implementations of the core cryptographic primitives
+required to securely run this secure channel. Especially, we concurrently
+work on the HaCl* and Vale projects to verify and generate performant
+portable C code or highly optimized assembly language.
+
 We aim for our verified components to be drop-in replacements suitable
-for use in mainstream web browsers, servers, and other popular tools.
+for use in mainstream web browsers, servers, and other popular tools and
+are actively working with the community at large to improve the ecosystem.
 
 ### A combination of several sub-projects
 
@@ -52,7 +58,7 @@ easy way to install all these projects together.
   F* to C
 - [HACL\*](https://github.com/mitls/hacl-star), a verified library of
   cryptographic primitives written in F\*
-- [Vale](https://github.com/project-everest/vale) (formerly codenamed Spartan), a domain-specific language designed to implement verified cryptographic primitives in assembly
+- [Vale](https://github.com/project-everest/vale) (formerly Spartan), a domain-specific language designed to implement verified cryptographic primitives in assembly
 
 When combined together, the projects above will generate a C library that not
 only implements TLS 1.3 but is also proven secure.
@@ -64,13 +70,17 @@ We generate a C library, but the verification is not complete.
 - The TLS 1.3 **handshake** verification is work in progress and still
   relies on the OCaml extraction mechanism of F*; thus, the C library
   still encapsulates the OCaml runtime system.
-  
+
 - We have completed verification of the TLS 1.3 [**record
   layer**](https://eprint.iacr.org/2016/1178) it currently extracts to
   C.
-  
-- The AES and SHA cryptographic **assembly routines** are verified and
-  extract to assembly via Vale.
+
+- The AES and SHA2 cryptographic **assembly routines** are verified and
+  extract to assembly via [**Vale**](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-bond.pdf).
+
+- [**HaCl\***](https://eprint.iacr.org/2017/536) provides verified C
+  code for multiple other primitives such as Curve25519, Chacha20,
+  Poly1305 or HMAC.
 
 Our test client implements TLS 1.2 + TLS 1.3 Draft 18 and successfully
 connects to TLS 1.3 test servers. We have a prototype integration of
@@ -149,7 +159,7 @@ using the usual command:
 docker pull projecteverest/everest
 ```
 
-## F* blog 
+## F* blog
 
 See [F* for the masses](https://fstarlang.github.io/) for news on F* and Everest!
 

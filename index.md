@@ -53,8 +53,6 @@ easy way to install all these projects together.
 - [HACL\*](https://github.com/mitls/hacl-star), a verified library of
   cryptographic primitives written in F\*
 - [Vale](https://github.com/project-everest/vale) (formerly codenamed Spartan), a domain-specific language designed to implement verified cryptographic primitives in assembly
-- [Dafny](https://www.microsoft.com/en-us/research/project/dafny-a-language-and-program-verifier-for-functional-correctness/),
-  a program verifier that Vale currently relies on.
 
 When combined together, the projects above will generate a C library that not
 only implements TLS 1.3 but is also proven secure.

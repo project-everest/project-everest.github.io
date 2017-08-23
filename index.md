@@ -2,7 +2,11 @@
 layout: home
 ---
 
-> Project Everest aims to build and deploy a verified HTTPS stack.
+![Microsoft](Microsoft-logo.png){:class="img-logo"}
+![INRIA](INRIA-logo.jpg){:class="img-logo"}
+![CMU](CMU-logo.png){:class="img-logo"}
+
+# <span style="color:red">Project Everest aims to build and deploy a verified HTTPS stack.</span>
 
 The HTTPS ecosystem (HTTPS and TLS protocols, X.509 public key
 infrastructure, crypto algorithms) is the foundation on which Internet

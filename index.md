@@ -12,7 +12,7 @@ the
 joint center, the [Prosecco](http://prosecco.gforge.inria.fr/) team at
 [INRIA](https://www.inria.fr/), and [Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/).
 
-Everest is a recursive acronym: It stands for the "Everest Verified
+Everest is a recursive acronym: It stands for the "Everest VERified
 End-to-end Secure Transport".
 
 ### The HTTPS Ecosystem

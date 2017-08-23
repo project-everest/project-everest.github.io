@@ -4,12 +4,13 @@ layout: home
 
 > Project Everest aims to build and deploy a formally verified HTTPS stack.
 
-We are a [team of researchers and engineers](https://project-everest.github.io/people/) regrouping
-[people](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/)
-from [Microsoft Research](https://www.microsoft.com/en-us/research/),
+We are a [team of researchers and
+engineers](https://project-everest.github.io/people/) from several
+organizations, including [Microsoft
+Research](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/),
 [Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/),
-the [Prosecco](http://prosecco.gforge.inria.fr/) team at [INRIA](https://www.inria.fr/) and,
-the [MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
+[INRIA](http://prosecco.gforge.inria.fr/), and the
+[MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
 joint center.
 
 Everest is a recursive acronym: It stands for the "Everest VERified
@@ -35,12 +36,9 @@ At the TLS level, for instance, we are developing new implementations
 of existing and forthcoming protocol standards and formally proving,
 by reduction to cryptographic assumptions on their core algorithms,
 that our implementations provide a secure-channel abstraction between
-the communicating endpoints.
-
-We also are developing implementations of the core cryptographic primitives
-required to securely run this secure channel. Especially, we concurrently
-work on the HaCl* and Vale projects to verify and generate performant
-portable C code or highly optimized assembly language.
+the communicating endpoints. Implementations of the core algorithms
+themselves are also verified, producing performant portable C code or
+highly optimized assembly language.
 
 We aim for our verified components to be drop-in replacements suitable
 for use in mainstream web browsers, servers, and other popular tools and

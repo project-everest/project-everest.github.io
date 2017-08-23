@@ -5,7 +5,7 @@ layout: home
 ![Microsoft](Microsoft-logo.png){:class="img-logo"}
 ![INRIA](INRIA-logo.jpg){:class="img-logo"}
 ![CMU](CMU-logo.png){:class="img-logo"}
-<!-- ![MSR-INRIA](MSR-INRIA-logo.png){:class="img-logo"} -->
+![MSR-INRIA](MSR-INRIA-logo.png){:class="img-logo"}
 
 > `Project Everest aims to build and deploy a verified HTTPS stack`
 

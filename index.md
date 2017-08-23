@@ -4,11 +4,11 @@ layout: home
 
 > Project Everest aims to build and deploy a formally verified HTTPS stack.
 
-We are a large team of researchers and engineers regrouping
+We are a [team of researchers and engineers](https://project-everest.github.io/people/) regrouping
 [people](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/)
 from [Microsoft Research](https://www.microsoft.com/en-us/research/),
 [Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/),
-the [Prosecco](http://prosecco.gforge.inria.fr/) team at [INRIA](https://www.inria.fr/) and
+the [Prosecco](http://prosecco.gforge.inria.fr/) team at [INRIA](https://www.inria.fr/) and,
 the [MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
 joint center.
 

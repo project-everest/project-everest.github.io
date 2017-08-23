@@ -49,6 +49,10 @@ We aim for our verified components to be drop-in replacements suitable
 for use in mainstream web browsers, servers, and other popular tools and
 are actively working with the community at large to improve the ecosystem.
 
+
+![Insecure](assets/InsecureHTTPS.png){:class="img-arch"}
+![Secure](assets/SecureHTTPS.png){:class="img-arch"}
+
 ### A combination of several sub-projects
 
 Project Everest is the combination of the following projects. Read below for an

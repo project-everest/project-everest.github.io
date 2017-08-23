@@ -28,8 +28,8 @@ Project Everest addresses this problem by constructing a
 high-performance, standards-compliant, verified implementation of
 components in HTTPS ecosystem, including
 [TLS](https://tools.ietf.org/html/draft-ietf-tls-tls13-20), the main
-protocol at the heart of HTTPS, as well as the main cryptographic
-algorithms such as RSA and AES.
+protocol at the heart of HTTPS, as well as the main underlying
+cryptographic algorithms such as RSA and AES.
 
 At the TLS level, for instance, we are developing new implementations
 of existing and forthcoming protocol standards and formally proving,
@@ -68,8 +68,8 @@ We generate a C library, but the verification is not complete.
   still encapsulates the OCaml runtime system.
   
 - We have completed verification of the TLS 1.3 [**record
-  layer**](https://github.com/FStarLang/FStar/tree/master/examples/low-level/crypto);
-  it currently extracts to C.
+  layer**](https://eprint.iacr.org/2016/1178) it currently extracts to
+  C.
   
 - The AES and SHA cryptographic **assembly routines** are verified and
   extract to assembly via Vale.

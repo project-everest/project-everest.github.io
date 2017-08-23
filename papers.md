@@ -9,6 +9,22 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2017</td></tr>
 
+<tr class="bibline"><td class="bibref">[6]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://eprint.iacr.org/2017/536">
+      <span class="bibtitle" itemprop="name">HACL*: A Verified Modern Cryptographic Library</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Jean-Karim Zinzindohoué</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Benjamin Beurdouche</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">In Proceedings of the ACM Conference on Computer and Communications Security (CCS) (To appear)</span>
+      </span>
+      <span itemprop="datePublished">2017</span>.
+    </span>
+  </td>
+</tr>
+
 <tr class="bibline"><td class="bibref">[5]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale2017.pdf">

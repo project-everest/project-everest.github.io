@@ -9,7 +9,7 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2017</td></tr>
 
-<tr class="bibline"><td class="bibref">[5]</td>
+<tr class="bibline"><td class="bibref">[6]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://eprint.iacr.org/2017/536">
       <span class="bibtitle" itemprop="name">HACL*: A Verified Modern Cryptographic Library</span></a>

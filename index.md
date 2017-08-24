@@ -153,7 +153,7 @@ Finally, if you want to revert to a clean state, you can run:
 ./everest clean
 ```
 
-## For the lazy: the `projecteverest/everest` Docker image
+## For the lazy: Docker
 
 Every night, we automatically build the `projecteverest/everest`
 Docker image with everything already built and verified, for you to

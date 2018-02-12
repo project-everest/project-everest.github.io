@@ -18,7 +18,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Benjamin Beurdouche</span></span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">In Proceedings of the ACM Conference on Computer and Communications Security (CCS) (To appear)</span>
+        <span itemprop="isPartOf">In Proceedings of the ACM Conference on Computer and Communications Security (CCS)</span>
       </span>
       <span itemprop="datePublished">2017</span>.
     </span>
@@ -39,7 +39,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Srinath Setty</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Laure Thompson</span></span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">In Proceedings of the USENIX Security Symposium (To appear)</span>
+        <span itemprop="isPartOf">In Proceedings of the USENIX Security Symposium (Distinguished Paper Award)</span>
       </span>
       <span itemprop="datePublished">2017</span>.
     </span>

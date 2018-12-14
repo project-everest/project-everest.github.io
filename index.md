@@ -49,7 +49,6 @@ We aim for our verified components to be drop-in replacements suitable
 for use in mainstream web browsers, servers, and other popular tools and
 are actively working with the community at large to improve the ecosystem.
 
-
 ![Insecure](assets/InsecureHTTPS.png){:class="img-arch"}
 ![Secure](assets/SecureHTTPS.png){:class="img-arch"}
 
@@ -58,14 +57,13 @@ are actively working with the community at large to improve the ecosystem.
 Project Everest is the combination of the following projects. Read below for an
 easy way to install all these projects together.
 
-- [F\*](https://fstar-lang.org), a verification-oriented dialect of ML
-- [miTLS](https://mitls.org/), our implementation of the TLS protocol, written
-  in F*
+- [F\*](https://fstar-lang.org), a verification language for effectful programs
+- [miTLS](https://mitls.org/), reference implementation of the TLS protocol in F*
 - [KreMLin](https://github.com/FStarLang/kremlin/), a compiler from a subset of
   F* to C
 - [HACL\*](https://github.com/mitls/hacl-star), a verified library of
   cryptographic primitives written in F\*
-- [Vale](https://github.com/project-everest/vale) (formerly Spartan), a domain-specific language designed to implement verified cryptographic primitives in assembly
+- [Vale](https://github.com/project-everest/vale), a domain-specific language for verified cryptographic primitives in assembly
 
 When combined together, the projects above will generate a C library that not
 only implements TLS 1.3 but is also proven secure.
@@ -85,7 +83,7 @@ We generate a C library, but the verification is not complete.
 - The AES and SHA2 cryptographic **assembly routines** are verified and
   extract to assembly via [**Vale**](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-bond.pdf).
 
-- [**HaCl\***](https://eprint.iacr.org/2017/536) provides verified C
+- [**HACL\***](https://eprint.iacr.org/2017/536) provides verified C
   code for multiple other primitives such as Curve25519, Chacha20,
   Poly1305 or HMAC.
 

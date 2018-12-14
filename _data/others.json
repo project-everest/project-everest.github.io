@@ -1,0 +1,26 @@
+[
+    {
+        "firstname": "Victor",
+        "lastname": "Dumitrescu",
+        "lab": "Nomadic Labs",
+        "url": "https://github.com/victor-dumitrescu"
+    },
+    {
+        "firstname": "Qunyan",
+        "lastname": "Mangus",
+        "lab": "Zen Protocol",
+        "url": "https://github.com/A-Manning"
+    },    
+    {
+        "firstname": "Asher",
+        "lastname": "Manning",
+        "lab": "Zen Protocol",
+        "url": "https://github.com/A-Manning"
+    },
+    {
+        "firstname": "Gustavo",
+        "lastname": "Varo",
+        "lab": "MSR Redmond",
+        "url": "https://www.microsoft.com/en-us/research/people/gugavaro/"
+    }
+]

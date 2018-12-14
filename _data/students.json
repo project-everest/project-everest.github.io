@@ -2,8 +2,8 @@
     {
         "firstname": "Danel",
         "lastname": "Ahman",
-        "lab": "University of Edinburgh",
-        "url": "http://homepages.inf.ed.ac.uk/s1225336/"
+        "lab": "University of Ljubljana",
+        "url": "https://danelahman.github.io"
     },
     {
         "firstname": "Benjamin",
@@ -36,16 +36,40 @@
         "url": "https://www.eleves.ens.fr/home/kmaillar/"
     },
     {
+        "firstname": "Guido",
+        "lastname": "Martínez",
+        "lab": "CIFASIS-CONICET Rosario",
+        "url": "https://mtzguido.github.io"
+    },
+    {
         "firstname": "Dan",
         "lastname": "Matichuk",
         "lab": "NICTA",
         "url": "https://ts.data61.csiro.au/people/?cn=Daniel+Matichuk"
     },
     {
+        "firstname": "Zoe",
+        "lastname": "Paraskevopoulou",
+        "lab": "Princeton University",
+        "url": "https://zoep.github.io"
+    },
+    {
+        "firstname": "Clément",
+        "lastname": "Pit-Claudel",
+        "lab": "MIT",
+        "url": "http://pit-claudel.fr/clement"
+    },
+    {
         "firstname": "Ashay",
         "lastname": "Rane",
         "lab": "University of Texas at Austin",
         "url": "https://ashay.rane.info/"
+    },
+    {
+        "firstname": "Exequiel",
+        "lastname": "Rivas",
+        "lab": "INRIA Paris",
+        "url": "https://dcc.fceia.unr.edu.ar/~erivas"
     },
     {
         "firstname": "Olivier",

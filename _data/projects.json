@@ -4,53 +4,61 @@
     "title" : "miTLS",
     "website" :  "https://mitls.org",
     "description" : "a verified reference TLS implementation"
-}, 
+},
 {
-     "name" : "FStar",
+    "name" : "HACL*",
+    "repo" : "https://github.com/project-everest/hacl-star",
+    "title" : "HACL*",
+    "website" :  "https://github.com/project-everest/hacl-star",
+    "description" : "a verified library of cryptographic primitives written in F*"
+},
+{
+    "name" : "Vale",
+    "repo" : "https://github.com/project-everest/vale",
+    "title" : "Vale",
+    "website" :  "https://github.com/project-everest/vale",
+    "description" : "Verfied Assembly Language for Everest"
+},
+{
+    "name" : "FStar",
     "repo" : "https://github.com/fstarlang/fstar",
     "title" : "FStar",
     "website" :  "https://fstar-lang.org",
-    "description" : "an ML-like functional programming language aimed at program verification "
+    "description" : "a verification language for effectful programs"
 },
 {
-     "name" : "Dafny",
-    "repo" : "https://github.com/Microsoft/dafny",
-    "title" : "Dafny",
-    "website" :  "https://github.com/Microsoft/dafny",
-    "description" : "a verification-aware programming language"
-},
-{
-     "name" : "Z3",
-    "repo" : "https://github.com/Z3Prover/z3",
-    "title" : "Z3 Theorem Prover",
-    "website" :  "https://github.com/Z3Prover/z3",
-    "description" : "a SMT theorem prover"
-},
-{
-     "name" : "ironclad",
-    "repo" : "https://github.com/Microsoft/Ironclad",
-    "title" : "IronClad",
-    "website" :  "https://github.com/Microsoft/Ironclad",
-    "description" : "provably secure and reliable systems"
-},
-{
-     "name" : "Lean",
-    "repo" : "https://github.com/leanprover/lean",
-    "title" : "Lean",
-    "website" :  "https://leanprover.github.io/",
-    "description" : "Open souce theorem prover"
-},
-{
-     "name" : "KreMLin",
+    "name" : "KreMLin",
     "repo" : "https://github.com/FStarLang/kremlin/",
     "title" : "KreMLin",
     "website" :  "https://github.com/FStarLang/kremlin/",
     "description" : "a compiler from a subset of F* to C"
 },
 {
-     "name" : "HACL*",
-    "repo" : "https://github.com/mitls/hacl-star",
-    "title" : "HACL*",
-    "website" :  "https://github.com/mitls/hacl-star",
-    "description" : "a verified library of cryptographic primitives written in F*"
-}]
+    "name" : "Z3",
+    "repo" : "https://github.com/Z3Prover/z3",
+    "title" : "Z3 Theorem Prover",
+    "website" :  "https://github.com/Z3Prover/z3",
+    "description" : "a SMT theorem prover"
+},
+{
+    "name" : "Dafny",
+    "repo" : "https://github.com/Microsoft/dafny",
+    "title" : "Dafny",
+    "website" :  "https://github.com/Microsoft/dafny",
+    "description" : "a verification-aware programming language"
+},
+{
+    "name" : "ironclad",
+    "repo" : "https://github.com/Microsoft/Ironclad",
+    "title" : "IronClad",
+    "website" :  "https://github.com/Microsoft/Ironclad",
+    "description" : "provably secure and reliable systems"
+},
+{
+    "name" : "Lean",
+    "repo" : "https://github.com/leanprover/lean",
+    "title" : "Lean",
+    "website" :  "https://leanprover.github.io/",
+    "description" : "Open souce theorem prover"
+}
+]

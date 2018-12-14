@@ -7,6 +7,25 @@ permalink: /papers/
 <table class="result">
 <tbody>
 
+<tr><td colspan="2" class="sheader">2019</td></tr>
+<tr class="bibline"><td class="bibref">[5]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale-popl.pdf">
+      <span class="bibtitle" itemprop="name">A Verified, Efficient Embedding of a Verifiable Assembly Language</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Nick Giannarakis</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aseem Rastogi</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Nikhil Swamy</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">In Proceedings of the Symposium on Principles of Programming Languages (POPL)</span>
+      </span>
+      <span itemprop="datePublished">2019</span>.
+    </span>
+  </td>
+</tr>
+
 <tr><td colspan="2" class="sheader">2017</td></tr>
 
 <tr class="bibline"><td class="bibref">[6]</td>

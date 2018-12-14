@@ -8,7 +8,7 @@ permalink: /papers/
 <tbody>
 
 <tr><td colspan="2" class="sheader">2019</td></tr>
-<tr class="bibline"><td class="bibref">[5]</td>
+<tr class="bibline"><td class="bibref">[7]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale-popl.pdf">
       <span class="bibtitle" itemprop="name">A Verified, Efficient Embedding of a Verifiable Assembly Language</span></a>

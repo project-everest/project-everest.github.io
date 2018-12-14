@@ -12,16 +12,46 @@
         "url": "https://github.com/beurdouche/"
     },
     {
+        "firstname": "Jay",
+        "lastname": "Bosamiya",
+        "lab": "CMU",
+        "url": "https://www.jaybosamiya.com/"
+    },
+    {
+        "firstname": "Tej",
+        "lastname": "Chajed",
+        "lab": "MIT",
+        "url": "https://www.chajed.io"
+    },
+    {
         "firstname": "Benjamin",
         "lastname": "Dowling",
-        "lab": "Queensland Univeristy of Technology",
+        "lab": "Queensland University of Technology",
         "url": "http://benjamindowling.com/"
+    },
+    {
+        "firstname": "Aymeric",
+        "lastname": "Fromherz",
+        "lab": "CMU",
+        "url": "https://users.ece.cmu.edu/~afromher/"
+    },
+    {
+        "firstname": "Nick",
+        "lastname": "Giannarakis",
+        "lab": "Princeton University",
+        "url": "https://nickgian.github.io/"
     },
     {
         "firstname": "Anitha",
         "lastname": "Gollamudi",
         "lab": "Harvard University",
         "url": "https://sites.google.com/site/anithagollamudi/"
+    },
+    {
+        "firstname": "Niklas",
+        "lastname": "Grimm",
+        "lab": "Technische Universität Wien",
+        "url": "https://secpriv.tuwien.ac.at/team/niklas_grimm/"
     },
     {
         "firstname": "Nadim",
@@ -48,6 +78,18 @@
         "url": "https://ts.data61.csiro.au/people/?cn=Daniel+Matichuk"
     },
     {
+        "firstname": "Denis",
+        "lastname": "Merigoux",
+        "lab": "INRIA Paris",
+        "url": "https://github.com/denismerigoux"
+    },
+    {
+        "firstname": "Monal",
+        "lastname": "Narasimhamurthy",
+        "lab": "University of Colorado Boulder",
+        "url": "https://monal.github.io/"
+    },
+    {
         "firstname": "Zoe",
         "lastname": "Paraskevopoulou",
         "lab": "Princeton University",
@@ -58,6 +100,12 @@
         "lastname": "Pit-Claudel",
         "lab": "MIT",
         "url": "http://pit-claudel.fr/clement"
+    },
+    {
+        "firstname": "Marina",
+        "lastname": "Polubelova",
+        "lab": "INRIA Paris",
+        "url": "https://github.com/polubelova"
     },
     {
         "firstname": "Ashay",
@@ -84,7 +132,7 @@
         "url": "http://www.cs.cornell.edu/~laurejt/"
     },
     {
-        "firstname": "Perry",
+        "firstname": "Peng (Perry)",
         "lastname": "Wang",
         "lab": "MIT",
         "url": "https://people.csail.mit.edu/wangpeng/"

@@ -26,4 +26,12 @@ permalink: /people/
       {% endfor %}
     </ul>
   </div>
+ <h3>Other Participants</h3>
+  <div style="">
+    <ul style="padding-left:2em; margin:0px 0px 0px 0px">
+      {% for member in site.data.others %}
+        <li><a href="{{ member.url}}"> {{member.firstname}} {{member.lastname}}</a> ({{member.lab}})</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>

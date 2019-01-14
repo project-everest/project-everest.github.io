@@ -72,25 +72,31 @@ only implements TLS 1.3 but is also proven secure.
 
 We generate a C library, but the verification is not complete.
 
-- The TLS 1.3 **handshake** verification is work in progress and still
-  relies on the OCaml extraction mechanism of F*; thus, the C library
-  still encapsulates the OCaml runtime system.
+- The TLS 1.3 **handshake** verification is work in progress
 
 - We have completed verification of the TLS 1.3 [**record
   layer**](https://eprint.iacr.org/2016/1178) it currently extracts to
   C.
 
-- The AES and SHA2 cryptographic **assembly routines** are verified and
-  extract to assembly via [**Vale**](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-bond.pdf).
+- Several cryptographic **assembly routines**, including AES-GCM,
+  Poly1305, AES and SHA2, are verified and extract to assembly via
+  Vale.
+  ([**USENIX-17**](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-bond.pdf),
+  [**POPL-19**](https://www.microsoft.com/en-us/research/publication/a-verified-efficient-embedding-of-a-verifiable-assembly-language/))
 
 - [**HACL\***](https://eprint.iacr.org/2017/536) provides verified C
   code for multiple other primitives such as Curve25519, Chacha20,
   Poly1305 or HMAC.
 
-Our test client implements TLS 1.2 + TLS 1.3 Draft 18 and successfully
-connects to TLS 1.3 test servers. We have a prototype integration of
-miTLS within libcurl that one can use to `git clone` a remote
-repository.
+## Deployments
+
+Everest code is deployed in several contexts.
+
+Code from the HACL\* library is deployed in [Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/) and in the [Tezos Blockchain](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from/).
+
+The miTLS protocol stack powers Microsoft's primary implementation of
+the [QUIC transport
+protocol](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/).
 
 ## Getting started with Project Everest
 

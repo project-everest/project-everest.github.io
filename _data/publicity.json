@@ -14,6 +14,13 @@
     "date" : "January 9, 2019"
   },
   {
+    "title" : "Generating C code that people actually want to use",
+    "url" : "https://jonathan.protzenko.fr/2019/01/04/behind-the-scenes.html",
+    "venue" : "Jonathan Protzenko's blog",
+    "description": "",
+    "date" : "January 4, 2019"
+  },
+  {
     "title" : "Introducing KreMlin",
     "url" : "https://fstarlang.github.io/general/2016/09/30/introducing-kremlin.html",
     "venue" : "F* for the masses",

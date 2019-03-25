@@ -64,6 +64,8 @@ easy way to install all these projects together.
 - [HACL\*](https://github.com/mitls/hacl-star), a verified library of
   cryptographic primitives written in F\*
 - [Vale](https://github.com/project-everest/vale), a domain-specific language for verified cryptographic primitives in assembly
+- [EverCrypt](https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md), a verified crypto provider
+  that combines HACL\* and Vale via an agile, multi-platform, self-configuring cryptographic API.
 
 When combined together, the projects above generate a mixture of C and assembly code that implements TLS 1.3, with proofs of safety, correctness, security and various forms of side-channel resistance.
 

@@ -77,7 +77,7 @@ TLS-1.3, but the verification is not complete.
 - The TLS 1.3 **handshake** verification is a work in progress
 
 - We have completed verification of the TLS 1.3 [**record
-  layer**](https://eprint.iacr.org/2016/1178) it currently extracts to
+  layer**](https://eprint.iacr.org/2016/1178); it currently extracts to
   C.
 
 - Several cryptographic **assembly routines**, including AES-GCM,

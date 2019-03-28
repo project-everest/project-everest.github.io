@@ -21,10 +21,24 @@
     "date" : "January 4, 2019"
   },
   {
+    "title" : "Securing the Cloud",
+    "url" : "https://news.microsoft.com/stories/cloud-security/#sec-12",
+    "venue" : "Microsoft Story Labs",
+    "description": "Climbing a Security Mountain: Project Everest",
+    "date" : "June 2, 2017"
+  },
+  {
     "title" : "Introducing KreMlin",
     "url" : "https://fstarlang.github.io/general/2016/09/30/introducing-kremlin.html",
     "venue" : "F* for the masses",
     "description": "",
     "date" : "September 30, 2016"
+  },
+  {
+    "title" : "Hacker-Proof Code Confirmed",
+    "url" : "https://www.quantamagazine.org/formal-verification-creates-hacker-proof-code-20160920/",
+    "venue" : "Quanta Magazine",
+    "description": "",
+    "date" : "September 20, 2016"
   }
 ]

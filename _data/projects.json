@@ -17,6 +17,12 @@
     "description" : "Verfied Assembly Language for Everest"
 },
 {
+    "name" : "EverCrypt",
+    "repo" : "https://github.com/project-everest/hacl-star/tree/fstar-master",
+    "website" : "https://github.com/project-everest/hacl-star/tree/fstar-master",
+    "description" : "Verified crypto provider that combines HACL* and Vale via an agile cryptographic API"
+},
+{
     "name" : "F*",
     "repo" : "https://github.com/fstarlang/fstar",
     "website" :  "https://fstar-lang.org",
@@ -39,17 +45,18 @@
     "repo" : "https://github.com/Microsoft/dafny",
     "website" :  "https://github.com/Microsoft/dafny",
     "description" : "a program verifier; used by Vale"
-},
-{
-    "name" : "IronClad",
-    "repo" : "https://github.com/Microsoft/Ironclad",
-    "website" :  "https://github.com/Microsoft/Ironclad",
-    "description" : "provably secure and reliable systems"
-},
-{
-    "name" : "Lean",
-    "repo" : "https://github.com/leanprover/lean",
-    "website" :  "https://leanprover.github.io/",
-    "description" : "Interactive theorem prover"
 }
+// ,
+// {
+//     "name" : "IronClad",
+//     "repo" : "https://github.com/Microsoft/Ironclad",
+//     "website" :  "https://github.com/Microsoft/Ironclad",
+//     "description" : "provably secure and reliable systems"
+// },
+// {
+//     "name" : "Lean",
+//     "repo" : "https://github.com/leanprover/lean",
+//     "website" :  "https://leanprover.github.io/",
+//     "description" : "Interactive theorem prover"
+// }
 ]

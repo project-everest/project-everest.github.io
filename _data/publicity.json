@@ -1,5 +1,26 @@
 [
   {
+    "title" : "Cryptography That Can’t Be Hacked",
+    "url" : "https://www.quantamagazine.org/how-the-evercrypt-library-creates-hacker-proof-cryptography-20190402/",
+    "venue" : "Quanta Magazine",
+    "description": "An overview of our EverCrypt release",
+    "date" : "April 2, 2019"
+  },
+  {
+    "title" : "EverCrypt cryptographic provider offers developers greater security assurances",
+    "url" : "https://www.microsoft.com/en-us/research/blog/evercrypt-cryptographic-provider-offers-developers-greater-security-assurances/",
+    "venue" : "Microsoft Research Blog",
+    "description": "An overview of EverCrypt, our high-performance, industrial-grade, verified cryptographic provider",
+    "date" : "April 2, 2019"
+  },
+  {
+    "title" : "Building a verifiably-secure internet",
+    "url" : "https://www.cylab.cmu.edu/news/2019/01/30-verifiably-secure-internet.html",
+    "venue" : "CyLab",
+    "description": "Recent advances in Vale",
+    "date" : "January 30, 2019"
+  },
+  {
     "title" : "Project Everest: Reaching greater heights in internet communication security",
     "url" : "https://www.microsoft.com/en-us/research/blog/project-everest-reaching-greater-heights-in-internet-communication-security/",
     "venue" : "Microsoft Research Blog",

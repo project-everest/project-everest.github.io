@@ -14,10 +14,17 @@
     "date" : "April 2, 2019"
   },
   {
+    "title" : "The EverCrypt verified cryptographic provider",
+    "url" : "https://jonathan.protzenko.fr/2019/04/02/evercrypt-alpha1.html",
+    "venue" : "Jonathan Protzenko's blog",
+    "description": "",
+    "date" : "April 2, 2019"
+  },
+  {
     "title" : "Cryptography That Can’t Be Hacked",
     "url" : "https://www.quantamagazine.org/how-the-evercrypt-library-creates-hacker-proof-cryptography-20190402/",
     "venue" : "Quanta Magazine",
-    "description": "An overview of our EverCrypt release",
+    "description": "An overview of our EverCrypt release, but the article title and first few paragraphs are is indeed over the top",
     "date" : "April 2, 2019"
   },
   {

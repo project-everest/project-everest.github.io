@@ -57,17 +57,25 @@ are actively working with the community at large to improve the ecosystem.
 Project Everest is the combination of the following projects. Read below for an
 easy way to install all these projects together.
 
-- [F\*](https://fstar-lang.org), a verification language for effectful programs
-- [miTLS](https://mitls.org/), reference implementation of the TLS protocol in F*
-- [KreMLin](https://github.com/FStarLang/kremlin/), a compiler from a subset of
-  F* to C
-- [HACL\*](https://github.com/mitls/hacl-star), a verified library of
-  cryptographic primitives written in F\*
-- [Vale](https://github.com/project-everest/vale), a domain-specific language for verified cryptographic primitives in assembly
-- [EverCrypt](https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md), a verified crypto provider
-  that combines HACL\* and Vale via an agile, multi-platform, self-configuring cryptographic API.
+- [F*], a verification language for effectful programs
+- [miTLS], reference implementation of the TLS protocol in [F*]
+- [KreMLin], a compiler from a subset of [F*] to C
+- [HACL*], a verified library of cryptographic primitives written in [F*]
+- [Vale], a domain-specific language for verified cryptographic
+  primitives in assembly
+- [EverCrypt], a verified crypto provider that combines [HACL*] and
+  [Vale] via an agile, multi-platform, self-configuring cryptographic API.
 
-When combined together, the projects above generate a mixture of C and assembly code that implements TLS 1.3, with proofs of safety, correctness, security and various forms of side-channel resistance.
+[F*]: https://fstar-lang.org
+[miTLS]: https://mitls.org
+[KreMLin]: https://github.com/FStarLang/kremlin
+[HACL*]: https://github.com/mitls/hacl-star
+[Vale]: https://github.com/project-everest/vale
+[EverCrypt]: https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md
+
+When combined together, the projects above generate a mixture of C and
+assembly code that implements TLS 1.3, with proofs of safety,
+correctness, security and various forms of side-channel resistance.
 
 ## Current status
 
@@ -94,9 +102,13 @@ TLS-1.3, but the verification is not complete.
 
 Everest code is deployed in several contexts.
 
-Code from the HACL\* library is deployed in [Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/) and in the [Tezos Blockchain](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from/).
+Code from the HACL\* library is deployed in
+[Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
+[Wireguard](https://www.wireguard.com), and in the
+[Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from) and
+[Concordium](https://www.concordium.com) blockchains.
 
-The miTLS protocol stack powers Microsoft's primary implementation of
+The [miTLS] protocol stack powers Microsoft's primary implementation of
 the [QUIC transport
 protocol](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/).
 

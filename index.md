@@ -101,10 +101,10 @@ Everest code is deployed in several contexts.
 
 Code from the [HACL\*] crypto library and
 [EverCrypt] crypto provider is deployed in
-[Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
-[Wireguard](https://www.wireguard.com), the upcoming
-[Zinc crypto library](https://lwn.net/Articles/770750/) for the Linux kernel,
-[the MirageOS unikernel](https://mirage.io/), and in the
+[Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/), the
+[Wireguard](https://www.wireguard.com) VPN, the upcoming
+[Zinc crypto library](https://lwn.net/Articles/770750/) for the Linux kernel, the
+[MirageOS unikernel](https://mirage.io/), and in the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from) and
 [Concordium](https://www.concordium.com) blockchains.
 

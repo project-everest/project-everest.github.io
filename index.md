@@ -57,19 +57,19 @@ are actively working with the community at large to improve the ecosystem.
 Project Everest is the combination of the following projects. Read below for an
 easy way to install all these projects together.
 
-- [F*], a verification language for effectful programs
-- [miTLS], reference implementation of the TLS protocol in [F*]
-- [KreMLin], a compiler from a subset of [F*] to C
-- [HACL*], a verified library of cryptographic primitives written in [F*]
+- [F\*], a verification language for effectful programs
+- [miTLS], reference implementation of the TLS protocol in [F\*]
+- [KreMLin], a compiler from a subset of [F\*] to C
+- [HACL\*], a verified library of cryptographic primitives written in [F\*]
 - [Vale], a domain-specific language for verified cryptographic
   primitives in assembly
-- [EverCrypt], a verified crypto provider that combines [HACL*] and
+- [EverCrypt], a verified crypto provider that combines [HACL\*] and
   [Vale] via an agile, multi-platform, self-configuring cryptographic API.
 
-[F*]: https://fstar-lang.org
+[F\*]: https://fstar-lang.org
 [miTLS]: https://mitls.org
 [KreMLin]: https://github.com/FStarLang/kremlin
-[HACL*]: https://github.com/mitls/hacl-star
+[HACL\*]: https://github.com/mitls/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverCrypt]: https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md
 
@@ -184,9 +184,9 @@ using the usual command:
 docker pull projecteverest/everest
 ```
 
-## F* blog
+## F\* blog
 
-See [F* for the masses](https://fstarlang.github.io/) for news on F* and Everest!
+See [F\* for the masses](https://fstarlang.github.io/) for news on F\* and Everest!
 
 ## Filing bugs
 

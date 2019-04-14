@@ -85,26 +85,26 @@ TLS-1.3, but the verification is not complete.
 - The TLS 1.3 **handshake** verification is a work in progress
 
 - We have completed verification of the TLS 1.3 [**record
-  layer**](https://eprint.iacr.org/2016/1178); it currently extracts to
-  C.
+  layer**](https://eprint.iacr.org/2016/1178); it currently extracts to C.
 
 - Several cryptographic **assembly routines**, including AES-GCM,
-  Poly1305, AES and SHA2, are verified and extract to assembly via
-  Vale.
+  Poly1305, AES and SHA2, are verified and extract to assembly via Vale.
   ([**USENIX-17**](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-bond.pdf),
   [**POPL-19**](https://www.microsoft.com/en-us/research/publication/a-verified-efficient-embedding-of-a-verifiable-assembly-language/))
 
-- [**HACL\***](https://eprint.iacr.org/2017/536) provides verified C
-  code for multiple other primitives such as Curve25519, Chacha20,
-  Poly1305 or HMAC.
+- **[HACL\*]** provides verified C code for multiple other primitives
+  such as Curve25519, Chacha20, Poly1305 or HMAC.
 
 ## Deployments
 
 Everest code is deployed in several contexts.
 
-Code from the HACL\* library is deployed in
+Code from the [HACL\*] crypto library and
+[EverCrypt] crypto provider is deployed in
 [Mozilla Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
-[Wireguard](https://www.wireguard.com), and in the
+[Wireguard](https://www.wireguard.com), the upcoming
+[Zinc crypto library](https://lwn.net/Articles/770750/) for the Linux kernel,
+[the MirageOS unikernel](https://mirage.io/), and in the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from) and
 [Concordium](https://www.concordium.com) blockchains.
 

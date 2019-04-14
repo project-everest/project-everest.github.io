@@ -1,16 +1,23 @@
 [
   {
-    "title" : "Cryptography That Can’t Be Hacked",
-    "url" : "https://www.quantamagazine.org/how-the-evercrypt-library-creates-hacker-proof-cryptography-20190402/",
-    "venue" : "Quanta Magazine",
-    "description": "An overview of our EverCrypt release",
-    "date" : "April 2, 2019"
+    "title" : "Microsoft’s New Cryptography Suite is “Mathematically Certain” to be Secure",
+    "url" : "https://www.cbronline.com/news/evercrypt-microsoft-cryptography",
+    "venue" : "CBR: Computer Business Review",
+    "description": "",
+    "date" : "April 5, 2019"
   },
   {
     "title" : "EverCrypt cryptographic provider offers developers greater security assurances",
     "url" : "https://www.microsoft.com/en-us/research/blog/evercrypt-cryptographic-provider-offers-developers-greater-security-assurances/",
     "venue" : "Microsoft Research Blog",
     "description": "An overview of EverCrypt, our high-performance, industrial-grade, verified cryptographic provider",
+    "date" : "April 2, 2019"
+  },
+  {
+    "title" : "Cryptography That Can’t Be Hacked",
+    "url" : "https://www.quantamagazine.org/how-the-evercrypt-library-creates-hacker-proof-cryptography-20190402/",
+    "venue" : "Quanta Magazine",
+    "description": "An overview of our EverCrypt release",
     "date" : "April 2, 2019"
   },
   {

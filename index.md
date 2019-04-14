@@ -66,10 +66,10 @@ easy way to install all these projects together.
 - [EverCrypt], a verified crypto provider that combines [HACL\*] and
   [Vale] via an agile, multi-platform, self-configuring cryptographic API.
 
-[F\*]: https://fstar-lang.org
+[F*]: https://fstar-lang.org
 [miTLS]: https://mitls.org
 [KreMLin]: https://github.com/FStarLang/kremlin
-[HACL\*]: https://github.com/mitls/hacl-star
+[HACL*]: https://github.com/mitls/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverCrypt]: https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md
 

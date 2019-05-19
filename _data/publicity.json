@@ -103,5 +103,12 @@
     "venue" : "Quanta Magazine",
     "description": "",
     "date" : "September 20, 2016"
+  },
+  {
+    "title" : "Expeditions: Exploring the unknown",
+    "url" : "https://www.microsoft.com/en-us/research/blog/expeditions-exploring-the-unknown/",
+    "venue" : "Jeannette M. Wing on Microsoft Research Blog",
+    "description": "",
+    "date" : "February 26, 2016"
   }
 ]

@@ -56,6 +56,13 @@
     "date" : "January 4, 2019"
   },
   {
+    "title" : "Zinc: a new kernel cryptography API",
+    "url" : "https://lwn.net/Articles/770750/",
+    "venue" : "LWN.net",
+    "description": "",
+    "date" : "November 6, 2018"
+  },
+  {
     "title" : "Tezos Switches Cryptographic Libraries from TWEETNACL to HACL!",
     "url" : "https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from/",
     "venue" : "reddit r/tezos",

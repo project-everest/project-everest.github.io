@@ -23,16 +23,22 @@
     "description" : "Verified crypto provider that combines HACL* and Vale via an agile cryptographic API"
 },
 {
+    "name" : "EverParse",
+    "repo" : "https://github.com/project-everest/everparse",
+    "website" : "https://github.com/project-everest/everparse",
+    "description" : "Automatic generation of verified parsers and serializers for binary data formats; used by miTLS"
+},
+{
     "name" : "F*",
     "repo" : "https://github.com/fstarlang/fstar",
     "website" :  "https://fstar-lang.org",
-    "description" : "a verification language for effectful programs; used by miTLS, HACL*, and Vale"
+    "description" : "a verification language for effectful programs; used by EverParse, miTLS, HACL* and Vale"
 },
 {
     "name" : "KreMLin",
     "repo" : "https://github.com/FStarLang/kremlin/",
     "website" :  "https://github.com/FStarLang/kremlin/",
-    "description" : "a compiler from a subset of F* to C; used by miTLS and HACL*"
+    "description" : "a compiler from a subset of F* to C; used by EverParse, miTLS and HACL*"
 },
 {
     "name" : "Z3",

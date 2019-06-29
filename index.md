@@ -65,6 +65,8 @@ easy way to install all these projects together.
   primitives in assembly
 - [EverCrypt], a verified crypto provider that combines [HACL\*] and
   [Vale] via an agile, multi-platform, self-configuring cryptographic API.
+- [EverParse], a library and tool to automatically generate verified
+  parsers and serializers for binary data formats
 
 [F*]: https://fstar-lang.org
 [miTLS]: https://mitls.org
@@ -72,6 +74,7 @@ easy way to install all these projects together.
 [HACL*]: https://github.com/mitls/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverCrypt]: https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md
+[EverParse]: https://github.com/project-everest/everparse
 
 When combined together, the projects above generate a mixture of C and
 assembly code that implements TLS 1.3, with proofs of safety,

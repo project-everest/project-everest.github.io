@@ -15,19 +15,19 @@ permalink: /papers/
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://eprint.iacr.org/2019/757">
       <span class="bibtitle" itemprop="name">EverCrypt: A Fast, Verified, Cross-Platform Cryptographic Provider</span></a>
       (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Marina Polubelova </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Benjamin Beurdouche </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Joonwon Choi </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Antoine Delignat-Lavaud </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Cedric Fournet </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Aseem Rastogi </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Nikhil Swamy </span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Christoph Wintersteiger </span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Marina Polubelova</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Benjamin Beurdouche</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Joonwon Choi</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Antoine Delignat-Lavaud</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Cedric Fournet</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aseem Rastogi</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Nikhil Swamy</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Christoph Wintersteiger</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Santiago Zanella-Beguelin</span>
 </span>)
       <span class="bibbooktitle">

@@ -179,12 +179,12 @@ Finally, if you want to revert to a clean state, you can run:
 Every night, we automatically build the `projecteverest/everest`
 Docker image with everything already built and verified, for you to
 directly pull from
-the [Docker Hub](https://hub.docker.com/r/projecteverest/everest/). If
+the [Docker Hub](https://hub.docker.com/r/projecteverest). If
 you have Docker installed on your machine, then you can pull the image
 using the usual command:
 
 ```
-docker pull projecteverest/everest
+docker pull projecteverest/everest-windows-nt
 ```
 
 ## F\* blog

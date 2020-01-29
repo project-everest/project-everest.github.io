@@ -73,7 +73,7 @@ easy way to install all these projects together.
 [KreMLin]: https://github.com/FStarLang/kremlin
 [HACL*]: https://github.com/mitls/hacl-star
 [Vale]: https://github.com/project-everest/vale
-[EverCrypt]: https://github.com/project-everest/hacl-star/blob/fstar-master/README.EverCrypt.md
+[EverCrypt]: https://hacl-star.github.io/HaclValeEverCrypt.html
 [EverParse]: https://github.com/project-everest/everparse
 
 When combined together, the projects above generate a mixture of C and

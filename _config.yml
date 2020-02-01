@@ -26,6 +26,11 @@ markdown: kramdown
 theme: minima
 gems:
   - jekyll-feed
+include:
+  - _static
+  - _sources
+  - vale/_static
+  - vale/_sources
 exclude:
   - Gemfile
   - Gemfile.lock

@@ -1,0 +1,972 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Complete Vale syntax &mdash; Vale: Verified Assembly Language for Everest  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using the Vale tool" href="tool.html" />
+    <link rel="prev" title="Vale programs" href="programs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Vale: Verified Assembly Language for Everest
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programs.html">Vale programs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Complete Vale syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#grammar">Grammar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verbatim-blocks">Verbatim blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Interface with verification framework</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Vale: Verified Assembly Language for Everest</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Complete Vale syntax</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/grammar.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="complete-vale-syntax">
+<h1>Complete Vale syntax<a class="headerlink" href="#complete-vale-syntax" title="Permalink to this headline">¶</a></h1>
+<p>This section presents a complete grammar for the Vale language.
+The grammar uses the following notation:</p>
+<ul class="simple">
+<li><p><em>[</em> A <em>]</em> indicates that A is optional.</p></li>
+<li><p>A … A indicates that A is repeated zero or more times.</p></li>
+<li><p>A <em>[</em> … A <em>]</em> indicates that A is repeated one or more times.</p></li>
+<li><p>Variable/attribute/function/procedure/constructor/field/type/operator-type names are written as
+<strong>x</strong>, <strong>F</strong>, <strong>P</strong>, <strong>C</strong>, <strong>D</strong>, <strong>T</strong>, <strong>O</strong>, where:</p>
+<ul>
+<li><p><strong>F</strong> indicates a function name</p></li>
+<li><p><strong>P</strong> indicates a procedure name</p></li>
+<li><p><strong>C</strong> indicates a datatype constructor name</p></li>
+<li><p><strong>D</strong> indicates a datatype field name</p></li>
+<li><p><strong>T</strong> indicates a type name</p></li>
+<li><p><strong>O</strong> indicates an operator type name</p></li>
+</ul>
+</li>
+<li><p>For conciseness, the grammar omits attributes.  Attributes are listed separately, in <a class="reference internal" href="#attributes"><span class="std std-ref">Attributes</span></a>.</p></li>
+</ul>
+<div class="section" id="grammar">
+<h2>Grammar<a class="headerlink" href="#grammar" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Grammar</p></th>
+<th class="head"><p>Examples and notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl>
+<dt>PROGRAM</dt><dd><div class="line-block">
+<div class="line">INCLUDE … INCLUDE <em>[</em> <code class="docutils literal notranslate"><span class="pre">module</span></code> <strong>x</strong> <em>]</em>
+DECL … DECL</div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>INCLUDE</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">include</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <strong>filename</strong> <code class="docutils literal notranslate"><span class="pre">&quot;</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>DECL</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">type</span></code> <strong>T</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> TFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">:</span></code>
+KIND <code class="docutils literal notranslate"><span class="pre">extern</span></code>
+<code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">type</span></code> <strong>T</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> TFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">:</span></code>
+KIND <code class="docutils literal notranslate"><span class="pre">:=</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">operand_type</span></code> <strong>O</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> <em>]</em>
+<code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE</div>
+<div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> TYPE <em>]</em> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:=</span></code> OTYPS <em>]</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">var</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">const</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">extern</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">function</span></code> <strong>F</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">#[</span></code> TFORMALS <code class="docutils literal notranslate"><span class="pre">]</span></code> <em>]</em>
+<code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">:</span></code> FRET SPECS <code class="docutils literal notranslate"><span class="pre">extern</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">function</span></code> <strong>F</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE
+<code class="docutils literal notranslate"><span class="pre">:=</span></code> <strong>F</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">ghost</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">procedure</span></code> <strong>P</strong></div>
+<div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">#[</span></code> TFORMALS <code class="docutils literal notranslate"><span class="pre">]</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">returns</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> PRETS <code class="docutils literal notranslate"><span class="pre">)</span></code> <em>]</em> SPECS <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">ghost</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">procedure</span></code> <strong>P</strong></div>
+<div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">#[</span></code> TFORMALS <code class="docutils literal notranslate"><span class="pre">]</span></code> <em>]</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">returns</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> PRETS <code class="docutils literal notranslate"><span class="pre">)</span></code> <em>]</em> SPECS <code class="docutils literal notranslate"><span class="pre">extern</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line">VERBATIM_DECL_BLOCK</div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>type bool:Type(0) extern;
+type my_bool:Type(0) := bool;
+operand_type opr32:nat32 :=
+    | inout eax | inout ebx
+    | mem32 | const
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var x:int;
+const c:int extern;
+function f(x:int, y:int):bool extern;
+function f#[a:Type(0)](x:a):a extern;
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure P(ghost x:int)
+    returns(ghost y:int)
+    requires
+        0 &lt;= x;
+        isEven(x);
+    ensures
+        x &lt;= y;
+    { ... }
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#verbatim
+open FStar.Mul
+#endverbatim
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>TFORMALS</dt><dd><div class="line-block">
+<div class="line">TFORMAL <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TFORMAL</div>
+</div>
+</dd>
+<dt>TFORMAL</dt><dd><div class="line-block">
+<div class="line"><strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> KIND</div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>FORMALS</dt><dd><div class="line-block">
+<div class="line">FORMAL <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> FORMAL</div>
+</div>
+</dd>
+<dt>FORMAL</dt><dd><div class="line-block">
+<div class="line"><strong>x</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <em>]</em></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>FRET</dt><dd><div class="line-block">
+<div class="line">TYPE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>PFORMALS</dt><dd><div class="line-block">
+<div class="line">PFORMAL <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> PFORMAL</div>
+</div>
+</dd>
+<dt>PFORMAL</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ghost</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inline</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">in</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> <strong>O</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> <strong>O</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inout</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> <strong>O</strong></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>PRETS</dt><dd><div class="line-block">
+<div class="line">PRET <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> PRET</div>
+</div>
+</dd>
+<dt>PRET</dt><dd><div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">ghost</span></code> <em>]</em> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE</div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>SPECS</dt><dd><div class="line-block">
+<div class="line">SPEC … SPEC</div>
+</div>
+</dd>
+<dt>SPEC</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">reads</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code> … <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">modifies</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code> … <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">lets</span></code> LETBIND <code class="docutils literal notranslate"><span class="pre">;</span></code> … LETBIND <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">requires</span></code> LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code> … LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ensures</span></code> LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code> … LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">requires</span></code> <code class="docutils literal notranslate"><span class="pre">/</span></code> <code class="docutils literal notranslate"><span class="pre">ensures</span></code> LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code> … LEXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</dd>
+<dt>LETBIND</dt><dd><div class="line-block">
+<div class="line">FORMAL <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP</div>
+<div class="line"><strong>x1</strong> <code class="docutils literal notranslate"><span class="pre">&#64;=</span></code> <strong>x2</strong></div>
+</div>
+</dd>
+<dt>LEXP</dt><dd><div class="line-block">
+<div class="line">EXP</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> FORMAL <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP</div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lets
+    x @= eax;
+    y @= ebx;
+    z := 3 + 3;
+reads
+    x; y;
+requires
+    x &lt;= y &lt; z;
+    let a := x + y;
+    is_even(a);
+ensures
+    x == old(x);
+    let a := x + y;
+    is_even(a);
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>STMTS</dt><dd><div class="line-block">
+<div class="line">STMT … STMT</div>
+</div>
+</dd>
+<dt>STMT</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">assume</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">assert</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">assert</span></code> <em>[</em> EXP <code class="docutils literal notranslate"><span class="pre">implies</span></code> <em>]</em> EXP <code class="docutils literal notranslate"><span class="pre">by</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">forall</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS</div>
+<div class="line-block">
+<div class="line"><em>[</em> EXP <code class="docutils literal notranslate"><span class="pre">implies</span></code> <em>]</em> EXP <code class="docutils literal notranslate"><span class="pre">by</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> <strong>x</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <em>]</em> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> <strong>x1</strong> <code class="docutils literal notranslate"><span class="pre">&#64;=</span></code> <strong>x2</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ghost</span></code> <code class="docutils literal notranslate"><span class="pre">var</span></code> <strong>x</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <em>]</em> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <em>]</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> <code class="docutils literal notranslate"><span class="pre">exists</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS</div>
+<div class="line-block">
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">reveal</span></code> <strong>F</strong> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">reveal</span></code> <strong>F</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>p</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line">DESTINATIONS <code class="docutils literal notranslate"><span class="pre">:=</span></code></div>
+<div class="line-block">
+<div class="line"><strong>p</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+<div class="line"><strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">this</span></code> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">while</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line-block">
+<div class="line">INVARIANTS DECREASE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">ghost</span></code> <em>]</em> <em>[</em> <code class="docutils literal notranslate"><span class="pre">inline</span></code> <em>]</em></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">else</span></code> <code class="docutils literal notranslate"><span class="pre">if</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+<div class="line">… <code class="docutils literal notranslate"><span class="pre">else</span></code> <code class="docutils literal notranslate"><span class="pre">if</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code> <em>]</em></div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">else</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code> <em>]</em></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line">CALC_STMT</div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assume x &lt; 10;
+assert x &lt;= 10;
+assert x &lt;= 10 implies p(x) by
+{
+    myLemma(x);
+}
+forall (x:int, y:int)
+    x &lt; y implies x &lt;= y by
+{
+    myLemma2(x, y);
+}
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// copy eax into immutable x:
+let x := eax;
+// let x be an alias for eax:
+let x @= eax;
+// mutable x:
+ghost var x:uint32 := 33 + 44;
+// ask solver to find an x:
+let exists (x:int) 0 &lt;= x;
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>reveal myOpaqueFunction;
+reveal myOpaqueFunction(5, x);
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Increment(x);
+// declare x and y:
+let (x:int, y) := MyProc(ebx, z);
+// declare x and update y:
+(let x:int), y := MyProc(ebx, z);
+x := 5;
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>while (eax != 0)
+    invariant true;
+    decreases *;
+{ ... }
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>if (eax != 5)
+{
+    Increment(edx);
+}
+else
+{
+    eax := 0;
+}
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>CALC_STMT</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">calc</span></code> CALC_OP <code class="docutils literal notranslate"><span class="pre">{</span></code> CALC … CALC EXP <code class="docutils literal notranslate"><span class="pre">;</span></code> <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+</dd>
+<dt>CALC</dt><dd><div class="line-block">
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">;</span></code> CALC_OP CALC_HINTS</div>
+</div>
+</dd>
+<dt>CALC_OP</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&lt;</span></code> | <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> | <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> | <code class="docutils literal notranslate"><span class="pre">==</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> | <code class="docutils literal notranslate"><span class="pre">||</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;==</span></code> | <code class="docutils literal notranslate"><span class="pre">==&gt;</span></code> | <code class="docutils literal notranslate"><span class="pre">&lt;==&gt;</span></code></div>
+</div>
+</dd>
+<dt>CALC_HINTS</dt><dd><div class="line-block">
+<div class="line">CALC_HINT … CALC_HINT</div>
+</div>
+</dd>
+<dt>CALC_HINT</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">{</span></code> STMTS <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>calc ==
+{
+    x;
+    ==
+    x * 1;
+    == { myLemma(x); }
+    1 * x;
+}
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>DESTINATIONS</dt><dd><div class="line-block">
+<div class="line">DESTINATION <em>[</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> DESTINATION <em>]</em></div>
+<div class="line">let <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMAL <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> FORMAL <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+<dt>DESTINATION</dt><dd><div class="line-block">
+<div class="line"><strong>x</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> <code class="docutils literal notranslate"><span class="pre">let</span></code> <strong>x</strong> <em>[</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE <em>]</em> <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// these two lines are equivalent:
+let (x:int, y) := MyProc();
+(let x:int), (let y) := MyProc();
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>INVARIANTS</dt><dd><div class="line-block">
+<div class="line">INVARIANT … INVARIANT</div>
+</div>
+</dd>
+<dt>INVARIANT</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">invariant</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code> … EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>DECREASE</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">decreases</span></code> <code class="docutils literal notranslate"><span class="pre">*</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">decreases</span></code> EXP <em>[</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <em>]</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>TRIGGERS</dt><dd><div class="line-block">
+<div class="line">TRIGGER … TRIGGER</div>
+</div>
+</dd>
+<dt>TRIGGER</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">{</span></code> EXP <em>[</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <em>]</em> <code class="docutils literal notranslate"><span class="pre">}</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>INT</dt><dd><div class="line-block">
+<div class="line">… | (-2) | (-1) | 0 | 1 | 2 | …</div>
+<div class="line">1_000_000</div>
+<div class="line">0xDeaD_bEEf</div>
+<div class="line">…</div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>EXP</dt><dd><div class="line-block">
+<div class="line"><strong>x</strong></div>
+<div class="line"><strong>F</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">true</span></code> | <code class="docutils literal notranslate"><span class="pre">false</span></code></div>
+<div class="line">INT</div>
+<div class="line">0.1 | 0.2 | … | 3.14159 | …</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">bv16</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 0xbeef <code class="docutils literal notranslate"><span class="pre">)</span></code> | <code class="docutils literal notranslate"><span class="pre">bv64</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 7 <code class="docutils literal notranslate"><span class="pre">)</span></code> | …</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&quot;</span></code> STRING <code class="docutils literal notranslate"><span class="pre">&quot;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> <code class="docutils literal notranslate"><span class="pre">-</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">this</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <strong>x</strong></div>
+</div>
+<div class="line-block">
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><strong>F</strong> <code class="docutils literal notranslate"><span class="pre">#[</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+<div class="line-block">
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">[</span></code> EXP <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">[</span></code> EXP <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">?[</span></code> EXP <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">.</span></code> <strong>D</strong></div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">.</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> <strong>D</strong> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">old</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">old</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> EXP <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+<div class="line-block">
+<div class="line">seq <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line">set <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line">list <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">tuple</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">!</span></code> EXP</div>
+</div>
+<div class="line-block">
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">*</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">/</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">%</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">+</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">-</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">is</span></code> <strong>C</strong></div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">==</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">!=</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">||</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">&lt;==</span></code> EXP | EXP <code class="docutils literal notranslate"><span class="pre">==&gt;</span></code> EXP</div>
+<div class="line">EXP <code class="docutils literal notranslate"><span class="pre">&lt;==&gt;</span></code> EXP</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span></code> EXP <code class="docutils literal notranslate"><span class="pre">then</span></code> EXP <code class="docutils literal notranslate"><span class="pre">else</span></code> EXP</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> FORMAL <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">in</span></code> EXP</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">forall</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">exists</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">fun</span></code>    <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// 3.14159 is a real number
+
+// bv1, bv2, etc. are bit vectors
+
+// @x is the location of variable x
+procedure P(in x:opr32)
+    requires
+        x == 10; // value in x
+        @x == OReg(Rax); // x&#39;s loc
+{
+}
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>function f#[a:Type(0)](x:a):a extern;
+assert f(10) == 20; // Vale infers a
+assert f#[int](10) == 20; // explicit
+
+// cast x to type uint32
+#uint32(x)
+// cast x to type set(uint32)
+#(set(uint32))(x)
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// indexing and update
+let s1:seq(int) := f();
+let s2:seq(int) := s1[3 := &quot;hi&quot;];
+assert s2[3] == &quot;hi&quot;;
+// Dafny only; like Dafny &quot;10 in m&quot;:
+assert m?[10];
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>old(x)
+old[snapshotOfThis](x)
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>seq(10, 20, 30) // Dafny only
+set(10, 20, 30) // Dafny only
+list(10, 20, 30) // F* only
+tuple(5, 15, true) // Dafny, F*
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/*
+binary operators:
+  left-associative
+  (but ==&gt; is right-associative)
+
+  highest precedence
+  /|\
+   | * / %
+   | + -
+   | &lt; &gt; &lt;= &gt;= is
+   | &amp;&amp;
+   | ||
+   | &lt;== ==&gt;
+   | &lt;==&gt;
+  \|/
+  lowest precedence
+*/
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>let x := 3 in x + 1
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>forall(x:int, y:int){foo(x, y)}
+    foo(x, y) || x == y
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>OTYPS</dt><dd><div class="line-block">
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">|</span></code> <em>]</em> OTYP <code class="docutils literal notranslate"><span class="pre">|</span></code> … <code class="docutils literal notranslate"><span class="pre">|</span></code> OTYP</div>
+</div>
+</dd>
+<dt>OTYP</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">const</span></code></div>
+<div class="line"><strong>O</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">in</span></code> <strong>x</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out</span></code> <strong>x</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inout</span></code> <strong>x</strong></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><dl>
+<dt>TYPE</dt><dd><div class="line-block">
+<div class="line"><strong>T</strong></div>
+<div class="line">TYPE <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">tuple</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">fun</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> TYPE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">int</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">int_range</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> _ <code class="docutils literal notranslate"><span class="pre">,</span></code> INT <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">int_range</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> INT <code class="docutils literal notranslate"><span class="pre">,</span></code> _ <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">int_range</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> INT <code class="docutils literal notranslate"><span class="pre">,</span></code> INT <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dependent</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>uint32
+map(int, set(uint32))
+tuple(int, int, bool)
+fun(int, int) -&gt; bool
+
+type byte : Type(0) :=
+    int_range(0, 0xff);
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>KIND</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Type</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 0 <code class="docutils literal notranslate"><span class="pre">)</span></code> | <code class="docutils literal notranslate"><span class="pre">Type</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 1 <code class="docutils literal notranslate"><span class="pre">)</span></code> |
+…</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Dependent</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> <strong>t</strong> <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="verbatim-blocks">
+<span id="verbatim"></span><h2>Verbatim blocks<a class="headerlink" href="#verbatim-blocks" title="Permalink to this headline">¶</a></h2>
+<p>Vale programs may contain verbatim blocks (VERBATIM_DECL_BLOCK in the table above):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#verbatim
+method printCode(...) { ... }
+lemma L(...) { ... }
+#endverbatim
+
+procedure P()
+{
+  L(...);
+  ...
+}
+
+#verbatim
+method Main()
+{
+  printHeader();
+  var n := printCode(va_code_P(), 0);
+  printFooter();
+}
+#endverbatim
+</pre></div>
+</div>
+<p>Verbatim blocks are written as lines between <code class="docutils literal notranslate"><span class="pre">#verbatim</span></code> and <code class="docutils literal notranslate"><span class="pre">#endverbatim</span></code>.
+Vale passes these lines directly to the verification language,
+with no processing or analysis by Vale.
+For example, verbatim blocks may be used to declare types, functions,
+and lemmas in the underlying verification languages so that these
+declarations may be used inside Vale procedures.</p>
+</div>
+<div class="section" id="attributes">
+<span id="id1"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p>Some elements of the Vale grammar may be annotated with <em>attributes</em>
+that supply additional information to Vale or to the verification language.
+Currently, attributes are only supported in the following places:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Grammar (attributes)</p></th>
+<th class="head"><p>Examples and notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl>
+<dt>INCLUDE</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">include</span></code> ATTRIBUTES <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <strong>filename</strong> <code class="docutils literal notranslate"><span class="pre">&quot;</span></code></div>
+</div>
+</dd>
+<dt>DECL</dt><dd><div class="line-block">
+<div class="line">…</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">var</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE ATTRIBUTES <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">procedure</span></code> <strong>P</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
+<div class="line-block">
+<div class="line">ATTRIBUTES</div>
+<div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">returns</span></code> … <em>]</em> …</div>
+<div class="line">…</div>
+</div>
+<div class="line">…</div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
+<dt>ATTRIBUTES</dt><dd><div class="line-block">
+<div class="line">ATTRIBUTE … ATTRIBUTE</div>
+</div>
+</dd>
+<dt>ATTRIBUTE</dt><dd><p><code class="docutils literal notranslate"><span class="pre">{:</span></code> <strong>x</strong> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">}</span></code></p>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Currently, the following attributes are supported:</p>
+<ul class="simple">
+<li><p>on include directives:</p>
+<ul>
+<li><p>{:from x};
+filename is interpreted relative to the path alias x rather than to the current directory</p></li>
+<li><p>{:verbatim} (Dafny only):
+include a file written directly in the underlying verification language,
+rather than including another Vale file</p></li>
+<li><p>{:fstar} and {:open} (FStar only):
+include a file written directly in FStar,
+rather than including another Vale file,
+and, if {:open} is specified, open the declarations in the file into the Vale namespace</p></li>
+</ul>
+</li>
+<li><p>on procedures:</p>
+<ul>
+<li><p>{:timeLimit n} and {:timeLimitMultiplier n} (Dafny only)
+set or increase the time limit for this procedure</p></li>
+<li><p>{:instruction EXP},
+indicating a primitive procedure that is implemented with the code value specified by the expression EXP</p></li>
+<li><p>{:recursive} and {:decrease EXP}, indicating that a procedure may call itself,
+optionally specifying a decreases clause to prove the recursion’s termination</p></li>
+<li><p>{:operand}, indicating an operand constructor</p></li>
+<li><p>{:quick} (FStar only) – an experimental feature that uses a more complicated, but more efficient,
+FStar encoding for generated lemmas</p></li>
+</ul>
+</li>
+<li><p>on global variables:</p>
+<ul>
+<li><p>{:state f(EXP, …, EXP)},
+indicating that the variable <strong>x</strong> corresponds to a field f(EXP, …, EXP) of the state type.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tool.html" class="btn btn-neutral float-right" title="Using the Vale tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="programs.html" class="btn btn-neutral float-left" title="Vale programs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Chris Hawblitzel
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

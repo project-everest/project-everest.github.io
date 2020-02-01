@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Vale programs &mdash; Vale: Verified Assembly Language for Everest  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Complete Vale syntax" href="grammar.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Vale: Verified Assembly Language for Everest
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Vale programs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#procedures">Procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#macros-and-instructions">Macros and instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inline-parameters-and-recursive-macros">Inline parameters and recursive macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ghost-variables-and-ghost-code">Ghost variables and ghost code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">Complete Vale syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Interface with verification framework</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Vale: Verified Assembly Language for Everest</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Vale programs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/programs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vale-programs">
+<h1>Vale programs<a class="headerlink" href="#vale-programs" title="Permalink to this headline">¶</a></h1>
+<p>A vale program consists of a series of top-level declarations,
+including global variable declarations and procedure declarations.
+For example, the following Vale program defines global variables and procedures to
+represent simple assembly language code on a hypothetical x86-like architecture:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var ok:bool {:state ok()};
+var eax:int {:state reg(EAX)};
+var ebx:int {:state reg(EBX)};
+
+procedure IncrEax()
+    modifies
+        eax;
+    requires
+        0 &lt;= eax &lt; 100;
+    ensures
+        eax == old(eax) + 1;
+    extern;
+
+procedure Test()
+    modifies
+        eax; ebx;
+    requires
+        0 &lt;= eax &lt; 99;
+    ensures
+        eax == old(eax) + 2;
+        ebx == old(ebx);
+{
+    IncrEax();
+    IncrEax();
+}
+</pre></div>
+</div>
+<p>The global variables <code class="docutils literal notranslate"><span class="pre">eax</span></code> and <code class="docutils literal notranslate"><span class="pre">ebx</span></code> represent two assembly language registers,
+each containing a value of type <code class="docutils literal notranslate"><span class="pre">int</span></code>.
+(The type <code class="docutils literal notranslate"><span class="pre">int</span></code> contains all mathematical integers;
+a more realistic assembly language would use a type for 32-bit integers or 64-bit integers.)
+The global variable <code class="docutils literal notranslate"><span class="pre">ok</span></code> represents the status of the running program:
+<code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">==</span> <span class="pre">true</span></code> means the program is
+in a good state, and <code class="docutils literal notranslate"><span class="pre">ok</span> <span class="pre">==</span> <span class="pre">false</span></code> means that the program has crashed.
+The <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code> procedure represents an assembly language instruction that
+increments register <code class="docutils literal notranslate"><span class="pre">eax</span></code>; the <code class="docutils literal notranslate"><span class="pre">extern</span></code> keyword
+indicates that the procedure’s body is defined elsewhere.
+The body of the <code class="docutils literal notranslate"><span class="pre">Test</span></code> procedure represents assembly language code that calls <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code> twice,
+adding 2 to <code class="docutils literal notranslate"><span class="pre">eax</span></code>.</p>
+<div class="section" id="procedures">
+<h2>Procedures<a class="headerlink" href="#procedures" title="Permalink to this headline">¶</a></h2>
+<p>Vale procedures consist of parameter and return value declarations,
+specifications (<code class="docutils literal notranslate"><span class="pre">reads</span></code>, <code class="docutils literal notranslate"><span class="pre">modifies</span></code>, <code class="docutils literal notranslate"><span class="pre">requires</span></code>, <code class="docutils literal notranslate"><span class="pre">ensures</span></code>, and <code class="docutils literal notranslate"><span class="pre">lets</span></code>),
+and, for non-<code class="docutils literal notranslate"><span class="pre">extern</span></code> procedures, a body containing statements.
+Statements may include calls to procedures, <code class="docutils literal notranslate"><span class="pre">if</span></code>/<code class="docutils literal notranslate"><span class="pre">else</span></code> statements, and <code class="docutils literal notranslate"><span class="pre">while</span></code> statements:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure TestControl()
+    modifies
+        eax;
+    requires
+        0 &lt;= eax &lt; 100;
+    ensures
+        eax == 100;
+{
+    if (eax &lt; 50)
+    {
+        IncrEax();
+        IncrEax();
+    }
+
+    while (eax &lt; 100)
+        invariant
+            0 &lt;= eax &lt;= 100;
+        decreases
+            100 - eax;
+    {
+        IncrEax();
+    }
+}
+</pre></div>
+</div>
+<p>If a procedure modifies a global variable, it must declare that it <code class="docutils literal notranslate"><span class="pre">modifies</span></code> the variable.
+If a procedure reads a global variable, it must declare that it <code class="docutils literal notranslate"><span class="pre">reads</span></code> or <code class="docutils literal notranslate"><span class="pre">modifies</span></code> the variable.</p>
+<p>To verify properties of a program, procedures can <code class="docutils literal notranslate"><span class="pre">require</span></code> preconditions and <code class="docutils literal notranslate"><span class="pre">ensure</span></code> postconditions.
+If verification is successful, then after executing a procedure, the procedure’s postcondition will be true,
+assuming the precondition was true before executing the procedure.
+The procedure <code class="docutils literal notranslate"><span class="pre">TestControl</span></code>, for example, guarantees that if <code class="docutils literal notranslate"><span class="pre">eax</span></code> is in the range 0…99 upon entry,
+then <code class="docutils literal notranslate"><span class="pre">eax</span></code> will be 100 upon exit.
+When preconditions refer to global variables, such as <code class="docutils literal notranslate"><span class="pre">eax</span></code>, they describe the initial value of the global variable
+upon entry to procedure.
+Postconditions, on the other hand, describe the final values of global variables as the procedure exits.
+Postconditions may refer to the initial state using the expression <code class="docutils literal notranslate"><span class="pre">old(...)</span></code>.
+For example, <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code>’s postcondition <code class="docutils literal notranslate"><span class="pre">eax</span> <span class="pre">==</span> <span class="pre">old(eax)</span> <span class="pre">+</span> <span class="pre">1</span></code> specifies that
+the value of <code class="docutils literal notranslate"><span class="pre">eax</span></code> upon exit equals the value upon entry (<code class="docutils literal notranslate"><span class="pre">old(eax)</span></code>) plus one.</p>
+<p>By default, all procedures implicitly say <code class="docutils literal notranslate"><span class="pre">modifies</span> <span class="pre">ok;</span> <span class="pre">requires</span> <span class="pre">ok;</span> <span class="pre">ensures</span> <span class="pre">ok;</span></code>,
+so that all procedures ensure that the program doesn’t crash.</p>
+<p>Verification of a procedure may be automatic or may require hints from the program.
+For example, <code class="docutils literal notranslate"><span class="pre">while</span></code> loops require a loop invariant as a hint to guide the verification process.
+The invariant must be true upon entry to the loop and is verified to be true after each loop iteration.
+The loop invariant shown above, for example, guarantees <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code> after each iteration.
+Notice that the loop condition <code class="docutils literal notranslate"><span class="pre">eax</span> <span class="pre">&lt;</span> <span class="pre">100</span></code> must be false when the loop exits,
+so after the loop exits, the verifier knows both <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code> and <code class="docutils literal notranslate"><span class="pre">!(eax</span> <span class="pre">&lt;</span> <span class="pre">100)</span></code>,
+which together imply <code class="docutils literal notranslate"><span class="pre">eax</span> <span class="pre">==</span> <span class="pre">100</span></code>, satisfying the procedure’s postcondition.
+Also notice that the loop condition <code class="docutils literal notranslate"><span class="pre">eax</span> <span class="pre">&lt;</span> <span class="pre">100</span></code> must be true inside the loop body.
+Together with the the invariant <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code>, this implies <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code>’s
+precondition <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span> <span class="pre">&lt;</span> <span class="pre">100</span></code>.</p>
+<p>Vale can also prove that programs terminate (don’t go into an infinite loop).
+For this, <code class="docutils literal notranslate"><span class="pre">while</span></code> loops need to specify an expression that decreases towards
+some lower bound, such as 0.  This expression must strictly decrease in each loop iteration.
+In the example above, <code class="docutils literal notranslate"><span class="pre">100</span> <span class="pre">-</span> <span class="pre">eax</span></code> decreases in each iteration, since <code class="docutils literal notranslate"><span class="pre">eax</span></code> increases in each iteration.
+If termination isn’t required, the while loop can specify <code class="docutils literal notranslate"><span class="pre">decreases</span> <span class="pre">*;</span></code>, which allows infinite loops.</p>
+</div>
+<div class="section" id="macros-and-instructions">
+<h2>Macros and instructions<a class="headerlink" href="#macros-and-instructions" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code> procedure shown above is of limited use since it can only modify a single register
+and can only add exactly 1 to the register.
+For more flexibility, procedures can accept operands as parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>operand_type reg:int := inout eax | inout ebx;
+operand_type opr:int := reg | const;
+
+procedure Add(inout x:reg, in y:opr)
+    ensures
+        x == old(x + y);
+    extern;
+
+procedure TestAdd()
+    modifies
+        eax; ebx;
+    requires
+        0 &lt;= eax &lt; 99;
+    ensures
+        eax == old(eax) + 30;
+        ebx == old(ebx) - 30;
+{
+    Add(eax, 10);
+    Add(eax, 20);
+    Add(ebx, (-30));
+}
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Add</span></code> procedure accepts two operand arguments, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">y</span></code> is an input operand (read-only) and <code class="docutils literal notranslate"><span class="pre">x</span></code> is both input and output (read and/or written).
+Each operand has an operand type.
+<code class="docutils literal notranslate"><span class="pre">x</span></code>’s operand type <code class="docutils literal notranslate"><span class="pre">reg</span></code> specifies that <code class="docutils literal notranslate"><span class="pre">x</span></code> may be instantiated with
+either <code class="docutils literal notranslate"><span class="pre">eax</span></code> or <code class="docutils literal notranslate"><span class="pre">ebx</span></code>, for reading and/or writing, and that <code class="docutils literal notranslate"><span class="pre">x</span></code> contains a value of type <code class="docutils literal notranslate"><span class="pre">int</span></code>.
+<code class="docutils literal notranslate"><span class="pre">y</span></code>’s operand type <code class="docutils literal notranslate"><span class="pre">opr</span></code> extends <code class="docutils literal notranslate"><span class="pre">reg</span></code> to also allow for constants as operands, such as the <code class="docutils literal notranslate"><span class="pre">10</span></code>
+passed by <code class="docutils literal notranslate"><span class="pre">TestAdd</span></code>.</p>
+<p>Procedures with operand parameters can represent assembly language instructions,
+as in the <code class="docutils literal notranslate"><span class="pre">Add</span></code> procedure shown above.
+They can also represent assembly language macros,
+as the following <code class="docutils literal notranslate"><span class="pre">AddThree</span></code> procedure demonstrates:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure AddThree(inout x:reg)
+    ensures
+        x == old(x + 3);
+{
+    Add(x, 1);
+    Add(x, 2);
+}
+
+procedure TestThree()
+    modifies
+        eax; ebx;
+    requires
+        0 &lt;= eax &lt; 99;
+    ensures
+        eax == old(eax) + 6;
+        ebx == old(ebx) + 3;
+{
+    AddThree(eax);
+    AddThree(eax);
+    AddThree(ebx);
+}
+</pre></div>
+</div>
+<p>Calls from one procedure to another are inlined during assembly language printing,
+so that <code class="docutils literal notranslate"><span class="pre">TestThree</span></code>’s body is equivalent to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add(eax, 1);
+Add(eax, 2);
+Add(eax, 1);
+Add(eax, 2);
+Add(ebx, 1);
+Add(ebx, 2);
+</pre></div>
+</div>
+</div>
+<div class="section" id="inline-parameters-and-recursive-macros">
+<h2>Inline parameters and recursive macros<a class="headerlink" href="#inline-parameters-and-recursive-macros" title="Permalink to this headline">¶</a></h2>
+<p>Operand parameters allow procedures to vary the operands passed to their instructions,
+but procedures can also vary the instructions themselves.
+This allows for macros whose instructions are configurable.
+The key to this configuration is <code class="docutils literal notranslate"><span class="pre">inline</span></code> parameters,
+which can have any type and can be used by <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">if</span></code> statements
+to decide whether to generate certain sequences of instructions.
+For example, the following procedure <code class="docutils literal notranslate"><span class="pre">AddMaybeThree</span></code> uses an inline parameter <code class="docutils literal notranslate"><span class="pre">b</span></code> of type <code class="docutils literal notranslate"><span class="pre">bool</span></code>
+to decide whether to generate an <code class="docutils literal notranslate"><span class="pre">Add(x,</span> <span class="pre">2)</span></code> instruction when printing the assembly language output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure AddMaybeThree(inline b:bool, inout x:reg)
+    ensures
+        x == old(x) + (if b then 3 else 1);
+{
+    Add(x, 1);
+    inline if (b)
+    {
+        Add(x, 2);
+    }
+}
+
+procedure TestMaybeThree()
+    modifies
+        eax; ebx;
+    requires
+        0 &lt;= eax &lt; 99;
+    ensures
+        eax == old(eax) + 3;
+        ebx == old(ebx) + 1;
+{
+    AddMaybeThree(true, eax);
+    AddMaybeThree(false, ebx);
+}
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">TestMaybeThree</span></code>’s body results in the following sequence of instructions:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add(eax, 1);
+Add(eax, 2);
+Add(ebx, 1);
+</pre></div>
+</div>
+<p>While an ordinary <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span></code> instruction generates compare and branch instructions to
+test the condition <code class="docutils literal notranslate"><span class="pre">e</span></code> at runtime, an <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">if</span> <span class="pre">(e)</span></code> instruction resolves the condition <code class="docutils literal notranslate"><span class="pre">e</span></code>
+statically, when printing the assembly language code.
+Because of this, the condition <code class="docutils literal notranslate"><span class="pre">e</span></code> cannot depend on runtime state.
+Instead, <code class="docutils literal notranslate"><span class="pre">e</span></code> usually consists of constants (as in <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code> in <code class="docutils literal notranslate"><span class="pre">TestMaybeThree</span></code>),
+or expressions computed from other inline parameters.</p>
+<p>One example of using inline parameters and <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">if</span></code> is to vary instructions across different platforms,
+such as Windows and Unix.  An <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">if</span></code> can generate prolog and epilog code customized to each platform
+based on an inline parameter that specifies the platform.</p>
+<p>Another use of <code class="docutils literal notranslate"><span class="pre">inline</span> <span class="pre">if</span></code> is generating repetitive sequences of instructions.
+The following <code class="docutils literal notranslate"><span class="pre">Add2N</span></code> procedure generates two <code class="docutils literal notranslate"><span class="pre">Add</span></code> instructions and then recursively
+calls itself to generate more instructions:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure Add2N(inline n:int, inout x:reg)
+    {:recursive}
+    requires
+        n &gt;= 0;
+    ensures
+        x == old(x + 3 * n);
+{
+    inline if (n &gt; 0)
+    {
+        Add(x, 1);
+        Add(x, 2);
+        Add2N(n - 1, x);
+    }
+}
+
+procedure TestAdd2N()
+    modifies
+        eax;
+    requires
+        0 &lt;= eax &lt; 99;
+    ensures
+        eax == old(eax) + 9;
+{
+    Add2N(3, eax);
+}
+</pre></div>
+</div>
+<p>Since the recursive call, like other calls, is inlined during code generation,
+this has the effect of generating a long sequence of unrolled instructions:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add(eax, 1);
+Add(eax, 2);
+Add(eax, 1);
+Add(eax, 2);
+Add(eax, 1);
+Add(eax, 2);
+</pre></div>
+</div>
+<p>(Note that recursive procedures require an attribute <code class="docutils literal notranslate"><span class="pre">{:recursive}</span></code> to call themselves;
+without this, Vale would not consider the <code class="docutils literal notranslate"><span class="pre">Add2N</span></code>’s name to be in scope inside <code class="docutils literal notranslate"><span class="pre">Add2N</span></code>’s body.
+Vale does not support mutually recursive procedures.)</p>
+</div>
+<div class="section" id="ghost-variables-and-ghost-code">
+<h2>Ghost variables and ghost code<a class="headerlink" href="#ghost-variables-and-ghost-code" title="Permalink to this headline">¶</a></h2>
+<p>The examples so far have shown very simple <code class="docutils literal notranslate"><span class="pre">requires</span></code>, <code class="docutils literal notranslate"><span class="pre">ensures</span></code>, and <code class="docutils literal notranslate"><span class="pre">invariant</span></code> expressions.
+When writing more complex preconditions, postconditions, and invariants,
+it often helps to define abbreviations for complex expressions.
+These abbreviations can be placed in <em>ghost</em> variables that are used to assist the proof but have no
+effect on the program’s runtime behavior.
+The simplest way to introduce a ghost variable is with <code class="docutils literal notranslate"><span class="pre">let</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure Ghosts1()
+    requires
+        eax == 0;
+    modifies
+        eax; ebx;
+    ensures
+        ebx == old(ebx) + 100;
+{
+    let lo := ebx;
+    let hi := lo + 100;
+    while (eax &lt; 100)
+        invariant
+            lo &lt;= ebx &lt;= hi;
+            ebx == lo + eax;
+        decreases
+            100 - eax;
+    {
+        Add(eax, 1);
+        Add(ebx, 1);
+    }
+}
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">lo</span></code> holds a copy of the contents of <code class="docutils literal notranslate"><span class="pre">ebx</span></code> upon entry to the procedure,
+and <code class="docutils literal notranslate"><span class="pre">hi</span></code> holds <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">+</span> <span class="pre">100</span></code>.
+The loop invariant may refer to <code class="docutils literal notranslate"><span class="pre">lo</span></code> and <code class="docutils literal notranslate"><span class="pre">hi</span></code> to indicate that <code class="docutils literal notranslate"><span class="pre">ebx</span></code> stays
+in the range <code class="docutils literal notranslate"><span class="pre">lo</span></code> … <code class="docutils literal notranslate"><span class="pre">hi</span></code> through all loop iterations.
+Physical (non-ghost) variables like <code class="docutils literal notranslate"><span class="pre">eax</span></code> may be assigned to ghost variables,
+but ghost variables cannot be assigned to physical variables.
+For example, <code class="docutils literal notranslate"><span class="pre">Add(eax,</span> <span class="pre">lo)</span></code> is not allowed, since the ghost variable <code class="docutils literal notranslate"><span class="pre">lo</span></code>
+exists only during verification, not when the assembly language code is run,
+and so <code class="docutils literal notranslate"><span class="pre">lo</span></code> cannot be used as an assembly language instruction operand.</p>
+<p>It’s often convenient to share ghost variables across procedure specifications and the procedure body.
+The <code class="docutils literal notranslate"><span class="pre">lets</span></code> specification introduces ghost variables that are in scope
+both in the remaining specifications (<code class="docutils literal notranslate"><span class="pre">ensures</span> <span class="pre">ebx</span> <span class="pre">==</span> <span class="pre">hi</span></code>) and in the procedure body:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure Ghosts2()
+    lets
+        lo := ebx;
+        hi := lo + 100;
+    requires
+        eax == 0;
+    modifies
+        eax; ebx;
+    ensures
+        ebx == hi;
+{
+    while (eax &lt; 100)
+        invariant
+            lo &lt;= ebx &lt;= hi;
+            ebx == lo + eax;
+        decreases
+            100 - eax;
+    {
+        Add(eax, 1);
+        Add(ebx, 1);
+    }
+}
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">lets</span></code> declarations evaluate global variables in the procedure’s initial state.
+In the example above, <code class="docutils literal notranslate"><span class="pre">hi</span></code> contains the initial value of <code class="docutils literal notranslate"><span class="pre">ebx</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">ensures</span> <span class="pre">ebx</span> <span class="pre">==</span> <span class="pre">hi</span></code> compares the final <code class="docutils literal notranslate"><span class="pre">ebx</span></code> to <code class="docutils literal notranslate"><span class="pre">hi</span></code>, which contains the initial <code class="docutils literal notranslate"><span class="pre">ebx</span></code> plus 100.
+Thus, <code class="docutils literal notranslate"><span class="pre">lets</span></code> can be used as an alternative to <code class="docutils literal notranslate"><span class="pre">old(...)</span></code> for refering to the initial state.</p>
+<p>Ghost variables introduced with <code class="docutils literal notranslate"><span class="pre">let</span></code> and <code class="docutils literal notranslate"><span class="pre">lets</span></code> are immutable.
+Mutable ghost variables are introduced with <code class="docutils literal notranslate"><span class="pre">ghost</span> <span class="pre">var</span></code>; these may be assigned by <code class="docutils literal notranslate"><span class="pre">:=</span></code> statements:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure Ghosts3()
+    requires
+        eax == 0;
+    modifies
+        eax; ebx;
+    ensures
+        ebx == old(ebx) + 100;
+{
+    let lo := ebx;
+    let hi := lo + 100;
+    ghost var countdown:int := 100;
+
+    while (eax &lt; 100)
+        invariant
+            lo &lt;= ebx &lt;= hi;
+            ebx == lo + eax;
+            countdown == 100 - eax;
+        decreases
+            countdown;
+    {
+        Add(eax, 1);
+        Add(ebx, 1);
+        countdown := countdown - 1;
+    }
+}
+</pre></div>
+</div>
+<p>The statement <code class="docutils literal notranslate"><span class="pre">countdown</span> <span class="pre">:=</span> <span class="pre">countdown</span> <span class="pre">-</span> <span class="pre">1;</span></code> is an example of ghost code,
+which is only used to assist verification and does not appear in generated assembly language code.
+Ghost code can also contain:</p>
+<ul class="simple">
+<li><p>calls to ghost procedures, such as lemmas</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assert</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assume</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ghost</span> <span class="pre">if</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calc</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reveal</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code> statements</p></li>
+</ul>
+<p><em>Ghost procedures</em> can only contain ghost code.
+Although they can read global variables, such as <code class="docutils literal notranslate"><span class="pre">eax</span></code>, they cannot modify global variables.
+The following somewhat silly example illustrates operations by ghost code on ghost variables:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ghost procedure ghost_example(ghost x:int) returns(ghost y:int)
+    requires
+        10 &lt;= x;
+    ensures
+        20 &lt;= y;
+{
+    y := x;
+    y := y + x;
+    ghost if (x &gt; 100)
+    {
+        y := y + 1;
+    }
+    assert 20 &lt;= y; // not necessary; for illustration purposes only
+}
+</pre></div>
+</div>
+<p>Note that ghost parameters, like <code class="docutils literal notranslate"><span class="pre">x</span></code>, are immutable while ghost return values, like <code class="docutils literal notranslate"><span class="pre">y</span></code>,
+are mutable.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ghost</span> <span class="pre">if</span></code> statement is like an ordinary <code class="docutils literal notranslate"><span class="pre">if</span></code> statement except that it has no runtime
+effect and its body can only contain ghost code.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">assert</span></code> statement asks the underlying verification framework to verify
+that an expression is true; if the expression is false, verification will fail.
+This can be used for documentation and diagnostics.
+<code class="docutils literal notranslate"><span class="pre">assert</span></code> statements can occassionally act as hint to the underlying verification framework:
+if a proof relies on <code class="docutils literal notranslate"><span class="pre">forall</span> <span class="pre">(x)</span> <span class="pre">...f(x)...</span></code> expressions for which the verification framework
+needs hints on how to instantiate the quantified variable <code class="docutils literal notranslate"><span class="pre">x</span></code>,
+<code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">f(10)</span></code>, for example can serve as a hint to instantiate <code class="docutils literal notranslate"><span class="pre">x</span></code> with 10.
+(Such hints can be abused: if a proof seems to need a long series of
+seemingly arbitrary <code class="docutils literal notranslate"><span class="pre">assert</span></code> statements to succeed,
+it’s often a sign that the proof needs to be restructured in a clearer way.)</p>
+<p>In contrast to <code class="docutils literal notranslate"><span class="pre">assert</span></code>, which just asks the verifier to check a property,
+<code class="docutils literal notranslate"><span class="pre">assume</span></code> demands that the verifier accept a property without proof.
+This can be useful when debugging proofs: you can assume part of a proof to
+test if that assumption enables the rest of the proof to succeed.
+Of course, <code class="docutils literal notranslate"><span class="pre">assume</span></code> is dangerous since it allows proofs of false theorems,
+so after debugging a proof, all <code class="docutils literal notranslate"><span class="pre">assume</span></code> statements should be removed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">extern</span></code> ghost procedures can represent lemmas from the underlying verification framework
+(Dafny or FStar).
+This allows longer proofs about mathematics, datatypes, functions, etc. to reside
+in Dafny or FStar libraries rather than requiring that all proofs be done directly in Vale.</p>
+<p>The following example illustrates calls to ghost procedures.
+The code assumes that two lemmas about arithmetic,
+<code class="docutils literal notranslate"><span class="pre">lemma_commute_mul</span></code> and <code class="docutils literal notranslate"><span class="pre">lemma_commute_mul</span></code>,
+have already been proven in the underlying verification framework:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ghost procedure lemma_commute_mul(ghost x:int, ghost y:int)
+    ensures
+        x * y == y * x;
+    extern;
+
+ghost procedure lemma_commute_mul(ghost x:int)
+    ensures
+        x * (x + 1) / 2 == x * (x - 1) / 2 + x;
+    extern;
+
+procedure ArithmeticSum(ghost n:int)
+    modifies
+        eax; ebx;
+    requires
+        0 &lt;= n;
+        ebx == 0;
+        eax == n;
+    ensures
+        ebx == n * (n + 1) / 2;
+{
+    while (0 &lt; eax)
+        invariant
+            0 &lt;= eax;
+            ebx + eax * (eax + 1) / 2 == n * (n + 1) / 2;
+        decreases
+            eax;
+    {
+        lemma_square_plus_minus_half(eax);
+        lemma_commute_mul(eax, eax - 1);
+        Add(ebx, eax);
+        Add(eax, (-1));
+    }
+}
+</pre></div>
+</div>
+<p>The calls to lemmas serve as hints to help prove that the loop invariant remains true
+after each loop iteration.
+Whether such hints are necessary depends on underlying verification framework
+and the difficulty of the properties being verified.
+Simple properties may not require any hints,
+while more advanced properties may require extensive lemmas.</p>
+<p>Notice that the procedures above declare <code class="docutils literal notranslate"><span class="pre">ghost</span></code> parameters.
+Such parameters may be instantiated with physical expressions or ghost expressions.
+(The <code class="docutils literal notranslate"><span class="pre">ghost</span> <span class="pre">n:int</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">ArithmeticSum</span></code> is for illustration;
+a simpler alternative would be to declare <code class="docutils literal notranslate"><span class="pre">lets</span> <span class="pre">n</span> <span class="pre">:=</span> <span class="pre">eax</span></code> rather than forcing
+the caller of <code class="docutils literal notranslate"><span class="pre">ArithmeticSum</span></code> to supply <code class="docutils literal notranslate"><span class="pre">n</span></code> as an argument.)</p>
+<p>Verification can take advantage of lemma postconditions,
+such as <code class="docutils literal notranslate"><span class="pre">ensures</span> <span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span> <span class="pre">==</span> <span class="pre">y</span> <span class="pre">*</span> <span class="pre">x</span></code>.
+To make verification faster, it often helps to limit the scope of such postconditions
+so that they are only used to prove relevant facts and don’t add overhead when proving
+unrelated facts.
+Vale provides two features for limiting the scope of postconditions: <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">by</span></code> and <code class="docutils literal notranslate"><span class="pre">calc</span></code>.
+The following code shows another way to write the loop body of <code class="docutils literal notranslate"><span class="pre">ArithmeticSum</span></code>,
+where the lemmas are used only to prove <code class="docutils literal notranslate"><span class="pre">b'</span> <span class="pre">+</span> <span class="pre">a'</span> <span class="pre">*</span> <span class="pre">(a'</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">n</span> <span class="pre">*</span> <span class="pre">(n</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>
+and nothing else:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    let b&#39; := ebx + eax;
+    let a&#39; := eax - 1;
+    assert b&#39; + a&#39; * (a&#39; + 1) / 2 == n * (n + 1) / 2 by
+    {
+        lemma_square_plus_minus_half(eax);
+        lemma_commute_mul(eax, eax - 1);
+    }
+
+    Add(ebx, eax);
+    Add(eax, (-1));
+}
+</pre></div>
+</div>
+<p>For even more clarity and efficiency, the <code class="docutils literal notranslate"><span class="pre">calc</span></code> statement can break a proof
+into a series of small steps,
+proving some relation (typically equality, <code class="docutils literal notranslate"><span class="pre">==</span></code>) between each step:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    let a := eax;
+    let b := ebx;
+    let b&#39; := b + a;
+    let a&#39; := a - 1;
+    calc ==
+    {
+        b&#39; + a&#39; * (a&#39; + 1) / 2;
+        ==
+        b + a&#39; * (a&#39; + 1) / 2 + a;
+        ==
+        b + (a - 1) * a / 2 + a;
+        == {lemma_commute_mul(a - 1, a);}
+        b + a * (a - 1) / 2 + a;
+        == {lemma_square_plus_minus_half(a);}
+        b + a * (a + 1) / 2;
+        ==
+        n * (n + 1) / 2;
+    }
+
+    Add(ebx, eax);
+    Add(eax, (-1));
+}
+</pre></div>
+</div>
+<p>The syntax <code class="docutils literal notranslate"><span class="pre">calc</span> <span class="pre">==</span></code> indicates that the calc statement proves the initial
+expression (<code class="docutils literal notranslate"><span class="pre">b'</span> <span class="pre">+</span> <span class="pre">a'</span> <span class="pre">*</span> <span class="pre">(a'</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>) equal to the final expression
+(<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">(n</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>).
+Each <code class="docutils literal notranslate"><span class="pre">==</span></code> inside the <code class="docutils literal notranslate"><span class="pre">calc</span></code> statement marks a single step,
+proving the expression above the <code class="docutils literal notranslate"><span class="pre">==</span></code> equal to the expression below the <code class="docutils literal notranslate"><span class="pre">==</span></code>.
+A <code class="docutils literal notranslate"><span class="pre">calc</span></code> statement can use ghost code, such as lemma calls, to help prove each step.
+This ghost code lives inside <code class="docutils literal notranslate"><span class="pre">{...}</span></code> after the <code class="docutils literal notranslate"><span class="pre">==</span></code>,
+as in <code class="docutils literal notranslate"><span class="pre">{lemma_commute_mul(a</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">a);}</span></code> above.
+<code class="docutils literal notranslate"><span class="pre">calc</span></code> statements often provide clearer documentation to people reading the code
+than unstructured series of calls to lemmas.
+However, if <code class="docutils literal notranslate"><span class="pre">calc</span></code> statements or <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">by</span></code> statements start to become large,
+it’s often a good idea to move the proof steps into the underlying verification framework
+so that the Vale code can focus solely on verifying assembly language operations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">by</span></code> statements can also contain preconditions that are required
+inside the body of the <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">by</span></code> statement:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ghost procedure lemma_cube_positive(ghost x:int)
+    requires
+        0 &lt;= x;
+    ensures
+        0 &lt;= x * x * x;
+    extern;
+
+ghost procedure test_cube_positive()
+    reads
+        eax;
+    ensures
+        0 &lt;= eax ==&gt; 0 &lt;= eax * eax * eax;
+{
+    assert 0 &lt;= eax implies 0 &lt;= eax * eax * eax by
+    {
+        lemma_cube_positive(eax);
+    }
+}
+</pre></div>
+</div>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">by</span></code> statement proves that <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span> <span class="pre">*</span> <span class="pre">eax</span> <span class="pre">*</span> <span class="pre">eax</span></code>
+is true if <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span></code> is true.
+(Without the <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">eax</span></code> condition, the call to <code class="docutils literal notranslate"><span class="pre">lemma_cube_positive</span></code>
+would fail because <code class="docutils literal notranslate"><span class="pre">eax</span></code> might be negative.)</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="grammar.html" class="btn btn-neutral float-right" title="Complete Vale syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Chris Hawblitzel
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+DECL
+  | ``type`` **t** *[* ``(`` TFORMALS ``)`` *]* ``:``
+      KIND ``extern``
+      ``;``
+  | ``type`` **t** *[* ``(`` TFORMALS ``)`` *]* ``:``
+      KIND ``:=`` TYPE ``;``
+  | ``operand_type`` **ot** *[* ``(`` PFORMALS ``)`` *]*
+      ``:`` TYPE
+  |   *[* ``@`` TYPE *]* *[* ``:=`` OTYPS *]* ``;``
+
+  | ``const`` **x** ``:`` TYPE ``extern`` ``;``
+  | ``function`` **f** *[* ``#[`` TFORMALS ``]`` *]*
+    ``(`` FORMALS ``)``
+  |   ``:`` FRET SPECS ``extern`` ``;``
+  | ``function`` **f** ``(`` FORMALS ``)`` ``:`` TYPE
+    ``:=`` **f** ``;``

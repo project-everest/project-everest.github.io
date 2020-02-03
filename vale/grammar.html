@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using the Vale tool" href="tool.html" />
-    <link rel="prev" title="Vale programs" href="programs.html" /> 
+    <link rel="prev" title="Types, functions, and expressions" href="exp.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,10 +80,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="programs.html">Vale programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programs.html">Programs and procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">Types, functions, and expressions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Complete Vale syntax</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#grammar">Grammar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verbatim-blocks">Verbatim blocks</a></li>
@@ -251,30 +251,30 @@ KIND <code class="docutils literal notranslate"><span class="pre">:=</span></cod
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>type bool:Type(0) extern;
-type my_bool:Type(0) := bool;
-operand_type opr32:nat32 :=
-    | inout eax | inout ebx
-    | mem32 | const
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="k">bool</span>:<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">type</span> my_bool:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">bool</span>;
+<span class="k">operand_type</span> opr<span class="m">32</span>:nat<span class="m">32</span> :=
+    | <span class="k">inout</span> eax | <span class="k">inout</span> ebx
+    | mem<span class="m">32</span> | <span class="k">const</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var x:int;
-const c:int extern;
-function f(x:int, y:int):bool extern;
-function f#[a:Type(0)](x:a):a extern;
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">var</span> x:<span class="k">int</span>;
+<span class="k">const</span> c:<span class="k">int</span> <span class="k">extern</span>;
+<span class="k">function</span> f(x:<span class="k">int</span>, y:<span class="k">int</span>):<span class="k">bool</span> <span class="k">extern</span>;
+<span class="k">function</span> f#[a:<span class="k">Type</span>(<span class="m">0</span>)](x:a):a <span class="k">extern</span>;
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>procedure P(ghost x:int)
-    returns(ghost y:int)
-    requires
-        0 &lt;= x;
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">procedure</span> P(<span class="k">ghost</span> x:<span class="k">int</span>)
+    <span class="k">returns</span>(<span class="k">ghost</span> y:<span class="k">int</span>)
+    <span class="k">requires</span>
+        <span class="m">0</span> &lt;= x;
         isEven(x);
-    ensures
+    <span class="k">ensures</span>
         x &lt;= y;
     { ... }
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#verbatim
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>#verbatim
 open FStar.Mul
 #endverbatim
 </pre></div>
@@ -373,19 +373,19 @@ open FStar.Mul
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lets
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">lets</span>
     x @= eax;
     y @= ebx;
-    z := 3 + 3;
-reads
+    z := <span class="m">3</span> + <span class="m">3</span>;
+<span class="k">reads</span>
     x; y;
-requires
+<span class="k">requires</span>
     x &lt;= y &lt; z;
-    let a := x + y;
+    <span class="k">let</span> a := x + y;
     is_even(a);
-ensures
-    x == old(x);
-    let a := x + y;
+<span class="k">ensures</span>
+    x == <span class="k">old</span>(x);
+    <span class="k">let</span> a := x + y;
     is_even(a);
 </pre></div>
 </div>
@@ -419,10 +419,10 @@ ensures
 <div class="line"><code class="docutils literal notranslate"><span class="pre">reveal</span></code> <strong>F</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 </div>
 <div class="line-block">
-<div class="line"><strong>p</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><strong>P</strong> <em>[</em> TYPE_ARGS <em>]</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 <div class="line">DESTINATIONS <code class="docutils literal notranslate"><span class="pre">:=</span></code></div>
 <div class="line-block">
-<div class="line"><strong>p</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
+<div class="line"><strong>P</strong> <em>[</em> TYPE_ARGS <em>]</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 </div>
 <div class="line"><strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">this</span></code> <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
@@ -449,54 +449,54 @@ ensures
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assume x &lt; 10;
-assert x &lt;= 10;
-assert x &lt;= 10 implies p(x) by
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">assume</span> x &lt; <span class="m">10</span>;
+<span class="k">assert</span> x &lt;= <span class="m">10</span>;
+<span class="k">assert</span> x &lt;= <span class="m">10</span> <span class="k">implies</span> p(x) <span class="k">by</span>
 {
     myLemma(x);
 }
-forall (x:int, y:int)
-    x &lt; y implies x &lt;= y by
+<span class="k">forall</span> (x:<span class="k">int</span>, y:<span class="k">int</span>)
+    x &lt; y <span class="k">implies</span> x &lt;= y <span class="k">by</span>
 {
-    myLemma2(x, y);
+    myLemma<span class="m">2</span>(x, y);
 }
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// copy eax into immutable x:
-let x := eax;
-// let x be an alias for eax:
-let x @= eax;
-// mutable x:
-ghost var x:uint32 := 33 + 44;
-// ask solver to find an x:
-let exists (x:int) 0 &lt;= x;
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// copy eax into immutable x:</span>
+<span class="k">let</span> x := eax;
+<span class="c">// let x be an alias for eax:</span>
+<span class="k">let</span> x @= eax;
+<span class="c">// mutable x:</span>
+<span class="k">ghost</span> <span class="k">var</span> x:uint<span class="m">32</span> := <span class="m">33</span> + <span class="m">44</span>;
+<span class="c">// ask solver to find an x:</span>
+<span class="k">let</span> <span class="k">exists</span> (x:<span class="k">int</span>) <span class="m">0</span> &lt;= x;
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>reveal myOpaqueFunction;
-reveal myOpaqueFunction(5, x);
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">reveal</span> myOpaqueFunction;
+<span class="k">reveal</span> myOpaqueFunction(<span class="m">5</span>, x);
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Increment(x);
-// declare x and y:
-let (x:int, y) := MyProc(ebx, z);
-// declare x and update y:
-(let x:int), y := MyProc(ebx, z);
-x := 5;
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>Increment(x);
+<span class="c">// declare x and y:</span>
+<span class="k">let</span> (x:<span class="k">int</span>, y) := MyProc(ebx, z);
+<span class="c">// declare x and update y:</span>
+(<span class="k">let</span> x:<span class="k">int</span>), y := MyProc(ebx, z);
+x := <span class="m">5</span>;
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>while (eax != 0)
-    invariant true;
-    decreases *;
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> (eax != <span class="m">0</span>)
+    <span class="k">invariant</span> <span class="k">true</span>;
+    <span class="k">decreases</span> *;
 { ... }
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>if (eax != 5)
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> (eax != <span class="m">5</span>)
 {
     Increment(edx);
 }
-else
+<span class="k">else</span>
 {
-    eax := 0;
+    eax := <span class="m">0</span>;
 }
 </pre></div>
 </div>
@@ -526,13 +526,13 @@ else
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>calc ==
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">calc</span> ==
 {
     x;
     ==
-    x * 1;
+    x * <span class="m">1</span>;
     == { myLemma(x); }
-    1 * x;
+    <span class="m">1</span> * x;
 }
 </pre></div>
 </div>
@@ -551,9 +551,9 @@ else
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// these two lines are equivalent:
-let (x:int, y) := MyProc();
-(let x:int), (let y) := MyProc();
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// these two lines are equivalent:</span>
+<span class="k">let</span> (x:<span class="k">int</span>, y) := MyProc();
+(<span class="k">let</span> x:<span class="k">int</span>), (<span class="k">let</span> y) := MyProc();
 </pre></div>
 </div>
 </td>
@@ -621,10 +621,7 @@ let (x:int, y) := MyProc();
 </div>
 <div class="line-block">
 <div class="line">EXP <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
-<div class="line"><strong>F</strong> <code class="docutils literal notranslate"><span class="pre">#[</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
-</div>
+<div class="line"><strong>F</strong> TYPE_ARGS <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">#</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 </div>
 <div class="line-block">
@@ -674,70 +671,68 @@ let (x:int, y) := MyProc();
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// 3.14159 is a real number
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// 3.14159 is a real number</span>
 
-// bv1, bv2, etc. are bit vectors
+<span class="c">// bv1, bv2, etc. are bit vectors</span>
 
-// @x is the location of variable x
-procedure P(in x:opr32)
-    requires
-        x == 10; // value in x
-        @x == OReg(Rax); // x&#39;s loc
+<span class="c">// @x is the location of variable x</span>
+<span class="k">procedure</span> P(<span class="k">in</span> x:opr<span class="m">32</span>)
+    <span class="k">requires</span>
+        x == <span class="m">10</span>; <span class="c">// value in x</span>
+        @x == OReg(Rax); <span class="c">// x&#39;s loc</span>
 {
 }
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>function f#[a:Type(0)](x:a):a extern;
-assert f(10) == 20; // Vale infers a
-assert f#[int](10) == 20; // explicit
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> f#[a:<span class="k">Type</span>(<span class="m">0</span>)](x:a):a <span class="k">extern</span>;
+<span class="k">assert</span> f(<span class="m">10</span>) == <span class="m">20</span>; <span class="c">// Vale infers a</span>
+<span class="k">assert</span> f#[<span class="k">int</span>](<span class="m">10</span>) == <span class="m">20</span>; <span class="c">// explicit</span>
 
-// cast x to type uint32
-#uint32(x)
-// cast x to type set(uint32)
-#(set(uint32))(x)
+<span class="c">// cast x to type uint32</span>
+#uint<span class="m">32</span>(x)
+<span class="c">// cast x to type set(uint32)</span>
+#(set(uint<span class="m">32</span>))(x)
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>// indexing and update
-let s1:seq(int) := f();
-let s2:seq(int) := s1[3 := &quot;hi&quot;];
-assert s2[3] == &quot;hi&quot;;
-// Dafny only; like Dafny &quot;10 in m&quot;:
-assert m?[10];
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// indexing and update</span>
+<span class="k">let</span> s<span class="m">1</span>:seq(<span class="k">int</span>) := f();
+<span class="k">let</span> s<span class="m">2</span>:seq(<span class="k">int</span>) := s<span class="m">1</span>[<span class="m">3</span> := &quot;hi&quot;];
+<span class="k">assert</span> s<span class="m">2</span>[<span class="m">3</span>] == &quot;hi&quot;;
+<span class="c">// Dafny only; like Dafny &quot;10 in m&quot;:</span>
+<span class="k">assert</span> m?[<span class="m">10</span>];
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>old(x)
-old[snapshotOfThis](x)
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">old</span>(x)
+<span class="k">old</span>[snapshotOfThis](x)
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>seq(10, 20, 30) // Dafny only
-set(10, 20, 30) // Dafny only
-list(10, 20, 30) // F* only
-tuple(5, 15, true) // Dafny, F*
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>seq(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) <span class="c">// Dafny only</span>
+set(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) <span class="c">// Dafny only</span>
+list(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) <span class="c">// F* only</span>
+<span class="k">tuple</span>(<span class="m">5</span>, <span class="m">15</span>, <span class="k">true</span>) <span class="c">// Dafny, F*</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/*
-binary operators:
-  left-associative
-  (but ==&gt; is right-associative)
-
-  highest precedence
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">//binary operators:</span>
+<span class="c">//  left-associative</span>
+<span class="c">//  but ==&gt; is right-associative</span>
+<span class="c">//</span>
+<span class="c">//highest precedence</span>
   /|\
    | * / %
    | + -
-   | &lt; &gt; &lt;= &gt;= is
+   | &lt; &gt; &lt;= &gt;= <span class="k">is</span>
    | &amp;&amp;
    | ||
    | &lt;== ==&gt;
    | &lt;==&gt;
   \|/
-  lowest precedence
-*/
+<span class="c">//lowest precedence</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>let x := 3 in x + 1
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> x := <span class="m">3</span> <span class="k">in</span> x + <span class="m">1</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>forall(x:int, y:int){foo(x, y)}
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span>(x:<span class="k">int</span>, y:<span class="k">int</span>){foo(x, y)}
     foo(x, y) || x == y
 </pre></div>
 </div>
@@ -761,11 +756,22 @@ binary operators:
 <td></td>
 </tr>
 <tr class="row-even"><td><dl>
+<dt>TYPE_ARGS</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#[</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">]</span></code></div>
+</div>
+</dd>
+</dl>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><dl>
 <dt>TYPE</dt><dd><div class="line-block">
 <div class="line"><strong>T</strong></div>
 <div class="line">TYPE <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">tuple</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">fun</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> TYPE <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> TYPE</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">bool</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">prop</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">int</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">int_range</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> _ <code class="docutils literal notranslate"><span class="pre">,</span></code> INT <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">int_range</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> INT <code class="docutils literal notranslate"><span class="pre">,</span></code> _ <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
@@ -776,18 +782,18 @@ binary operators:
 </dd>
 </dl>
 </td>
-<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>uint32
-map(int, set(uint32))
-tuple(int, int, bool)
-fun(int, int) -&gt; bool
+<td><div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>uint<span class="m">32</span>
+map(<span class="k">int</span>, set(uint<span class="m">32</span>))
+<span class="k">tuple</span>(<span class="k">int</span>, <span class="k">int</span>, <span class="k">bool</span>)
+<span class="k">fun</span>(<span class="k">int</span>, <span class="k">int</span>) -&gt; <span class="k">bool</span>
 
-type byte : Type(0) :=
-    int_range(0, 0xff);
+<span class="k">type</span> byte:<span class="k">Type</span>(<span class="m">0</span>) :=
+    <span class="k">int_range</span>(<span class="m">0</span>, <span class="m">0xff</span>);
 </pre></div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><dl>
+<tr class="row-even"><td><dl>
 <dt>KIND</dt><dd><div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">Type</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 0 <code class="docutils literal notranslate"><span class="pre">)</span></code> | <code class="docutils literal notranslate"><span class="pre">Type</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> 1 <code class="docutils literal notranslate"><span class="pre">)</span></code> |
 …</div>
@@ -804,12 +810,12 @@ type byte : Type(0) :=
 <div class="section" id="verbatim-blocks">
 <span id="verbatim"></span><h2>Verbatim blocks<a class="headerlink" href="#verbatim-blocks" title="Permalink to this headline">¶</a></h2>
 <p>Vale programs may contain verbatim blocks (VERBATIM_DECL_BLOCK in the table above):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#verbatim
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>#verbatim
 method printCode(...) { ... }
-lemma L(...) { ... }
+<span class="k">lemma</span> L(...) { ... }
 #endverbatim
 
-procedure P()
+<span class="k">procedure</span> P()
 {
   L(...);
   ...
@@ -819,7 +825,7 @@ procedure P()
 method Main()
 {
   printHeader();
-  var n := printCode(va_code_P(), 0);
+  <span class="k">var</span> n := printCode(va_code_P(), <span class="m">0</span>);
   printFooter();
 }
 #endverbatim
@@ -855,6 +861,7 @@ Currently, attributes are only supported in the following places:</p>
 </dd>
 <dt>DECL</dt><dd><div class="line-block">
 <div class="line">…</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">type</span></code> <strong>T</strong> … ATTRIBUTES extern <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">var</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE ATTRIBUTES <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">procedure</span></code> <strong>P</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line-block">
@@ -916,6 +923,11 @@ FStar encoding for generated lemmas</p></li>
 indicating that the variable <strong>x</strong> corresponds to a field f(EXP, …, EXP) of the state type.</p></li>
 </ul>
 </li>
+<li><p>on types:</p>
+<ul>
+<li><p>{:primitive}, declaring a primitive type like <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code></p></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -931,7 +943,7 @@ indicating that the variable <strong>x</strong> corresponds to a field f(EXP, �
         <a href="tool.html" class="btn btn-neutral float-right" title="Using the Vale tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="programs.html" class="btn btn-neutral float-left" title="Vale programs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="exp.html" class="btn btn-neutral float-left" title="Types, functions, and expressions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

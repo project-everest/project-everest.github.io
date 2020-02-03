@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Types, functions, and expressions &mdash; Vale: Verified Assembly Language for Everest  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Complete Vale syntax" href="grammar.html" />
+    <link rel="prev" title="Programs and procedures" href="programs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Vale: Verified Assembly Language for Everest
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programs.html">Programs and procedures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Types, functions, and expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operands-and-operand-types">Operands and operand types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#operand-constructors-and-memory">Operand constructors and memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operand-values-and-locations">Operand values and locations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">Complete Vale syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Interface with verification framework</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Vale: Verified Assembly Language for Everest</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Types, functions, and expressions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/exp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="types-functions-and-expressions">
+<h1>Types, functions, and expressions<a class="headerlink" href="#types-functions-and-expressions" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned in <a class="reference internal" href="programs.html#programs"><span class="std std-ref">Programs and procedures</span></a>, a Vale program contains a series of top-level declarations.
+These top-level declarations may be:</p>
+<ul class="simple">
+<li><p>type declarations and operand type declarations</p></li>
+<li><p>global variable declarations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span></code> and <code class="docutils literal notranslate"><span class="pre">function</span></code> declarations</p></li>
+<li><p>procedure declarations</p></li>
+<li><p>verbatim blocks (see <a class="reference internal" href="grammar.html#verbatim"><span class="std std-ref">Verbatim blocks</span></a>)</p></li>
+</ul>
+<p>Vale processes declarations in the order they appear in the program.
+The order matters,
+because each declaration can refer to earlier declarations but not later declarations.
+All declared names (types, variables, constants, functions, procedures)
+live in a single namespace:
+you cannot have a type, a function, and a procedure with the same name.
+For any name <code class="docutils literal notranslate"><span class="pre">x</span></code>, there may be up one non-<code class="docutils literal notranslate"><span class="pre">extern</span></code> top-level declaration named <code class="docutils literal notranslate"><span class="pre">x</span></code>
+or multiple <code class="docutils literal notranslate"><span class="pre">extern</span></code> declarations named <code class="docutils literal notranslate"><span class="pre">x</span></code>.
+If two top-level <code class="docutils literal notranslate"><span class="pre">extern</span></code> declarations with the same name are declared,
+the later declaration hides the earlier one.</p>
+<p>For compatibility with Dafny modules and FStar modules,
+names may contain <code class="docutils literal notranslate"><span class="pre">.</span></code> symbols, as in <code class="docutils literal notranslate"><span class="pre">FStar.Pervasives.option</span></code>.</p>
+<p>Global variables, constants, functions, and procedures have types.
+Vale has a simple type system with polymorphism but without dependent types.
+Because Vale’s type system is simpler than that of some verification frameworks, such as FStar’s,
+there may be expressions from the verification framework that
+Vale’s type system cannot type-check.
+As described in the next section, a Vale program can use type casts to access such expressions.
+For formal details on Vale’s type system,
+see <a class="reference external" href="https://raw.githubusercontent.com/project-everest/vale/master/doc/types.txt">here</a>.</p>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>Vale has a small number of built-in types
+and can import other types from the underlying verification framework.
+The <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">extern</span></code> declaration imports types from the verification framework:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> char:<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">type</span> option(a:<span class="k">Type</span>(<span class="m">0</span>)):<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">type</span> map(a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)):<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+</pre></div>
+</div>
+<p>Types can have type parameters like <code class="docutils literal notranslate"><span class="pre">a:Type(0)</span></code>.
+For example, the map type shown above takes parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>,
+which can be instantiated with types:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> x:map(<span class="k">int</span>, option(<span class="k">bool</span>)) := ...;
+</pre></div>
+</div>
+<p>Every type declaration specifies a <em>kind</em> for each type parameter and a return kind.
+The most common kind is <code class="docutils literal notranslate"><span class="pre">Type(0)</span></code>, and for Dafny, <code class="docutils literal notranslate"><span class="pre">Type(0)</span></code> is the only kind that is needed.
+However, FStar is more complicated does not allow all types to have the same kind.
+FStar’s <code class="docutils literal notranslate"><span class="pre">prop</span></code> type, for example, has kind <code class="docutils literal notranslate"><span class="pre">Type(1)</span></code>.
+Therefore, Vale also supports kinds <code class="docutils literal notranslate"><span class="pre">Type(1)</span></code>, <code class="docutils literal notranslate"><span class="pre">Type(2)</span></code>, and so on.</p>
+<p>Vale provides the following built-in primitive types:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code>, containing constants <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>
+and used for operators like <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code>, and <code class="docutils literal notranslate"><span class="pre">==&gt;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prop</span></code> (FStar only), which FStar uses instead of <code class="docutils literal notranslate"><span class="pre">bool</span></code> for <code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code>.
+Vale uses the same constants <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code>, and <code class="docutils literal notranslate"><span class="pre">==&gt;</span></code> for <code class="docutils literal notranslate"><span class="pre">prop</span></code> as for <code class="docutils literal notranslate"><span class="pre">bool</span></code>,
+and will automatically generate the appropriate FStar operators
+as necessary (e.g. generating FStar’s <code class="docutils literal notranslate"><span class="pre">/\</span></code> or <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> from Vale’s <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> as appropriate).
+In Vale, <code class="docutils literal notranslate"><span class="pre">bool</span></code> is a subtype of <code class="docutils literal notranslate"><span class="pre">prop</span></code>, so values of type <code class="docutils literal notranslate"><span class="pre">bool</span></code>
+can be used where a value of type <code class="docutils literal notranslate"><span class="pre">prop</span></code> is expected.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>, containing all mathematical integers …, (-2), (-1), 0, 1, 2, …</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int_range(I1,</span> <span class="pre">I2)</span></code>, containing integers in the range I1…I2 (including I1 and I2).
+<code class="docutils literal notranslate"><span class="pre">I1</span></code> and <code class="docutils literal notranslate"><span class="pre">I2</span></code> must be integer constants or the symbol <code class="docutils literal notranslate"><span class="pre">_</span></code>,
+representing no bound (i.e. negative or positive infinity).
+For example, if <code class="docutils literal notranslate"><span class="pre">x</span></code> has type <code class="docutils literal notranslate"><span class="pre">int_type(0,</span> <span class="pre">_)</span></code>,
+then <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> will have type <code class="docutils literal notranslate"><span class="pre">int_type(1,</span> <span class="pre">_)</span></code>.
+Smaller range types are subtypes of larger range types and of <code class="docutils literal notranslate"><span class="pre">int</span></code>,
+so that a value of type <code class="docutils literal notranslate"><span class="pre">int_type(1,</span> <span class="pre">_)</span></code> can be used where
+a value of type <code class="docutils literal notranslate"><span class="pre">int_type(0,</span> <span class="pre">_)</span></code> or <code class="docutils literal notranslate"><span class="pre">int</span></code> is expected.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tuple(t1,</span> <span class="pre">...,</span> <span class="pre">tn)</span></code> is the type of tuples containing components
+of type <code class="docutils literal notranslate"><span class="pre">t1</span></code> … <code class="docutils literal notranslate"><span class="pre">tn</span></code>, created by expressions <code class="docutils literal notranslate"><span class="pre">tuple(e1,</span> <span class="pre">...,</span> <span class="pre">en)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fun(t1,</span> <span class="pre">...,</span> <span class="pre">tn)</span> <span class="pre">-&gt;</span> <span class="pre">t0</span></code> is type of functions accepting arguments
+of type <code class="docutils literal notranslate"><span class="pre">t1</span></code> … <code class="docutils literal notranslate"><span class="pre">tn</span></code> and returning type <code class="docutils literal notranslate"><span class="pre">t0</span></code>.</p></li>
+</ul>
+<p>In addition, Vale is aware of the following types,
+although they must be declared explicitly as <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">extern;</span></code> declarations
+with a {:primitive} attribute (see <a class="reference internal" href="grammar.html#attributes"><span class="std std-ref">Attributes</span></a>):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">state</span></code>, the type of the program’s state (the built-in expression <code class="docutils literal notranslate"><span class="pre">this</span></code> has type <code class="docutils literal notranslate"><span class="pre">state</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code>, the type of string literals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list(t)</span></code> (FStar only), the type of list literals <code class="docutils literal notranslate"><span class="pre">list(e1,</span> <span class="pre">...,</span> <span class="pre">en)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seq(t)</span></code> (Dafny only), the type of sequence literals <code class="docutils literal notranslate"><span class="pre">seq(e1,</span> <span class="pre">...,</span> <span class="pre">en)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set(t)</span></code> (Dafny only), the type of set literals <code class="docutils literal notranslate"><span class="pre">set(e1,</span> <span class="pre">...,</span> <span class="pre">en)</span></code></p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">:=</span> <span class="pre">...;</span></code> syntax declares type abbreviations:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> my_bool:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">bool</span>;
+<span class="k">type</span> nat:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">int_range</span>(<span class="m">0</span>, <span class="m">_</span>);
+<span class="k">type</span> pos:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">int_range</span>(<span class="m">1</span>, <span class="m">_</span>);
+<span class="k">type</span> byte:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">int_range</span>(<span class="m">0</span>, <span class="m">0xff</span>);
+<span class="k">type</span> int_map(a:<span class="k">Type</span>(<span class="m">0</span>)):<span class="k">Type</span>(<span class="m">0</span>) := map(<span class="k">int</span>, a);
+</pre></div>
+</div>
+<p>Within Vale’s type system, type abbreviations like <code class="docutils literal notranslate"><span class="pre">nat</span></code> are equivalent to the types
+that they abbreviate, like <code class="docutils literal notranslate"><span class="pre">int_range(0,</span> <span class="pre">_)</span></code>.
+When generating Dafny/FStar code, Vale attempts to preserve abbreviations,
+so that if variable <code class="docutils literal notranslate"><span class="pre">x</span></code> has type <code class="docutils literal notranslate"><span class="pre">nat</span></code> in the Vale code,
+it will have type <code class="docutils literal notranslate"><span class="pre">nat</span></code> in the Dafny or FStar code, not <code class="docutils literal notranslate"><span class="pre">int_range(0,</span> <span class="pre">_)</span></code>.
+Vale will not generate a declaration of the <code class="docutils literal notranslate"><span class="pre">nat</span></code> type itself,
+so <code class="docutils literal notranslate"><span class="pre">nat</span></code> must be declared manually in separate Dafny or FStar code.
+Also note that raw <code class="docutils literal notranslate"><span class="pre">int_range</span></code> types do not have built-in equivalents in Dafny and FStar:
+<code class="docutils literal notranslate"><span class="pre">int_range</span></code> is translated into <code class="docutils literal notranslate"><span class="pre">int</span></code> in Dafny and into refinements of <code class="docutils literal notranslate"><span class="pre">int</span></code> in FStar.</p>
+<p><code class="docutils literal notranslate"><span class="pre">extern</span></code> procedures and functions can be polymorphic over types:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">ghost</span> <span class="k">procedure</span> g<span class="m">1</span>#[a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)](<span class="k">ghost</span> x:a, <span class="k">ghost</span> y:b)
+    <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> g<span class="m">2</span>()
+{
+    g<span class="m">1</span>(<span class="m">10</span>, <span class="k">true</span>);
+    g<span class="m">1</span>#[<span class="k">int</span>, <span class="k">bool</span>](<span class="m">10</span>, <span class="k">true</span>);
+}
+</pre></div>
+</div>
+<p>The explicit type arguments <code class="docutils literal notranslate"><span class="pre">#[int,</span> <span class="pre">bool]</span></code> are optional;
+without them, Vale will try to infer type arguments.</p>
+<p>The syntax <code class="docutils literal notranslate"><span class="pre">#t(e)</span></code> or <code class="docutils literal notranslate"><span class="pre">#(t)(e)</span></code> casts expression <code class="docutils literal notranslate"><span class="pre">e</span></code> to type <code class="docutils literal notranslate"><span class="pre">t</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">ghost</span> <span class="k">procedure</span> cast_test(<span class="k">ghost</span> i:<span class="k">int</span>)
+    <span class="k">requires</span>
+        i &gt;= <span class="m">0</span>;
+{
+    <span class="k">let</span> n:nat := #nat(i);
+}
+</pre></div>
+</div>
+<p>The cast in this example is needed because <code class="docutils literal notranslate"><span class="pre">i</span></code>’s type <code class="docutils literal notranslate"><span class="pre">int</span></code> is not a subtype of <code class="docutils literal notranslate"><span class="pre">n</span></code>’s type <code class="docutils literal notranslate"><span class="pre">nat</span></code>.</p>
+<p>Although Vale does not have dependent types,
+it has some limited support for interacting with some of FStar’s dependent types:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> buf_typ:<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">const</span> bt<span class="m">32</span>:buf_typ <span class="k">extern</span>;
+<span class="k">const</span> bt<span class="m">64</span>:buf_typ <span class="k">extern</span>;
+<span class="k">type</span> buf(bt:<span class="k">Dependent</span>(buf_typ)):<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">type</span> buf<span class="m">32</span>:<span class="k">Type</span>(<span class="m">0</span>) := buf(<span class="k">dependent</span>(bt<span class="m">32</span>));
+<span class="k">type</span> buf<span class="m">64</span>:<span class="k">Type</span>(<span class="m">0</span>) := buf(<span class="k">dependent</span>(bt<span class="m">64</span>));
+<span class="k">function</span> buf_len #[bt:<span class="k">Dependent</span>(buf_typ)](b:buf(bt)):<span class="k">int</span> <span class="k">extern</span>;
+</pre></div>
+</div>
+<p>If an expression <code class="docutils literal notranslate"><span class="pre">xe</span></code> has type <code class="docutils literal notranslate"><span class="pre">xt</span></code>, then the type <code class="docutils literal notranslate"><span class="pre">dependent(xe)</span></code> has kind <code class="docutils literal notranslate"><span class="pre">Dependent(xt)</span></code>.
+In the example above, this allows
+type <code class="docutils literal notranslate"><span class="pre">buf</span></code> to take a value <code class="docutils literal notranslate"><span class="pre">bt</span></code> as a type parameter
+and allows <code class="docutils literal notranslate"><span class="pre">buf_len</span></code> to be polymorphic over values <code class="docutils literal notranslate"><span class="pre">bt</span></code> of type <code class="docutils literal notranslate"><span class="pre">buf_typ</span></code>,
+as in a dependent type system.
+(From Vale’s perspective, <code class="docutils literal notranslate"><span class="pre">bt</span></code> is promoted to a type in order to use ordinary polymorphism over types.)
+However, <code class="docutils literal notranslate"><span class="pre">xe</span></code> must be a global constant and <code class="docutils literal notranslate"><span class="pre">xt</span></code> must be simple named type,
+so this is only useful in limited situations.</p>
+</div>
+<div class="section" id="operands-and-operand-types">
+<h2>Operands and operand types<a class="headerlink" href="#operands-and-operand-types" title="Permalink to this headline">¶</a></h2>
+<p>Vale expressions have types, while procedure operands have <em>operand types</em>.
+Operand types describe both the type of the value carried by the operand (e.g. an integer)
+and the location of the operand.
+Locations may be global variables (typically registers), constants,
+or dynamically constructed locations (typically memory addresses).
+Here is an example of operand type declarations for x64 assembly language:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> nat<span class="m">64</span>:<span class="k">Type</span>(<span class="m">0</span>) := <span class="k">int_range</span>(<span class="m">0</span>, <span class="m">0xffff_ffff_ffff_ffff</span>);
+
+<span class="k">operand_type</span> reg<span class="m">64</span>:nat<span class="m">64</span> :=
+| <span class="k">inout</span> rax | <span class="k">inout</span> rbx | <span class="k">inout</span> rcx | <span class="k">inout</span> rdx
+| <span class="k">inout</span> rsi | <span class="k">inout</span> rdi | <span class="k">inout</span> rbp | <span class="k">inout</span> r<span class="m">8</span>
+| <span class="k">inout</span> r<span class="m">9</span> | <span class="k">inout</span> r<span class="m">10</span> | <span class="k">inout</span> r<span class="m">11</span> | <span class="k">inout</span> r<span class="m">12</span>
+| <span class="k">inout</span> r<span class="m">13</span> | <span class="k">inout</span> r<span class="m">14</span> | <span class="k">inout</span> r<span class="m">15</span>
+;
+
+<span class="k">operand_type</span> shift_amt<span class="m">64</span>:nat<span class="m">64</span> := <span class="k">in</span> rcx | <span class="k">const</span>;
+<span class="k">operand_type</span> Mem<span class="m">64</span>(<span class="k">in</span> base:reg<span class="m">64</span>, <span class="k">inline</span> offset:<span class="k">int</span>):nat<span class="m">64</span>;
+<span class="k">operand_type</span> dst_opr<span class="m">64</span>:nat<span class="m">64</span> := reg<span class="m">64</span> | Mem<span class="m">64</span>;
+<span class="k">operand_type</span> opr<span class="m">64</span>:nat<span class="m">64</span> := dst_opr<span class="m">64</span> | <span class="k">const</span>;
+</pre></div>
+</div>
+<p>This declares a series of operand types:</p>
+<ul class="simple">
+<li><p>operand type <code class="docutils literal notranslate"><span class="pre">reg64</span></code>, for 64-bit values (of type <code class="docutils literal notranslate"><span class="pre">nat64</span></code>) located in registers <code class="docutils literal notranslate"><span class="pre">rax</span></code> … <code class="docutils literal notranslate"><span class="pre">r15</span></code>,
+usable as both input and output operands.</p></li>
+<li><p>operand type <code class="docutils literal notranslate"><span class="pre">shift_amt64</span></code>, for x64 shift instructions that require the shift amount
+in either register <code class="docutils literal notranslate"><span class="pre">rcx</span></code> or as a constant.</p></li>
+<li><p>operand type <code class="docutils literal notranslate"><span class="pre">Mem64</span></code>, for 64-bit values located in memory.</p></li>
+<li><p>operand type <code class="docutils literal notranslate"><span class="pre">dst_opr64</span></code>, for operands that can be either a register or memory operand</p></li>
+<li><p>operand type <code class="docutils literal notranslate"><span class="pre">opr64</span></code>, for operands that can be either a register, memory operand, or constant.
+(Note that <code class="docutils literal notranslate"><span class="pre">const</span></code> is a built-in Vale keyword, not an operand type.)</p></li>
+</ul>
+<p>For example, an x64 shift-left instruction can be declared to take
+a destination operand of operand type <code class="docutils literal notranslate"><span class="pre">dst_opr64</span></code> and a source operand
+of type <code class="docutils literal notranslate"><span class="pre">shift_amt64</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">procedure</span> Shl<span class="m">64</span>(<span class="k">inout</span> dst:dst_opr<span class="m">64</span>, <span class="k">in</span> amt:shift_amt<span class="m">64</span>)
+</pre></div>
+</div>
+<div class="section" id="operand-constructors-and-memory">
+<h3>Operand constructors and memory<a class="headerlink" href="#operand-constructors-and-memory" title="Permalink to this headline">¶</a></h3>
+<p>Locations can be constructed dynamically with <em>operand constructors</em> like <code class="docutils literal notranslate"><span class="pre">Mem64</span></code>.
+Such constructors can take other operands as arguments:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>Shl<span class="m">64</span>(Mem<span class="m">64</span>(rax, <span class="m">60</span>), <span class="m">16</span>);
+</pre></div>
+</div>
+<p>Each operand constructor requires <em>operand procedures</em> for reading and/or writing the location
+specified by the operand constructor.
+The operand procedures have the name of the operand constructor concatenated
+with the suffix “_in” or “_out”:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">var</span> mem:map(<span class="k">int</span>, byte) {:state mem()};
+
+<span class="k">procedure</span> Mem<span class="m">64_</span><span class="k">in</span>(<span class="k">in</span> base:reg_opr<span class="m">64</span>, <span class="k">inline</span> offset:<span class="k">int</span>) <span class="k">returns</span>(o:operand)
+    {:operand}
+    <span class="k">reads</span>
+        mem;
+    <span class="k">extern</span>;
+
+<span class="k">procedure</span> Mem<span class="m">64_</span><span class="k">out</span>(<span class="k">in</span> base:reg_opr<span class="m">64</span>, <span class="k">inline</span> offset:<span class="k">int</span>, <span class="k">in</span> o:operand)
+    {:operand}
+    <span class="k">modifies</span>
+        mem;
+    <span class="k">extern</span>;
+</pre></div>
+</div>
+<p>In the first procedure, the operand <code class="docutils literal notranslate"><span class="pre">o</span></code> contains the value loaded from memory.
+In the second procedure, the operand <code class="docutils literal notranslate"><span class="pre">o</span></code> contains the value being stored to memory.
+Operand procedures can optionally have <code class="docutils literal notranslate"><span class="pre">requires</span></code> and <code class="docutils literal notranslate"><span class="pre">ensures</span></code> to specify
+properties of <code class="docutils literal notranslate"><span class="pre">o</span></code> and of the other parameters to the procedures.
+Operand procedures can also read and write global variables like <code class="docutils literal notranslate"><span class="pre">mem</span></code>.</p>
+</div>
+<div class="section" id="operand-values-and-locations">
+<h3>Operand values and locations<a class="headerlink" href="#operand-values-and-locations" title="Permalink to this headline">¶</a></h3>
+<p>Vale procedures can refer to both the value and location of an operand.
+For an operand parameter <code class="docutils literal notranslate"><span class="pre">x</span></code>, the expression <code class="docutils literal notranslate"><span class="pre">x</span></code> contains the operand’s value,
+while the expression <code class="docutils literal notranslate"><span class="pre">&#64;x</span></code> contains the operand’s location.
+This can be used, for example, to require two operands to be in distinct registers:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">procedure</span> IncrTwo(<span class="k">inout</span> dst<span class="m">1</span>:reg<span class="m">64</span>, <span class="k">inout</span> dst<span class="m">2</span>:reg<span class="m">64</span>)
+    <span class="k">requires</span>
+        dst<span class="m">1</span> &lt; <span class="m">100</span>;
+        dst<span class="m">2</span> &lt; <span class="m">100</span>;
+        @dst<span class="m">1</span> != @dst<span class="m">2</span>;
+    <span class="k">ensures</span>
+        dst<span class="m">1</span> == <span class="k">old</span>(dst<span class="m">1</span>) + <span class="m">1</span>;
+        dst<span class="m">2</span> == <span class="k">old</span>(dst<span class="m">2</span>) + <span class="m">1</span>;
+{
+    Add(dst<span class="m">1</span>, <span class="m">1</span>);
+    Add(dst<span class="m">2</span>, <span class="m">1</span>);
+}
+</pre></div>
+</div>
+<p>To use <code class="docutils literal notranslate"><span class="pre">&#64;x</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>’s operand type must declare a type for locations, using the <code class="docutils literal notranslate"><span class="pre">&#64;</span> <span class="pre">t</span></code> syntax.
+The following declaration, for example, tells Vale that the expressions <code class="docutils literal notranslate"><span class="pre">&#64;dst1</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;dst2</span></code>
+should have type <code class="docutils literal notranslate"><span class="pre">operandImpl</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">operand_type</span> reg<span class="m">64</span>:nat<span class="m">64</span> @ operandImpl :=
+| <span class="k">inout</span> rax | <span class="k">inout</span> rbx | <span class="k">inout</span> rcx | <span class="k">inout</span> rdx
+...
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="grammar.html" class="btn btn-neutral float-right" title="Complete Vale syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="programs.html" class="btn btn-neutral float-left" title="Programs and procedures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Chris Hawblitzel
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

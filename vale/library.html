@@ -79,10 +79,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="programs.html">Vale programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programs.html">Programs and procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">Types, functions, and expressions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="grammar.html">Complete Vale syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Interface with verification framework</a><ul>
@@ -188,22 +188,22 @@ the names <code class="docutils literal notranslate"><span class="pre">bool</spa
 </ul>
 <p>As an example, suppose that a Vale procedure <code class="docutils literal notranslate"><span class="pre">P</span></code> consists of two calls to a procedure named <code class="docutils literal notranslate"><span class="pre">Increment</span></code>,
 passing a register named eax as an argument:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var ok:bool {:state ok()};
-var eax:int {:state reg(EAX)};
-var ebx:int {:state reg(EBX)};
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">var</span> ok:<span class="k">bool</span> {:state ok()};
+<span class="k">var</span> eax:<span class="k">int</span> {:state reg(EAX)};
+<span class="k">var</span> ebx:<span class="k">int</span> {:state reg(EBX)};
 
-procedure Increment(inout x:reg)
-    ensures
-        x == old(x) + 1;
+<span class="k">procedure</span> Increment(<span class="k">inout</span> x:reg)
+    <span class="k">ensures</span>
+        x == <span class="k">old</span>(x) + <span class="m">1</span>;
 { ... }
 
-procedure P()
-    modifies
+<span class="k">procedure</span> P()
+    <span class="k">modifies</span>
         eax;
-    requires
-        eax &gt;= 0;
-    ensures
-        eax &gt;= 2;
+    <span class="k">requires</span>
+        eax &gt;= <span class="m">0</span>;
+    <span class="k">ensures</span>
+        eax &gt;= <span class="m">2</span>;
 {
     Increment(eax);
     Increment(eax);
@@ -213,7 +213,7 @@ procedure P()
 <p>For procedure <code class="docutils literal notranslate"><span class="pre">P</span></code>, the Vale tool generates a Dafny function <code class="docutils literal notranslate"><span class="pre">va_code_P</span></code> that builds a value of type code.
 (Generated FStar code is similar, though with FStar syntax.)
 This value contains two values constructed by <code class="docutils literal notranslate"><span class="pre">va_code_Increment</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>function method{:opaque} va_code_P():va_code
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> method{:opaque} va_code_P():va_code
 {
   va_Block(
     va_CCons(va_code_Increment(va_op_reg_reg(EAX)),
@@ -223,25 +223,25 @@ This value contains two values constructed by <code class="docutils literal notr
 </pre></div>
 </div>
 <p>The Vale tool also generates a lemma that proves the correctness of the code for <code class="docutils literal notranslate"><span class="pre">P</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lemma va_lemma_P(va_b0:va_codes, va_s0:va_state, va_sN:va_state)
-  returns (va_bM:va_codes, va_sM:va_state)
-  requires va_require(va_b0, va_code_P(), va_s0, va_sN)
-  ensures  va_ensure(va_b0, va_bM, va_s0, va_sM, va_sN)
-  requires va_get_ok(va_s0)
-  ensures  va_get_ok(va_sM)
-  requires va_get_reg(EAX, va_s0) &gt;= (0)
-  ensures  va_get_reg(EAX, va_sM) &gt;= (2)
-  ensures  va_state_eq(va_sM, va_update_reg(EAX, va_sM, va_update_ok(va_sM, va_s0)))
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">lemma</span> va_lemma_P(va_b<span class="m">0</span>:va_codes, va_s<span class="m">0</span>:va_state, va_sN:va_state)
+  <span class="k">returns</span> (va_bM:va_codes, va_sM:va_state)
+  <span class="k">requires</span> va_require(va_b<span class="m">0</span>, va_code_P(), va_s<span class="m">0</span>, va_sN)
+  <span class="k">ensures</span>  va_ensure(va_b<span class="m">0</span>, va_bM, va_s<span class="m">0</span>, va_sM, va_sN)
+  <span class="k">requires</span> va_get_ok(va_s<span class="m">0</span>)
+  <span class="k">ensures</span>  va_get_ok(va_sM)
+  <span class="k">requires</span> va_get_reg(EAX, va_s<span class="m">0</span>) &gt;= (<span class="m">0</span>)
+  <span class="k">ensures</span>  va_get_reg(EAX, va_sM) &gt;= (<span class="m">2</span>)
+  <span class="k">ensures</span>  va_state_eq(va_sM, va_update_reg(EAX, va_sM, va_update_ok(va_sM, va_s<span class="m">0</span>)))
 {
   reveal_va_code_P();
-  var va_old_s:va_state := va_s0;
-  ghost var va_ltmp1, va_cM:va_code, va_ltmp2 := va_lemma_block(va_b0, va_s0, va_sN);
-  va_sM := va_ltmp1;
-  va_bM := va_ltmp2;
-  var va_b1:va_codes := va_get_block(va_cM);
-  ghost var va_b2, va_s2 := va_lemma_Increment(va_b1, va_s0, va_sM, va_op_reg_reg(EAX));
-  ghost var va_b3, va_s3 := va_lemma_Increment(va_b2, va_s2, va_sM, va_op_reg_reg(EAX));
-  va_sM := va_lemma_empty(va_s3, va_sM);
+  <span class="k">var</span> va_old_s:va_state := va_s<span class="m">0</span>;
+  <span class="k">ghost</span> <span class="k">var</span> va_ltmp<span class="m">1</span>, va_cM:va_code, va_ltmp<span class="m">2</span> := va_lemma_block(va_b<span class="m">0</span>, va_s<span class="m">0</span>, va_sN);
+  va_sM := va_ltmp<span class="m">1</span>;
+  va_bM := va_ltmp<span class="m">2</span>;
+  <span class="k">var</span> va_b<span class="m">1</span>:va_codes := va_get_block(va_cM);
+  <span class="k">ghost</span> <span class="k">var</span> va_b<span class="m">2</span>, va_s<span class="m">2</span> := va_lemma_Increment(va_b<span class="m">1</span>, va_s<span class="m">0</span>, va_sM, va_op_reg_reg(EAX));
+  <span class="k">ghost</span> <span class="k">var</span> va_b<span class="m">3</span>, va_s<span class="m">3</span> := va_lemma_Increment(va_b<span class="m">2</span>, va_s<span class="m">2</span>, va_sM, va_op_reg_reg(EAX));
+  va_sM := va_lemma_empty(va_s<span class="m">3</span>, va_sM);
 }
 </pre></div>
 </div>
@@ -335,6 +335,13 @@ or one of <code class="docutils literal notranslate"><span class="pre">eq</span>
 <li><p>op_O_f(…):O – build operand O from f or f(…)</p></li>
 <li><p>get_f(…, s:state):t – get field f or f(…) from state s</p></li>
 <li><p>update_f(…, sM:state, sK:state):state – return sK updated with a copy of sM’s field f or f(…)</p></li>
+</ul>
+</li>
+<li><p>Functions and procedures for operand constructors P(…params…)</p>
+<ul>
+<li><p>opr_code_P(…non-ghost params…):operand_type – construct operand for P</p></li>
+<li><p>opr_lemma_P(state, …params…):operand_type (Dafny only) – lemma called for each occurrence of P</p></li>
+<li><p>P_lemma(…params as ghost…) (FStar only) – Vale procedure (no <code class="docutils literal notranslate"><span class="pre">va_</span></code> prefix) called for each occurrence of P</p></li>
 </ul>
 </li>
 </ul>

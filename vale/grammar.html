@@ -87,7 +87,9 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Complete Vale syntax</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#grammar">Grammar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verbatim-blocks">Verbatim blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lexical-structure">Lexical structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-conventions">Coding conventions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
@@ -157,7 +159,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="complete-vale-syntax">
-<h1>Complete Vale syntax<a class="headerlink" href="#complete-vale-syntax" title="Permalink to this headline">¶</a></h1>
+<span id="syntax"></span><h1>Complete Vale syntax<a class="headerlink" href="#complete-vale-syntax" title="Permalink to this headline">¶</a></h1>
 <p>This section presents a complete grammar for the Vale language.
 The grammar uses the following notation:</p>
 <ul class="simple">
@@ -633,7 +635,6 @@ x := <span class="m">5</span>;
 </div>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">old</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">old</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> EXP <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 </div>
 <div class="line-block">
 <div class="line">seq <code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">,</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
@@ -659,11 +660,11 @@ x := <span class="m">5</span>;
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">if</span></code> EXP <code class="docutils literal notranslate"><span class="pre">then</span></code> EXP <code class="docutils literal notranslate"><span class="pre">else</span></code> EXP</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">let</span></code> FORMAL <code class="docutils literal notranslate"><span class="pre">:=</span></code> EXP <code class="docutils literal notranslate"><span class="pre">in</span></code> EXP</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">fun</span></code>    <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> EXP</div>
 </div>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">forall</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">exists</span></code> <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">fun</span></code>    <code class="docutils literal notranslate"><span class="pre">(</span></code> FORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code> TRIGGERS EXP</div>
 </div>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">(</span></code> EXP <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
@@ -698,12 +699,11 @@ x := <span class="m">5</span>;
 <span class="k">let</span> s<span class="m">1</span>:seq(<span class="k">int</span>) := f();
 <span class="k">let</span> s<span class="m">2</span>:seq(<span class="k">int</span>) := s<span class="m">1</span>[<span class="m">3</span> := &quot;hi&quot;];
 <span class="k">assert</span> s<span class="m">2</span>[<span class="m">3</span>] == &quot;hi&quot;;
-<span class="c">// Dafny only; like Dafny &quot;10 in m&quot;:</span>
+<span class="c">// assert that map m has key 10</span>
 <span class="k">assert</span> m?[<span class="m">10</span>];
 </pre></div>
 </div>
 <div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">old</span>(x)
-<span class="k">old</span>[snapshotOfThis](x)
 </pre></div>
 </div>
 <div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>seq(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) <span class="c">// Dafny only</span>
@@ -837,12 +837,40 @@ with no processing or analysis by Vale.
 For example, verbatim blocks may be used to declare types, functions,
 and lemmas in the underlying verification languages so that these
 declarations may be used inside Vale procedures.</p>
+<p>For FStar code, verbatim blocks can be written to the interface file (<code class="docutils literal notranslate"><span class="pre">.fsti</span></code>)
+via <code class="docutils literal notranslate"><span class="pre">#verbatim{:interface}</span></code>,
+the implementation file (<code class="docutils literal notranslate"><span class="pre">.fst</span></code>)
+via <code class="docutils literal notranslate"><span class="pre">#verbatim</span></code> or <code class="docutils literal notranslate"><span class="pre">#verbatim{:implementation}</span></code>
+or both via <code class="docutils literal notranslate"><span class="pre">#verbatim{:interface}{:implementation}</span></code>.</p>
+</div>
+<div class="section" id="lexical-structure">
+<span id="lexical"></span><h2>Lexical structure<a class="headerlink" href="#lexical-structure" title="Permalink to this headline">¶</a></h2>
+<p>Single-line comments begin with <code class="docutils literal notranslate"><span class="pre">//</span></code>.
+Longer comments can be placed in <code class="docutils literal notranslate"><span class="pre">/*</span></code> … <code class="docutils literal notranslate"><span class="pre">*/</span></code>.
+Comments can be nested inside each other: <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">a</span> <span class="pre">/*</span> <span class="pre">b</span> <span class="pre">*/</span> <span class="pre">c</span> <span class="pre">*/</span></code> is a valid comment.
+Whitespace includes spaces, newlines, and carriage returns; tab characters are not allowed.</p>
+<p>Variable names can include letters, <code class="docutils literal notranslate"><span class="pre">_</span></code> characters, <code class="docutils literal notranslate"><span class="pre">'</span></code> characters after the first character,
+and digits after the first character.
+There are special function names <code class="docutils literal notranslate"><span class="pre">operator(+)</span></code>, <code class="docutils literal notranslate"><span class="pre">operator(-)</span></code>, etc. to represent operators
+in function declarations (see <a class="reference internal" href="exp.html#functions"><span class="std std-ref">Functions and consts</span></a>).</p>
+<p>Vale programs can define new operator tokens
+out of the characters
+<code class="docutils literal notranslate"><span class="pre">!</span></code> <code class="docutils literal notranslate"><span class="pre">%</span></code> <code class="docutils literal notranslate"><span class="pre">+</span></code> <code class="docutils literal notranslate"><span class="pre">-</span></code> <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> <code class="docutils literal notranslate"><span class="pre">^</span></code> <code class="docutils literal notranslate"><span class="pre">|</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">=</span></code> <code class="docutils literal notranslate"><span class="pre">.</span></code> <code class="docutils literal notranslate"><span class="pre">#</span></code> <code class="docutils literal notranslate"><span class="pre">:</span></code> <code class="docutils literal notranslate"><span class="pre">$</span></code> <code class="docutils literal notranslate"><span class="pre">?</span></code> <code class="docutils literal notranslate"><span class="pre">`</span></code> <code class="docutils literal notranslate"><span class="pre">~</span></code> <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <code class="docutils literal notranslate"><span class="pre">\</span></code> <code class="docutils literal notranslate"><span class="pre">/</span></code>
+using the <code class="docutils literal notranslate"><span class="pre">#token</span></code> directive:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>#token +. precedence +
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">#token</span></code> declares a new token (<code class="docutils literal notranslate"><span class="pre">+.</span></code> in the example above)
+that is parsed with the same precedence and associativity as an existing token
+(<code class="docutils literal notranslate"><span class="pre">+</span></code> in the example above).
+This token can then be used for a custom operator, as described in <a class="reference internal" href="exp.html#custom"><span class="std std-ref">Custom operators</span></a>.</p>
 </div>
 <div class="section" id="attributes">
 <span id="id1"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <p>Some elements of the Vale grammar may be annotated with <em>attributes</em>
 that supply additional information to Vale or to the verification language.
-Currently, attributes are only supported in the following places:</p>
+Currently, attributes are only supported in the following places and
+on verbatim blocks:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 50%" />
@@ -865,8 +893,9 @@ Currently, attributes are only supported in the following places:</p>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">var</span></code> <strong>x</strong> <code class="docutils literal notranslate"><span class="pre">:</span></code> TYPE ATTRIBUTES <code class="docutils literal notranslate"><span class="pre">;</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">procedure</span></code> <strong>P</strong> <code class="docutils literal notranslate"><span class="pre">(</span></code> PFORMALS <code class="docutils literal notranslate"><span class="pre">)</span></code></div>
 <div class="line-block">
-<div class="line">ATTRIBUTES</div>
 <div class="line"><em>[</em> <code class="docutils literal notranslate"><span class="pre">returns</span></code> … <em>]</em> …</div>
+<div class="line">ATTRIBUTES</div>
+<div class="line">SPECS</div>
 <div class="line">…</div>
 </div>
 <div class="line">…</div>
@@ -889,12 +918,14 @@ Currently, attributes are only supported in the following places:</p>
 </tr>
 </tbody>
 </table>
+<p>Attributes are not checked by Vale’s type checker, so they can contain arbitrary expressions.</p>
 <p>Currently, the following attributes are supported:</p>
 <ul class="simple">
 <li><p>on include directives:</p>
 <ul>
 <li><p>{:from x};
-filename is interpreted relative to the path alias x rather than to the current directory</p></li>
+filename is interpreted relative to the path alias x rather than to the current directory
+(see <a class="reference internal" href="programs.html#includes"><span class="std std-ref">Modules and includes</span></a> and <a class="reference internal" href="tool.html#tool"><span class="std std-ref">Using the Vale tool</span></a>)</p></li>
 <li><p>{:verbatim} (Dafny only):
 include a file written directly in the underlying verification language,
 rather than including another Vale file</p></li>
@@ -909,7 +940,8 @@ and, if {:open} is specified, open the declarations in the file into the Vale na
 <li><p>{:timeLimit n} and {:timeLimitMultiplier n} (Dafny only)
 set or increase the time limit for this procedure</p></li>
 <li><p>{:instruction EXP},
-indicating a primitive procedure that is implemented with the code value specified by the expression EXP</p></li>
+indicating a primitive procedure that is implemented with the code value specified by the expression EXP
+(see <a class="reference internal" href="library.html#instructions"><span class="std std-ref">Instructions</span></a>)</p></li>
 <li><p>{:recursive} and {:decrease EXP}, indicating that a procedure may call itself,
 optionally specifying a decreases clause to prove the recursion’s termination</p></li>
 <li><p>{:operand}, indicating an operand constructor</p></li>
@@ -928,7 +960,105 @@ indicating that the variable <strong>x</strong> corresponds to a field f(EXP, �
 <li><p>{:primitive}, declaring a primitive type like <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code></p></li>
 </ul>
 </li>
+<li><p>on verbatim blocks:</p>
+<ul>
+<li><p>{:interface} and {:implementation} (FStar only) – see <a class="reference internal" href="#verbatim"><span class="std std-ref">Verbatim blocks</span></a></p></li>
 </ul>
+</li>
+</ul>
+</div>
+<div class="section" id="coding-conventions">
+<h2>Coding conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<p>The following conventions are recommended (not required) for Vale programs:</p>
+<ul class="simple">
+<li><p>Names</p>
+<ul>
+<li><p>Names of non-ghost procedures (including instructions) start with an upper-case letter.
+Names of ghost procedures start with a lower-case letter.
+This helps to distinguish ghost and non-ghost procedure calls.
+Note that for FStar, ghost procedures <em>must</em> start with a lower-case letter;
+FStar will reject upper-case ghost procedure names.</p></li>
+<li><p>Names of functions and constants may start with lower-case or upper-case letters,
+depending on the underlying verification framework conventions.
+FStar and Dafny typically use upper-case for datatype constructor functions
+and lower-case for other functions.</p></li>
+<li><p>Names of types and global variables start with lower-case letters.</p></li>
+<li><p>Names of operand types start with a lower-case letter, except for operand constructors,
+which start with an upper-case letter.</p></li>
+<li><p>Names of type parameters and local variables should start with lower-case letters.
+In FStar, this is required.</p></li>
+<li><p>Lower-case names use underscores to separate words: <code class="docutils literal notranslate"><span class="pre">my_name</span></code>.
+Upper-case names may use underscores: <code class="docutils literal notranslate"><span class="pre">MyName</span></code> or <code class="docutils literal notranslate"><span class="pre">My_Name</span></code> or <code class="docutils literal notranslate"><span class="pre">My_name</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Formatting</p>
+<ul>
+<li><p>Indentation is 4 spaces.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">//</span></code> is used for single-line comments, <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code> for multi-line comments.</p></li>
+<li><p>If a function’s parameters or procedure’s parameters are too long to fit on a single line,
+the parameters all go on one or more separate lines and are double-indented (8 spaces).</p></li>
+<li><p>Statements and specifications that are too long for a single line are broken into multiple
+lines, with the extra lines indented 4 spaces more than the first line.</p></li>
+<li><p>Binary operators have spaces around them: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code>, …, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;==&gt;</span> <span class="pre">y</span></code>.
+Colons do not: <code class="docutils literal notranslate"><span class="pre">x:int</span></code>.  Commas have spaces after them: <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>..</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>, <code class="docutils literal notranslate"><span class="pre">forall</span></code>, and <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">exists</span></code> statements have a space before parentheses:
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">forall</span> <span class="pre">(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">exists</span> <span class="pre">(...)</span></code>.
+In other places, there is no space before parentheses: <code class="docutils literal notranslate"><span class="pre">my_lemma(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">my_function(...)</span></code>.</p></li>
+<li><p>Curly brackets <code class="docutils literal notranslate"><span class="pre">{</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code>, for multi-line blocks of statements, go on their own line.
+This is largely because <code class="docutils literal notranslate"><span class="pre">procedure</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops have specifications (<code class="docutils literal notranslate"><span class="pre">requires</span></code>, <code class="docutils literal notranslate"><span class="pre">invariant</span></code>, etc.)
+that get in the way of a <code class="docutils literal notranslate"><span class="pre">{</span></code> appearing on the same line as the <code class="docutils literal notranslate"><span class="pre">procedure</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code>
+keyword.</p></li>
+<li><p>Each procedure attribute gets its own line.</p></li>
+<li><p>Specification keywords like <code class="docutils literal notranslate"><span class="pre">requires</span></code>, <code class="docutils literal notranslate"><span class="pre">ensures</span></code>, <code class="docutils literal notranslate"><span class="pre">modifies</span></code>, etc. are single-indented
+relative to a procedure or <code class="docutils literal notranslate"><span class="pre">while</span></code> loop.
+The specification expressions appear on a separate line from the specification keywords
+and are indented 4 spaces more than the keywords.</p></li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// This is a short procedure</span>
+<span class="k">procedure</span> ShortProc(<span class="k">ghost</span> x:<span class="k">int</span>, <span class="k">ghost</span> y:<span class="k">int</span>)
+    <span class="k">modifies</span>
+        eax;
+{
+    Add(eax, <span class="m">1</span>);
+}
+
+<span class="c">/*</span>
+<span class="c">This is a longer procedure.</span>
+<span class="c">Its parameters don&#39;t fit on a line, so they are indented 8 spaces.</span>
+<span class="c">*/</span>
+<span class="k">procedure</span> MyLongProcedure(
+        <span class="k">inline</span> b:<span class="k">bool</span>,
+        <span class="k">inout</span> dst:reg, <span class="k">in</span> src:reg,
+        <span class="k">ghost</span> apple_banana:<span class="k">bool</span>, <span class="k">ghost</span> cat_dog:<span class="k">int</span>, <span class="k">ghost</span> earth_fire:<span class="k">int</span>)
+    {:public}
+    {:timeLimit <span class="m">10</span>}
+    <span class="k">modifies</span>
+        eax; ebx;
+    <span class="k">requires</span>
+        <span class="m">10</span> &lt;= eax &lt; <span class="m">20</span>;
+        ebx == (<span class="k">if</span> apple_banana <span class="k">then</span> cat_dog <span class="k">else</span>
+            <span class="m">7</span> * (earth_fire + src));
+{
+    <span class="k">inline</span> <span class="k">if</span> (b)
+    {
+        <span class="k">while</span> (eax &lt; <span class="m">100</span>)
+            <span class="k">invariant</span>
+                <span class="m">0</span> &lt;= eax &lt;= <span class="m">100</span>;
+            <span class="k">decreases</span>
+                <span class="m">100</span> - eax;
+        {
+            Add(eax, <span class="m">1</span>);
+            MyOtherLongProcedure(b, dst, src, apple_banana, cat_dog,
+                <span class="m">7</span> * (earth_fire + src), eax, ebx);
+            my_lemma(cat_dog);
+        }
+    }
+}
+</pre></div>
+</div>
 </div>
 </div>
 

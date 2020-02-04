@@ -152,7 +152,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="using-the-vale-tool">
-<h1>Using the Vale tool<a class="headerlink" href="#using-the-vale-tool" title="Permalink to this headline">¶</a></h1>
+<span id="tool"></span><h1>Using the Vale tool<a class="headerlink" href="#using-the-vale-tool" title="Permalink to this headline">¶</a></h1>
 <p>We recommend that Vale files have suffix <code class="docutils literal notranslate"><span class="pre">.vad</span></code> or <code class="docutils literal notranslate"><span class="pre">.vaf</span></code>,
 the former for Vale code verified with Dafny and the latter for Vale code verified with FStar.
 (This is a recommendation, not a requirement.  The Vale tool does not treat any suffixes specially.)</p>
@@ -173,12 +173,12 @@ If no <code class="docutils literal notranslate"><span class="pre">-out</span></
 </dd>
 <dt><strong>-outi &lt;filename.fsti&gt;</strong></dt><dd><p><strong>[FStar only]</strong> specify the name of the generated .fsti file</p>
 </dd>
-<dt><strong>-includeSuffix .vad .dfy</strong></dt><dd><p><strong>[Dafny only]</strong> specify that if <code class="docutils literal notranslate"><span class="pre">a.vad</span></code> includes <code class="docutils literal notranslate"><span class="pre">b.vad</span></code>,
-then the generated <code class="docutils literal notranslate"><span class="pre">a.dfy</span></code> file should include <code class="docutils literal notranslate"><span class="pre">b.dfy</span></code></p>
+<dt><strong>-includeSuffix .vad .dfy</strong></dt><dd><p><strong>[Dafny only]</strong> specify that if <code class="docutils literal notranslate"><span class="pre">b.vad</span></code> includes <code class="docutils literal notranslate"><span class="pre">a.vad</span></code>,
+then the generated <code class="docutils literal notranslate"><span class="pre">b.dfy</span></code> file should include <code class="docutils literal notranslate"><span class="pre">a.dfy</span></code></p>
 </dd>
 <dt><strong>-include &lt;filename.vad&gt;</strong></dt><dd><p>include another .vad or .vaf file (alternative to using <code class="docutils literal notranslate"><span class="pre">include</span></code> directives inside the .vad/.vaf files)</p>
 </dd>
-<dt><strong>-sourceFrom x path</strong></dt><dd><p>let x be an alias to path in <code class="docutils literal notranslate"><span class="pre">include</span></code> directives in source files (see <a class="reference internal" href="grammar.html#attributes"><span class="std std-ref">Attributes</span></a>)</p>
+<dt><strong>-sourceFrom x path</strong></dt><dd><p>let x be an alias to path in <code class="docutils literal notranslate"><span class="pre">include</span></code> directives in source files (see <a class="reference internal" href="grammar.html#attributes"><span class="std std-ref">Attributes</span></a> and <a class="reference internal" href="programs.html#includes"><span class="std std-ref">Modules and includes</span></a>)</p>
 </dd>
 <dt><strong>-destFrom x path</strong></dt><dd><p>let x be an alias to path in generated .dfy files</p>
 </dd>

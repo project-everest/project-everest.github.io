@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tool.html">Using the Vale tool</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Interface with verification framework</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#vale-generated-code">Vale-generated code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instructions">Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#vale-libraries">Vale libraries</a></li>
 </ul>
 </li>
@@ -195,7 +196,7 @@ passing a register named eax as an argument:</p>
 <span class="k">procedure</span> Increment(<span class="k">inout</span> x:reg)
     <span class="k">ensures</span>
         x == <span class="k">old</span>(x) + <span class="m">1</span>;
-{ ... }
+    <span class="k">extern</span>;
 
 <span class="k">procedure</span> P()
     <span class="k">modifies</span>
@@ -262,6 +263,87 @@ These instructions may then be assembled and executed.
 The details of the generated code may vary depending on the exact version of the tool.
 (To see examples of up-to-do date generated code,
 try running the Vale tool and examining the generated code.)</p>
+</div>
+<div class="section" id="instructions">
+<span id="id1"></span><h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>For the example procedure <code class="docutils literal notranslate"><span class="pre">P</span></code> from the previous section, Vale generates
+functions <code class="docutils literal notranslate"><span class="pre">va_code_P</span></code> and <code class="docutils literal notranslate"><span class="pre">va_lemma_P</span></code> automatically.
+The increment procedure <code class="docutils literal notranslate"><span class="pre">Increment</span></code>, however, is declared <code class="docutils literal notranslate"><span class="pre">extern</span></code>,
+and Vale does not generate code for <code class="docutils literal notranslate"><span class="pre">extern</span></code> declarations.
+It’s possible to write the Dafny (or FStar)
+<code class="docutils literal notranslate"><span class="pre">va_code_Increment</span></code> and <code class="docutils literal notranslate"><span class="pre">va_lemma_Increment</span></code> functions manually,
+but this is inconvenient.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">{:instruction</span> <span class="pre">...}</span></code> attribute provides a more convenient approach
+than <code class="docutils literal notranslate"><span class="pre">extern</span></code> to implement <code class="docutils literal notranslate"><span class="pre">Increment</span></code> and other primitive instructions:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">procedure</span> Increment(<span class="k">inout</span> x:reg)
+    {:instruction Ins(InsAdd(x, OConst(<span class="m">1</span>)))}
+    <span class="k">ensures</span>
+        x == <span class="k">old</span>(x) + <span class="m">1</span>;
+{
+    <span class="c">// empty body in this example,</span>
+    <span class="c">// but can contain additional ghost code if needed</span>
+}
+</pre></div>
+</div>
+<p>Vale generates a <code class="docutils literal notranslate"><span class="pre">va_code_Increment</span></code> function containing the expression
+from the <code class="docutils literal notranslate"><span class="pre">{:instruction</span> <span class="pre">...}</span></code> attribute:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> method{:opaque} va_code_Increment(x:va_operand_reg):va_code
+{
+  Ins(InsAdd(x, OConst(<span class="m">1</span>)))
+}
+
+<span class="k">lemma</span> va_lemma_Increment(va_b<span class="m">0</span>:va_codes, va_s<span class="m">0</span>:va_state, va_sN:va_state, x:va_operand_reg)
+  <span class="k">returns</span> (va_bM:va_codes, va_sM:va_state)
+  <span class="k">requires</span> va_require(va_b<span class="m">0</span>, va_code_Increment(x), va_s<span class="m">0</span>, va_sN)
+  <span class="k">requires</span> va_is_dst_reg(x, va_s<span class="m">0</span>)
+  <span class="k">ensures</span>  va_ensure(va_b<span class="m">0</span>, va_bM, va_s<span class="m">0</span>, va_sM, va_sN)
+  <span class="k">requires</span> va_get_ok(va_s<span class="m">0</span>)
+  <span class="k">ensures</span>  va_get_ok(va_sM)
+  <span class="k">ensures</span>  va_eval_reg(va_sM, x) == va_eval_reg(va_s<span class="m">0</span>, x) + <span class="m">1</span>
+  <span class="k">ensures</span>  va_state_eq(va_sM, va_update_ok(va_sM, va_update_operand_reg(x, va_sM, va_s<span class="m">0</span>)))
+{
+  reveal_va_code_Increment();
+  <span class="k">var</span> va_old_s:va_state := va_s<span class="m">0</span>;
+  va_ins_lemma(Ins(InsAdd(x, OConst(<span class="m">1</span>))), va_s<span class="m">0</span>);
+  <span class="k">ghost</span> <span class="k">var</span> va_ltmp<span class="m">1</span>, va_cM:va_code, va_ltmp<span class="m">2</span> := va_lemma_block(va_b<span class="m">0</span>, va_s<span class="m">0</span>, va_sN);
+  va_sM := va_ltmp<span class="m">1</span>;
+  va_bM := va_ltmp<span class="m">2</span>;
+}
+</pre></div>
+</div>
+<p>Vale also generates a <code class="docutils literal notranslate"><span class="pre">va_lemma_Increment</span></code> that reveals the definition of
+<code class="docutils literal notranslate"><span class="pre">va_code_Increment</span></code> and calls a user-supplied lemma <code class="docutils literal notranslate"><span class="pre">va_ins_lemma</span></code>,
+as shown above.
+If these are insufficient to prove <code class="docutils literal notranslate"><span class="pre">va_lemma_Increment</span></code>’s postconditions,
+the body of the Vale <code class="docutils literal notranslate"><span class="pre">P</span></code> procedure can also contain additional ghost code,
+such as calls to lemmas, as hints to complete the proof.</p>
+<p>For the definitions above to succeed, the programmer must manually supply
+definitions of instructions and their semantics:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="c">// Manually-written Dafny code:</span>
+datatype register = EAX | EBX
+datatype operand = OReg(r:register) | OConst(n:<span class="k">int</span>)
+datatype ins =
+  InsAdd(dstAdd:register, srcAdd:operand)
+| InsSub(dstAdd:register, srcAdd:operand)
+datatype code =
+  Ins(ins:ins)
+| Block(block:codes)
+| IfElse(ifCond:ocmp, ifTrue:code, ifFalse:code)
+| While(whileCond:ocmp, whileBody:code)
+datatype codes = CNil() | CCons(hd:code, tl:codes)
+...
+predicate eval_ins(ins:ins, s<span class="m">0</span>:state, sN:state)
+{
+    ...
+        match ins
+            case InsAdd(dst, src) =&gt;
+                sN == update_reg(dst, s<span class="m">0</span>, eval_reg(dst, s<span class="m">0</span>) + eval_opr(src, s<span class="m">0</span>))
+            ...
+}
+<span class="k">type</span> va_operand_reg = register
+...
+</pre></div>
+</div>
 </div>
 <div class="section" id="vale-libraries">
 <h2>Vale libraries<a class="headerlink" href="#vale-libraries" title="Permalink to this headline">¶</a></h2>
@@ -337,11 +419,18 @@ or one of <code class="docutils literal notranslate"><span class="pre">eq</span>
 <li><p>update_f(…, sM:state, sK:state):state – return sK updated with a copy of sM’s field f or f(…)</p></li>
 </ul>
 </li>
-<li><p>Functions and procedures for operand constructors P(…params…)</p>
+<li><p>Functions and procedures for operand constructors P(…params…):</p>
 <ul>
 <li><p>opr_code_P(…non-ghost params…):operand_type – construct operand for P</p></li>
 <li><p>opr_lemma_P(state, …params…):operand_type (Dafny only) – lemma called for each occurrence of P</p></li>
 <li><p>P_lemma(…params as ghost…) (FStar only) – Vale procedure (no <code class="docutils literal notranslate"><span class="pre">va_</span></code> prefix) called for each occurrence of P</p></li>
+</ul>
+</li>
+<li><p>Functions for overloaded collection operators with name <code class="docutils literal notranslate"><span class="pre">x</span></code> (currently FStar only):</p>
+<ul>
+<li><p>va_subscript_x(c:container, k:key):value</p></li>
+<li><p>va_update_x(c:container, k:key, v:value):container</p></li>
+<li><p>va_contains_x(c:container, k:key):bool</p></li>
 </ul>
 </li>
 </ul>

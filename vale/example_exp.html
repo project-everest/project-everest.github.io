@@ -176,12 +176,11 @@
 let s1:seq(int) := f();
 let s2:seq(int) := s1[3 := &quot;hi&quot;];
 assert s2[3] == &quot;hi&quot;;
-// Dafny only; like Dafny &quot;10 in m&quot;:
+// assert that map m has key 10
 assert m?[10];
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">old</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">old</span><span class="p">[</span><span class="n">snapshotOfThis</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">//</span> <span class="n">Dafny</span> <span class="n">only</span>

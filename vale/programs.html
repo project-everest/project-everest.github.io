@@ -88,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#inline-parameters-and-recursive-macros">Inline parameters and recursive macros</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ghost-variables-and-ghost-code">Ghost variables and ghost code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#global-variable-aliases">Global variable aliases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules-and-includes">Modules and includes</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">Types, functions, and expressions</a></li>
@@ -204,7 +205,7 @@ indicates that the procedure’s body is defined elsewhere.
 The body of the <code class="docutils literal notranslate"><span class="pre">Test</span></code> procedure represents assembly language code that calls <code class="docutils literal notranslate"><span class="pre">IncrEax</span></code> twice,
 adding 2 to <code class="docutils literal notranslate"><span class="pre">eax</span></code>.</p>
 <div class="section" id="procedures">
-<h2>Procedures<a class="headerlink" href="#procedures" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Procedures<a class="headerlink" href="#procedures" title="Permalink to this headline">¶</a></h2>
 <p>Vale procedures consist of parameter and return value declarations,
 specifications (<code class="docutils literal notranslate"><span class="pre">reads</span></code>, <code class="docutils literal notranslate"><span class="pre">modifies</span></code>, <code class="docutils literal notranslate"><span class="pre">requires</span></code>, <code class="docutils literal notranslate"><span class="pre">ensures</span></code>, and <code class="docutils literal notranslate"><span class="pre">lets</span></code>),
 and, for non-<code class="docutils literal notranslate"><span class="pre">extern</span></code> procedures, a body containing statements.
@@ -541,8 +542,8 @@ Ghost code can also contain:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">assume</span></code> statements</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ghost</span> <span class="pre">if</span></code> statements</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">calc</span></code> statements</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">reveal</span></code> statements</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code> statements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reveal</span></code> statements (see <a class="reference internal" href="exp.html#functions"><span class="std std-ref">Functions and consts</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code> statements (see <a class="reference internal" href="exp.html#quantifiers"><span class="std std-ref">Quantifiers</span></a>)</p></li>
 </ul>
 <p><em>Ghost procedures</em> can only contain ghost code.
 Although they can read global variables, such as <code class="docutils literal notranslate"><span class="pre">eax</span></code>, they cannot modify global variables.
@@ -573,7 +574,8 @@ This can be used for documentation and diagnostics.
 <code class="docutils literal notranslate"><span class="pre">assert</span></code> statements can occassionally act as hint to the underlying verification framework:
 if a proof relies on <code class="docutils literal notranslate"><span class="pre">forall</span> <span class="pre">(x)</span> <span class="pre">...f(x)...</span></code> expressions for which the verification framework
 needs hints on how to instantiate the quantified variable <code class="docutils literal notranslate"><span class="pre">x</span></code>,
-<code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">f(10)</span></code>, for example can serve as a hint to instantiate <code class="docutils literal notranslate"><span class="pre">x</span></code> with 10.
+<code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">f(10)</span></code>, for example can serve as a hint to instantiate <code class="docutils literal notranslate"><span class="pre">x</span></code> with 10
+(see <a class="reference internal" href="exp.html#quantifiers"><span class="std std-ref">Quantifiers</span></a>).
 (Such hints can be abused: if a proof seems to need a long series of
 seemingly arbitrary <code class="docutils literal notranslate"><span class="pre">assert</span></code> statements to succeed,
 it’s often a sign that the proof needs to be restructured in a clearer way.)</p>
@@ -753,6 +755,57 @@ for global variables:</p>
 holding a copy of <code class="docutils literal notranslate"><span class="pre">eax</span></code>’s initial value,
 <code class="docutils literal notranslate"><span class="pre">lets</span> <span class="pre">a</span> <span class="pre">&#64;=</span> <span class="pre">eax</span></code> introduces a mutable alias for <code class="docutils literal notranslate"><span class="pre">eax</span></code>.
 <code class="docutils literal notranslate"><span class="pre">a</span></code> can be used interchangeably with <code class="docutils literal notranslate"><span class="pre">eax</span></code> in the specification and body of the procedure <code class="docutils literal notranslate"><span class="pre">TestAddAlias</span></code>.</p>
+</div>
+<div class="section" id="modules-and-includes">
+<span id="includes"></span><h2>Modules and includes<a class="headerlink" href="#modules-and-includes" title="Permalink to this headline">¶</a></h2>
+<p>Vale files can <code class="docutils literal notranslate"><span class="pre">include</span></code> declarations from other Vale files.
+Suppose, for example, that file <code class="docutils literal notranslate"><span class="pre">b.vad</span></code> includes file <code class="docutils literal notranslate"><span class="pre">a.vad</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> &quot;a.vad&quot;
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">a.vad</span></code>’s declarations will appear as <code class="docutils literal notranslate"><span class="pre">extern</span></code> declarations to <code class="docutils literal notranslate"><span class="pre">b.vad</span></code>.</p>
+<p>Vale tries to find the file <code class="docutils literal notranslate"><span class="pre">a.vad</span></code> in the same directory as <code class="docutils literal notranslate"><span class="pre">b.vad</span></code>.
+If the files are in different directories, the <code class="docutils literal notranslate"><span class="pre">include</span></code> directive can use a path relative to <code class="docutils literal notranslate"><span class="pre">b.vad</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> &quot;../../d/a.vad&quot;
+</pre></div>
+</div>
+<p>As an alternative to looking for the file relative to <code class="docutils literal notranslate"><span class="pre">b.vad</span></code>’s directory,
+the <code class="docutils literal notranslate"><span class="pre">include</span></code> directive can supply a named <em>path alias</em>.
+Vale will then try to find the file relative to the path associated with this alias:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">include</span>{:from STDLIB} &quot;d/a.vad&quot;
+</pre></div>
+</div>
+<p>The path for the alias (e.g. <code class="docutils literal notranslate"><span class="pre">STDLIB</span></code>) is defined with command-line arguments (see <a class="reference internal" href="grammar.html#attributes"><span class="std std-ref">Attributes</span></a> and <a class="reference internal" href="tool.html#tool"><span class="std std-ref">Using the Vale tool</span></a>).</p>
+<p>When Vale generates Dafny code, the generated code may need to include other Dafny files.
+Rather than using a verbatim block for this (see <a class="reference internal" href="grammar.html#verbatim"><span class="std std-ref">Verbatim blocks</span></a>),
+the Vale file can use a verbatim include, which is translated into a Dafny include in the generated Dafny code:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">include</span>{:verbatim} &quot;vale.dfy&quot;
+<span class="k">include</span>{:verbatim} &quot;vale<span class="m">64</span>.dfy&quot;
+<span class="k">include</span>{:verbatim}{:from BASE} &quot;code/lib/util/operations.dfy&quot;
+<span class="k">include</span> &quot;decls.vad&quot;
+</pre></div>
+</div>
+<p>Vale code may have to refer to definitions from FStar module,
+which use qualified names like <code class="docutils literal notranslate"><span class="pre">FStar.Seq.seq</span></code> or <code class="docutils literal notranslate"><span class="pre">X64.Machine_s.state</span></code>.
+The current best way to do this is with <code class="docutils literal notranslate"><span class="pre">include{:fstar}{:open}</span></code>,
+specifying the FStar <em>module name</em> (not the filename):</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">include</span>{:fstar}{:open} &quot;X<span class="m">64</span>.Machine_s&quot;
+<span class="k">include</span>{:fstar}{:open Sequence} &quot;FStar.Seq&quot;
+...
+<span class="k">const</span> s:state <span class="k">extern</span>; <span class="c">// state refers to X64.Machine_s.state</span>
+<span class="k">const</span> q:Sequence.seq <span class="k">extern</span>; <span class="c">// Sequence.seq refers to FStar.Seq.seq</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">{:open}</span></code> attribute,
+Vale code refers to FStar names without the module prefix (e.g. without <code class="docutils literal notranslate"><span class="pre">X64.Machine_s.</span></code>).
+Using the <code class="docutils literal notranslate"><span class="pre">{:open</span> <span class="pre">x}</span></code> attribute,
+Vale code refers to FStar names with an alternate module prefix <code class="docutils literal notranslate"><span class="pre">x</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">Sequence.</span></code>).</p>
+<p>Every generated FStar file needs a module declaration.
+Rather than using a verbatim block for this (see <a class="reference internal" href="grammar.html#verbatim"><span class="std std-ref">Verbatim blocks</span></a>),
+the Vale file can use a Vale module declaration:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> A
+</pre></div>
+</div>
 </div>
 </div>
 

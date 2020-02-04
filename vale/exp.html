@@ -90,6 +90,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#operand-values-and-locations">Operand values and locations</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-and-consts">Functions and consts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-operators">Custom operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overloaded-operators">Overloaded operators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#expressions">Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantifiers">Quantifiers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="grammar.html">Complete Vale syntax</a></li>
@@ -191,7 +200,7 @@ As described in the next section, a Vale program can use type casts to access su
 For formal details on Vale’s type system,
 see <a class="reference external" href="https://raw.githubusercontent.com/project-everest/vale/master/doc/types.txt">here</a>.</p>
 <div class="section" id="types">
-<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <p>Vale has a small number of built-in types
 and can import other types from the underlying verification framework.
 The <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">extern</span></code> declaration imports types from the verification framework:</p>
@@ -379,7 +388,7 @@ properties of <code class="docutils literal notranslate"><span class="pre">o</sp
 Operand procedures can also read and write global variables like <code class="docutils literal notranslate"><span class="pre">mem</span></code>.</p>
 </div>
 <div class="section" id="operand-values-and-locations">
-<h3>Operand values and locations<a class="headerlink" href="#operand-values-and-locations" title="Permalink to this headline">¶</a></h3>
+<span id="locations"></span><h3>Operand values and locations<a class="headerlink" href="#operand-values-and-locations" title="Permalink to this headline">¶</a></h3>
 <p>Vale procedures can refer to both the value and location of an operand.
 For an operand parameter <code class="docutils literal notranslate"><span class="pre">x</span></code>, the expression <code class="docutils literal notranslate"><span class="pre">x</span></code> contains the operand’s value,
 while the expression <code class="docutils literal notranslate"><span class="pre">&#64;x</span></code> contains the operand’s location.
@@ -404,6 +413,296 @@ should have type <code class="docutils literal notranslate"><span class="pre">op
 <div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">operand_type</span> reg<span class="m">64</span>:nat<span class="m">64</span> @ operandImpl :=
 | <span class="k">inout</span> rax | <span class="k">inout</span> rbx | <span class="k">inout</span> rcx | <span class="k">inout</span> rdx
 ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="functions-and-consts">
+<span id="functions"></span><h2>Functions and consts<a class="headerlink" href="#functions-and-consts" title="Permalink to this headline">¶</a></h2>
+<p>Vale can import functions and constants from the verification framework
+using <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">extern</span></code> and <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">extern</span></code> declarations:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> seven:<span class="k">int</span> <span class="k">extern</span>;
+
+<span class="k">function</span> sum<span class="m">3</span>(x:<span class="k">int</span>, y:<span class="k">int</span>, z:<span class="k">int</span>):<span class="k">int</span> <span class="k">extern</span>;
+
+<span class="k">function</span> sqr(x:<span class="k">int</span>):(z:<span class="k">int</span>)
+    <span class="k">ensures</span>
+        z &gt;= <span class="m">0</span>;
+    <span class="k">extern</span>;
+
+<span class="k">function</span> id#[a:<span class="k">Type</span>(<span class="m">0</span>)](x:a):a <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> test_functions()
+{
+    <span class="k">assert</span> seven == <span class="m">7</span>;
+
+    <span class="k">assert</span> sum<span class="m">3</span>(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) == <span class="m">60</span>;
+    <span class="k">assert</span> sqr(<span class="m">10</span>) == <span class="m">100</span>;
+    <span class="k">assert</span> id(<span class="m">10</span>) == <span class="m">10</span>;
+    <span class="k">assert</span> id#[<span class="k">int</span>](<span class="m">10</span>) == <span class="m">10</span>;
+
+    <span class="k">let</span> f:<span class="k">fun</span>(<span class="k">int</span>, <span class="k">int</span>, <span class="k">int</span>) -&gt; <span class="k">int</span> := sum<span class="m">3</span>;
+    <span class="k">assert</span> f(<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>) == <span class="m">60</span>;
+
+    <span class="k">let</span> g:<span class="k">fun</span>(<span class="k">int</span>) -&gt; <span class="k">int</span> := id;
+    <span class="k">assert</span> g(<span class="m">10</span>) == <span class="m">10</span>;
+}
+</pre></div>
+</div>
+<p>Polymorphic functions like <code class="docutils literal notranslate"><span class="pre">id</span></code> can be applied to type arguments using <code class="docutils literal notranslate"><span class="pre">#[...]</span></code>;
+otherwise, Vale will try to infer the type arguments.
+Monomorphic functions have function types <code class="docutils literal notranslate"><span class="pre">fun(...)</span> <span class="pre">-&gt;</span> <span class="pre">...</span></code>;
+polymorphic functions can be coerced to monomorphic function types,
+as with <code class="docutils literal notranslate"><span class="pre">g</span></code> in the example above.</p>
+<p>Dafny and FStar can declare <em>opaque</em> functions whose definitions are hidden from the verifier
+unless explicitly revealed.
+Vale can reveal an opaque function’s definition with <code class="docutils literal notranslate"><span class="pre">reveal</span> <span class="pre">f</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> opaque_sum(x:<span class="k">int</span>, y:<span class="k">int</span>):<span class="k">int</span> <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> test_opaque()
+{
+    <span class="k">reveal</span> opaque_sum;
+    <span class="k">assert</span> opaque_sum(<span class="m">10</span>, <span class="m">20</span>) == <span class="m">30</span>;
+}
+</pre></div>
+</div>
+<div class="section" id="custom-operators">
+<span id="custom"></span><h3>Custom operators<a class="headerlink" href="#custom-operators" title="Permalink to this headline">¶</a></h3>
+<p>Vale programs can abbreviate one-argument and two-argument functions as custom unary and binary operators.
+Such operators are not overloaded — there can only be one function for each operator name —
+but Vale programs can create as many operator names as desired.</p>
+<p>The <a class="reference internal" href="grammar.html#lexical"><span class="std std-ref">Lexical structure</span></a> section describes how to use the <code class="docutils literal notranslate"><span class="pre">#token</span></code> directive to create new operator names (operator tokens).
+After creating a name, the Vale code declares a function abbreviation using the
+<code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">operator(...)</span> <span class="pre">...</span> <span class="pre">:=</span> <span class="pre">...</span></code> syntax:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span>#token #+# precedence +
+#token +. precedence +
+#token *. precedence *
+#token %. precedence *
+#token ~~ precedence !
+<span class="k">function</span> <span class="k">operator</span>(#+#) (a:<span class="k">int</span>, b:<span class="k">int</span>):<span class="k">int</span> := opaque_sum;
+<span class="k">function</span> <span class="k">operator</span>(+.) (a:poly, b:poly):poly := poly_add;
+<span class="k">function</span> <span class="k">operator</span>(*.) (a:poly, b:poly):poly := poly_mul;
+<span class="k">function</span> <span class="k">operator</span>(%.) (a:poly, b:poly):poly := poly_mod;
+<span class="k">function</span> <span class="k">operator</span>(~~) (a:quad<span class="m">32</span>):poly := quad<span class="m">32_</span>to_poly;
+
+<span class="k">ghost</span> <span class="k">procedure</span> test_opaque()
+{
+    <span class="k">reveal</span> opaque_sum;
+    <span class="k">assert</span> <span class="m">10</span> #+# <span class="m">20</span> == <span class="m">30</span>;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="overloaded-operators">
+<span id="overloaded"></span><h3>Overloaded operators<a class="headerlink" href="#overloaded-operators" title="Permalink to this headline">¶</a></h3>
+<p>Vale supports a small set of overloadable operators:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.fieldname</span></code> for reading a field of a datatype</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fieldname</span> <span class="pre">:=</span></code> for updating a field of a datatype with some value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[]</span></code> for reading an item in a collection based on some key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">:=</span> <span class="pre">]</span></code> for updating an item in a collection based on some key and value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">?[]</span></code> for testing whether a collection contains a key</p></li>
+</ul>
+<p>Each of these operators can have many implementations.
+Each implementation is declared to Vale with a <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">operator(...)</span> <span class="pre">...</span> <span class="pre">extern</span></code> declaration:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> int_pair:<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">function</span> Mkint_pair(fst:<span class="k">int</span>, snd:<span class="k">int</span>):int_pair <span class="k">extern</span>;
+
+<span class="k">function</span> <span class="k">operator</span>(.fst) (p:int_pair):<span class="k">int</span> <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>(.snd) (p:int_pair):<span class="k">int</span> <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>(.fst :=) (p:int_pair, v:<span class="k">int</span>):int_pair <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>(.snd :=) (p:int_pair, v:<span class="k">int</span>):int_pair <span class="k">extern</span>;
+
+<span class="k">type</span> seq(a:<span class="k">Type</span>(<span class="m">0</span>)):<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+<span class="k">type</span> map(a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)):<span class="k">Type</span>(<span class="m">0</span>) <span class="k">extern</span>;
+
+<span class="k">function</span> length#[a:<span class="k">Type</span>(<span class="m">0</span>)](s:seq(a)):nat <span class="k">extern</span>;
+
+<span class="k">function</span> <span class="k">operator</span>([])     #[a:<span class="k">Type</span>(<span class="m">0</span>)](s:seq(a), i:<span class="k">int</span>):a <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>([ := ]) #[a:<span class="k">Type</span>(<span class="m">0</span>)](s:seq(a), i:<span class="k">int</span>, v:a):seq(a) <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>([])     #[a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)](m:map(a, b), key:a):b <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>([ := ]) #[a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)](m:map(a, b), key:a, v:b):map(a, b) <span class="k">extern</span>;
+<span class="k">function</span> <span class="k">operator</span>(?[])    #[a:<span class="k">Type</span>(<span class="m">0</span>), b:<span class="k">Type</span>(<span class="m">0</span>)](m:map(a, b), key:a):<span class="k">bool</span> <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> test_overload(<span class="k">ghost</span> s:seq(nat), <span class="k">ghost</span> m:map(<span class="k">int</span>, nat))
+    <span class="k">requires</span>
+        length(s) &gt; <span class="m">3</span>;
+{
+    <span class="k">let</span> x := Mkint_pair(<span class="m">10</span>, <span class="m">20</span>);
+    <span class="k">assert</span> x.fst == <span class="m">10</span>;
+    <span class="k">assert</span> x.snd == <span class="m">20</span>;
+    <span class="k">let</span> x<span class="m">2</span> := x.(fst := <span class="m">11</span>);
+    <span class="k">assert</span> x<span class="m">2</span>.fst == <span class="m">11</span>;
+    <span class="k">assert</span> x<span class="m">2</span>.snd == <span class="m">20</span>;
+
+    <span class="k">let</span> s<span class="m">2</span>:seq(nat) := s[<span class="m">3</span> := <span class="m">30</span>];
+    <span class="k">assert</span> s<span class="m">2</span>[<span class="m">3</span>] == <span class="m">30</span>;
+
+    <span class="k">assert</span> m?[<span class="m">100</span>] ==&gt; m[<span class="m">100</span>] &gt;= <span class="m">0</span>;
+}
+</pre></div>
+</div>
+<p>When an expression like <code class="docutils literal notranslate"><span class="pre">m[100]</span></code> uses an overloaded operator like <code class="docutils literal notranslate"><span class="pre">operator([])</span></code>,
+Vale must decide which of the various <code class="docutils literal notranslate"><span class="pre">operator([])</span></code> implementations is appropriate.
+To do this, it computes the type <code class="docutils literal notranslate"><span class="pre">t</span></code> of <code class="docutils literal notranslate"><span class="pre">m</span></code>, simplifies <code class="docutils literal notranslate"><span class="pre">t</span></code> until it is an <code class="docutils literal notranslate"><span class="pre">extern</span></code> type
+rather than a type abbreviation, and then uses <code class="docutils literal notranslate"><span class="pre">t</span></code>’s name (<code class="docutils literal notranslate"><span class="pre">map</span></code> in this case) for disambiguation.
+Thus, there can be one <code class="docutils literal notranslate"><span class="pre">operator([])</span></code> for <code class="docutils literal notranslate"><span class="pre">map</span></code> and one for <code class="docutils literal notranslate"><span class="pre">seq</span></code>,
+but not more than one for <code class="docutils literal notranslate"><span class="pre">map</span></code> or more than one for <code class="docutils literal notranslate"><span class="pre">seq</span></code>.</p>
+</div>
+</div>
+<div class="section" id="expressions">
+<h2>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="grammar.html#syntax"><span class="std std-ref">Complete Vale syntax</span></a> section for a complete list of Vale expressions.
+The following expressions are described in other sections:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;x</span></code> in <a class="reference internal" href="#locations"><span class="std std-ref">Operand values and locations</span></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">old</span></code> in <a class="reference internal" href="programs.html#procedures"><span class="std std-ref">Procedures</span></a></p></li>
+<li><p>function application in <a class="reference internal" href="#functions"><span class="std std-ref">Functions and consts</span></a></p></li>
+<li><p>field and subscript operators in <a class="reference internal" href="#overloaded"><span class="std std-ref">Overloaded operators</span></a></p></li>
+<li><p>collection and tuple literals in <a class="reference internal" href="#types"><span class="std std-ref">Types</span></a></p></li>
+</ul>
+<p>Arithmetic operators <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">%</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, and <code class="docutils literal notranslate"><span class="pre">-</span></code>
+compute new <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">int_range</span></code> values from existing <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">int_range</span></code>
+values (see <a class="reference internal" href="#types"><span class="std std-ref">Types</span></a> or
+the <a class="reference external" href="https://raw.githubusercontent.com/project-everest/vale/master/doc/types.txt">formal type rules</a>).
+Integer comparison operators <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, and <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>
+compute <code class="docutils literal notranslate"><span class="pre">bool</span></code> values from <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">int_range</span></code> values.</p>
+<p>Comparisons can be chained together: <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span> <span class="pre">&lt;=</span> <span class="pre">d</span></code> is an abbreviation for
+<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">b</span> <span class="pre">&amp;&amp;</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span> <span class="pre">&amp;&amp;</span> <span class="pre">c</span> <span class="pre">&lt;=</span> <span class="pre">d</span></code>.</p>
+<p>Equality <code class="docutils literal notranslate"><span class="pre">==</span></code> and inequality <code class="docutils literal notranslate"><span class="pre">!=</span></code> compute <code class="docutils literal notranslate"><span class="pre">bool</span></code> values (in Dafny)
+or <code class="docutils literal notranslate"><span class="pre">prop</span></code> values (in FStar).</p>
+<p><code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">is</span> <span class="pre">C</span></code> tests whether a datatype value <code class="docutils literal notranslate"><span class="pre">e</span></code> is an instance of datatype constructor <code class="docutils literal notranslate"><span class="pre">C</span></code>
+(like Dafny’s <code class="docutils literal notranslate"><span class="pre">e.C?</span></code> or FStar’s <code class="docutils literal notranslate"><span class="pre">C?</span> <span class="pre">e</span></code>).</p>
+<p>Logical operators <code class="docutils literal notranslate"><span class="pre">!</span></code>, <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code>, <code class="docutils literal notranslate"><span class="pre">==&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;==</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;==&gt;</span></code>
+compute <code class="docutils literal notranslate"><span class="pre">bool</span></code> values from existing <code class="docutils literal notranslate"><span class="pre">bool</span></code> values in Dafny.
+For FStar, they work on both <code class="docutils literal notranslate"><span class="pre">bool</span></code> and <code class="docutils literal notranslate"><span class="pre">prop</span></code> values.</p>
+<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">e1</span> <span class="pre">then</span> <span class="pre">e2</span> <span class="pre">else</span> <span class="pre">e3</span></code> selects either <code class="docutils literal notranslate"><span class="pre">e2</span></code> or <code class="docutils literal notranslate"><span class="pre">e3</span></code> based on <code class="docutils literal notranslate"><span class="pre">e1</span></code> of type <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">e1</span> <span class="pre">in</span> <span class="pre">e2</span></code> introduces a variable <code class="docutils literal notranslate"><span class="pre">x</span></code>, equal to <code class="docutils literal notranslate"><span class="pre">e1</span></code>, in <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fun(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code>, sometimes known as a “lambda”, creates an anonymous function
+with parameters <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code> and body <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">this</span></code> computes the current state (i.e. all register values, memory values, etc.),
+of type <code class="docutils literal notranslate"><span class="pre">state</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">state</span></code> type is not defined by Vale,
+but is instead user-defined in the underlying verification framework
+(see <code class="docutils literal notranslate"><span class="pre">va_state</span></code> in <a class="reference internal" href="library.html#interface"><span class="std std-ref">Interface with verification framework</span></a>).
+Most procedures shouldn’t refer to <code class="docutils literal notranslate"><span class="pre">this</span></code>, but it is occasionally used for
+implementing instructions (see <a class="reference internal" href="library.html#instructions"><span class="std std-ref">Instructions</span></a>),
+which can read <code class="docutils literal notranslate"><span class="pre">this</span></code> or assign <code class="docutils literal notranslate"><span class="pre">this</span> <span class="pre">:=</span> <span class="pre">...</span></code>.</p>
+<div class="section" id="quantifiers">
+<span id="id2"></span><h3>Quantifiers<a class="headerlink" href="#quantifiers" title="Permalink to this headline">¶</a></h3>
+<p>Vale supports two <em>quantifiers</em>, <code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code>.
+The expression <code class="docutils literal notranslate"><span class="pre">forall(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code> means that <code class="docutils literal notranslate"><span class="pre">e</span></code>
+is true for all values that can be assigned to variables <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code>
+of type <code class="docutils literal notranslate"><span class="pre">t1</span></code> … <code class="docutils literal notranslate"><span class="pre">tn</span></code>.
+The expression <code class="docutils literal notranslate"><span class="pre">exists(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code> means that <code class="docutils literal notranslate"><span class="pre">e</span></code>
+is true for at least one assignment of values to variables <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code>
+of type <code class="docutils literal notranslate"><span class="pre">t1</span></code> … <code class="docutils literal notranslate"><span class="pre">tn</span></code>.
+In Dafny, <code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code> expressions have type <code class="docutils literal notranslate"><span class="pre">bool</span></code>.
+In FStar, they have type <code class="docutils literal notranslate"><span class="pre">prop</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code>, used in combination with
+other expressions like arithmetic and function application,
+are often difficult for verification frameworks to reason about
+completely automatically.
+Specifically, it’s hard for the verification framework to answer these two questions:</p>
+<ul class="simple">
+<li><p>If the verifier knows <code class="docutils literal notranslate"><span class="pre">forall(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code> and wants to use this to
+prove some formula <code class="docutils literal notranslate"><span class="pre">Q</span></code>, which values should it instantiate <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code>
+with?  For example, if it knows <code class="docutils literal notranslate"><span class="pre">forall(x:int)</span> <span class="pre">p(x</span> <span class="pre">+</span> <span class="pre">x)</span> <span class="pre">==</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span></code>,
+which <code class="docutils literal notranslate"><span class="pre">x</span></code> should it choose to prove <code class="docutils literal notranslate"><span class="pre">p(10)</span> <span class="pre">==</span> <span class="pre">15</span></code>?
+(In this example, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span></code> is a good choice,
+but it’s not obvious how a verifier should guess this automatically.)</p></li>
+<li><p>If the verifier wants to prove <code class="docutils literal notranslate"><span class="pre">exists(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code>,
+which values for <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code> should it choose to prove <code class="docutils literal notranslate"><span class="pre">e</span></code>?
+For example, it can prove <code class="docutils literal notranslate"><span class="pre">exists(x:int)</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">10</span></code> with <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">10</span></code>,
+but it’s not obvious how to guess this automatically,
+especially in more complicated examples.</p></li>
+</ul>
+<p>Dafny and FStar rely on <code class="docutils literal notranslate"><span class="pre">triggers</span></code> (also called patterns)
+to determine how to use <code class="docutils literal notranslate"><span class="pre">forall</span></code> expressions and how to prove <code class="docutils literal notranslate"><span class="pre">exists</span></code>
+expressions.
+For example, suppose the verifier knows <code class="docutils literal notranslate"><span class="pre">forall(x:int,</span> <span class="pre">y:int)</span> <span class="pre">f(x,</span> <span class="pre">y)</span> <span class="pre">==</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code>
+and wants to prove <code class="docutils literal notranslate"><span class="pre">f(2,</span> <span class="pre">3)</span> <span class="pre">==</span> <span class="pre">5</span></code>.
+This can be proven with <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">3</span></code>, which the verifier can guess
+by matching the expression <code class="docutils literal notranslate"><span class="pre">f(x,</span> <span class="pre">y)</span></code> with the expression <code class="docutils literal notranslate"><span class="pre">f(2,</span> <span class="pre">3)</span></code>.
+To enable this matching, a Vale program annotates the <code class="docutils literal notranslate"><span class="pre">forall</span></code> expression with the <em>trigger</em>
+<code class="docutils literal notranslate"><span class="pre">{f(x,</span> <span class="pre">y)}</span></code>, which tells the verifier to try to find terms of the form <code class="docutils literal notranslate"><span class="pre">f(...,</span> <span class="pre">...)</span></code>
+and match them to <code class="docutils literal notranslate"><span class="pre">f(x,</span> <span class="pre">y)</span></code>:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span>(x:<span class="k">int</span>, y:<span class="k">int</span>){f(x, y)} f(x, y) == x + y
+</pre></div>
+</div>
+<p>A trigger can have more than one expression in it;
+the trigger fires if all the expressions in the trigger are matched:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">forall</span>(x:<span class="k">int</span>, y:<span class="k">int</span>){f(x), g(y))} f(x) == g(y)
+</pre></div>
+</div>
+<p>There can also be more than one trigger; the verifier tries to match any of them.</p>
+<p>Dafny will automatically infer the triggers shown in the examples above,
+so the Vale code can safely omit them.
+However, FStar will not infer them, so it’s a good idea to always write the triggers explicitly when using FStar.
+(Without the triggers, FStar lets the underlying SMT solver choose the triggers,
+and these triggers tend to be dangerously aggressive, leading to slow proofs and timeouts.)</p>
+<p>Even when using Dafny, not all quantified expressions have good triggers.
+The expression <code class="docutils literal notranslate"><span class="pre">forall(x:int)</span> <span class="pre">p(x</span> <span class="pre">+</span> <span class="pre">x)</span> <span class="pre">==</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span></code>, for example,
+cannot be matched with <code class="docutils literal notranslate"><span class="pre">p(10)</span> <span class="pre">==</span> <span class="pre">15</span></code> to produce <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span></code> in any obvious way,
+since <code class="docutils literal notranslate"><span class="pre">p(10)</span> <span class="pre">==</span> <span class="pre">15</span></code> doesn’t contain <code class="docutils literal notranslate"><span class="pre">5</span></code> anywhere.
+Dafny’s automatic inference of triggers doesn’t help, since there is no good trigger to infer.
+Therefore, it’s wise to use quantified expressions that have good triggers.
+For example, the expression <code class="docutils literal notranslate"><span class="pre">forall(y:int)</span> <span class="pre">y</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span> <span class="pre">==&gt;</span> <span class="pre">p(y)</span> <span class="pre">==</span> <span class="pre">y</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></code> can use <code class="docutils literal notranslate"><span class="pre">{p(y)}</span></code>
+as a trigger (and Dafny will infer this trigger automatically).
+This is logically equivalent to the earlier expression,
+but enables better automation.</p>
+<p>There are two other questions relevant to quantifiers (the flip side of the
+two earlier questions):</p>
+<ul class="simple">
+<li><p>How does a verifier prove <code class="docutils literal notranslate"><span class="pre">forall(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code>?</p></li>
+<li><p>How does a verifier use <code class="docutils literal notranslate"><span class="pre">exists(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code> to prove some formula <code class="docutils literal notranslate"><span class="pre">Q</span></code>?</p></li>
+</ul>
+<p>Compared with the two earlier questions, these are relatively easy and do not require triggers.
+For example, a verification framework can prove <code class="docutils literal notranslate"><span class="pre">forall(x1:t1,</span> <span class="pre">...,</span> <span class="pre">xn:tn)</span> <span class="pre">e</span></code> simply
+by trying to prove <code class="docutils literal notranslate"><span class="pre">e</span></code> with variables <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code> in scope.
+There is no need to instantiate <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code> with particular values to do this,
+so there is no decision to make on which values to instantiate <code class="docutils literal notranslate"><span class="pre">x1</span></code> … <code class="docutils literal notranslate"><span class="pre">xn</span></code> with.
+However, <code class="docutils literal notranslate"><span class="pre">e</span></code> itself could be difficult to prove, and the verification framework
+may need hints to complete the proof of <code class="docutils literal notranslate"><span class="pre">e</span></code>, such as calls to lemmas.
+Vale programs can use a <code class="docutils literal notranslate"><span class="pre">forall</span></code> statement to supply such hints:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> f<span class="m">1</span>(x:<span class="k">int</span>, y:<span class="k">int</span>):<span class="k">bool</span> <span class="k">extern</span>;
+<span class="k">function</span> f<span class="m">2</span>(x:<span class="k">int</span>, y:<span class="k">int</span>):<span class="k">bool</span> <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> lemma_f<span class="m">1_</span>f<span class="m">2</span>(<span class="k">ghost</span> x:<span class="k">int</span>, <span class="k">ghost</span> y:<span class="k">int</span>)
+    <span class="k">requires</span>
+        f<span class="m">1</span>(x, y);
+    <span class="k">ensures</span>
+        f<span class="m">2</span>(x, y);
+    <span class="k">extern</span>;
+
+<span class="k">ghost</span> <span class="k">procedure</span> test_forall()
+    <span class="k">ensures</span>
+        <span class="k">forall</span>(x:<span class="k">int</span>, y:<span class="k">int</span>){f<span class="m">1</span>(x, y)}{f<span class="m">2</span>(x, y)} f<span class="m">1</span>(x, y) ==&gt; f<span class="m">2</span>(x, y);
+{
+    <span class="k">forall</span> (x:<span class="k">int</span>, y:<span class="k">int</span>){f<span class="m">2</span>(x, y)}
+        f<span class="m">1</span>(x, y) <span class="k">implies</span> f<span class="m">2</span>(x, y) <span class="k">by</span>
+    {
+        lemma_f<span class="m">1_</span>f<span class="m">2</span>(x, y);
+    }
+}
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">forall</span> <span class="pre">(x:int,</span> <span class="pre">y:int)...{...}</span></code> statement proves
+<code class="docutils literal notranslate"><span class="pre">forall(x:int,</span> <span class="pre">y:int){f2(x,</span> <span class="pre">y)}</span> <span class="pre">f1(x,</span> <span class="pre">y)</span> <span class="pre">==&gt;</span> <span class="pre">f2(x,</span> <span class="pre">y)</span></code>,
+which in turn proves <code class="docutils literal notranslate"><span class="pre">test_forall</span></code>’s postcondition.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">exists</span></code>, a <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">exists</span></code> statement (Dafny-only, not FStar)
+can extract variables from an <code class="docutils literal notranslate"><span class="pre">exists</span></code> expression in order to use
+those variables to prove other expressions, such as the precondition to
+<code class="docutils literal notranslate"><span class="pre">lemma_f1_f2</span></code> in the following example:</p>
+<div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">ghost</span> <span class="k">procedure</span> test_exists()
+    <span class="k">requires</span>
+        <span class="k">exists</span>(x:<span class="k">int</span>, y:<span class="k">int</span>){f<span class="m">1</span>(x, y)} f<span class="m">1</span>(x, y);
+{
+    <span class="c">// Ask verifier to choose some x and y such that f1(x, y):</span>
+    <span class="k">let</span> <span class="k">exists</span> (x:<span class="k">int</span>, y:<span class="k">int</span>){f<span class="m">1</span>(x, y)} f<span class="m">1</span>(x, y);
+    <span class="c">// Now we have x and y as local ghost variables and we can use them:</span>
+    lemma_f<span class="m">1_</span>f<span class="m">2</span>(x, y);
+}
 </pre></div>
 </div>
 </div>

@@ -591,14 +591,14 @@ This allows longer proofs about mathematics, datatypes, functions, etc. to resid
 in Dafny or FStar libraries rather than requiring that all proofs be done directly in Vale.</p>
 <p>The following example illustrates calls to ghost procedures.
 The code assumes that two lemmas about arithmetic,
-<code class="docutils literal notranslate"><span class="pre">lemma_commute_mul</span></code> and <code class="docutils literal notranslate"><span class="pre">lemma_commute_mul</span></code>,
+<code class="docutils literal notranslate"><span class="pre">lemma_commute_mul</span></code> and <code class="docutils literal notranslate"><span class="pre">lemma_square_plus_minus_half</span></code>,
 have already been proven in the underlying verification framework:</p>
 <div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">ghost</span> <span class="k">procedure</span> lemma_commute_mul(<span class="k">ghost</span> x:<span class="k">int</span>, <span class="k">ghost</span> y:<span class="k">int</span>)
     <span class="k">ensures</span>
         x * y == y * x;
     <span class="k">extern</span>;
 
-<span class="k">ghost</span> <span class="k">procedure</span> lemma_commute_mul(<span class="k">ghost</span> x:<span class="k">int</span>)
+<span class="k">ghost</span> <span class="k">procedure</span> lemma_square_plus_minus_half(<span class="k">ghost</span> x:<span class="k">int</span>)
     <span class="k">ensures</span>
         x * (x + <span class="m">1</span>) / <span class="m">2</span> == x * (x - <span class="m">1</span>) / <span class="m">2</span> + x;
     <span class="k">extern</span>;

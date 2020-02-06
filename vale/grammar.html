@@ -943,6 +943,8 @@ set or increase the time limit for this procedure</p></li>
 push-options/pop-options around procedure (examples: <code class="docutils literal notranslate"><span class="pre">{:options</span> <span class="pre">z3rlimit(20),</span> <span class="pre">max_ifuel(2)}</span></code>,
 <code class="docutils literal notranslate"><span class="pre">{:options</span> <span class="pre">smtencoding.nl_arith_repr(boxwrap)}</span></code>,
 <code class="docutils literal notranslate"><span class="pre">{:options</span> <span class="pre">using_facts_from(&quot;*</span> <span class="pre">-FStar.Seq.Base&quot;),</span> <span class="pre">debug(FStar.Seq.Base)}</span></code>)</p></li>
+<li><p>{:restartProver} (FStar only)
+restart theorem prover to improve theorem prover predictability (<code class="docutils literal notranslate"><span class="pre">#restart-solver</span></code> in FStar)</p></li>
 <li><p>{:instruction EXP},
 indicating a primitive procedure that is implemented with the code value specified by the expression EXP
 (see <a class="reference internal" href="library.html#instructions"><span class="std std-ref">Instructions</span></a>)</p></li>

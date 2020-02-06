@@ -546,7 +546,7 @@ Ghost code can also contain:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">forall</span></code> and <code class="docutils literal notranslate"><span class="pre">exists</span></code> statements (see <a class="reference internal" href="exp.html#quantifiers"><span class="std std-ref">Quantifiers</span></a>)</p></li>
 </ul>
 <p><em>Ghost procedures</em> can only contain ghost code.
-Although they can read global variables, such as <code class="docutils literal notranslate"><span class="pre">eax</span></code>, they cannot modify global variables.
+They cannot read or modify global variables.
 The following somewhat silly example illustrates operations by ghost code on ghost variables:</p>
 <div class="highlight-vale notranslate"><div class="highlight"><pre><span></span><span class="k">ghost</span> <span class="k">procedure</span> ghost_example(<span class="k">ghost</span> x:<span class="k">int</span>) <span class="k">returns</span>(<span class="k">ghost</span> y:<span class="k">int</span>)
     <span class="k">requires</span>

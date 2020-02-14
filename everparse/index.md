@@ -5,14 +5,22 @@ permalink: /everparse/
 ---
 
 EverParse is a framework for generating verified secure parsers and
-formatters from DSL format specification languages.
+formatters from domain-specific format specification languages.
 
-At the core of EverParse is _LowParse_, a verified combinator library
-programmed in F\*. Additionally, we have two frontend DSLs in which to
-specify input data formats. _QuackyDucky_ accepts data formats in a
-style common to many RFCs. The _3d_ frontend allows specifying data
+The framework contains three components:
+
+*LowParse*: At the core of EverParse is _LowParse_, a verified library
+of parsing and formatting combinators programmed and verified in F\*.
+
+*QuackyDucky*: Our first frontend for EverParse accepts data formats
+in a style common to many RFCs. We have used it to generate message
+processing code for several networking protocols, including TLS and
+QUIC.
+
+*3D*: Our second frontend for EverParse enables specifying data
 formats in an style resembling type definitions in the C programming
-language.
+language. We have used it to generate message validation code for use
+within several low-level C programs.
 
 ## Releases
 

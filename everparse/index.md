@@ -2,6 +2,7 @@
 layout: page
 title: EverParse
 permalink: /everparse/
+hide_header_link: true
 ---
 
 EverParse is a framework for generating verified secure parsers and

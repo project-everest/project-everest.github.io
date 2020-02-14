@@ -25,5 +25,5 @@ Soon to come
 ## Papers
 
 * [EverParse: Verified Secure Zero-Copy Parsers for Authenticated Message Formats](https://project-everest.github.io/assets/everparse.pdf);
-  Tahina Ramananandro et, Antoine Delignat-Lavaud, Cedric Fournet, Nikhil Swamy, Tej Chajed, Nadim Koneissi, and Jonathan Protzenko;
+  Tahina Ramananandro et, Antoine Delignat-Lavaud, Cedric Fournet, Nikhil Swamy, Tej Chajed, Nadim Kobeissi, and Jonathan Protzenko;
   In Proceedings of the 28th USENIX Security Symposium, 2019

@@ -25,14 +25,14 @@
 {
     "name" : "EverParse",
     "repo" : "https://github.com/project-everest/everparse",
-    "website" : "https://github.com/project-everest/everparse",
-    "description" : "Automatic generation of verified parsers and serializers for binary data formats; used by miTLS"
+    "website" : "https://project-everest.github.io/everparse",
+    "description" : "Automatic generation of verified parsers and serializers for binary data formats"
 },
 {
     "name" : "F*",
     "repo" : "https://github.com/fstarlang/fstar",
     "website" :  "https://fstar-lang.org",
-    "description" : "a verification language for effectful programs; used by EverParse, miTLS, HACL* and Vale"
+    "description" : "A proof assistant and verification language for effectful programs"
 },
 {
     "name" : "KreMLin",

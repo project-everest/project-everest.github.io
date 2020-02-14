@@ -1,6 +1,8 @@
-# EverParse
-
-## EverParse: A Tool for Verified Low-level Parsing and Formatting
+---
+layout: page
+title: EverParse
+permalink: /everparse/
+---
 
 EverParse is a framework for generating verified secure parsers and
 formatters from DSL format specification languages.
@@ -12,15 +14,15 @@ style common to many RFCs. The _3d_ frontend allows specifying data
 formats in an style resembling type definitions in the C programming
 language.
 
-### Releases
+## Releases
 
 The latest release of EverParse can be found [here](https://github.com/project-everest/everparse/releases).
 
-### Manual
+## Manual
 
 Soon to come
 
-### Papers
+## Papers
 
 * [EverParse: Verified Secure Zero-Copy Parsers for Authenticated Message Formats](https://project-everest.github.io/assets/everparse.pdf);
   Tahina Ramananandro et, Antoine Delignat-Lavaud, Cedric Fournet, Nikhil Swamy, Tej Chajed, Nadim Koneissi, and Jonathan Protzenko;

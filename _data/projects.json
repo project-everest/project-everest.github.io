@@ -18,8 +18,8 @@
 },
 {
     "name" : "EverCrypt",
-    "repo" : "https://github.com/project-everest/hacl-star/tree/fstar-master",
-    "website" : "https://github.com/project-everest/hacl-star/tree/fstar-master",
+    "repo" : "https://github.com/project-everest/hacl-star",
+    "website" : "https://github.com/project-everest/hacl-star",
     "description" : "Verified crypto provider that combines HACL* and Vale via an agile cryptographic API"
 },
 {

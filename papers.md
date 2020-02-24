@@ -12,7 +12,7 @@ permalink: /papers/
 
 <tr class="bibline"><td class="bibref">[15]</td>
   <td class="bibitem">
-    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://eprint.iacr.org/2019/757">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/evercrypt.pdf">
       <span class="bibtitle" itemprop="name">EverCrypt: A Fast, Verified, Cross-Platform Cryptographic Provider</span></a>
       (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
@@ -31,9 +31,9 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Santiago Zanella-Beguelin</span>
 </span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">Cryptology ePrint Archive: Report 2019/757</span>
+        <span itemprop="isPartOf">To Appear In The Proceedings of the IEEE Symposium on Security & Privacy</span>
       </span>
-      <span itemprop="datePublished">2019</span>.
+      <span itemprop="datePublished">2020</span>.
     </span>
   </td>
 </tr>

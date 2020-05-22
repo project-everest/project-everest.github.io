@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3d: Dependent Data Descriptions for Verified Validation &mdash; EverParse Manual  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Verified efficient parsing for binary data formats" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EverParse Manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3d: Dependent Data Descriptions for Verified Validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tl-dr-summary">tl;dr Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#everparse-bat-command-line-arguments">EverParse.bat command-line arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-3d-dependent-data-description-language">The 3d Dependent Data Description language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-3d-frontend">The 3d frontend</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">EverParse Manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3d: Dependent Data Descriptions for Verified Validation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="d-dependent-data-descriptions-for-verified-validation">
+<span id="d"></span><h1>3d: Dependent Data Descriptions for Verified Validation<a class="headerlink" href="#d-dependent-data-descriptions-for-verified-validation" title="Permalink to this headline">¶</a></h1>
+<p><strong>NOTE:</strong> 3d is available only from the EverParse/3d releases
+(including the corresponding Windows binary package) or from the
+<code class="docutils literal notranslate"><span class="pre">everparse_3d</span></code> branch. It is not available from <code class="docutils literal notranslate"><span class="pre">master</span></code>.</p>
+<div class="section" id="tl-dr-summary">
+<h2>tl;dr Summary<a class="headerlink" href="#tl-dr-summary" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Write your data description format in the 3d language, as MyFile.3d</li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">everparse.bat</span> <span class="pre">/3D</span> <span class="pre">MyFile</span></code> from the location of your .3d
+file, without the .3d file name extension</li>
+</ol>
+<p>Then, EverParse/3d produces:</p>
+<ul class="simple">
+<li>MyFile.fsti, MyFile.fst: the verified F* specification and Low*
+implementation of parsers and validators for your data format</li>
+<li>MyFile.c, MyFile.h: the verified C code generated from the verified
+F* and Low* files</li>
+<li>MyFileWrapper.c, MyFileWrapper.h: an entrypoint API to call into the
+verified C code.</li>
+<li>EverParse.h, EverParseEndianness.h: various EverParse helpers for
+the implementation of verified validators</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFileWrapper.h&quot;</span></code> into any of your C compilation
+units that need to call a validator.</li>
+</ol>
+</div>
+<div class="section" id="everparse-bat-command-line-arguments">
+<h2>EverParse.bat command-line arguments<a class="headerlink" href="#everparse-bat-command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Usage: <code class="docutils literal notranslate"><span class="pre">EVERPARSE.BAT</span> <span class="pre">[/F]</span> <span class="pre">/3D</span> <span class="pre">filenamewithoutextension</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">/F</span></code> (optional) Runs clang-format on the generated .c and .h
+files. A <code class="docutils literal notranslate"><span class="pre">clang-format.exe</span></code> must be reachable from the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+environment variable.</li>
+<li><code class="docutils literal notranslate"><span class="pre">/3D</span> <span class="pre">filenamewithoutextension</span></code> (required) Generates verified
+validators from the data description in
+<code class="docutils literal notranslate"><span class="pre">filenamewithoutextension.3d</span></code>. That file must be in the current
+directory. Files are produced in the current directory.</li>
+</ul>
+</div>
+<div class="section" id="the-3d-dependent-data-description-language">
+<h2>The 3d Dependent Data Description language<a class="headerlink" href="#the-3d-dependent-data-description-language" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="the-3d-frontend">
+<h2>The 3d frontend<a class="headerlink" href="#the-3d-frontend" title="Permalink to this headline">¶</a></h2>
+<p>You can also use the 3d frontend by hand (but then, you will need to
+manually call F* and KReMLin to verify and generate C code.) If you
+are using the Windows binary package, you can find 3d at
+<code class="docutils literal notranslate"><span class="pre">bin\3d.exe</span></code>; if you are using the source package or the source code
+from the <code class="docutils literal notranslate"><span class="pre">everparse_3d</span></code> branch, do <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">3d</span></code> and then you will
+find the 3d tool at <code class="docutils literal notranslate"><span class="pre">src/3d/3d</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/project-everest/everparse/">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Verified efficient parsing for binary data formats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, INRIA, Microsoft Research
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

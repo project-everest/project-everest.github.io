@@ -95,7 +95,19 @@
 <li class="toctree-l2"><a class="reference internal" href="3d.html#tl-dr-summary">tl;dr Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d.html#everparse-bat-command-line-arguments">EverParse.bat command-line arguments</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="3d.html#the-3d-dependent-data-description-language">The 3d Dependent Data Description language</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">The 3d Dependent Data Description language</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">The 3d Dependent Data Description language</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#structs">Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#constraints">Constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bitfields">Bitfields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#constants-and-enumerations">Constants and Enumerations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameterized-data-types">Parameterized data types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tagged-unions">Tagged unions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#element-sized-arrays">Element-sized arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#byte-sized-arrays">Byte-sized arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="3d.html#the-3d-frontend">The 3d frontend</a></li>
@@ -166,9 +178,325 @@
 
            <div itemprop="articleBody">
             
-  <div class="section" id="the-3d-dependent-data-description-language">
+  <blockquote>
+<div></div></blockquote>
+<div class="section" id="the-3d-dependent-data-description-language">
 <span id="d-lang"></span><h1>The 3d Dependent Data Description language<a class="headerlink" href="#the-3d-dependent-data-description-language" title="Permalink to this headline">¶</a></h1>
+<p>3d supports (nested) structs, constraints, enums, parameterized data
+types, tagged or otherwise value-dependent unions, fixed-size arrays,
+and variable-size arrays. In addition to data validation, 3d also
+supports <em>local actions</em> to pass values read from the data structure,
+or pointers to them, to the caller code.</p>
+<div class="section" id="structs">
+<h2>Structs<a class="headerlink" href="#structs" title="Permalink to this headline">¶</a></h2>
+<p>We would like to extract a validator for a simple point type, with X
+and Y coordinates. So we create a file, <code class="docutils literal notranslate"><span class="pre">HelloWorld.3d</span></code>, with the
+following 3d data format description:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This data format is very similar to a C type description, where
+<code class="docutils literal notranslate"><span class="pre">UINT16</span></code> denotes the type of unsigned 16-bit integers, represented
+as little-endian; with the addition of the <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> keyword,
+which tells 3d to expose a validator to the final user.</p>
+<p>Once we run <code class="docutils literal notranslate"><span class="pre">3d</span></code> with this file, we obtain several files:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">HelloWorld.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorld.h</span></code>, which contain the actual verified
+validators;</li>
+<li><code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>, which contain
+entrypoint function definitions for data validators that the user
+should ultimately use in their client code. More precisely, here is
+the contents of <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>:</li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">HelloWorldCheckPoint</span></code> function is the actual validator for the
+<code class="docutils literal notranslate"><span class="pre">point</span></code> type. It takes an array of bytes, <code class="docutils literal notranslate"><span class="pre">base</span></code>, and its length
+<code class="docutils literal notranslate"><span class="pre">len</span></code>, and it returns 1 if <code class="docutils literal notranslate"><span class="pre">base</span></code> starts with valid <code class="docutils literal notranslate"><span class="pre">point</span></code> data
+that fits in <code class="docutils literal notranslate"><span class="pre">len</span></code> bytes or less, and 0 otherwise.</p>
+<p>More generally, for a given <code class="docutils literal notranslate"><span class="pre">Module.3d</span></code>, a type definition <code class="docutils literal notranslate"><span class="pre">typ</span></code>
+marked with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> tells 3d to expose its validator in
+<code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> which will bear the name <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>.</p>
+<p>Structs can be nested, such as in the following instance:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_triangle</span> <span class="p">{</span>
+  <span class="n">point</span> <span class="n">a</span><span class="p">;</span>
+  <span class="n">point</span> <span class="n">b</span><span class="p">;</span>
+  <span class="n">point</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">triangle</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then, since in this file the definition of <code class="docutils literal notranslate"><span class="pre">point</span></code> is not prefixed
+with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>, only <code class="docutils literal notranslate"><span class="pre">triangle</span></code> will have its validator exposed
+in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.h</span></code>.</p>
+<p>There can be several definitions marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> in a given
+<code class="docutils literal notranslate"><span class="pre">.3d</span></code> file.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>3d does not enforce any alignment constraints, and does not
+introduce any implicit alignment padding. So, for instance, in the
+following data format description:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint1</span> <span class="p">{</span>
+  <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
+  <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">coloredPoint1</span><span class="p">;</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint2</span> <span class="p">{</span>
+  <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
+  <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">coloredPoint2</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="last simple">
+<li>in <code class="docutils literal notranslate"><span class="pre">coloredPoint1</span></code>, 3d will not introduce any padding between
+the <code class="docutils literal notranslate"><span class="pre">color</span></code> field and the <code class="docutils literal notranslate"><span class="pre">pt</span></code> field;</li>
+<li>in <code class="docutils literal notranslate"><span class="pre">coloredPoint2</span></code>, 3d will not introduce any padding after the
+<code class="docutils literal notranslate"><span class="pre">color</span></code> field.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="constraints">
+<h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
+<p>Validators for structs alone are only layout-related. Beyond that, 3d
+provides a way to actually check for constraints on their field
+values:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_smoker</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">age</span> <span class="p">{</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">21</span> <span class="p">};</span>
+  <span class="n">UINT8</span> <span class="n">cigarettesConsumed</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">smoker</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In this example, the validator for <code class="docutils literal notranslate"><span class="pre">smoker</span></code> will check that the
+value of the <code class="docutils literal notranslate"><span class="pre">age</span></code> field is at least 21.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">(FIXME) Integer constants are currently considered to be 32-bit
+integers; 3d does not support any kind of type casting at this time.</p>
+</div>
+<p>The constraint language includes integer arithmetic (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>,
+<code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>) and
+Boolean propositional logic (<code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code>, <code class="docutils literal notranslate"><span class="pre">!</span></code>)</p>
+<p>Constraints on a field can also depend on the values of the previous
+fields of the struct. For instance, here is a type definition for a
+pair ordered by increasing values:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_orderedPair</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">lesser</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">greater</span> <span class="p">{</span> <span class="n">lesser</span> <span class="o">&lt;=</span> <span class="n">greater</span> <span class="p">};</span>
+<span class="p">}</span> <span class="n">orderedPair</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Arithmetics on constraints are evaluated in machine integers, not
+mathematical integers. Thus, the following naive definition:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_boundedSum</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="p">};</span>
+<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>will fail at F* verification because the <code class="docutils literal notranslate"><span class="pre">left</span> <span class="pre">+</span> <span class="pre">right</span></code> sum must
+be proven to not overflow <em>before</em> evaluating the condition. The
+correct way of stating the condition is as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_boundedSum</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
+<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="last">which is correct because the right-hand-side condition of a <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>
+is evaluated in a context where the left-hand-side can be assumed
+to be true (thus <code class="docutils literal notranslate"><span class="pre">42</span> <span class="pre">-</span> <span class="pre">left</span></code> will not underflow.)</p>
+</div>
+</div>
+<div class="section" id="bitfields">
+<h2>Bitfields<a class="headerlink" href="#bitfields" title="Permalink to this headline">¶</a></h2>
+<p>TODO:</p>
+<ul class="simple">
+<li>What is the constraint on a bitfield type? on field sizes?</li>
+<li>Can constraints be put on indvidual fields of a bitfield?</li>
+</ul>
+</div>
+<div class="section" id="constants-and-enumerations">
+<h2>Constants and Enumerations<a class="headerlink" href="#constants-and-enumerations" title="Permalink to this headline">¶</a></h2>
+<p>3d provides a way to define numerical constants:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define red   1</span>
+<span class="cp">#define green 2</span>
+<span class="cp">#define blue  42</span>
+</pre></div>
+</div>
+<p>Alternatively, 3d provides a way to define enumerated types:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span> <span class="k">enum</span> <span class="n">color</span> <span class="p">{</span>
+  <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">green</span><span class="p">,</span>
+  <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="p">}</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint</span> <span class="p">{</span>
+  <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">coloredPoint</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then, the validator for <code class="docutils literal notranslate"><span class="pre">coloredPoint</span></code> will check that the value of
+<code class="docutils literal notranslate"><span class="pre">col</span></code> is either 1, 2 (for <code class="docutils literal notranslate"><span class="pre">green</span></code>), or 42.</p>
+<p>Contrary to structs, enum types cannot be marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>.</p>
+<p>The first enum label must be associated with a value.</p>
+<p>The support type (here <code class="docutils literal notranslate"><span class="pre">UINT32</span></code>) must be the same type as the type
+of the values associated to each label.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">(FIXME) Contrary to type definitions, enum definitions must not be
+followed by a <code class="docutils literal notranslate"><span class="pre">;</span></code></p>
+</div>
+</div>
+<div class="section" id="parameterized-data-types">
+<h2>Parameterized data types<a class="headerlink" href="#parameterized-data-types" title="Permalink to this headline">¶</a></h2>
+<p>3d also offers the possibility to parameterize a data type description
+with arguments that can then be reused in constraints. For instance,
+the following <code class="docutils literal notranslate"><span class="pre">BoundedSum.3d</span></code> data description defines a pair of two
+integers whose sum is bounded by a bound provided by the user as
+argument:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
+<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then, these arguments will add up to the arguments of the
+corresponding validator in the <code class="docutils literal notranslate"><span class="pre">BoundedSumWrapper.h</span></code> header produced
+by 3d:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">BoundedSumCheckBoundedSum</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">bound</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Parameterized data types can also be instantiated within the <code class="docutils literal notranslate"><span class="pre">.3d</span></code>
+file itself, including by the value of the field of a struct:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">mySum</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">bound</span><span class="p">;</span>
+  <span class="n">boundedSum</span><span class="p">(</span><span class="n">bound</span><span class="p">)</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">mySum</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A parameterized data type can also check whether a condition on its
+arguments holds before even trying to check its contents:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span>
+<span class="n">where</span> <span class="n">bound</span> <span class="o">&lt;=</span> <span class="mi">1729</span>
+<span class="p">{</span>
+  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
+<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tagged-unions">
+<h2>Tagged unions<a class="headerlink" href="#tagged-unions" title="Permalink to this headline">¶</a></h2>
+<p>3d supports <em>tagged unions</em>: a data type can store a value named <em>tag</em>
+and a <em>payload</em> whose type depends on the tag value.</p>
+<p>For instance, the following description defines the type of an integer
+prefixed by its size in bits.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define size8  8</span>
+<span class="cp">#define size16 16</span>
+<span class="cp">#define size32 32</span>
+
+<span class="n">casetype</span> <span class="nf">_int_payload</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">size8</span><span class="p">:</span>  <span class="n">UINT8</span>  <span class="n">value8</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">size16</span><span class="p">:</span> <span class="n">UINT16</span> <span class="n">value16</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">size32</span><span class="p">:</span> <span class="n">UINT32</span> <span class="n">value32</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="n">int_payload</span><span class="p">;</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_integer</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                <span class="n">size</span><span class="p">;</span>
+  <span class="n">int_payload</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="n">payload</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">integer</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">(FIXME) Currently, union cases can only be introduced by constants
+defined with <code class="docutils literal notranslate"><span class="pre">#define</span></code>. Due to current restrictions on
+double-fetches, 3d currently does not support unions tagged by enum
+values.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">3d does not enforce that all cases of a union be of the same size,
+and 3d does not introduce any implicit padding to enforce it. Nor
+does 3d introduce any alignment padding.</p>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">casetype</span></code> type actually defines an untagged union type dependent
+on an argument value, which can be reused, e.g. for several types that
+put different constraints on the value of the tag.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">casetype</span></code> type can also be marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>.</p>
+</div>
+<div class="section" id="element-sized-arrays">
+<h2>Element-sized arrays<a class="headerlink" href="#element-sized-arrays" title="Permalink to this headline">¶</a></h2>
+<p>3d lets the user define arrays with a constant number of elements. The
+following example defines a triangle where the three corners of the
+triangle are recorded in an array of 3 elements:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_triangle</span> <span class="p">{</span>
+  <span class="n">point</span> <span class="n">corners</span><span class="p">[{</span><span class="mi">3</span><span class="p">}];</span>
+<span class="p">}</span> <span class="n">triangle</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">(FIXME) There is no direct 3d support for arrays with a variable
+number of elements. Sometimes, but not always, they can be simulated
+with variable-size arrays in terms of size in bytes.</p>
+</div>
+</div>
+<div class="section" id="byte-sized-arrays">
+<h2>Byte-sized arrays<a class="headerlink" href="#byte-sized-arrays" title="Permalink to this headline">¶</a></h2>
+<p>3d lets the user define arrays with a constant of variable size in bytes.</p>
+<p>TODO:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">suffix</span></code>: am I restricted to only one explicitly declared
+variable-sized array having to be named <code class="docutils literal notranslate"><span class="pre">suffix</span></code> and be the last
+element of my struct? does it mean that if I need several
+variable-sized arrays, I have to use parameterized data types?</li>
+<li><code class="docutils literal notranslate"><span class="pre">sizeof</span></code>: how does it work with “variable-size” types with no
+variable-size suffix? (e.g. unions where cases do not have the same
+size)</li>
+<li>how could we define variable-length arrays in terms of number of
+elements?</li>
+</ul>
+</div>
+<div class="section" id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<p>TODO:</p>
+<ul class="simple">
+<li>how to return values as pointer arguments</li>
+<li><code class="docutils literal notranslate"><span class="pre">onerror</span></code>: does it work?</li>
+<li>how do actions work with array elements</li>
+</ul>
+</div>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>The user can insert comments in their <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file, some of which will
+be inserted into the <code class="docutils literal notranslate"><span class="pre">.c</span></code> file:</p>
 <p>TODO</p>
+</div>
 </div>
 
 

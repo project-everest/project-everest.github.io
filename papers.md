@@ -9,6 +9,24 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2020</td></tr>
 
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="16"></a>[16]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/steelcore.pdf">
+      <span class="bibtitle" itemprop="name">SteelCore: An Extensible Concurrent Separation Logic for Effectful Dependently Typed Programs</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Nikhil Swamy</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aseem Rastogi</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Denis Merigoux</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Danel Ahman</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Guido Mart&iacute;nez</span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">To appear in the 25th ACM SIGPLAN International Conference on Functional Programming</span>
+      </span>
+      <span itemprop="datePublished">2020</span>.
+    </span>
+  </td>
+</tr>
+
 <tr class="bibline"><td class="bibref">[15]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/evercrypt.pdf">
@@ -41,7 +59,7 @@ permalink: /papers/
 <tr><td colspan="2" class="sheader">2019</td></tr>
 
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="13"></a>[14]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="14"></a>[14]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everparse.pdf">
       <span class="bibtitle" itemprop="name">EverParse: Verified Secure Zero-Copy Parsers for Authenticated Message Formats</span></a>

@@ -18,9 +18,9 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Denis Merigoux</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Danel Ahman</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Guido Mart&iacute;nez</span>)
+<span itemprop="author" itemtype="http://schema.org/Person">Guido Mart&iacute;nez</span></span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">To appear in the 25th ACM SIGPLAN International Conference on Functional Programming</span>
+        <span itemprop="isPartOf">To appear in the 25th ACM SIGPLAN International Conference on Functional Programming (ICFP),</span>
       </span>
       <span itemprop="datePublished">2020</span>.
     </span>

@@ -42,7 +42,7 @@
     "date" : "April 2, 2019"
   },
   {
-    "title" : "Cryptography That Can’t Be Hacked",
+    "title" : "Cryptography That Is Provably Secure",
     "url" : "https://www.quantamagazine.org/how-the-evercrypt-library-creates-hacker-proof-cryptography-20190402/",
     "venue" : "Quanta Magazine",
     "description": "An overview of our EverCrypt release, but the article title and first few paragraphs are is indeed over the top",

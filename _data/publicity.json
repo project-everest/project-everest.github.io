@@ -1,5 +1,12 @@
 [
   {
+    "title" : "The story behind that little padlock in your browser",
+    "url" : "https://horizon-magazine.eu/article/story-behind-little-padlock-your-browser.html",
+    "venue" : "Horizon: the EU Research & Innovation magazine",
+    "description": "",
+    "date" : "March 24, 2020"
+  },
+  {
     "title" : "Project Everest: Advancing the science of program proof",
     "url" : "https://www.microsoft.com/en-us/research/blog/project-everest-advancing-the-science-of-program-proof/",
     "venue" : "Microsoft Research Blog",

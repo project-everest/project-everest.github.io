@@ -1,5 +1,12 @@
 [
   {
+    "title" : "Performance Improvements via Formally-Verified Cryptography in Firefox",
+    "url" : "https://blog.mozilla.org/security/2020/07/06/performance-improvements-via-formally-verified-cryptography-in-firefox/",
+    "venue" : "Mozilla Security Blog",
+    "description": "",
+    "date" : "July 6, 2020"
+  },
+  {
     "title" : "The story behind that little padlock in your browser",
     "url" : "https://horizon-magazine.eu/article/story-behind-little-padlock-your-browser.html",
     "venue" : "Horizon: the EU Research & Innovation magazine",

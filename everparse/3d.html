@@ -175,7 +175,8 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The documentation from this page covers the EverParse/3d releases
-v2020.06.14 or later.</p>
+v2020.08.07 or later. Documentations for earlier versions may be
+found in the Git history.</p>
 </div>
 <p>EverParse/3d lets you write a data format description and
 automatically produces efficient data validation code formally
@@ -191,7 +192,7 @@ secret-independence.</p>
 <li>Write your data format description in the 3d language, as
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</li>
 <li>Give MyFile1.3d and MyFile2.3d to EverParse:<ul>
-<li>with the Windows binary package: <code class="docutils literal notranslate"><span class="pre">everparse.bat</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
+<li>with the Windows binary package: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
 <li>with the Linux binary package: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
 <li>with the sources: <code class="docutils literal notranslate"><span class="pre">src/3d/3d</span> <span class="pre">--batch</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
 </ul>
@@ -234,7 +235,7 @@ the <a class="reference external" href="https://github.com/project-everest/everp
 like. No need to configure it anyhow.</li>
 </ol>
 <p>Then, everything is contained in a <code class="docutils literal notranslate"><span class="pre">everparse</span></code> directory, whose
-actual entrypoint executable is <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> (for Windows) or
+actual entrypoint executable is <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> (for Windows) or
 <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> (for Linux.)</p>
 <p>Binary packages already contain all dependencies required by
 EverParse, such as F*, KReMLin and z3, so no need to install anything
@@ -247,7 +248,7 @@ not require any POSIX emulation layer such as Cygwin or WSL.</p>
 </div>
 <div class="section" id="run">
 <h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h2>
-<p>On Windows: <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> [options] input_files</p>
+<p>On Windows: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> [options] input_files</p>
 <p>On Linux: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> [options] input_files</p>
 <p>Options are treated from left to right:</p>
 <ul>
@@ -396,10 +397,10 @@ the environment variables accordingly.)</p>
 at <code class="docutils literal notranslate"><span class="pre">src/3d/3d</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You cannot use <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> from the
+<p class="last">You cannot use <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> from the
 sources. You need to use <code class="docutils literal notranslate"><span class="pre">3d</span></code> instead.</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">3d</span></code> has the same options as <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code>,
+<p><code class="docutils literal notranslate"><span class="pre">3d</span></code> has the same options as <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code>,
 with the following caveat: no options are toggled by default (not even
 <code class="docutils literal notranslate"><span class="pre">--batch</span></code> or <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>) and you need to provide all options
 by hand.</p>

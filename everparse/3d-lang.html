@@ -106,6 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#element-sized-arrays">Element-sized arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#byte-sized-arrays">Byte-sized arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#checking-3d-types-for-correspondence-with-existing-c-types">Checking 3d types for correspondence with existing C types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
 </ul>
 </li>
@@ -489,18 +490,211 @@ elements?</li>
 </div>
 <div class="section" id="actions">
 <h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<p>In addition to semantic constraints on types, 3d allows augmenting the
+the fields of a struct or union with imperative actions, which allows
+running certain user-chosen commands at specified points during
+validation.</p>
+<p>Let’s start with a simple example. Suppose you want to validate that a
+byte array contains a pair of integers, and then read them into a
+couple of mutable locations of your choosing. Here’s how:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_Pair</span><span class="p">(</span><span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">x</span><span class="p">,</span>
+                     <span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">UINT32</span> <span class="n">first</span>
+   <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
+        <span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="n">first</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+   <span class="p">};</span>
+
+   <span class="n">UINT32</span> <span class="n">second</span>
+   <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
+        <span class="o">*</span><span class="n">y</span> <span class="o">=</span> <span class="n">second</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+   <span class="p">};</span>
+<span class="p">}</span> <span class="n">Pair</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The struct <code class="docutils literal notranslate"><span class="pre">Pair</span></code> is takes two out-parameters, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. Out
+parameters are signified by the <code class="docutils literal notranslate"><span class="pre">mutable</span></code> keyword and have pointer
+types—in this case <code class="docutils literal notranslate"><span class="pre">UINT32*</span></code>. Each field in the struct is
+augmented with an <code class="docutils literal notranslate"><span class="pre">on-success</span></code> action, where the action’s body is a
+runs a small program snippet, which writes the <code class="docutils literal notranslate"><span class="pre">first</span></code> field into
+<code class="docutils literal notranslate"><span class="pre">x</span></code>; the <code class="docutils literal notranslate"><span class="pre">second</span></code> field into <code class="docutils literal notranslate"><span class="pre">y</span></code>; and returns <code class="docutils literal notranslate"><span class="pre">true</span></code> in both
+cases. Actions can also return <code class="docutils literal notranslate"><span class="pre">false</span></code>, to signal that validation
+should halt and signal failure.</p>
+<p>Now, in greater detail:</p>
+<div class="section" id="action-basics">
+<h3>Action basics<a class="headerlink" href="#action-basics" title="Permalink to this headline">¶</a></h3>
+<p>An action is a program composed from a few elements:</p>
+<ul class="simple">
+<li>Atomic actions: Basic commands to read and write variables</li>
+<li>Variable bindings and sequential composition</li>
+<li>Conditionals</li>
+</ul>
+<p>An action is evaluated with respect to a handler (e.g.,
+<code class="docutils literal notranslate"><span class="pre">on-success</span></code>) associated with a given field. We refer to this field
+as the “base field” of the action.</p>
+<p>An action is invoked by EverParse immediately after validating the
+base field of the action. The action of the <code class="docutils literal notranslate"><span class="pre">on-success</span></code> handler is
+invoked in case the field is valid (if preseent), otherwise the
+<code class="docutils literal notranslate"><span class="pre">on-error</span></code> handler is invoked (if present).</p>
+<p>The on-success handler can influence whether or not validation of the
+other fields continues by returning a boolean—in case an on-success
+action returns false, the validation of the type halts with an error.</p>
+<p>The on-error handler also returns a boolean: in case it returns false,
+the error code associated with the validator is mentions that an
+on-error handler failed; if it returns true, the error code is the
+error code associated with the failed validation of the base field. In
+both cases, validation halts with an error.</p>
+<div class="section" id="atomic-actions">
+<h4>Atomic actions<a class="headerlink" href="#atomic-actions" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">*i</span> <span class="pre">=</span> <span class="pre">e</span></code>: Assigns the value of the expressions <code class="docutils literal notranslate"><span class="pre">e</span></code> to the memory referenced by the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">*i</span></code>: Dereferences the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">field_pos</span></code>: Returns the offset of base field of the action from
+the base of the validation buffer as a <code class="docutils literal notranslate"><span class="pre">UINT32</span></code> value.</li>
+<li><code class="docutils literal notranslate"><span class="pre">field_ptr</span></code>: Returns a pointer to base field of the action as a
+<code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>, i.e., an abstract pointer to a <code class="docutils literal notranslate"><span class="pre">UINT8</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">e</span></code> Returns a boolean value <code class="docutils literal notranslate"><span class="pre">e</span></code></li>
+</ul>
 <p>TODO:</p>
 <ul class="simple">
-<li>how to return values as pointer arguments</li>
-<li><code class="docutils literal notranslate"><span class="pre">onerror</span></code>: does it work?</li>
-<li>how do actions work with array elements</li>
+<li>We have experimental features for external calls in actions and for
+an abort action.</li>
 </ul>
+</div>
+<div class="section" id="composing-atomic-actions-sequentially-and-conditionally">
+<h4>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Permalink to this headline">¶</a></h4>
+<p>Composite actions can be built in a few ways:</p>
+<ul class="simple">
+<li>Atomic actions: Any atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code> the <code class="docutils literal notranslate"><span class="pre">a;</span></code> (with a trailing
+semicolon) is a composite action <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
+<li>Sequential composition: <code class="docutils literal notranslate"><span class="pre">`a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, and
+a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">a;p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code> then <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
+<li>Variable binding: <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+and a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code>
+and stores its result in the new variable <code class="docutils literal notranslate"><span class="pre">x</span></code> (local to the
+action) and then runs <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
+<li>Conditionals: <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a conditional action that runs the
+composite actions <code class="docutils literal notranslate"><span class="pre">p</span></code> only if the condition <code class="docutils literal notranslate"><span class="pre">e</span></code> is
+true. Additionally, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p0</span> <span class="pre">}</span> <span class="pre">else</span> <span class="pre">{</span> <span class="pre">p1</span> <span class="pre">}</span></code> is also legal,
+with the expected semantics, i.e., <code class="docutils literal notranslate"><span class="pre">p1`</span> <span class="pre">is</span> <span class="pre">run</span> <span class="pre">in</span> <span class="pre">case</span> <span class="pre">``e</span></code> is
+false.</li>
+</ul>
+</div>
+<div class="section" id="another-example">
+<h4>Another example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h4>
+<p>Consider the following definition:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+    <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+    <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
+        <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">field_ptr</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="n">T</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here, we define a type <code class="docutils literal notranslate"><span class="pre">T</span></code> with an out-parameter <code class="docutils literal notranslate"><span class="pre">PUINT8*</span> <span class="pre">out</span></code>,
+i.e., pointer to a pointer to a <code class="docutils literal notranslate"><span class="pre">UINT8</span></code>.</p>
+<p>Associated with field <code class="docutils literal notranslate"><span class="pre">f2</span></code> we have an on-success handler, where we
+read a pointer to the field <code class="docutils literal notranslate"><span class="pre">f2</span></code> into the local variable <code class="docutils literal notranslate"><span class="pre">x</span></code>;
+then, we write <code class="docutils literal notranslate"><span class="pre">x</span></code> into <code class="docutils literal notranslate"><span class="pre">*out</span></code>; and finally return <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The return type of <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> is <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>. In
+EverParse, a <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code> is a pointer into the input buffer, unlike
+a <code class="docutils literal notranslate"><span class="pre">UINT8*</span></code> which may point to any other memory. This distinction
+between pointers into the input buffer and other pointers allows
+EverParse to prove that validators never read the contents of the
+input buffer more than once, i.e., there are no double fetches from
+the input buffer. As such, the <code class="docutils literal notranslate"><span class="pre">out</span></code> parameter should have type
+<code class="docutils literal notranslate"><span class="pre">PUINT8*</span></code> rather than <code class="docutils literal notranslate"><span class="pre">UINT8*</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="restrictions">
+<h3>Restrictions<a class="headerlink" href="#restrictions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Actions can only be associated with fields.</li>
+<li>Actions cannot be associated with the elements of an array, unless
+the array elements themselves are defined types, in which case they
+can be associated with the fields of that type, if any.</li>
+<li>Actions cannot be associated with bit fields.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="checking-3d-types-for-correspondence-with-existing-c-types">
+<h2>Checking 3d types for correspondence with existing C types<a class="headerlink" href="#checking-3d-types-for-correspondence-with-existing-c-types" title="Permalink to this headline">¶</a></h2>
+<p>A typical scenario is that you have an existing C program with some
+collection of types defined in a file <code class="docutils literal notranslate"><span class="pre">Types.h</span></code>.  You’ve written a
+<code class="docutils literal notranslate"><span class="pre">Types.3d</span></code> file to defined validators for byte buffers containing
+those types, typically <em>refining</em> the C types with additional semantic
+constraints and also with actions. Now, you may want to make sure that
+types you defined in <code class="docutils literal notranslate"><span class="pre">Types.3d</span></code> correspond to the types in
+<code class="docutils literal notranslate"><span class="pre">Types.h</span></code>, e.g., to ensure that you didn’t forget to include a field
+in a struct, or that you’ve made explicit in your <code class="docutils literal notranslate"><span class="pre">Types.3d</span></code> the
+alignment padding between struct fields that a C compiler is sometimes
+requires to insert.</p>
+<p>To assist with this, 3d provides the following feature:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// SNIPPET_START: GetFieldPtr.T</span>
+<span class="n">entrypoint</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+    <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+    <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
+        <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">field_ptr</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="n">T</span><span class="p">;</span>
+<span class="c1">// SNIPPET_END: GetFieldPtr.T</span>
+
+<span class="n">refining</span> <span class="s">&quot;GetFieldPtrBase.h&quot;</span> <span class="p">{</span>
+   <span class="n">S</span> <span class="n">as</span> <span class="n">T</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Following the type definitions, the <code class="docutils literal notranslate"><span class="pre">refining</span></code> section states that
+the type <code class="docutils literal notranslate"><span class="pre">S</span></code> defined in the C header file <code class="docutils literal notranslate"><span class="pre">GetFieldPtrBase.h</span></code> is
+refined by the type <code class="docutils literal notranslate"><span class="pre">T</span></code> defined here. As a result of this
+declaration, 3d emits a static assertion in the C code of the form</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;GetFieldPtrBase.h&quot;</span><span class="cp"></span>
+<span class="n">C_ASSERT</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="mi">30</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>checking that the <code class="docutils literal notranslate"><span class="pre">sizeof(S)</span></code> as computed by the C compiler matches
+3d’s computation of the <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span></code>.</p>
+<p>In generality, the refining declaration takes the following form:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">refining</span> <span class="s">&quot;I1.h&quot;</span><span class="p">,</span> <span class="p">...,</span> <span class="s">&quot;In.h&quot;</span> <span class="p">{</span>
+    <span class="n">S1</span> <span class="n">as</span> <span class="n">T1</span><span class="p">,</span> <span class="p">...</span>
+    <span class="n">Sm</span> <span class="n">as</span> <span class="n">Tm</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where each <code class="docutils literal notranslate"><span class="pre">Si</span></code> is a type defined in one of the C header files
+“I1.h”, …, “In.h”, and the <code class="docutils literal notranslate"><span class="pre">Ti</span></code> are types defined in the current
+3d file. In case the types have the same names, one can simply write
+<code class="docutils literal notranslate"><span class="pre">T</span></code> instead of <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">as</span> <span class="pre">T</span></code>.</p>
 </div>
 <div class="section" id="comments">
 <h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
 <p>The user can insert comments in their <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file, some of which will
 be inserted into the <code class="docutils literal notranslate"><span class="pre">.c</span></code> file:</p>
-<p>TODO</p>
+<p>There are three kinds of comments:</p>
+<ul class="simple">
+<li>Block comments are delimited by <code class="docutils literal notranslate"><span class="pre">/*</span></code> and <code class="docutils literal notranslate"><span class="pre">*/</span></code> and do not
+nest. These are never propagated to the C code.</li>
+<li>Line comments begin with <code class="docutils literal notranslate"><span class="pre">//</span></code> and are propagated to C
+heuristically close to the translated source construct.</li>
+<li>Each top-level declaration can be preceded by a type declaration
+comment delimited by <code class="docutils literal notranslate"><span class="pre">/*++</span></code> and <code class="docutils literal notranslate"><span class="pre">--*/</span></code>: These are propagated to
+the C code preceding the C procedure corresponding to the validator
+of the source type.</li>
+</ul>
 </div>
 </div>
 

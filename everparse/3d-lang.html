@@ -103,8 +103,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#constants-and-enumerations">Constants and Enumerations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parameterized-data-types">Parameterized data types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tagged-unions">Tagged unions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#element-sized-arrays">Element-sized arrays</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#byte-sized-arrays">Byte-sized arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arrays">Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#checking-3d-types-for-correspondence-with-existing-c-types">Checking 3d types for correspondence with existing C types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
@@ -450,43 +449,52 @@ on an argument value, which can be reused, e.g. for several types that
 put different constraints on the value of the tag.</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">casetype</span></code> type can also be marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>.</p>
 </div>
-<div class="section" id="element-sized-arrays">
-<h2>Element-sized arrays<a class="headerlink" href="#element-sized-arrays" title="Permalink to this headline">¶</a></h2>
-<p>3d lets the user define arrays with a constant number of elements. The
-following example defines a triangle where the three corners of the
-triangle are recorded in an array of 3 elements:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
-  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
-  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
-
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_triangle</span> <span class="p">{</span>
-  <span class="n">point</span> <span class="n">corners</span><span class="p">[{</span><span class="mi">3</span><span class="p">}];</span>
-<span class="p">}</span> <span class="n">triangle</span><span class="p">;</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">(FIXME) There is no direct 3d support for arrays with a variable
-number of elements. Sometimes, but not always, they can be simulated
-with variable-size arrays in terms of size in bytes.</p>
-</div>
-</div>
-<div class="section" id="byte-sized-arrays">
-<h2>Byte-sized arrays<a class="headerlink" href="#byte-sized-arrays" title="Permalink to this headline">¶</a></h2>
-<p>3d lets the user define arrays with a constant of variable size in bytes.</p>
-<p>TODO:</p>
+<div class="section" id="arrays">
+<h2>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+<p>A field in a struct or a casetype can be an array.</p>
+<p>Arrays in 3d differ from arrays in C in a few important ways:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">suffix</span></code>: am I restricted to only one explicitly declared
-variable-sized array having to be named <code class="docutils literal notranslate"><span class="pre">suffix</span></code> and be the last
-element of my struct? does it mean that if I need several
-variable-sized arrays, I have to use parameterized data types?</li>
-<li><code class="docutils literal notranslate"><span class="pre">sizeof</span></code>: how does it work with “variable-size” types with no
-variable-size suffix? (e.g. unions where cases do not have the same
-size)</li>
-<li>how could we define variable-length arrays in terms of number of
-elements?</li>
+<li>Rather than counting elements, the size of an array in 3d is always
+given in bytes.</li>
+<li>Array sizes need not be a constant expression: any integer
+expression is permissible for an array, so long as it fits in
+<code class="docutils literal notranslate"><span class="pre">UINT32</span></code>. This allows expressing variable-sized arrays.</li>
 </ul>
+<p>3d supports several kinds of arrays.</p>
+<div class="section" id="byte-sized-arrays">
+<h3>Byte-sized arrays<a class="headerlink" href="#byte-sized-arrays" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size</span> <span class="pre">n]</span></code></li>
+</ul>
+<p>The notation <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size</span> <span class="pre">n]</span></code> describes a field named <code class="docutils literal notranslate"><span class="pre">f</span></code> holding an
+array of elements of type <code class="docutils literal notranslate"><span class="pre">T</span></code> whose cumulative size in bytes is <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">=</span> <span class="pre">1</span></code>, 3d supports the notation <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[n]</span></code>, i.e., for
+byte arrays, since the byte size and element count coincide, you need
+not qualify the size of the array with a <code class="docutils literal notranslate"><span class="pre">:byte-size</span></code> qualifier.</p>
+</div>
+<div class="section" id="upper-bounded-byte-sized-arrays">
+<h3>Upper-bounded byte-sized arrays<a class="headerlink" href="#upper-bounded-byte-sized-arrays" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-at-most</span> <span class="pre">n]</span></code></li>
+</ul>
+<p>Sometimes, it is required to specify that a variable size array has a
+cumulative length that fits within some given byte size bound. This
+can be specified in 3d using the notation above, which introduces a
+field <code class="docutils literal notranslate"><span class="pre">f</span></code> of <code class="docutils literal notranslate"><span class="pre">T</span></code>-typed elements whose cumulative size in bytes
+less than or equal to <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+</div>
+<div class="section" id="singleton-arrays-of-variable-size">
+<h3>Singleton arrays of variable size<a class="headerlink" href="#singleton-arrays-of-variable-size" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array</span> <span class="pre">n]</span></code></li>
+</ul>
+<p>In some cases, it is required to specify that a field contains a
+single variable-sized element whose size in bytes is equal to a given
+expression. The notation above introduces a field <code class="docutils literal notranslate"><span class="pre">f</span></code> that contains
+a single element of type <code class="docutils literal notranslate"><span class="pre">T</span></code> occupying exactly <code class="docutils literal notranslate"><span class="pre">n</span></code> bytes.</p>
+<p>We expect to add several other kinds of variable-length array-like
+types in the uture.</p>
+</div>
 </div>
 <div class="section" id="actions">
 <h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>

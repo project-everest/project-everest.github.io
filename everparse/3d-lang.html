@@ -197,7 +197,7 @@ or pointers to them, to the caller code.</p>
 <p>We would like to extract a validator for a simple point type, with X
 and Y coordinates. So we create a file, <code class="docutils literal notranslate"><span class="pre">HelloWorld.3d</span></code>, with the
 following 3d data format description:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
   <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
   <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">point</span><span class="p">;</span>
@@ -227,12 +227,12 @@ that fits in <code class="docutils literal notranslate"><span class="pre">len</s
 marked with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> tells 3d to expose its validator in
 <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> which will bear the name <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>.</p>
 <p>Structs can be nested, such as in the following instance:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
   <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
   <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">point</span><span class="p">;</span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_triangle</span> <span class="p">{</span>
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_triangle</span> <span class="p">{</span>
   <span class="n">point</span> <span class="n">a</span><span class="p">;</span>
   <span class="n">point</span> <span class="n">b</span><span class="p">;</span>
   <span class="n">point</span> <span class="n">c</span><span class="p">;</span>
@@ -249,17 +249,17 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 <p>3d does not enforce any alignment constraints, and does not
 introduce any implicit alignment padding. So, for instance, in the
 following data format description:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_point</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
   <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
   <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">point</span><span class="p">;</span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint1</span> <span class="p">{</span>
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint1</span> <span class="p">{</span>
   <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
   <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">coloredPoint1</span><span class="p">;</span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint2</span> <span class="p">{</span>
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint2</span> <span class="p">{</span>
   <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
   <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">coloredPoint2</span><span class="p">;</span>
@@ -278,7 +278,7 @@ the <code class="docutils literal notranslate"><span class="pre">color</span></c
 <p>Validators for structs alone are only layout-related. Beyond that, 3d
 provides a way to actually check for constraints on their field
 values:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_smoker</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_smoker</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">age</span> <span class="p">{</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">21</span> <span class="p">};</span>
   <span class="n">UINT8</span> <span class="n">cigarettesConsumed</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">smoker</span><span class="p">;</span>
@@ -297,7 +297,7 @@ Boolean propositional logic (<code class="docutils literal notranslate"><span cl
 <p>Constraints on a field can also depend on the values of the previous
 fields of the struct. For instance, here is a type definition for a
 pair ordered by increasing values:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_orderedPair</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_orderedPair</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">lesser</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">greater</span> <span class="p">{</span> <span class="n">lesser</span> <span class="o">&lt;=</span> <span class="n">greater</span> <span class="p">};</span>
 <span class="p">}</span> <span class="n">orderedPair</span><span class="p">;</span>
@@ -307,7 +307,7 @@ pair ordered by increasing values:</p>
 <p class="first admonition-title">Warning</p>
 <p>Arithmetics on constraints are evaluated in machine integers, not
 mathematical integers. Thus, the following naive definition:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_boundedSum</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="p">};</span>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
@@ -316,7 +316,7 @@ mathematical integers. Thus, the following naive definition:</p>
 <p>will fail at F* verification because the <code class="docutils literal notranslate"><span class="pre">left</span> <span class="pre">+</span> <span class="pre">right</span></code> sum must
 be proven to not overflow <em>before</em> evaluating the condition. The
 correct way of stating the condition is as follows:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_boundedSum</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
@@ -350,7 +350,7 @@ to be true (thus <code class="docutils literal notranslate"><span class="pre">42
   <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="p">}</span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_coloredPoint</span> <span class="p">{</span>
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint</span> <span class="p">{</span>
   <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">x</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">y</span><span class="p">;</span>
@@ -376,7 +376,7 @@ with arguments that can then be reused in constraints. For instance,
 the following <code class="docutils literal notranslate"><span class="pre">BoundedSum.3d</span></code> data description defines a pair of two
 integers whose sum is bounded by a bound provided by the user as
 argument:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
   <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
@@ -390,7 +390,7 @@ by 3d:</p>
 </div>
 <p>Parameterized data types can also be instantiated within the <code class="docutils literal notranslate"><span class="pre">.3d</span></code>
 file itself, including by the value of the field of a struct:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">mySum</span> <span class="p">{</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">mySum</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">bound</span><span class="p">;</span>
   <span class="n">boundedSum</span><span class="p">(</span><span class="n">bound</span><span class="p">)</span> <span class="n">sum</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">mySum</span><span class="p">;</span>
@@ -398,7 +398,7 @@ file itself, including by the value of the field of a struct:</p>
 </div>
 <p>A parameterized data type can also check whether a condition on its
 arguments holds before even trying to check its contents:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span>
 <span class="n">where</span> <span class="n">bound</span> <span class="o">&lt;=</span> <span class="mi">1729</span>
 <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
@@ -425,7 +425,7 @@ prefixed by its size in bits.</p>
   <span class="p">}</span>
 <span class="p">}</span> <span class="n">int_payload</span><span class="p">;</span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_integer</span> <span class="p">{</span>
+<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_integer</span> <span class="p">{</span>
   <span class="n">UINT32</span>                <span class="n">size</span><span class="p">;</span>
   <span class="n">int_payload</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="n">payload</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">integer</span><span class="p">;</span>
@@ -506,7 +506,7 @@ validation.</p>
 byte array contains a pair of integers, and then read them into a
 couple of mutable locations of your choosing. Here’s how:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_Pair</span><span class="p">(</span><span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">x</span><span class="p">,</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Pair</span><span class="p">(</span><span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">x</span><span class="p">,</span>
                      <span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">y</span><span class="p">)</span>
 <span class="p">{</span>
    <span class="n">UINT32</span> <span class="n">first</span>
@@ -595,7 +595,7 @@ false.</li>
 <h4>Another example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h4>
 <p>Consider the following definition:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
     <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
     <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
@@ -650,7 +650,7 @@ requires to insert.</p>
 <p>To assist with this, 3d provides the following feature:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// SNIPPET_START: GetFieldPtr.T</span>
 <span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nf">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
     <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
     <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>

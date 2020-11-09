@@ -9,7 +9,7 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2021</td></tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="17"></a>[17]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="18"></a>[18]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everquic.pdf">
       <span class="bibtitle" itemprop="name">A Security Model and Fully Verified Implementation for the IETF QUIC Record Layer
@@ -36,6 +36,30 @@ permalink: /papers/
 </tr>
 
 <tr><td colspan="2" class="sheader">2020</td></tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="17"></a>[17]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/haclxn.pdf">
+      <span class="bibtitle" itemprop="name">HACL&times;N: Verified Generic SIMD Crypto (for all your favorite platforms)
+</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Marina Polubelova</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Karthikeyan Bhargavan</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Benjamin Beurdouche</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aymeric Fromherz</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Natalia Kulatova</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Santiago Zanella-B&eacute;guelin</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">In Proceedings of the 27th ACM/SIGSAC International Conference on Computer and Communications Security (CCS)</span>
+      </span>
+      <span itemprop="datePublished">2020</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="/assets/haclxn.pdf">[pdf]</a>
+      <a href="https://eprint.iacr.org/2020/572">[eprint]</a>
+    </span>
+  </td>
+</tr>
 
 <tr class="bibline"><td class="bibref"><a class="bibanchor" name="16"></a>[16]</td>
   <td class="bibitem">

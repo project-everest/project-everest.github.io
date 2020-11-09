@@ -7,6 +7,30 @@ permalink: /papers/
 <table class="result">
 <tbody>
 
+<tr><td colspan="2" class="sheader">2021</td></tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="17"></a>[17]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everquic.pdf">
+      <span class="bibtitle" itemprop="name">A Security Model and Fully Verified Implementation for the IETF QUIC Record Layer
+</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Antoine Delignat-Lavaud</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">C&eacute;dric Fournet</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Jonathan Protzenko</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Jay Bosamiya</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Joseph Lallemand</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Itsaka Rakotonirina</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">To Appear In The Proceedings of the 42nd IEEE Symposium on Security & Privacy</span>
+      </span>
+      <span itemprop="datePublished">2021</span>.
+    </span>
+  </td>
+</tr>
+
 <tr><td colspan="2" class="sheader">2020</td></tr>
 
 <tr class="bibline"><td class="bibref"><a class="bibanchor" name="16"></a>[16]</td>

@@ -28,6 +28,10 @@ permalink: /papers/
       </span>
       <span itemprop="datePublished">2021</span>.
     </span>
+    <span class="bibmenu">
+      <a href="/assets/everquic.pdf">[pdf]</a>
+      <a href="https://eprint.iacr.org/2020/114">[eprint]</a>
+    </span>
   </td>
 </tr>
 
@@ -75,6 +79,10 @@ permalink: /papers/
         <span itemprop="isPartOf">In Proceedings of the 41st IEEE Symposium on Security & Privacy</span>
       </span>
       <span itemprop="datePublished">2020</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="/assets/evercrypt.pdf">[pdf]</a>
+      <a href="https://eprint.iacr.org/2019/757">[eprint]</a>
     </span>
   </td>
 </tr>

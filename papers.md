@@ -72,7 +72,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Santiago Zanella-Beguelin</span>
 </span>)
       <span class="bibbooktitle">
-        <span itemprop="isPartOf">To Appear In The Proceedings of the IEEE Symposium on Security & Privacy</span>
+        <span itemprop="isPartOf">In Proceedings of the 41st IEEE Symposium on Security & Privacy</span>
       </span>
       <span itemprop="datePublished">2020</span>.
     </span>

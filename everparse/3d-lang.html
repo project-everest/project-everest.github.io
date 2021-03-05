@@ -110,6 +110,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#checking-3d-types-for-correspondence-with-existing-c-types">Checking 3d types for correspondence with existing C types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modular-structure-and-files">Modular structure and files</a></li>
 </ul>
 </li>
 </ul>
@@ -708,6 +709,54 @@ comment delimited by <code class="docutils literal notranslate"><span class="pre
 the C code preceding the C procedure corresponding to the validator
 of the source type.</li>
 </ul>
+</div>
+<div class="section" id="modular-structure-and-files">
+<h2>Modular structure and files<a class="headerlink" href="#modular-structure-and-files" title="Permalink to this headline">¶</a></h2>
+<p>A 3d specification is described in a collection of modules, each
+stored in a file with a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> extension. The name of a module is
+derived from its filename, i.e., the file <code class="docutils literal notranslate"><span class="pre">A.3d</span></code> defines a module
+named <code class="docutils literal notranslate"><span class="pre">A</span></code>. A module can <code class="docutils literal notranslate"><span class="pre">Derived</span></code> (in Derived.3d) can refer to
+another module <code class="docutils literal notranslate"><span class="pre">Base</span></code> (in Base.3d) by its name, allowing definitions
+in <code class="docutils literal notranslate"><span class="pre">Derived</span></code> to reuse the definitions that are exported in <code class="docutils literal notranslate"><span class="pre">Base</span></code>.</p>
+<p>For example, in module <code class="docutils literal notranslate"><span class="pre">Base</span></code> we could define the following types:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">export</span>
+<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">ULONG</span><span class="p">;</span>
+
+<span class="n">export</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Pair</span> <span class="p">{</span>
+   <span class="n">ULONG</span> <span class="n">first</span><span class="p">;</span>
+   <span class="n">ULONG</span> <span class="n">second</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Pair</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Mine</span> <span class="p">{</span>
+   <span class="n">UINT8</span> <span class="n">f</span><span class="p">;</span>
+   <span class="n">UINT8</span> <span class="n">g</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Mine</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note, the <code class="docutils literal notranslate"><span class="pre">export</span></code> qualifier indicate that these definitions may be
+referenced from another module. Types that are not exproted (like
+<code class="docutils literal notranslate"><span class="pre">Mine</span></code>) are not visible from another module.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">Derived</span></code> we can use the type from <code class="docutils literal notranslate"><span class="pre">Base</span></code> by referring to it
+using a fully qualified name of the form <code class="docutils literal notranslate"><span class="pre">&lt;MODULE</span> <span class="pre">NAME&gt;.&lt;IDENTIFIER&gt;</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Triple</span> <span class="p">{</span>
+   <span class="n">Base</span><span class="p">.</span><span class="n">Pair</span> <span class="n">pair</span><span class="p">;</span>
+   <span class="n">Base</span><span class="p">.</span><span class="n">ULONG</span> <span class="n">third</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Triple</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>3d also allows defining module abbreviations. For example, using
+<code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">B</span> <span class="pre">=</span> <span class="pre">Base</span></code> we introduce a shorter name for the module
+<code class="docutils literal notranslate"><span class="pre">Base</span></code> for use within the current module.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Base</span>
+<span class="n">entrypoint</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Quad</span> <span class="p">{</span>
+   <span class="n">B</span><span class="p">.</span><span class="n">Pair</span> <span class="n">_12</span><span class="p">;</span>
+   <span class="n">B</span><span class="p">.</span><span class="n">Pair</span> <span class="n">_34</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Quad</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 

@@ -110,6 +110,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#checking-3d-types-for-correspondence-with-existing-c-types">Checking 3d types for correspondence with existing C types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modular-structure-and-files">Modular structure and files</a></li>
 </ul>
 </li>
@@ -708,6 +709,26 @@ heuristically close to the translated source construct.</li>
 comment delimited by <code class="docutils literal notranslate"><span class="pre">/*++</span></code> and <code class="docutils literal notranslate"><span class="pre">--*/</span></code>: These are propagated to
 the C code preceding the C procedure corresponding to the validator
 of the source type.</li>
+</ul>
+</div>
+<div class="section" id="adding-copyright-notices-to-produced-c-h-files">
+<h2>Adding copyright notices to produced .c/.h files<a class="headerlink" href="#adding-copyright-notices-to-produced-c-h-files" title="Permalink to this headline">¶</a></h2>
+<p>If, along with some <code class="docutils literal notranslate"><span class="pre">MyFile.3d</span></code>, in the same directory, you provide
+a file <code class="docutils literal notranslate"><span class="pre">MyFile.3d.copyright.txt</span></code> that contains syntactically correct
+C comments (with <code class="docutils literal notranslate"><span class="pre">//</span></code> or <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code>), then EverParse will prepend
+<code class="docutils literal notranslate"><span class="pre">MyFile.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFileWrapper.c</span></code> and their corresponding <code class="docutils literal notranslate"><span class="pre">.h</span></code> with
+these comments. You do not need to mention this file on the command
+line.</p>
+<p>These comments can contain the following special symbols:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">EVERPARSEVERSION</span></code>, which EverParse will automatically replace
+with its version number;</li>
+<li><code class="docutils literal notranslate"><span class="pre">FILENAME</span></code>, which EverParse will automatically replace with the
+name of the <code class="docutils literal notranslate"><span class="pre">.c</span></code> / <code class="docutils literal notranslate"><span class="pre">.h</span></code> file being generated.</li>
+<li><code class="docutils literal notranslate"><span class="pre">EVERPARSEHASHES</span></code>, which EverParse will automatically replace with
+a hash of the contents of the corresponding .3d file for the purpose
+of <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code> or <code class="docutils literal notranslate"><span class="pre">--check_inplace_hash</span></code> (see <a class="reference external" href="3d.html#alternate-mode-hash-checking">Hash
+checking</a>).</li>
 </ul>
 </div>
 <div class="section" id="modular-structure-and-files">

@@ -104,7 +104,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#download-and-install">Download and install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#default-mode">Default mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alternate-mode-generating-a-makefile">Alternate mode: generating a Makefile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alternate-mode-hash-checking">Alternate mode: hash checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alternate-mode-help-and-version">Alternate mode: help and version</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#optional-from-the-sources">Optional: From the sources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#licenses">Licenses</a></li>
 </ul>
@@ -180,7 +186,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The documentation from this page covers the EverParse/3d releases
-v2020.08.17 or later. Documentations for earlier versions may be
+v2021.03.05 or later. Documentations for earlier versions may be
 found in the Git history.</p>
 </div>
 <p>EverParse/3d lets you write a data format description and
@@ -255,6 +261,8 @@ not require any POSIX emulation layer such as Cygwin or WSL.</p>
 <h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h2>
 <p>On Windows: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> [options] input_files</p>
 <p>On Linux: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> [options] input_files</p>
+<div class="section" id="default-mode">
+<h3>Default mode<a class="headerlink" href="#default-mode" title="Permalink to this headline">¶</a></h3>
 <p>Options are treated from left to right:</p>
 <ul>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">--odir</span> <span class="pre">output_directory_name</span></code></p>
@@ -296,15 +304,6 @@ This option automatically toggles <code class="docutils literal notranslate"><sp
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">--no_cleanup</span></code></p>
 <p>Keep all produced intermediate files. This is toggled by default.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--version</span></code></p>
-<p>Print the version of EverParse/3d and exit (do not process any
-further options to the right, nor any files at all.)</p>
-</li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--help</span></code></p>
-<p>Show the usage message and the status of some options given so far,
-and exit (do not process any further options to the right, nor any
-files at all.)</p>
-</li>
 </ul>
 <p>Options are treated from left to right, with higher priority on
 right-most options. Thus, any <code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code> will override any
@@ -315,20 +314,143 @@ all bear the <code class="docutils literal notranslate"><span class="pre">.3d</s
 with a capital letter. Then, <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> and
 <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> will be shared across <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code>
 files produced for all the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files that you provided.</p>
+</div>
+<div class="section" id="alternate-mode-generating-a-makefile">
+<h3>Alternate mode: generating a Makefile<a class="headerlink" href="#alternate-mode-generating-a-makefile" title="Permalink to this headline">¶</a></h3>
+<p>By default, with <code class="docutils literal notranslate"><span class="pre">--batch</span></code>, given a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> specification, EverParse
+produces <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files by first producing <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> and
+<code class="docutils literal notranslate"><span class="pre">.fst</span></code> files files containing verified F* specifications and
+implementations of validators, and then calling F* and KReMLin on each
+such file to verify and extract them to C. EverParse will issue all
+such calls to F* and KReMLin sequentially.</p>
+<p>Alternatively, with <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">--makefile</span> <span class="pre">gmake</span> <span class="pre">Test.3d</span></code> (on
+Windows; use <code class="docutils literal notranslate"><span class="pre">./everparse.sh</span></code> on Linux), instead of producing <code class="docutils literal notranslate"><span class="pre">.c</span></code>
+and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files, EverParse will take <code class="docutils literal notranslate"><span class="pre">Test.3d</span></code> and all of the
+modules it depends on, and produce a GNU Makefile containing all
+recipes and rules to produce <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files and all
+intermediate files with proper dependencies so that the user can
+leverage GNU Make parallelism for any rules that do not depend on one
+another. Other build systems are supported with variations of the
+<code class="docutils literal notranslate"><span class="pre">--makefile</span></code> option, as stated below.</p>
+<p>The produced Makefile will make use of three variables:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_CMD</span></code>: the command to run EverParse. This variable must
+contain the path and name of the EverParse executable, and any
+options (<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, etc.) useful to produce .</li>
+<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_DIR</span></code>: the path to the input files.</li>
+</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>If, along with some <code class="docutils literal notranslate"><span class="pre">MyFile.3d</span></code>, in the same directory, you
-provide a file <code class="docutils literal notranslate"><span class="pre">MyFile.3d.copyright.txt</span></code> that contains
-syntactically correct C comments (with <code class="docutils literal notranslate"><span class="pre">//</span></code> or <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code>),
-then EverParse will prepend <code class="docutils literal notranslate"><span class="pre">MyFile.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFileWrapper.c</span></code> and
-their corresponding <code class="docutils literal notranslate"><span class="pre">.h</span></code> with these comments. You do not need to
-mention this file on the command line.</p>
-<p>These comments can contain the following special symbols:</p>
-<ul class="last simple">
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSEVERSION</span></code>, which EverParse will automatically replace
-with its version number;</li>
-<li><code class="docutils literal notranslate"><span class="pre">FILENAME</span></code>, which EverParse will automatically replace with the
-name of the <code class="docutils literal notranslate"><span class="pre">.c</span></code> / <code class="docutils literal notranslate"><span class="pre">.h</span></code> file being generated.</li>
+<p class="last">(FIXME) Currently, all <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files shall be located in the same
+input directory.</p>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_OUTPUT_DIR</span></code>: the path to the output files. EverParse
+will append the <code class="docutils literal notranslate"><span class="pre">--odir</span></code> option appropriately.</li>
+<li><code class="docutils literal notranslate"><span class="pre">CC</span></code>: the path and name of the C compiler that will be used to
+compile the produced C files.</li>
+<li><code class="docutils literal notranslate"><span class="pre">CFLAGS</span></code>: options to provide to the C compiler to compile the
+produced C files.</li>
+</ul>
+<p>The produced Makefile, by default called <code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>, is
+meant to be included in the main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> of your project. On
+Linux, such a typical main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for use with GNU Make may look
+like:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span> <span class="n">test</span>
+
+<span class="nv">EVERPARSE_CMD</span><span class="o">=</span>/path/to/everparse.sh
+<span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="o">=</span>obj
+<span class="nv">EVERPARSE_INPUT_DIR</span><span class="o">=</span>src
+
+<span class="nv">everparse_makefile</span><span class="o">=</span><span class="k">$(</span>EVERPARSE_OUTPUT_DIR<span class="k">)</span>/EverParse.Makefile
+<span class="nv">source_files</span><span class="o">=</span><span class="k">$(</span>wildcard <span class="k">$(</span>EVERPARSE_INPUT_DIR<span class="k">)</span>/*.3d<span class="k">)</span>
+
+<span class="nf">$(EVERPARSE_OUTPUT_DIR)</span><span class="o">:</span>
+	mkdir -p <span class="nv">$@</span>
+
+<span class="nf">$(everparse_makefile)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">source_files</span><span class="k">)</span> <span class="k">$(</span><span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="k">)</span>
+	<span class="k">$(</span>EVERPARSE_CMD<span class="k">)</span> --makefile gmake --makefile_name <span class="nv">$@</span> <span class="k">$(</span>source_files<span class="k">)</span>
+
+<span class="cp">include $(everparse_makefile)</span>
+
+<span class="nf">test</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EVERPARSE_ALL_O_FILES</span><span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+	rm -rf <span class="k">$(</span>EVERPARSE_OUTPUT_DIR<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">test</span> <span class="n">clean</span>
+</pre></div>
+</div>
+<p>EverParse supports the following command-line options relevant to this
+mode:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">gmake</span></code>: produce a Makefile for use with GNU Make.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">nmake</span></code>: produce a Makefile for use with Microsoft
+NMAKE.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--makefile_name</span> <span class="pre">my_file_name</span></code>: the name of the produced Makefile
+shall be <code class="docutils literal notranslate"><span class="pre">my_file_name</span></code> instead of the default
+<code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--skip_o_rules</span></code>: do not output rules that would produce <code class="docutils literal notranslate"><span class="pre">.o</span></code>
+files by compiling <code class="docutils literal notranslate"><span class="pre">.c</span></code> files.</li>
+</ul>
+</div>
+<div class="section" id="alternate-mode-hash-checking">
+<h3>Alternate mode: hash checking<a class="headerlink" href="#alternate-mode-hash-checking" title="Permalink to this headline">¶</a></h3>
+<p>To speed up some scenarios where the user maintains a snapshot of the
+generated .c and .h files to skip unnecessary verification time when
+.3d files are not changed, EverParse provides an optional mechanism to
+record the hash of .3d, .c and .h files and to compare them to skip
+reverification and regeneration. This mechanism is disabled by
+default, and has to be explicitly enabled using the <code class="docutils literal notranslate"><span class="pre">--check_hashes</span></code>
+option as described below.  <strong>WARNING:</strong> this mode will weaken
+verification guarantees to the probability of hash collisions!</p>
+<p>If enabled, then EverParse checks the hashes of the .3d and maybe .c
+and .h files (depending on the variant, as described below) and fails
+if hashes do not match; no verification or regeneration is performed
+at all.</p>
+<p>Hashes are computed and checked using the <a class="reference external" href="https://hacl-star.github.io/HaclValeEverCrypt.html">EverCrypt</a> verified
+cryptographic library, which is included in EverParse binary packages.</p>
+<p>Options relevant to this mode:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>: save the hashes of the contents of source .3d, .c
+and .h files into a .json file. This option can be added in default
+mode when generating .c and .h files.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">strong</span></code> : checks the hashes of the contents of
+source .3d, .c and .h files, by reading the recorded hash from the
+.json file created by <code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code> : checks the hashes of the contents of
+source .3d files only, by reading the recorded hash from the .json
+file created by <code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>, leaving the option for the user
+to manually change the generated .c and .h files (<strong>WARNING:</strong> this
+will void all verification guarantees!)</li>
+<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code>: same as <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code>, but
+uses the hash recorded in the copyright header of the generated .c
+and .h files instead of the .json file. The hash is introduced by
+using the <code class="docutils literal notranslate"><span class="pre">EVERPARSEHASHES</span></code> keyword in the corresponding
+<code class="docutils literal notranslate"><span class="pre">.copyright.txt</span></code> used to prepend generated .c and .h files with
+copyright headers; see <a class="reference external" href="3d-lang.html#adding-copyright-notices-to-produced-c-h-files">Copyright headers</a> for
+more details.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--check_inplace_hash</span> <span class="pre">MyFile.3d=MyFile.h</span></code>: same as
+<code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code>, but instead manually specifies the pair
+of the source <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file and the already-generated <code class="docutils literal notranslate"><span class="pre">.h</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">.c</span></code>) file in which to check the hash. This option can be
+specified several times to provide several such pairs to check.</li>
+</ul>
+</div>
+<div class="section" id="alternate-mode-help-and-version">
+<h3>Alternate mode: help and version<a class="headerlink" href="#alternate-mode-help-and-version" title="Permalink to this headline">¶</a></h3>
+<p>Some options make EverParse do nothing other than show a help or
+version message:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--version</span></code></p>
+<p>Print the version of EverParse/3d and exit (do not process any
+further options to the right, nor any files at all.)</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--help</span></code></p>
+<p>Show the usage message and the status of some options given so far,
+and exit (do not process any further options to the right, nor any
+files at all.)</p>
+</li>
 </ul>
 </div>
 </div>

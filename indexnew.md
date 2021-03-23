@@ -42,7 +42,7 @@ The following is a partial list of software components with formal
 proofs of correctness and security developed using Project Everest's
 toolchain.
 
-### The TLS-1.3 Record Layer
+### The TLS-1.3 record Layer
 
 The TLS record layer is the main bridge between applications and TLS'
 internal sub-protocols. Its core functionality is an elaborate
@@ -105,7 +105,7 @@ SDK, and in the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from)
 and [Concordium](https://www.concordium.com) blockchains.
 
-### The QUIC Record Layer
+### The QUIC record Layer
 
 [QUIC](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/) is
 a new, high-performance secure transport protocol. We model packet and
@@ -118,7 +118,7 @@ performance is within 21% of an unverified baseline. For more details,
 see [this
 paper](https://www.microsoft.com/en-us/research/publication/security-model-verified-implementation-quic-record-layer/).
 
-### Signal*: A Verified Secure Messaging Protocol
+### Signal*: A verified secure messaging protocol
 
 [Signal](https://signal.org/) is a secure messaging application that
 relies on a special cryptographic protocol for exchanging messages
@@ -131,7 +131,7 @@ execution environment supported by all major browsers and Web
 application frameworks. For more details, see [this
 paper](https://www.computer.org/csdl/proceedings-article/sp/2019/666000b002/19skg8v5fZS).
 
-### DICE*: A Formally Verified Implementation of DICE Measured Boot
+### DICE*: A formally ferified implementation of DICE measured boot
 
 Measured boot is an important class of boot protocols that ensure that
 each layer of firmware and software in a device’s chain of trust is
@@ -191,7 +191,7 @@ optimized C code through the Low\* toolchain which has been integrated
 in several projects, including our verified implementations of QUIC,
 DICE, and in the Microsoft Azure networking stack.
 
-### Steel: A Concurrent Separation Logic Embedded in F\*
+### Steel: A concurrent separation logic embedded in F\*
 
 [Steel](https://www.microsoft.com/en-us/research/uploads/prod/2021/03/steel.pdf)
 is a framework embedded in F\* for programming and proving concurrent

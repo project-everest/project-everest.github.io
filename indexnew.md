@@ -203,10 +203,10 @@ and distributed programs in a new concurrent separation logic called
 Project Everest is the combination of the following GitHub
 projects.
 
-- [F\*], a verification language for effectful programs
+- [F*], a verification language for effectful programs
 - [miTLS], reference implementation of the TLS protocol in [F\*]
 - [KreMLin], a compiler from a subset of [F\*] to C
-- [HACL\*], a verified library of cryptographic primitives written in [F\*], including
+- [HACL*], a verified library of cryptographic primitives written in [F\*], including
   the EverCrypt cryptographic provider.
 - [Vale], a domain-specific language for verified cryptographic
   primitives in assembly
@@ -215,10 +215,10 @@ projects.
 - [EverParse], a library and tool to automatically generate verified
   parsers and serializers for binary data formats
 
-[F\*]: https://github.com/FStarLang/FStar
+[F*]: https://github.com/FStarLang/FStar
 [miTLS]: https://github.com/project-everest/mitls-fstar
 [KreMLin]: https://github.com/FStarLang/kremlin
-[HACL\*]: https://github.com/project-everest/hacl-star
+[HACL*]: https://github.com/project-everest/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverParse]: https://github.com/project-everest/everparse
 [EverCrypt]: (https://github.com/project-everest/hacl-star/blob/master/providers/evercrypt)

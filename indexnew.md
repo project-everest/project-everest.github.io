@@ -67,7 +67,7 @@ Additionally, the [miTLS] protocol stack powers Microsoft's primary
 implementation of the [QUIC transport
 protocol](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/).
 
-### HACL*, ValeCrypt, and EverCrypt: A high-assurance cryptographic library
+### HACL*, ValeCrypt, and EverCrypt: Cryptographic libraries
 
 [HACL\*](https://github.com/project-everest/hacl-star) is a formally
 verified library of modern cryptographic algorithms, where each

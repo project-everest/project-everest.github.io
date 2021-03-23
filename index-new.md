@@ -214,12 +214,13 @@ projects.
 - [EverParse], a library and tool to automatically generate verified
   parsers and serializers for binary data formats
 
-[F*]: https://github.com/FStarLang/FStar
+[F\*]: https://github.com/FStarLang/FStar
 [miTLS]: https://github.com/project-everest/mitls-fstar
 [KreMLin]: https://github.com/FStarLang/kremlin
-[HACL*]: https://github.com/project-everest/hacl-star
+[HACL\*]: https://github.com/project-everest/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverParse]: https://github.com/project-everest/everparse
+[EverCrypt]: (https://github.com/project-everest/hacl-star/blob/master/providers/evercrypt)
 
 To make things easier for prospective users, the [everest
 script](https://github.com/project-everest/everest) performs high-level project

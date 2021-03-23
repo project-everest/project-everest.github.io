@@ -16,7 +16,7 @@ organizations, including [Microsoft
 Research](https://www.microsoft.com/en-us/research/project/project-everest-verified-secure-implementations-https-ecosystem/),
 [Carnegie Mellon University](http://www.andrew.cmu.edu/user/bparno/),
 [INRIA](http://prosecco.gforge.inria.fr/), and the
-[MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
+[MSR-INRIA](https://www.microsoft.com/en-us/research/collaboration/inria-joint-centre/)
 joint center.
 
 # Secure Communication Components with Proofs

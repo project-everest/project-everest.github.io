@@ -131,7 +131,7 @@ execution environment supported by all major browsers and Web
 application frameworks. For more details, see [this
 paper](https://www.computer.org/csdl/proceedings-article/sp/2019/666000b002/19skg8v5fZS).
 
-### DICE*: A formally ferified implementation of DICE measured boot
+### DICE*: A verified implementation of DICE measured boot
 
 Measured boot is an important class of boot protocols that ensure that
 each layer of firmware and software in a device’s chain of trust is

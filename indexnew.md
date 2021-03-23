@@ -171,7 +171,7 @@ multiple architectures, such as x86, x64, and ARM, and multiple
 platforms, such as Windows, Mac, and Linux. Additional architectures
 and platforms can be supported with no changes to the Vale tool.
 
-### Low* and KReMLin: A proof-oriented C-like language embedded in F\*
+### Low* and KReMLin: A proof-oriented subset of C embedded in F\*
 
 Low\* is a subset of F\* and a set of F\* libraries that models a
 fragment of the C programming language, including its memory model,
@@ -182,7 +182,7 @@ F\*. Low\* programs are compilable to C by
 [KReMLin](https://fstarlang.github.io/lowstar/html/). [This
 paper](https://doi.org/10.1145/3110261) provides more details.
 
-### EverParse: A domain-specific language for verified cryptographic primitives
+### EverParse: A parser generator for binary data formats
 
 [EverParse](https://project-everest.github.io/everparse/) is a
 framework for generating formally proven secure parsers and formatters

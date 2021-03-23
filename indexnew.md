@@ -33,8 +33,8 @@ including verified implementations of newer security protocols like
 [QUIC](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/),
 [Signal](https://signal.org/) and
 [DICE](https://trustedcomputinggroup.org/work-groups/dice-architectures/),
-as well as securing networking infrastructure using in commerical
-cloud platforms including Microsoft Azure.
+as well as securing networking infrastructure used in commerical
+cloud platforms, including Microsoft Azure.
 
 ## Everest Artifacts with Formal Proofs
 

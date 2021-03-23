@@ -280,18 +280,23 @@ Finally, if you want to revert to a clean state, you can run:
 
 ## For the lazy: Docker
 
-Every night, we automatically build the `projecteverest/everest`
-Docker image with everything already built and verified, for you to
-directly pull from
-the [Docker Hub](https://hub.docker.com/r/projecteverest). If
-you have Docker installed on your machine, then you can pull the image
-using the usual command:
+Every night, we automatically build the `projecteverest/everest-linux`
+Linux Docker image with everything already built and verified, for you
+to directly pull from the [Docker
+Hub](https://hub.docker.com/r/projecteverest), where you can find the
+list of the latest images, each of which is tagged with their commit
+hash on the Everest repository and is accompanied with its relevant
+`docker pull` command to download and run it on your machine.
+
+Then, for some image with tag `foobar`, you can create and run a fresh
+container with a Bash interactive command-line prompt using the
+following command:
 
 ```
-docker pull projecteverest/everest-linux
+docker run -i -t projecteverest/everest-linux:foobar /bin/bash --login
 ```
 
-(This no longer works for Windows Docker containers.)
+(Windows Docker images are no longer working, due to [this issue](https://github.com/moby/moby/issues/41058).)
 
 ## Filing bugs
 

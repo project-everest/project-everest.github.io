@@ -19,7 +19,7 @@ Research](https://www.microsoft.com/en-us/research/project/project-everest-verif
 [MSR-INRIA](https://www.inria.fr/en/institute/partnerships/industrial-partnerships2/microsoft-research)
 joint center.
 
-## Secure Communication Components with Formal Proofs
+# Secure Communication Components with Proofs
 
 Focusing on the HTTPS ecosystem, including components such as the TLS
 protocol and its underlying cryptographic algorithms, Project Everest
@@ -36,13 +36,13 @@ including verified implementations of newer security protocols like
 as well as securing networking infrastructure using in commerical
 cloud platforms including Microsoft Azure.
 
-### Everest Artifacts with Formal Proofs
+## Everest Artifacts with Formal Proofs
 
 The following is a partial list of software components with formal
 proofs of correctness and security developed using Project Everest's
 toolchain.
 
-#### The TLS-1.3 Record Layer
+### The TLS-1.3 Record Layer
 
 The TLS record layer is the main bridge between applications and TLS'
 internal sub-protocols. Its core functionality is an elaborate
@@ -60,13 +60,14 @@ a TLS library partially verified in F\*, and interoperates with Chrome
 and Firefox, and thus that experimentally the new TLS record layer (as
 described in RFCs and cryptographic standards) is provably secure.
 
-See [this paper](https://eprint.iacr.org/2016/1178) for more details.
+See [this paper](https://eprint.iacr.org/2016/1178) and [this
+page](https://project-everest.github.io/record/) for more details.
 
 Additionally, the [miTLS] protocol stack powers Microsoft's primary
 implementation of the [QUIC transport
 protocol](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/).
 
-#### HACL*, ValeCrypt, and EverCrypt: A high-assurance cryptographic library
+### HACL*, ValeCrypt, and EverCrypt: A high-assurance cryptographic library
 
 [HACL\*](https://github.com/project-everest/hacl-star) is a formally
 verified library of modern cryptographic algorithms, where each
@@ -104,7 +105,7 @@ SDK, and in the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from)
 and [Concordium](https://www.concordium.com) blockchains.
 
-#### The QUIC Record Layer
+### The QUIC Record Layer
 
 [QUIC](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/) is
 a new, high-performance secure transport protocol. We model packet and
@@ -117,7 +118,7 @@ performance is within 21% of an unverified baseline. For more details,
 see [this
 paper](https://www.microsoft.com/en-us/research/publication/security-model-verified-implementation-quic-record-layer/).
 
-#### Signal*: A Verified Secure Messaging Protocol
+### Signal*: A Verified Secure Messaging Protocol
 
 [Signal](https://signal.org/) is a secure messaging application that
 relies on a special cryptographic protocol for exchanging messages
@@ -130,7 +131,7 @@ execution environment supported by all major browsers and Web
 application frameworks. For more details, see [this
 paper](https://www.computer.org/csdl/proceedings-article/sp/2019/666000b002/19skg8v5fZS).
 
-#### DICE*: A Formally Verified Implementation of DICE Measured Boot
+### DICE*: A Formally Verified Implementation of DICE Measured Boot
 
 Measured boot is an important class of boot protocols that ensure that
 each layer of firmware and software in a device’s chain of trust is
@@ -142,12 +143,12 @@ implementation in F\* of DICE, an industry standard measured boot
 protocol. For more details, see [this
 paper](https://www.microsoft.com/en-us/research/publication/dice-a-formally-verified-implementation-of-dice-measured-boot/).
 
-### Tools for Formal Proofs
+## Tools for Formal Proofs
 
 In conjunction with our verified software artifacts, we develop a
 variety tools for program proofs.
 
-#### F*: A programming language and proof assistant
+### F*: A programming language and proof assistant
 
 [F\*](https://fstar-lang.org) is a general-purpose functional
 programming language with effects, based on dependent type theory and
@@ -158,7 +159,7 @@ programs can be extracted to OCaml, F\#, C, Wasm, or ASM code. F\* is
 the core programming and proving platform on which Project Everest is
 built.
 
-#### Vale: A tool for verifying cryptographic primitives in assembly
+### Vale: A tool for verifying cryptographic primitives in assembly
 
 [Vale](https://github.com/project-everest/vale) is a tool for
 constructing formally verified high-performance assembly language
@@ -170,7 +171,7 @@ multiple architectures, such as x86, x64, and ARM, and multiple
 platforms, such as Windows, Mac, and Linux. Additional architectures
 and platforms can be supported with no changes to the Vale tool.
 
-#### Low* and KReMLin: A proof-oriented C-like language embedded in F\*
+### Low* and KReMLin: A proof-oriented C-like language embedded in F\*
 
 Low\* is a subset of F\* and a set of F\* libraries that models a
 fragment of the C programming language, including its memory model,
@@ -181,7 +182,7 @@ F\*. Low\* programs are compilable to C by
 [KReMLin](https://fstarlang.github.io/lowstar/html/). [This
 paper](https://doi.org/10.1145/3110261) provides more details.
 
-#### EverParse: A domain-specific language for verified cryptographic primitives
+### EverParse: A domain-specific language for verified cryptographic primitives
 
 [EverParse](https://project-everest.github.io/everparse/) is a
 framework for generating formally proven secure parsers and formatters
@@ -190,7 +191,7 @@ optimized C code through the Low\* toolchain which has been integrated
 in several projects, including our verified implementations of QUIC,
 DICE, and in the Microsoft Azure networking stack.
 
-#### Steel: A Concurrent Separation Logic Embedded in F\*
+### Steel: A Concurrent Separation Logic Embedded in F\*
 
 [Steel](https://www.microsoft.com/en-us/research/uploads/prod/2021/03/steel.pdf)
 is a framework embedded in F\* for programming and proving concurrent

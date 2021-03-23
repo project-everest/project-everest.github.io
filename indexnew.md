@@ -253,6 +253,12 @@ together.
 ./everest pull
 ```
 
+At this stage, you can build HACL\*, ValeCrypt and EverCrypt since the generated
+C/ASM is under version control. If that's what you're looking for, head over to
+[the relevant documentation](https://hacl-star.github.io/Obtaining.html).
+
+If you'd rather build the tools and verify all of Project Everest, read on.
+
 Building all the projects together should work at any time, and be achieved by
 running
 
@@ -264,14 +270,6 @@ Testing the generated binaries can be achieved by running:
 
 ```
 ./everest test
-```
-
-But, remember that the whole point of the Everest project is that our
-code is entirely verified. Verification (which can be as slow as 2
-hours on recent machines) can be performed by running:
-
-```
-./everest verify
 ```
 
 Finally, if you want to revert to a clean state, you can run:
@@ -290,8 +288,10 @@ you have Docker installed on your machine, then you can pull the image
 using the usual command:
 
 ```
-docker pull projecteverest/everest-windows-nt
+docker pull projecteverest/everest-linux
 ```
+
+(This no longer works for Windows Docker containers.)
 
 ## Filing bugs
 

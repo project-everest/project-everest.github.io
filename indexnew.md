@@ -283,7 +283,7 @@ Finally, if you want to revert to a clean state, you can run:
 Every night, we automatically build the `projecteverest/everest-linux`
 Linux Docker image with everything already built and verified, for you
 to directly pull from the [Docker
-Hub](https://hub.docker.com/r/projecteverest), where you can find the
+Hub](https://hub.docker.com/r/projecteverest/everest-linux), where you can find the
 list of the latest images, each of which is tagged with their commit
 hash on the Everest repository and is accompanied with its relevant
 `docker pull` command to download and run it on your machine.

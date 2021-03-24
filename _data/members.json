@@ -2,7 +2,7 @@
   {
     "firstname": "Karthikeyan",
     "lastname": "Bhargavan",
-    "lab": "INRIA Paris",
+    "lab": "Inria Paris",
     "url": "http://prosecco.gforge.inria.fr/personal/karthik/"
   },
   {
@@ -93,6 +93,6 @@
     "firstname": "Santiago",
     "lastname": "Zanella-Béguelin",
     "lab": "MSR Cambridge",
-    "url": "http://research.microsoft.com/en-us/people/santiago/"
+    "url": "https://www.microsoft.com/en-us/research/people/santiago/"
   }
 ]

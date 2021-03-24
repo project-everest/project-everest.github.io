@@ -6,9 +6,15 @@
         "url": "https://danelahman.github.io"
     },
     {
+        "firstname": "Cezar Constantin",
+        "lastname": "Andrici",
+        "lab": "MPI-SP and UAIC Iasi",
+        "url": "https://www.linkedin.com/in/cezar-andrici-49771663"
+    },
+    {
         "firstname": "Benjamin",
         "lastname": "Beurdouche",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://github.com/beurdouche/"
     },
     {
@@ -56,19 +62,25 @@
     {
         "firstname": "Nadim",
         "lastname": "Kobeissi",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://nadim.computer/"
+    },
+    {
+        "firstname": "Konrad",
+        "lastname": "Kohbrok",
+        "lab": "Aalto University",
+        "url": "https://kkohbrok.github.io"
     },
     {
         "firstname": "Théo",
         "lastname": "Laurent",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://github.com/theolaurent"
     },
     {
         "firstname": "Kenji",
         "lastname": "Maillard",
-        "lab": "INRIA Paris and ENS Paris",
+        "lab": "Inria Paris and ENS Paris",
         "url": "https://www.eleves.ens.fr/home/kmaillar/"
     },
     {
@@ -86,7 +98,7 @@
     {
         "firstname": "Denis",
         "lastname": "Merigoux",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://github.com/denismerigoux"
     },
     {
@@ -110,7 +122,7 @@
     {
         "firstname": "Marina",
         "lastname": "Polubelova",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://github.com/polubelova"
     },
     {
@@ -122,7 +134,7 @@
     {
         "firstname": "Exequiel",
         "lastname": "Rivas",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://dcc.fceia.unr.edu.ar/~erivas"
     },
     {
@@ -144,9 +156,15 @@
         "url": "https://people.csail.mit.edu/wangpeng/"
     },
     {
+        "firstname": "Théo",
+        "lastname": "Winterhalter",
+        "lab": "MPI-SP",
+        "url": "https://theowinterhalter.github.io/"
+    },
+    {
         "firstname": "Jean-Karim",
         "lastname": "Zinzindohoué",
-        "lab": "INRIA Paris",
+        "lab": "Inria Paris",
         "url": "https://github.com/jkzinzindohoue"
     }
 ]

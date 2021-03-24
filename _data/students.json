@@ -24,6 +24,12 @@
         "url": "https://www.jaybosamiya.com/"
     },
     {
+        "firstname": "Joonwon",
+        "lastname": "Choi",
+        "lab": "MIT",
+        "url": "http://joonwon.net/c/"
+    },
+    {
         "firstname": "Tej",
         "lastname": "Chajed",
         "lab": "MIT",
@@ -70,6 +76,18 @@
         "lastname": "Kohbrok",
         "lab": "Aalto University",
         "url": "https://kkohbrok.github.io"
+    },
+    {
+        "firstname": "Natalia",
+        "lastname": "Kulatova",
+        "lab": "Inria Paris",
+        "url": "https://www.linkedin.com/in/natalia-kulatova-18044a110"
+    },
+    {
+        "firstname": "Joseph",
+        "lastname": "Lallemand",
+        "lab": "IRISA",
+        "url": "https://members.loria.fr/JLallemand/"
     },
     {
         "firstname": "Théo",
@@ -132,6 +150,12 @@
         "url": "https://ashay.rane.info/"
     },
     {
+        "firstname": "Itsaka",
+        "lastname": "Rakotonirina",
+        "lab": "Inria Nancy Grand-Est",
+        "url": "https://members.loria.fr/IRakotonirina/"
+    },
+    {
         "firstname": "Exequiel",
         "lastname": "Rivas",
         "lab": "Inria Paris",
@@ -166,5 +190,11 @@
         "lastname": "Zinzindohoué",
         "lab": "Inria Paris",
         "url": "https://github.com/jkzinzindohoue"
+    }
+    {
+        "firstname": "Yi",
+        "lastname": "Zhou",
+        "lab": "CMU",
+        "url": "https://yizhou7.github.io/"
     }
 ]

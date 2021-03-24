@@ -23,7 +23,7 @@ joint center.
 
 Focusing on the HTTPS ecosystem, including components such as the TLS
 protocol and its underlying cryptographic algorithms, Project Everest
-began in 2017 aiming to build and deploy formally verified
+began in 2016 aiming to build and deploy formally verified
 implementations of several of these components in the [F\* proof
 assistant](https://fstar-lang.org).
 

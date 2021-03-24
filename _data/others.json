@@ -96,6 +96,12 @@
         "url": "https://github.com/theolaurent"
     },
     {
+        "firstname": "Yao",
+        "lastname" : "Li",
+        "lab":"UPenn",
+        "url":"https://lastland.github.io/"
+    },
+    {
         "firstname": "Kenji",
         "lastname": "Maillard",
         "lab": "Inria Paris and ENS Paris",
@@ -131,6 +137,12 @@
         "lastname": "Narasimhamurthy",
         "lab": "University of Colorado Boulder",
         "url": "https://monal.github.io/"
+    },
+    {
+        "firstname": "Haobin",
+        "lastname" : "Ni",
+        "lab":"Cornell",
+        "url":"https://lastland.github.io/"
     },
     {
         "firstname": "Zoe",

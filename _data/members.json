@@ -1,5 +1,11 @@
 ﻿[
   {
+    "firstname": "Benjamin",
+    "lastname": "Beurdouche",
+    "lab": "Mozilla",
+    "url": "https://github.com/beurdouche/"
+  },
+  {
     "firstname": "Karthikeyan",
     "lastname": "Bhargavan",
     "lab": "Inria Paris",
@@ -28,7 +34,7 @@
     "lastname": "Fournet",
     "lab": "MSR Cambridge",
     "url": "http://research.microsoft.com/en-us/um/people/fournet/"
-  }, 
+  },
   {
     "firstname": "Patrice",
     "lastname": "Godefroid",

@@ -30,6 +30,12 @@
     "url": "http://research.microsoft.com/en-us/um/people/fournet/"
   },
   {
+    "firstname": "Sydney",
+    "lastname": "Gibson",
+    "lab": "CMU",
+    "url": "https://sydgibs.com/"
+  },
+  {
     "firstname": "Chris",
     "lastname": "Hawblitzel",
     "lab": "MSR Redmond",
@@ -58,6 +64,12 @@
         "lastname": "Martínez",
         "lab": "CIFASIS-CONICET Rosario",
         "url": "https://mtzguido.github.io"
+    },
+    {
+        "firstname": "Denis",
+        "lastname": "Merigoux",
+        "lab": "Inria Paris",
+        "url": "https://github.com/denismerigoux"
     },
   {
     "firstname": "Bryan",

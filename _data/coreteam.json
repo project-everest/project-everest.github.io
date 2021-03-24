@@ -1,0 +1,110 @@
+﻿[
+  {
+    "firstname": "Benjamin",
+    "lastname": "Beurdouche",
+    "lab": "Mozilla",
+    "url": "https://github.com/beurdouche/"
+  },
+  {
+    "firstname": "Karthikeyan",
+    "lastname": "Bhargavan",
+    "lab": "Inria Paris",
+    "url": "http://prosecco.gforge.inria.fr/personal/karthik/"
+  },
+  {
+    "firstname": "Antoine",
+    "lastname": "Delignat-Lavaud",
+    "lab": "MSR Cambridge",
+    "url": "http://antoine.delignat-lavaud.fr/"
+  },
+    {
+        "firstname": "Aymeric",
+        "lastname": "Fromherz",
+        "lab": "CMU",
+        "url": "https://users.ece.cmu.edu/~afromher/"
+    },
+  {
+    "firstname": "Cédric",
+    "lastname": "Fournet",
+    "lab": "MSR Cambridge",
+    "url": "http://research.microsoft.com/en-us/um/people/fournet/"
+  },
+  {
+    "firstname": "Chris",
+    "lastname": "Hawblitzel",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/chrishaw/"
+  },
+  {
+    "firstname": "Cătălin",
+    "lastname": "Hriţcu",
+    "lab": "MPI-SP",
+    "url": "http://prosecco.gforge.inria.fr/personal/hritcu/"
+  },
+  {
+    "firstname": "Markulf",
+    "lastname": "Kohlweiss",
+    "lab": "University of Edinburgh",
+    "url": "https://homepages.inf.ed.ac.uk/mkohlwei/"
+  },
+    {
+        "firstname": "Natalia",
+        "lastname": "Kulatova",
+        "lab": "Inria Paris",
+        "url": "https://www.linkedin.com/in/natalia-kulatova-18044a110"
+    },
+    {
+        "firstname": "Guido",
+        "lastname": "Martínez",
+        "lab": "CIFASIS-CONICET Rosario",
+        "url": "https://mtzguido.github.io"
+    },
+  {
+    "firstname": "Bryan",
+    "lastname": "Parno",
+    "lab": "CMU",
+    "url": "https://www.andrew.cmu.edu/user/bparno"
+  },
+  {
+    "firstname": "Jonathan",
+    "lastname": "Protzenko",
+    "lab": "MSR Redmond",
+    "url": "http://jonathan.protzenko.fr/"
+  },
+    {
+        "firstname": "Marina",
+        "lastname": "Polubelova",
+        "lab": "Inria Paris",
+        "url": "https://github.com/polubelova"
+    },
+  {
+    "firstname": "Tahina",
+    "lastname": "Ramananandro",
+    "lab": "MSR Redmond",
+    "url": "https://www.normalesup.org/~ramanana/"
+  },
+  {
+    "firstname": "Aseem",
+    "lastname": "Rastogi",
+    "lab": "MSR Bangalore",
+    "url": "https://www.microsoft.com/en-us/research/people/aseemr/"
+  },
+  {
+    "firstname": "Nikhil",
+    "lastname": "Swamy",
+    "lab": "MSR Redmond",
+    "url": "http://research.microsoft.com/en-us/people/nswamy/"
+  },
+  {
+    "firstname": "Christoph",
+    "lastname": "Wintersteiger",
+    "lab": "MSR Cambridge",
+    "url": "http://research.microsoft.com/en-us/people/cwinter/"
+  },
+  {
+    "firstname": "Santiago",
+    "lastname": "Zanella-Béguelin",
+    "lab": "MSR Cambridge",
+    "url": "https://www.microsoft.com/en-us/research/people/santiago/"
+  },
+]

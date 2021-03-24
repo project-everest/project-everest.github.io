@@ -17,23 +17,15 @@ permalink: /people/
 </p>
 
 <div style="margin:0 auto">
-  <h3>Researchers</h3>
+  <h3>Core team</h3>
   <div style=" ">
     <ul style="padding-left:2em; margin:0px 0px 0px 0px">
-      {% for member in site.data.members %}
+      {% for member in site.data.coreteam %}
         <li><a href="{{ member.url}}"> {{member.firstname}} {{member.lastname}}</a> ({{member.lab}})</li>
       {% endfor %}
     </ul>
   </div>
- <h3>Students, PostDocs, and Interns</h3>
-  <div style="">
-    <ul style="padding-left:2em; margin:0px 0px 0px 0px">
-      {% for member in site.data.students %}
-        <li><a href="{{ member.url}}"> {{member.firstname}} {{member.lastname}}</a> ({{member.lab}})</li>
-      {% endfor %}
-    </ul>
-  </div>
- <h3>Other Participants</h3>
+ <h3>Alumni and other contributors</h3>
   <div style="">
     <ul style="padding-left:2em; margin:0px 0px 0px 0px">
       {% for member in site.data.others %}

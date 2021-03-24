@@ -1,9 +1,105 @@
 [
+        {
+        "firstname": "Danel",
+        "lastname": "Ahman",
+        "lab": "University of Ljubljana",
+        "url": "https://danelahman.github.io"
+    },
+    {
+        "firstname": "Cezar Constantin",
+        "lastname": "Andrici",
+        "lab": "MPI-SP and UAIC Iasi",
+        "url": "https://www.linkedin.com/in/cezar-andrici-49771663"
+    },
+  {
+    "firstname": "Barry",
+    "lastname": "Bond",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/barrybo/"
+  },
+    {
+        "firstname": "Jay",
+        "lastname": "Bosamiya",
+        "lab": "CMU",
+        "url": "https://www.jaybosamiya.com/"
+    },
+    {
+        "firstname": "Joonwon",
+        "lastname": "Choi",
+        "lab": "MIT",
+        "url": "http://joonwon.net/c/"
+    },
+    {
+        "firstname": "Tej",
+        "lastname": "Chajed",
+        "lab": "MIT",
+        "url": "https://www.chajed.io"
+    },
+    {
+        "firstname": "Benjamin",
+        "lastname": "Dowling",
+        "lab": "Queensland University of Technology",
+        "url": "http://benjamindowling.com/"
+    },
     {
         "firstname": "Victor",
         "lastname": "Dumitrescu",
         "lab": "Nomadic Labs",
         "url": "https://github.com/victor-dumitrescu"
+    },
+    {
+        "firstname": "Nick",
+        "lastname": "Giannarakis",
+        "lab": "Princeton University",
+        "url": "https://nickgian.github.io/"
+    },
+  {
+    "firstname": "Patrice",
+    "lastname": "Godefroid",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/pg/"
+  },
+    {
+        "firstname": "Anitha",
+        "lastname": "Gollamudi",
+        "lab": "Harvard University",
+        "url": "https://sites.google.com/site/anithagollamudi/"
+    },
+    {
+        "firstname": "Niklas",
+        "lastname": "Grimm",
+        "lab": "Technische Universität Wien",
+        "url": "https://secpriv.tuwien.ac.at/team/niklas_grimm/"
+    },
+    {
+        "firstname": "Nadim",
+        "lastname": "Kobeissi",
+        "lab": "Inria Paris",
+        "url": "https://nadim.computer/"
+    },
+    {
+        "firstname": "Konrad",
+        "lastname": "Kohbrok",
+        "lab": "Aalto University",
+        "url": "https://kkohbrok.github.io"
+    },
+    {
+        "firstname": "Joseph",
+        "lastname": "Lallemand",
+        "lab": "IRISA",
+        "url": "https://members.loria.fr/JLallemand/"
+    },
+    {
+        "firstname": "Théo",
+        "lastname": "Laurent",
+        "lab": "Inria Paris",
+        "url": "https://github.com/theolaurent"
+    },
+    {
+        "firstname": "Kenji",
+        "lastname": "Maillard",
+        "lab": "Inria Paris and ENS Paris",
+        "url": "https://www.eleves.ens.fr/home/kmaillar/"
     },
     {
         "firstname": "Qunyan",
@@ -18,9 +114,101 @@
         "url": "https://github.com/A-Manning"
     },
     {
+        "firstname": "Dan",
+        "lastname": "Matichuk",
+        "lab": "NICTA",
+        "url": "https://ts.data61.csiro.au/people/?cn=Daniel+Matichuk"
+    },
+    {
+        "firstname": "Denis",
+        "lastname": "Merigoux",
+        "lab": "Inria Paris",
+        "url": "https://github.com/denismerigoux"
+    },
+      {
+    "firstname": "Leonardo ",
+    "lastname": "de Moura",
+    "lab": "MSR Redmond",
+    "url": "https://www.microsoft.com/en-us/research/people/leonardo/"
+  },
+
+    {
+        "firstname": "Monal",
+        "lastname": "Narasimhamurthy",
+        "lab": "University of Colorado Boulder",
+        "url": "https://monal.github.io/"
+    },
+    {
+        "firstname": "Zoe",
+        "lastname": "Paraskevopoulou",
+        "lab": "Princeton University",
+        "url": "https://zoep.github.io"
+    },
+    {
+        "firstname": "Clément",
+        "lastname": "Pit-Claudel",
+        "lab": "MIT",
+        "url": "http://pit-claudel.fr/clement"
+    },
+    {
+        "firstname": "Ashay",
+        "lastname": "Rane",
+        "lab": "University of Texas at Austin",
+        "url": "https://ashay.rane.info/"
+    },
+    {
+        "firstname": "Itsaka",
+        "lastname": "Rakotonirina",
+        "lab": "Inria Nancy Grand-Est",
+        "url": "https://members.loria.fr/IRakotonirina/"
+    },
+    {
+        "firstname": "Exequiel",
+        "lastname": "Rivas",
+        "lab": "Inria Paris",
+        "url": "https://dcc.fceia.unr.edu.ar/~erivas"
+    },
+    {
+        "firstname": "Olivier",
+        "lastname": "Savary Bélanger",
+        "lab": "Princeton University",
+        "url": "http://www.cs.princeton.edu/~olivierb/"
+    },
+    {
+        "firstname": "Laure",
+        "lastname": "Thompson",
+        "lab": "Cornell University",
+        "url": "http://www.cs.cornell.edu/~laurejt/"
+    },
+    {
         "firstname": "Gustavo",
         "lastname": "Varo",
         "lab": "MSR Redmond",
         "url": "https://www.microsoft.com/en-us/research/people/gugavaro/"
+    },
+    {
+        "firstname": "Peng (Perry)",
+        "lastname": "Wang",
+        "lab": "MIT",
+        "url": "https://people.csail.mit.edu/wangpeng/"
+    },
+    {
+        "firstname": "Théo",
+        "lastname": "Winterhalter",
+        "lab": "MPI-SP",
+        "url": "https://theowinterhalter.github.io/"
+    },
+    {
+        "firstname": "Jean-Karim",
+        "lastname": "Zinzindohoué",
+        "lab": "Inria Paris",
+        "url": "https://github.com/jkzinzindohoue"
+    },
+    {
+        "firstname": "Yi",
+        "lastname": "Zhou",
+        "lab": "CMU",
+        "url": "https://yizhou7.github.io/"
     }
+
 ]

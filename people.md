@@ -10,7 +10,9 @@ permalink: /people/
    <a href="http://prosecco.gforge.inria.fr/">INRIA Paris</a>,
    <a href="http://www.andrew.cmu.edu/user/bparno/">Carnegie Mellon University</a>,
    the <a href="http://www.msr-inria.fr">MSR-INRIA joint center</a>,
-   <a href="https://homepages.inf.ed.ac.uk/mkohlwei">the University of Edinburgh</a>, and the community at large.
+   <a href="https://homepages.inf.ed.ac.uk/mkohlwei">The University of Edinburgh</a>,
+   <a href="https://www.mpi-sp.org">MPI-SP</a>,
+   and the community at large.
    We have had many interns and collaborators from other institutions work on related projects as well.
 </p>
 

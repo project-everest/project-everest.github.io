@@ -19,7 +19,7 @@ Research](https://www.microsoft.com/en-us/research/project/project-everest-verif
 [MSR-INRIA](https://www.microsoft.com/en-us/research/collaboration/inria-joint-centre/)
 joint center.
 
-# Secure Communication Components with Proofs
+# Communication Components with Proofs of Security
 
 Focusing on the HTTPS ecosystem, including components such as the TLS
 protocol and its underlying cryptographic algorithms, Project Everest
@@ -148,7 +148,7 @@ implementation in F\* of DICE, an industry standard measured boot
 protocol. For more details, see [this
 paper](https://www.microsoft.com/en-us/research/publication/dice-a-formally-verified-implementation-of-dice-measured-boot/).
 
-## Tools for Formal Proofs
+## Tools for Program Proofs
 
 In conjunction with our verified software artifacts, we develop a
 variety tools for program proofs.

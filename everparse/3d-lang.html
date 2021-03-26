@@ -112,6 +112,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modular-structure-and-files">Modular structure and files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#a-fully-worked-example-tcp-segment-headers">A fully worked example: TCP Segment Headers</a></li>
 </ul>
 </li>
 </ul>
@@ -293,11 +294,6 @@ values:</p>
 </div>
 <p>In this example, the validator for <code class="docutils literal notranslate"><span class="pre">smoker</span></code> will check that the
 value of the <code class="docutils literal notranslate"><span class="pre">age</span></code> field is at least 21.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">(FIXME) Integer constants are currently considered to be 32-bit
-integers; 3d does not support any kind of type casting at this time.</p>
-</div>
 <p>The constraint language includes integer arithmetic (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>,
 <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>) and
 Boolean propositional logic (<code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code>, <code class="docutils literal notranslate"><span class="pre">!</span></code>)</p>
@@ -417,7 +413,8 @@ arguments holds before even trying to check its contents:</p>
 <div class="section" id="tagged-unions">
 <h2>Tagged unions<a class="headerlink" href="#tagged-unions" title="Permalink to this headline">¶</a></h2>
 <p>3d supports <em>tagged unions</em>: a data type can store a value named <em>tag</em>
-and a <em>payload</em> whose type depends on the tag value.</p>
+and a <em>payload</em> whose type depends on the tag value. The tag does not
+need to be stored with the payload.</p>
 <p>For instance, the following description defines the type of an integer
 prefixed by its size in bits.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define size8  8</span>
@@ -440,8 +437,7 @@ prefixed by its size in bits.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">(FIXME) Currently, union cases can only be introduced by constants
-defined with <code class="docutils literal notranslate"><span class="pre">#define</span></code>. Due to current restrictions on
+<p class="last">(FIXME) Due to current restrictions on
 double-fetches, 3d currently does not support unions tagged by enum
 values.</p>
 </div>
@@ -449,7 +445,9 @@ values.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">3d does not enforce that all cases of a union be of the same size,
 and 3d does not introduce any implicit padding to enforce it. Nor
-does 3d introduce any alignment padding.</p>
+does 3d introduce any alignment padding. This is in the spirit of
+keeping 3d specifications explicit: if you want padding, you need to
+add it explicitly.</p>
 </div>
 <p>A <code class="docutils literal notranslate"><span class="pre">casetype</span></code> type actually defines an untagged union type dependent
 on an argument value, which can be reused, e.g. for several types that
@@ -572,12 +570,10 @@ the base of the validation buffer as a <code class="docutils literal notranslate
 <li><code class="docutils literal notranslate"><span class="pre">field_ptr</span></code>: Returns a pointer to base field of the action as a
 <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>, i.e., an abstract pointer to a <code class="docutils literal notranslate"><span class="pre">UINT8</span></code>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">e</span></code> Returns a boolean value <code class="docutils literal notranslate"><span class="pre">e</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">abort</span></code>: Causes the current validation process to fail.</li>
 </ul>
-<p>TODO:</p>
-<ul class="simple">
-<li>We have experimental features for external calls in actions and for
-an abort action.</li>
-</ul>
+<p>We plan to support additional user-defined actions as callbacks to
+external C functions.</p>
 </div>
 <div class="section" id="composing-atomic-actions-sequentially-and-conditionally">
 <h4>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Permalink to this headline">¶</a></h4>
@@ -778,6 +774,234 @@ using a fully qualified name of the form <code class="docutils literal notransla
 <span class="p">}</span> <span class="n">Quad</span><span class="p">;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="a-fully-worked-example-tcp-segment-headers">
+<h2>A fully worked example: TCP Segment Headers<a class="headerlink" href="#a-fully-worked-example-tcp-segment-headers" title="Permalink to this headline">¶</a></h2>
+<p>The classic <a class="reference external" href="https://tools.ietf.org/html/rfc793">IETF RFC 793</a> from
+1981 introduces the TCP protocol, including the format of the header
+of TCP segments. The format has been extended slightly since then, to
+accommodate new options and flags—this <a class="reference external" href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_segment_structure">Wikipedia page</a>
+provides a good summary.</p>
+<p>Reproduced below is an ASCII depiction of the format of TCP
+headers. In this section, we show how to specify this format in
+3d. The full specification can be found <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/tcpip/TCP.3d">here</a>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>          <span class="n">Source</span> <span class="n">Port</span>          <span class="o">|</span>       <span class="n">Destination</span> <span class="n">Port</span>        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                        <span class="n">Sequence</span> <span class="n">Number</span>                        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                    <span class="n">Acknowledgment</span> <span class="n">Number</span>                      <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>  <span class="n">Data</span> <span class="o">|</span>     <span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">U</span><span class="o">|</span><span class="n">A</span><span class="o">|</span><span class="n">P</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">F</span><span class="o">|</span>                               <span class="o">|</span>
+<span class="o">|</span> <span class="n">Offset</span><span class="o">|</span> <span class="n">Rese</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">W</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">Y</span><span class="o">|</span><span class="n">I</span><span class="o">|</span>            <span class="n">Window</span>             <span class="o">|</span>
+<span class="o">|</span>       <span class="o">|</span> <span class="n">rved</span><span class="o">|</span> <span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">G</span><span class="o">|</span><span class="n">K</span><span class="o">|</span><span class="n">H</span><span class="o">|</span><span class="n">T</span><span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">N</span><span class="o">|</span>                               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>           <span class="n">Checksum</span>            <span class="o">|</span>         <span class="n">Urgent</span> <span class="n">Pointer</span>        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                    <span class="n">Options</span>                    <span class="o">|</span>    <span class="n">Padding</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                             <span class="n">data</span>                              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<p>Each <code class="docutils literal notranslate"><span class="pre">-</span></code> in the diagram represents a single bit, with fioelds
+separated by vertical bars <code class="docutils literal notranslate"><span class="pre">|</span></code>.</p>
+<p>The main subtle element of the specification is the handling of the
+<code class="docutils literal notranslate"><span class="pre">DataOffset</span></code> field. It is a 4-bit value representing an offset from
+the beginning of the segment, in 32-bit increments, of the start of
+the <code class="docutils literal notranslate"><span class="pre">data</span></code> field. The <code class="docutils literal notranslate"><span class="pre">Options</span></code> and <code class="docutils literal notranslate"><span class="pre">Padding</span></code> fields are
+optional, so the <code class="docutils literal notranslate"><span class="pre">DataOffset</span></code> field is used to encode the size of
+the <code class="docutils literal notranslate"><span class="pre">Options</span></code> field. As such, <code class="docutils literal notranslate"><span class="pre">DataOffset</span></code> is always at least
+<code class="docutils literal notranslate"><span class="pre">5</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Options</span></code> field itself is an array of tagged unions,
+representing various kinds of options. Padding and the end of the
+options array ensures that the <code class="docutils literal notranslate"><span class="pre">data</span></code> fields is always begins at a
+multiple of 32-bits from the start of the segment.</p>
+<p>Additionally, semantic constraints restrict the values of the fields
+depending on the values of some other fields. For example, the
+Acknowledgement number can only be non-zero when the <code class="docutils literal notranslate"><span class="pre">ACK</span></code> bit is
+set.</p>
+<p>To specify the type of a TCP header, we begin by defining some basic
+types.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">PORT</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">SEQ_NUMBER</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">ACK_NUMBER</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">WINDOW</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">CHECK_SUM</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">URGENT_PTR</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The source and destination port each occupy 16 bits and are
+represented by a <code class="docutils literal notranslate"><span class="pre">UINT16</span></code>; the sequence and acknowledgment number
+fields are <code class="docutils literal notranslate"><span class="pre">UINT32</span></code> etc.</p>
+<p>Next, we define the various kind of options that are allowed. Every
+option begins with an option kind tag, an 8-bit value. Depending on
+the option kind, a variable number of bits of an option value can
+follow. The permitted option kinds are:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define OPTION_KIND_END_OF_OPTION_LIST 0x00</span>
+<span class="cp">#define OPTION_KIND_NO_OPERATION 0x01</span>
+<span class="cp">#define OPTION_KIND_MAX_SEG_SIZE 0x02</span>
+<span class="cp">#define OPTION_KIND_WINDOW_SCALE 0x03</span>
+<span class="cp">#define OPTION_KIND_SACK_PERMITTED 0x04</span>
+<span class="cp">#define OPTION_KIND_SACK 0x05</span>
+<span class="cp">#define OPTION_KIND_TIMESTAMP 0x08</span>
+</pre></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">OPTION</span></code> is parameterized by a boolean, <code class="docutils literal notranslate"><span class="pre">MaxSegSizeAllowed</span></code>,
+which constraints when the <code class="docutils literal notranslate"><span class="pre">OPTION_KIND_MAX_SEG_SIZE</span></code> is allowed to
+be present—it turns out, the <code class="docutils literal notranslate"><span class="pre">SYN</span></code> bit in the header must be set
+for this option to be allowed. The general shape of an <code class="docutils literal notranslate"><span class="pre">OPTION</span></code> is
+as below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_OPTION</span><span class="p">(</span><span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">UINT8</span> <span class="n">OptionKind</span><span class="p">;</span>
+    <span class="n">OPTION_PAYLOAD</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">,</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span> <span class="n">OptionPayload</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">OPTION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We have an <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code> field followed by an <code class="docutils literal notranslate"><span class="pre">OptionPayload</span></code> that
+depends on the <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code> and the <code class="docutils literal notranslate"><span class="pre">MaxSegSizeAllowed</span></code> flag.</p>
+<p>Next, to define the <code class="docutils literal notranslate"><span class="pre">OPTION_PAYLOAD</span></code> type, we use a <code class="docutils literal notranslate"><span class="pre">casetype</span></code>, as
+shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">casetype</span> <span class="nf">_OPTION_PAYLOAD</span><span class="p">(</span><span class="n">UINT8</span> <span class="n">OptionKind</span><span class="p">,</span> <span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">switch</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">)</span>
+  <span class="p">{</span>
+   <span class="k">case</span> <span class="nl">OPTION_KIND_END_OF_OPTION_LIST</span><span class="p">:</span>
+     <span class="n">unit</span> <span class="n">EndOfList</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_NO_OPERATION</span><span class="p">:</span>
+     <span class="n">unit</span> <span class="n">Noop</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_MAX_SEG_SIZE</span><span class="p">:</span>
+     <span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span> <span class="n">MaxSegSizePayload</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_WINDOW_SCALE</span><span class="p">:</span>
+     <span class="n">WINDOW_SCALE_PAYLOAD</span> <span class="n">WindowScalePayload</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_SACK_PERMITTED</span><span class="p">:</span>
+     <span class="n">UINT8</span> <span class="n">SackPermittedPayload</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_SACK</span><span class="p">:</span>
+     <span class="n">SELECTIVE_ACK_PAYLOAD</span> <span class="n">SelectiveAckPayload</span><span class="p">;</span>
+
+   <span class="k">case</span> <span class="nl">OPTION_KIND_TIMESTAMP</span><span class="p">:</span>
+     <span class="n">TIMESTAMP_PAYLOAD</span> <span class="n">TimestampPayload</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="n">OPTION_PAYLOAD</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the first two cases of <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code>, no payload is expected. The
+<code class="docutils literal notranslate"><span class="pre">unit</span></code> type in 3d is an empty type—it consumes no space in the
+message format.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">OPTION_KIND_MAX_SEG_SIZE</span></code>, we have the following payload—the
+use of the <code class="docutils literal notranslate"><span class="pre">where`</span> <span class="pre">constraint</span> <span class="pre">ensures</span> <span class="pre">that</span> <span class="pre">this</span> <span class="pre">case</span> <span class="pre">is</span> <span class="pre">present</span> <span class="pre">only</span>
+<span class="pre">when</span> <span class="pre">`MaxSegSizeAllowed</span> <span class="pre">==</span> <span class="pre">true</span></code>. The payload is a length field (4
+bytes) and a 2-byte <code class="docutils literal notranslate"><span class="pre">MaxSegSize</span></code> value.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
+<span class="n">where</span> <span class="n">MaxSegSizeAllowed</span>
+<span class="p">{</span>
+  <span class="n">UINT8</span> <span class="n">Length</span>
+  <span class="p">{</span>
+    <span class="n">Length</span> <span class="o">==</span> <span class="mi">4</span>
+  <span class="p">};</span>
+  <span class="n">UINT16</span> <span class="n">MaxSegSize</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The other cases are relatively straightforward, where
+<code class="docutils literal notranslate"><span class="pre">SELECTIVE_ACK_PAYLOAD</span></code> and <code class="docutils literal notranslate"><span class="pre">TIMESTAMP_PAYLOAD</span></code> illustrate the use
+of variable length arrays.</p>
+<p>Finally, we can assemble our top-level TCP header type, as shown
+below. The specification of the options array is weaker than it could
+be. It currently permits an end-of-options-list option to appear
+anywhere in the Options list, rather than as just the last
+element. This can be improved by using a more advanced combinator from
+EverParse, however we leave it as is for simplicity of this example.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*++</span>
+<span class="cm">  The top-level type of a TCP Header</span>
+
+<span class="cm">  Arguments:</span>
+
+<span class="cm">  * UINT32 SegmentLength, the size of the segment,</span>
+<span class="cm">    including both header and data, passed in by the caller</span>
+
+<span class="cm">  --*/</span>
+<span class="n">export</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_TCP_HEADER</span><span class="p">(</span><span class="n">UINT32</span> <span class="n">SegmentLength</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">PORT</span>            <span class="n">SourcePort</span><span class="p">;</span>
+  <span class="n">PORT</span>            <span class="n">DestinationPort</span><span class="p">;</span>
+  <span class="n">SEQ_NUMBER</span>      <span class="n">SeqNumber</span><span class="p">;</span>
+  <span class="n">ACK_NUMBER</span>      <span class="n">AckNumber</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">DataOffset</span><span class="p">:</span><span class="mi">4</span>
+  <span class="p">{</span> <span class="c1">//DataOffset is in units of 32 bit words</span>
+    <span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="c1">//DataOffset points after the static fields</span>
+    <span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="n">SegmentLength</span> <span class="c1">//and within the current segment</span>
+  <span class="p">};</span>
+  <span class="n">UINT16</span>          <span class="nl">Reserved</span><span class="p">:</span><span class="mi">3</span>
+  <span class="p">{</span>
+    <span class="n">Reserved</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">//Reserved bytes are unused</span>
+  <span class="p">};</span>
+  <span class="n">UINT16</span>          <span class="nl">NS</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">CWR</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">ECE</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">URG</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">ACK</span><span class="p">:</span><span class="mi">1</span>
+  <span class="p">{</span>
+    <span class="n">AckNumber</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
+    <span class="n">ACK</span> <span class="o">==</span> <span class="mi">1</span> <span class="c1">//AckNumber can only be set if the ACK flag is set</span>
+  <span class="p">}</span> <span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">PSH</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">RST</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">SYN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">UINT16</span>          <span class="nl">FIN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">WINDOW</span>          <span class="n">Window</span><span class="p">;</span>
+  <span class="n">CHECK_SUM</span>       <span class="n">CheckSum</span><span class="p">;</span>
+  <span class="n">URGENT_PTR</span>      <span class="n">UrgentPointer</span>
+  <span class="p">{</span>
+    <span class="n">UrgentPointer</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
+    <span class="n">URG</span> <span class="o">==</span> <span class="mi">1</span> <span class="c1">//UrgentPointer can only be set if the URG flag is set</span>
+  <span class="p">};</span>
+  <span class="c1">//The SYN=1 condition indicates when MAX_SEG_SIZE option can be received</span>
+  <span class="c1">//This is an array of options consuming</span>
+  <span class="n">OPTION</span><span class="p">(</span><span class="n">SYN</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>  <span class="n">Options</span><span class="p">[</span><span class="o">:</span><span class="n">byte</span><span class="o">-</span><span class="n">size</span> <span class="p">(</span><span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)];</span>
+  <span class="n">UINT8</span>           <span class="n">Data</span><span class="p">[</span><span class="n">SegmentLength</span> <span class="o">-</span> <span class="p">(</span><span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)];</span>
+<span class="p">}</span> <span class="n">TCP_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The type is parameterized by <code class="docutils literal notranslate"><span class="pre">SegmentLength</span></code>, the size in bytes
+determined by the caller of the entire segment, including the header
+and the data.</p>
+<p>The first four fields, <code class="docutils literal notranslate"><span class="pre">SourcePort</span></code>, <code class="docutils literal notranslate"><span class="pre">DestinationPort</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SeqNumber</span></code> and <code class="docutils literal notranslate"><span class="pre">AckNumber</span></code> are straightforward.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataOffset</span></code> field is 4-bit value constrained to point beyond
+the static fields of the header. Here <code class="docutils literal notranslate"><span class="pre">sizeof(this)</span></code> is a 3d
+compile-time constant referring to the size of the non-variable length
+prefix of the current type, i.e., the sum of the length in bytes of
+all the fields up to the <code class="docutils literal notranslate"><span class="pre">Options</span></code> field. In this case, that number
+is <code class="docutils literal notranslate"><span class="pre">20</span></code>. <code class="docutils literal notranslate"><span class="pre">DataOffset</span></code> is also constrained to reference an offset
+within the curent segment.</p>
+<p>Next, we have 3 reserved bits, following by 1 bit each for the 9
+flags. The <code class="docutils literal notranslate"><span class="pre">Ack</span></code> flag is interesting, since its constraints states
+that the <code class="docutils literal notranslate"><span class="pre">AckNumber</span></code> can be non-zero only if the <code class="docutils literal notranslate"><span class="pre">Ack</span></code> bit is set.</p>
+<p>Then, we have a <code class="docutils literal notranslate"><span class="pre">Window</span></code> and <code class="docutils literal notranslate"><span class="pre">CheckSum</span></code>, both of which are
+straightforward. Note, we do not specify the <code class="docutils literal notranslate"><span class="pre">CheckSum</span></code> as part of
+the format—that’s up to an application-specific check to
+confirm. Alternatively, one could check this using a user-provided
+action callback, though this is not yet supported.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">UrgentPointer</span></code> field is similar to <code class="docutils literal notranslate"><span class="pre">AckNumber</span></code> in that it can
+only be non-zero when the <code class="docutils literal notranslate"><span class="pre">URG</span></code> flag is set.</p>
+<p>Then, we have an <code class="docutils literal notranslate"><span class="pre">Options</span></code> array, using the condition <code class="docutils literal notranslate"><span class="pre">SYN==1</span></code> to
+determine the <code class="docutils literal notranslate"><span class="pre">MaxSegSizeAllowed</span></code> condition. The size in bytes of
+the options array is variable and includes also the padding field, to
+ensure 32-bit alignment. Note, this type is little too permissive, as
+it will permit options arrays where the end-of-list option kind is not
+necessarily only the last element.</p>
+<p>Finally, we have the data field itself, whose byte size is bytes is
+the computed expression.</p>
 </div>
 </div>
 

@@ -19,7 +19,7 @@ Research](https://www.microsoft.com/en-us/research/project/project-everest-verif
 [MSR-INRIA](https://www.microsoft.com/en-us/research/collaboration/inria-joint-centre/)
 joint center.
 
-# Communication Components with Proofs of Security
+# Provably Secure Communication Software
 
 Focusing on the HTTPS ecosystem, including components such as the TLS
 protocol and its underlying cryptographic algorithms, Project Everest
@@ -62,8 +62,8 @@ on its ciphers.
 
 Our implementation has been plugged in to [miTLS](https://mitls.org),
 a TLS library partially verified in F\*, and interoperates with Chrome
-and Firefox, and thus that experimentally the new TLS record layer (as
-described in RFCs and cryptographic standards) is provably secure.
+and Firefox, confirming that our code is compatible with other,
+mainstream (unverified) implementations.
 
 See [this paper](https://eprint.iacr.org/2016/1178) and [this
 page](https://project-everest.github.io/record/) for more details.

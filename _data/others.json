@@ -72,6 +72,12 @@
         "url": "https://secpriv.tuwien.ac.at/team/niklas_grimm/"
     },
     {
+        "firstname": "Naman",
+        "lastname": "Gupta",
+        "lab": "MSR Bangalore",
+        "url": "https://naman.github.io/"
+    },
+    {
         "firstname": "Nadim",
         "lastname": "Kobeissi",
         "lab": "Inria Paris",
@@ -181,6 +187,17 @@
         "url": "http://www.cs.princeton.edu/~olivierb/"
     },
     {
+        "firstname": "Zhe",
+        "lastname": "Tao",
+        "lab": "University of California, Davis"
+    },
+    {
+        "firstname": "Aditya V.",
+        "lastname": "Thakur",
+        "lab": "University of California, Davis",
+        "url": "https://thakur.cs.ucdavis.edu/"
+    },
+    {
         "firstname": "Laure",
         "lastname": "Thompson",
         "lab": "Cornell University",
@@ -191,6 +208,12 @@
         "lastname": "Varo",
         "lab": "MSR Redmond",
         "url": "https://www.microsoft.com/en-us/research/people/gugavaro/"
+    },
+    {
+        "firstname": "Kapil",
+        "lastname": "Vaswani",
+        "lab": "MSR Cambridge",
+        "url": "https://www.microsoft.com/en-us/research/people/kapilv/"
     },
     {
         "firstname": "Peng (Perry)",

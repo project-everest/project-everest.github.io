@@ -138,14 +138,18 @@ paper](https://www.computer.org/csdl/proceedings-article/sp/2019/666000b002/19sk
 
 ### DICE*: A verified implementation of DICE measured boot
 
-Measured boot is an important class of boot protocols that ensure that
+Measured boot is an important class of boot protocols which ensure that
 each layer of firmware and software in a device’s chain of trust is
 measured, and the measurements are reliably recorded for subsequent
 verification.
 
-DICE\*, is a formal specification as well as a formally verified
-implementation in F\* of DICE, an industry standard measured boot
-protocol. For more details, see [this
+DICE\* is a formal specification as well as a formally verified
+implementation in F\* of
+[DICE](https://trustedcomputinggroup.org/work-groups/dice-architectures/),
+an industry standard measured boot
+protocol. DICE\* has been integrated into the boot firmware of an
+STM32H753ZI micro-controller, replacing an unverified DICE implementation
+with negligible effect on the code size and boot time. For more details, see [this
 paper](https://www.microsoft.com/en-us/research/publication/dice-a-formally-verified-implementation-of-dice-measured-boot/).
 
 ## Tools for Program Proofs

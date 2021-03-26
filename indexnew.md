@@ -97,7 +97,7 @@ depending on processor support and the target execution environment
 makes it simple to switch between algorithms (e.g., from SHA2 to
 SHA3), and verified cryptographic data structures like Merkle trees.
 
-Code from the HACL\*, ValeCrypt and EverCrypt is deployed in several
+Code from HACL\*, ValeCrypt and EverCrypt is deployed in several
 production systems, including [Mozilla
 Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
 [Azure Confidential Consortium

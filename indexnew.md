@@ -138,7 +138,7 @@ paper](https://www.computer.org/csdl/proceedings-article/sp/2019/666000b002/19sk
 
 ### DICE*: A verified implementation of DICE measured boot
 
-Measured boot is an important class of boot protocols that ensure that
+Measured boot is an important class of boot protocols which ensure that
 each layer of firmware and software in a device’s chain of trust is
 measured, and the measurements are reliably recorded for subsequent
 verification.

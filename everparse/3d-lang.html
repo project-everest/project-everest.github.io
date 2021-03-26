@@ -214,7 +214,7 @@ following 3d data format description:</p>
 <p>This data format is very similar to a C type description, where
 <code class="docutils literal notranslate"><span class="pre">UINT16</span></code> denotes the type of unsigned 16-bit integers, represented
 as little-endian; with the addition of the <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> keyword,
-which tells 3d to expose a validator to the final user.</p>
+which tells 3d to expose the validator for the type to the final user.</p>
 <p>Once we run <code class="docutils literal notranslate"><span class="pre">3d</span></code> with this file, we obtain several files:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">HelloWorld.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorld.h</span></code>, which contain the actual verified
@@ -250,7 +250,7 @@ marked with <code class="docutils literal notranslate"><span class="pre">entrypo
 <p>Then, since in this file the definition of <code class="docutils literal notranslate"><span class="pre">point</span></code> is not prefixed
 with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>, only <code class="docutils literal notranslate"><span class="pre">triangle</span></code> will have its validator exposed
 in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.h</span></code>.</p>
-<p>There can be several definitions marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> in a given
+<p>There can be multiple definitions marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> in a given
 <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -316,8 +316,8 @@ mathematical integers. Thus, the following naive definition:</p>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>will fail at F* verification because the <code class="docutils literal notranslate"><span class="pre">left</span> <span class="pre">+</span> <span class="pre">right</span></code> sum must
-be proven to not overflow <em>before</em> evaluating the condition. The
+<p>will fail at F* verification because the expression <code class="docutils literal notranslate"><span class="pre">left</span> <span class="pre">+</span> <span class="pre">right</span></code>
+must be proven to not overflow <em>before</em> evaluating the condition. The
 correct way of stating the condition is as follows:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">{</span>
   <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
@@ -325,18 +325,53 @@ correct way of stating the condition is as follows:</p>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
 </pre></div>
 </div>
-<p class="last">which is correct because the right-hand-side condition of a <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>
-is evaluated in a context where the left-hand-side can be assumed
-to be true (thus <code class="docutils literal notranslate"><span class="pre">42</span> <span class="pre">-</span> <span class="pre">left</span></code> will not underflow.)</p>
+<p class="last">This verifies because F* evaluates the right-hand-side
+condition of a <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> in a context where the left-hand-side
+condition is assumed to be true (thus <code class="docutils literal notranslate"><span class="pre">42</span> <span class="pre">-</span> <span class="pre">left</span></code> will not underflow.)</p>
 </div>
 </div>
 <div class="section" id="bitfields">
 <h2>Bitfields<a class="headerlink" href="#bitfields" title="Permalink to this headline">¶</a></h2>
-<p>TODO:</p>
-<ul class="simple">
-<li>What is the constraint on a bitfield type? on field sizes?</li>
-<li>Can constraints be put on indvidual fields of a bitfield?</li>
-</ul>
+<p>Like in C, the fields of a struct type in 3d can include bitfields,
+i.e., unsigned integer types of user-specified width represented
+packed within unsigned integer fields of the canonical sizes
+UINT16, UINT32 and UINT64.</p>
+<p>Consider the following example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_BF</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="nl">x</span> <span class="p">:</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="nl">y</span> <span class="p">:</span> <span class="mi">10</span> <span class="p">{</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">900</span> <span class="p">};</span>
+  <span class="n">UINT32</span> <span class="nl">z</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">{</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">60000</span> <span class="p">}</span>
+<span class="p">}</span> <span class="n">BF</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This defines a struct <code class="docutils literal notranslate"><span class="pre">BF</span></code> occupying 32 bits of memory, where the
+first 6 bits are for the field <code class="docutils literal notranslate"><span class="pre">x</span></code>; the next 10 bits are for the
+field <code class="docutils literal notranslate"><span class="pre">y</span></code>; and the following 16 bits are for the field <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+<p>The fields <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code> can all be used in specifications
+and are implicitly promoted to the underlying integer type, <code class="docutils literal notranslate"><span class="pre">UINT32</span></code>
+in this case, although the 3d verifier is aware of suitable bounds on
+the types, e.g., that <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">64</span></code>.</p>
+<p>3d implements C’s rules for packing bit fields. For instance,</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_BF2</span> <span class="p">{</span>
+  <span class="n">UINT16</span> <span class="nl">x</span> <span class="p">:</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="n">UINT16</span> <span class="nl">y</span> <span class="p">:</span> <span class="mi">12</span><span class="p">;</span>
+  <span class="n">UINT8</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">BF2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">BF2</span></code>, although <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code> cumulatively consume only
+26 bits, the layout of <code class="docutils literal notranslate"><span class="pre">BF2</span></code> is actually as shown below, consuming
+40 bits, since a given field must be represented within the bounds of
+a single underlying type—we have 10 unused bits after <code class="docutils literal notranslate"><span class="pre">x</span></code> and 4
+unused bits after <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>                   <span class="mi">4</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span>
+<span class="o">|</span>     <span class="n">x</span>     <span class="o">|</span>       <span class="n">Unused</span>      <span class="o">|</span>           <span class="n">y</span>           <span class="o">|</span><span class="n">Unused</span> <span class="o">|</span>        <span class="n">z</span>      <span class="o">|</span>
+<span class="o">|</span>           <span class="o">|</span>                   <span class="o">|</span>                       <span class="o">|</span>       <span class="o">|</span>               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="constants-and-enumerations">
 <h2>Constants and Enumerations<a class="headerlink" href="#constants-and-enumerations" title="Permalink to this headline">¶</a></h2>
@@ -360,17 +395,57 @@ to be true (thus <code class="docutils literal notranslate"><span class="pre">42
 <span class="p">}</span> <span class="n">coloredPoint</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Then, the validator for <code class="docutils literal notranslate"><span class="pre">coloredPoint</span></code> will check that the value of
-<code class="docutils literal notranslate"><span class="pre">col</span></code> is either 1, 2 (for <code class="docutils literal notranslate"><span class="pre">green</span></code>), or 42.</p>
+<p>The validator for <code class="docutils literal notranslate"><span class="pre">coloredPoint</span></code> will check that the value of
+the field <code class="docutils literal notranslate"><span class="pre">col</span></code> is either 1, 2 (for <code class="docutils literal notranslate"><span class="pre">green</span></code>), or 42.</p>
 <p>Contrary to structs, enum types cannot be marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>.</p>
 <p>The first enum label must be associated with a value.</p>
 <p>The support type (here <code class="docutils literal notranslate"><span class="pre">UINT32</span></code>) must be the same type as the type
 of the values associated to each label.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">(FIXME) Contrary to type definitions, enum definitions must not be
-followed by a <code class="docutils literal notranslate"><span class="pre">;</span></code></p>
+<p>Due to a limitation in the way 3d currently checks for the absence of
+double-fetches, values with enum type cannot be used in
+constraints. For example, the following code is currently rejected.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span> <span class="k">enum</span> <span class="n">color</span> <span class="p">{</span>
+  <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">green</span><span class="p">,</span>
+  <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_enum_constraint</span> <span class="p">{</span>
+  <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">x</span>
+  <span class="p">{</span>
+     <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">color</span> <span class="o">==</span> <span class="n">green</span>
+  <span class="p">};</span>
+<span class="p">}</span> <span class="n">_enum_constraint</span> <span class="p">;</span>
+</pre></div>
 </div>
+<p>With the following error message:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Error</span><span class="p">)</span> <span class="n">The</span> <span class="n">type</span> <span class="n">of</span> <span class="n">this</span> <span class="n">field</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">a</span> <span class="n">reader</span><span class="p">,</span> <span class="n">either</span> <span class="n">because</span> <span class="n">its</span> <span class="n">values</span> <span class="n">are</span> <span class="n">too</span> <span class="n">large</span> <span class="n">or</span> <span class="n">because</span> <span class="n">reading</span> <span class="n">it</span> <span class="n">may</span> <span class="n">incur</span> <span class="n">a</span> <span class="kt">double</span> <span class="n">fetch</span><span class="p">;</span> <span class="n">subsequent</span> <span class="n">fields</span> <span class="n">cannot</span> <span class="n">depend</span> <span class="n">on</span> <span class="n">it</span>
+</pre></div>
+</div>
+<p>One must instead write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span> <span class="n">enum</span> <span class="n">color</span> <span class="p">{</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">green</span><span class="p">,</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="p">};</span>
+
+<span class="n">entrypoint</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_enum_constraint</span> <span class="p">{</span>
+    <span class="n">UINT32</span> <span class="n">col</span>
+    <span class="p">{</span>
+       <span class="n">col</span> <span class="o">==</span> <span class="n">red</span> <span class="o">||</span>
+       <span class="n">col</span> <span class="o">==</span> <span class="n">green</span> <span class="o">||</span>
+       <span class="n">col</span> <span class="o">==</span> <span class="n">blue</span>
+    <span class="p">};</span>
+    <span class="n">UINT32</span> <span class="n">x</span>
+    <span class="p">{</span>
+       <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">col</span> <span class="o">==</span> <span class="n">green</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="n">_enum_constraint</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>We expect to lift this limitation soon.</p>
 </div>
 <div class="section" id="parameterized-data-types">
 <h2>Parameterized data types<a class="headerlink" href="#parameterized-data-types" title="Permalink to this headline">¶</a></h2>
@@ -385,7 +460,7 @@ argument:</p>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Then, these arguments will add up to the arguments of the
+<p>Then, these arguments will show up as arguments of the
 corresponding validator in the <code class="docutils literal notranslate"><span class="pre">BoundedSumWrapper.h</span></code> header produced
 by 3d:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">BoundedSumCheckBoundedSum</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">bound</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
@@ -409,12 +484,15 @@ arguments holds before even trying to check its contents:</p>
 <span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>In this case, the validator for <code class="docutils literal notranslate"><span class="pre">boundedSum</span></code> would check
+that <code class="docutils literal notranslate"><span class="pre">bound</span> <span class="pre">&lt;=</span> <span class="pre">1729</span></code>, before validating its fields.</p>
 </div>
 <div class="section" id="tagged-unions">
 <h2>Tagged unions<a class="headerlink" href="#tagged-unions" title="Permalink to this headline">¶</a></h2>
 <p>3d supports <em>tagged unions</em>: a data type can store a value named <em>tag</em>
 and a <em>payload</em> whose type depends on the tag value. The tag does not
-need to be stored with the payload.</p>
+need to be stored with the payload (e.g. it could be a parameter to the
+type).</p>
 <p>For instance, the following description defines the type of an integer
 prefixed by its size in bits.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define size8  8</span>
@@ -434,12 +512,6 @@ prefixed by its size in bits.</p>
   <span class="n">int_payload</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="n">payload</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">integer</span><span class="p">;</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">(FIXME) Due to current restrictions on
-double-fetches, 3d currently does not support unions tagged by enum
-values.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -528,7 +600,7 @@ couple of mutable locations of your choosing. Here’s how:</p>
 <span class="p">}</span> <span class="n">Pair</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The struct <code class="docutils literal notranslate"><span class="pre">Pair</span></code> is takes two out-parameters, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. Out
+<p>The struct <code class="docutils literal notranslate"><span class="pre">Pair</span></code> takes two out-parameters, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. Out
 parameters are signified by the <code class="docutils literal notranslate"><span class="pre">mutable</span></code> keyword and have pointer
 types—in this case <code class="docutils literal notranslate"><span class="pre">UINT32*</span></code>. Each field in the struct is
 augmented with an <code class="docutils literal notranslate"><span class="pre">on-success</span></code> action, where the action’s body is a
@@ -556,13 +628,14 @@ invoked in case the field is valid (if preseent), otherwise the
 other fields continues by returning a boolean—in case an on-success
 action returns false, the validation of the type halts with an error.</p>
 <p>The on-error handler also returns a boolean: in case it returns false,
-the error code associated with the validator is mentions that an
+the error code associated with the validator mentions that an
 on-error handler failed; if it returns true, the error code is the
 error code associated with the failed validation of the base field. In
 both cases, validation halts with an error.</p>
 <div class="section" id="atomic-actions">
 <h4>Atomic actions<a class="headerlink" href="#atomic-actions" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
+<li>Expression <code class="docutils literal notranslate"><span class="pre">e</span></code> consist of variables and constants.</li>
 <li><code class="docutils literal notranslate"><span class="pre">*i</span> <span class="pre">=</span> <span class="pre">e</span></code>: Assigns the value of the expressions <code class="docutils literal notranslate"><span class="pre">e</span></code> to the memory referenced by the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">*i</span></code>: Dereferences the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">field_pos</span></code>: Returns the offset of base field of the action from
@@ -579,14 +652,14 @@ external C functions.</p>
 <h4>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Permalink to this headline">¶</a></h4>
 <p>Composite actions can be built in a few ways:</p>
 <ul class="simple">
-<li>Atomic actions: Any atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code> the <code class="docutils literal notranslate"><span class="pre">a;</span></code> (with a trailing
+<li>Atomic actions: For any atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">a;</span></code> (with a trailing
 semicolon) is a composite action <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
 <li>Sequential composition: <code class="docutils literal notranslate"><span class="pre">`a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, and
 a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">a;p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code> then <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
 <li>Variable binding: <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>,
-and a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code>
-and stores its result in the new variable <code class="docutils literal notranslate"><span class="pre">x</span></code> (local to the
-action) and then runs <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
+and a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+stores its result in the new variable <code class="docutils literal notranslate"><span class="pre">x</span></code> (local to the
+action), and then runs <code class="docutils literal notranslate"><span class="pre">p</span></code> (where <code class="docutils literal notranslate"><span class="pre">p</span></code> may mention <cite>x</cite></li>
 <li>Conditionals: <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a conditional action that runs the
 composite actions <code class="docutils literal notranslate"><span class="pre">p</span></code> only if the condition <code class="docutils literal notranslate"><span class="pre">e</span></code> is
 true. Additionally, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p0</span> <span class="pre">}</span> <span class="pre">else</span> <span class="pre">{</span> <span class="pre">p1</span> <span class="pre">}</span></code> is also legal,

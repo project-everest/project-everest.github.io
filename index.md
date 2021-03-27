@@ -74,7 +74,7 @@ protocol](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/).
 [HACL\*](https://github.com/project-everest/hacl-star) is a formally
 verified library of modern cryptographic algorithms, where each
 primitive is verified for memory safety, functional correctness, and
-secret independence. HACL\* provide efficient, readable, standalone C
+secret independence. HACL\* provides efficient, readable, standalone C
 code for each algorithm that can be easily integrated into any C
 project.
 

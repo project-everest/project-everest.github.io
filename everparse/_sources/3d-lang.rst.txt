@@ -3,11 +3,34 @@
 The 3d Dependent Data Description language
 ==========================================
 
-3d supports (nested) structs, constraints, enums, parameterized data
-types, tagged or otherwise value-dependent unions, fixed-size arrays,
-and variable-size arrays. In addition to data validation, 3d also
-supports *local actions* to pass values read from the data structure,
-or pointers to them, to the caller code.
+3d supports several fixed-width integer base types, (nested) structs,
+constraints, enums, parameterized data types, tagged or otherwise
+value-dependent unions, fixed-size arrays, and variable-size
+arrays. In addition to data validation, 3d also supports *local
+actions* to pass values read from the data structure, or pointers to
+them, to the caller code.
+
+Base types
+----------
+
+The primitive types in 3d include unsigned integers of the following
+flavors:
+
+* UINT8: 8-bit unsigned little-endian integer
+* UINT16: 16-bit unsigned little-endian integer
+* UINT32: 32-bit unsigned little-endian integer
+* UINT64: 64-bit unsigned little-endian integer
+
+We also provide big-endian unsigned integers:
+
+* UINT16BE: 16-bit unsigned big-endian integer
+* UINT32BE: 32-bit unsigned big-endian integer
+* UINT64BE: 64-bit unsigned big-endian integer
+
+Big-endian integers are often useful in describing network message
+formats. 3d ensures suitable endianness conversions are applied when
+comparing or equating integers represented in different endianness. We
+show an example of this :ref:`below <sec-constraints>`.
 
 Structs
 -------
@@ -74,6 +97,8 @@ There can be multiple definitions marked ``entrypoint`` in a given
 
   * in ``coloredPoint2``, 3d will not introduce any padding after the
     ``color`` field.
+
+.. _sec-constraints:
 
 Constraints
 -----------
@@ -324,17 +349,6 @@ When ``sizeof(T) = 1``, 3d supports the notation ``T f[n]``, i.e., for
 byte arrays, since the byte size and element count coincide, you need
 not qualify the size of the array with a ``:byte-size`` qualifier.
 
-Upper-bounded byte-sized arrays
-...............................
-
-* ``T f[:byte-size-at-most n]``
-
-Sometimes, it is required to specify that a variable size array has a
-cumulative length that fits within some given byte size bound. This
-can be specified in 3d using the notation above, which introduces a
-field ``f`` of ``T``-typed elements whose cumulative size in bytes
-less than or equal to ``n``.
-
 Singleton arrays of variable size
 .................................
 
@@ -344,6 +358,13 @@ In some cases, it is required to specify that a field contains a
 single variable-sized element whose size in bytes is equal to a given
 expression. The notation above introduces a field ``f`` that contains
 a single element of type ``T`` occupying exactly ``n`` bytes.
+
+A variation is:
+
+* ``T f[:byte-size-single-element-array-at-most n]``
+
+similar to the previous form, but where ``n`` is an upper bound on the
+size in bytes.
 
 We expect to add several other kinds of variable-length array-like
 types in the uture.
@@ -833,7 +854,7 @@ EverParse, however we leave it as is for simplicity of this example.
       including both header and data, passed in by the caller
 
     --*/
-  export
+  entrypoint
   typedef struct _TCP_HEADER(UINT32 SegmentLength)
   {
     PORT            SourcePort;
@@ -913,3 +934,31 @@ necessarily only the last element.
 
 Finally, we have the data field itself, whose byte size is bytes is
 the computed expression.
+
+Generated code
+..............
+
+Running the EverParse toolchain on the TCP segment header
+specification produces a C procedure with the following signature, in ``TCPWrapper.h``:
+
+
+.. code-block:: c
+
+   BOOLEAN TcpCheckTcpHeader(uint32_t ___SegmentLength, uint8_t *base, uint32_t len);
+
+This procedure is a validator for the ``TCP_HEADER`` type. The caller
+passes in three parameters:
+
+* ``__SegmentLength``, representing the ``SegmentLength`` argument of
+  the ``TCPHeader`` type in the 3d specification.
+
+* ``base``: a pointer to an array of bytes
+
+* ``len``: a lower bound on the length of that array that ``base``
+  points to.
+
+``TcpCheckTcpHeader`` returns ``TRUE`` if, and only if, the contents
+of ``base`` represent a valid ``TCPHeader``, while enjoying all the
+guarantees of memory safety, arithmetic safety, double-fetch freedom,
+not modifying any of the caller's memory, not allocating any heap
+data, and being provably functional correct.

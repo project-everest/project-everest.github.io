@@ -204,6 +204,12 @@ is a framework embedded in F\* for programming and proving concurrent
 and distributed programs in a new concurrent separation logic called
 [SteelCore](https://www.fstar-lang.org/papers/steelcore/).
 
+## Community
+
+Project Everest's developers and many users interact on this
+[Slack forum](https://everestexpedition.slack.com)---you should be able to
+join automatically by [clicking here](https://aka.ms/JoinEverestSlack).
+
 ## Getting started with Project Everest
 
 Project Everest is the combination of the following GitHub

@@ -98,7 +98,10 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3d: Dependent Data Descriptions for Verified Validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tl-dr-summary">tl;dr Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#formal-guarantees">Formal guarantees</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#the-3d-dependent-data-description-language">The 3d Dependent Data Description language</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3d-lang.html">The 3d Dependent Data Description language</a></li>
 </ul>
@@ -197,8 +200,8 @@ correctness (validation is correct wrt. your data format) and security
 verification is available in the <a class="reference external" href="https://hacl-star.github.io/Overview.html#what-is-verified-software">documentation of EverCrypt</a>;
 EverParse provides similar formal guarantees except
 secret-independence.</p>
-<div class="section" id="tl-dr-summary">
-<h2>tl;dr Summary<a class="headerlink" href="#tl-dr-summary" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Write your data format description in the 3d language, as
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</li>
@@ -227,6 +230,30 @@ helpers for the implementation of verified validators, common to
 compilation units that need to call a validator from
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</li>
 </ol>
+<div class="section" id="formal-guarantees">
+<h3>Formal guarantees<a class="headerlink" href="#formal-guarantees" title="Permalink to this headline">¶</a></h3>
+<p>For each message type in the source data formats, the generated C code
+provides a _validator_, a procedure to determine if a given input
+array of bytes contains a valid representation of a message, with the
+following properties:</p>
+<ul class="simple">
+<li><em>Memory safety</em>: The validator is <a class="reference external" href="http://www.pl-enthusiast.net/2014/07/21/memory-safety/">memory safe</a>, meaning it never
+accesses memory out of bounds, accesses memory at an incompatible
+type, uses memory after it has been freed, etc.</li>
+<li><em>Arithmetic safety</em>: The validator has no integer overflows or underflows.</li>
+<li><em>Double-fetch freedom</em>: The validator reads every byte in the input array at
+most once, defending against certain kinds of
+<a class="reference external" href="https://cwe.mitre.org/data/definitions/367.html">time-of-check/time-of-use</a> bugs.</li>
+<li><em>Write footprint</em>: The validator does not modify the input array,
+and only modifies memory as described by user-controlled imperative
+actions that are explicit in the specification.</li>
+<li><em>No heap allocation</em>: The validator does not allocate any memory on
+the heap.</li>
+<li><em>Functionally correct</em>: The validator accepts all input arrays that
+contain valid representations of the message according to its
+specification, rejecting all others.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="the-3d-dependent-data-description-language">
 <h2>The 3d Dependent Data Description language<a class="headerlink" href="#the-3d-dependent-data-description-language" title="Permalink to this headline">¶</a></h2>
@@ -381,6 +408,8 @@ like:</p>
 <span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">test</span> <span class="n">clean</span>
 </pre></div>
 </div>
+<p>A fully commented version of that main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/Makefile">in
+the EverParse repository</a>.</p>
 <p>EverParse supports the following command-line options relevant to this
 mode:</p>
 <ul class="simple">

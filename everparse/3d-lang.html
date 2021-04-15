@@ -97,9 +97,10 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="3d.html#tl-dr-summary">tl;dr Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d.html#summary">Summary</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="3d.html#the-3d-dependent-data-description-language">The 3d Dependent Data Description language</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">The 3d Dependent Data Description language</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#base-types">Base types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#structs">Structs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#constraints">Constraints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#bitfields">Bitfields</a></li>
@@ -195,11 +196,33 @@
 <div></div></blockquote>
 <div class="section" id="the-3d-dependent-data-description-language">
 <span id="d-lang"></span><h1>The 3d Dependent Data Description language<a class="headerlink" href="#the-3d-dependent-data-description-language" title="Permalink to this headline">¶</a></h1>
-<p>3d supports (nested) structs, constraints, enums, parameterized data
-types, tagged or otherwise value-dependent unions, fixed-size arrays,
-and variable-size arrays. In addition to data validation, 3d also
-supports <em>local actions</em> to pass values read from the data structure,
-or pointers to them, to the caller code.</p>
+<p>3d supports several fixed-width integer base types, (nested) structs,
+constraints, enums, parameterized data types, tagged or otherwise
+value-dependent unions, fixed-size arrays, and variable-size
+arrays. In addition to data validation, 3d also supports <em>local
+actions</em> to pass values read from the data structure, or pointers to
+them, to the caller code.</p>
+<div class="section" id="base-types">
+<h2>Base types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h2>
+<p>The primitive types in 3d include unsigned integers of the following
+flavors:</p>
+<ul class="simple">
+<li>UINT8: 8-bit unsigned little-endian integer</li>
+<li>UINT16: 16-bit unsigned little-endian integer</li>
+<li>UINT32: 32-bit unsigned little-endian integer</li>
+<li>UINT64: 64-bit unsigned little-endian integer</li>
+</ul>
+<p>We also provide big-endian unsigned integers:</p>
+<ul class="simple">
+<li>UINT16BE: 16-bit unsigned big-endian integer</li>
+<li>UINT32BE: 32-bit unsigned big-endian integer</li>
+<li>UINT64BE: 64-bit unsigned big-endian integer</li>
+</ul>
+<p>Big-endian integers are often useful in describing network message
+formats. 3d ensures suitable endianness conversions are applied when
+comparing or equating integers represented in different endianness. We
+show an example of this <a class="reference internal" href="#sec-constraints"><span class="std std-ref">below</span></a>.</p>
+</div>
 <div class="section" id="structs">
 <h2>Structs<a class="headerlink" href="#structs" title="Permalink to this headline">¶</a></h2>
 <p>We would like to extract a validator for a simple point type, with X
@@ -282,7 +305,7 @@ the <code class="docutils literal notranslate"><span class="pre">color</span></c
 </div>
 </div>
 <div class="section" id="constraints">
-<h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
+<span id="sec-constraints"></span><h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
 <p>Validators for structs alone are only layout-related. Beyond that, 3d
 provides a way to actually check for constraints on their field
 values:</p>
@@ -549,17 +572,6 @@ array of elements of type <code class="docutils literal notranslate"><span class
 byte arrays, since the byte size and element count coincide, you need
 not qualify the size of the array with a <code class="docutils literal notranslate"><span class="pre">:byte-size</span></code> qualifier.</p>
 </div>
-<div class="section" id="upper-bounded-byte-sized-arrays">
-<h3>Upper-bounded byte-sized arrays<a class="headerlink" href="#upper-bounded-byte-sized-arrays" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-at-most</span> <span class="pre">n]</span></code></li>
-</ul>
-<p>Sometimes, it is required to specify that a variable size array has a
-cumulative length that fits within some given byte size bound. This
-can be specified in 3d using the notation above, which introduces a
-field <code class="docutils literal notranslate"><span class="pre">f</span></code> of <code class="docutils literal notranslate"><span class="pre">T</span></code>-typed elements whose cumulative size in bytes
-less than or equal to <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
-</div>
 <div class="section" id="singleton-arrays-of-variable-size">
 <h3>Singleton arrays of variable size<a class="headerlink" href="#singleton-arrays-of-variable-size" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -569,6 +581,12 @@ less than or equal to <code class="docutils literal notranslate"><span class="pr
 single variable-sized element whose size in bytes is equal to a given
 expression. The notation above introduces a field <code class="docutils literal notranslate"><span class="pre">f</span></code> that contains
 a single element of type <code class="docutils literal notranslate"><span class="pre">T</span></code> occupying exactly <code class="docutils literal notranslate"><span class="pre">n</span></code> bytes.</p>
+<p>A variation is:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array-at-most</span> <span class="pre">n]</span></code></li>
+</ul>
+<p>similar to the previous form, but where <code class="docutils literal notranslate"><span class="pre">n</span></code> is an upper bound on the
+size in bytes.</p>
 <p>We expect to add several other kinds of variable-length array-like
 types in the uture.</p>
 </div>
@@ -847,6 +865,7 @@ using a fully qualified name of the form <code class="docutils literal notransla
 <span class="p">}</span> <span class="n">Quad</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/">in the EverParse repository</a>.</p>
 </div>
 <div class="section" id="a-fully-worked-example-tcp-segment-headers">
 <h2>A fully worked example: TCP Segment Headers<a class="headerlink" href="#a-fully-worked-example-tcp-segment-headers" title="Permalink to this headline">¶</a></h2>
@@ -1002,7 +1021,7 @@ EverParse, however we leave it as is for simplicity of this example.</p>
 <span class="cm">    including both header and data, passed in by the caller</span>
 
 <span class="cm">  --*/</span>
-<span class="n">export</span>
+<span class="n">entrypoint</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_TCP_HEADER</span><span class="p">(</span><span class="n">UINT32</span> <span class="n">SegmentLength</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">PORT</span>            <span class="n">SourcePort</span><span class="p">;</span>
@@ -1075,6 +1094,28 @@ it will permit options arrays where the end-of-list option kind is not
 necessarily only the last element.</p>
 <p>Finally, we have the data field itself, whose byte size is bytes is
 the computed expression.</p>
+<div class="section" id="generated-code">
+<h3>Generated code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
+<p>Running the EverParse toolchain on the TCP segment header
+specification produces a C procedure with the following signature, in <code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">TcpCheckTcpHeader</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">___SegmentLength</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This procedure is a validator for the <code class="docutils literal notranslate"><span class="pre">TCP_HEADER</span></code> type. The caller
+passes in three parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">__SegmentLength</span></code>, representing the <code class="docutils literal notranslate"><span class="pre">SegmentLength</span></code> argument of
+the <code class="docutils literal notranslate"><span class="pre">TCPHeader</span></code> type in the 3d specification.</li>
+<li><code class="docutils literal notranslate"><span class="pre">base</span></code>: a pointer to an array of bytes</li>
+<li><code class="docutils literal notranslate"><span class="pre">len</span></code>: a lower bound on the length of that array that <code class="docutils literal notranslate"><span class="pre">base</span></code>
+points to.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">TcpCheckTcpHeader</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if, and only if, the contents
+of <code class="docutils literal notranslate"><span class="pre">base</span></code> represent a valid <code class="docutils literal notranslate"><span class="pre">TCPHeader</span></code>, while enjoying all the
+guarantees of memory safety, arithmetic safety, double-fetch freedom,
+not modifying any of the caller’s memory, not allocating any heap
+data, and being provably functional correct.</p>
+</div>
 </div>
 </div>
 

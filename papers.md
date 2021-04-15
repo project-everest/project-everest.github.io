@@ -9,7 +9,7 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2021</td></tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="18"></a>[18]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="19"></a>[19]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everquic.pdf">
       <span class="bibtitle" itemprop="name">A Security Model and Fully Verified Implementation for the IETF QUIC Record Layer
@@ -37,7 +37,7 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2020</td></tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="17"></a>[17]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="18"></a>[18]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/haclxn.pdf">
       <span class="bibtitle" itemprop="name">HACL&times;N: Verified Generic SIMD Crypto (for all your favorite platforms)
@@ -61,7 +61,7 @@ permalink: /papers/
   </td>
 </tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="16"></a>[16]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="17"></a>[17]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/steelcore.pdf">
       <span class="bibtitle" itemprop="name">SteelCore: An Extensible Concurrent Separation Logic for Effectful Dependently Typed Programs</span></a>
@@ -75,6 +75,28 @@ permalink: /papers/
         <span itemprop="isPartOf">In Proceedings of the 25th ACM SIGPLAN International Conference on Functional Programming (ICFP),</span>
       </span>
       <span itemprop="datePublished">2020</span>.
+    </span>
+  </td>
+</tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="16"></a>[16]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/vale-transformers.pdf">
+      <span class="bibtitle" itemprop="name">Verified Transformations and Hoare Logic: Beautiful Proofs for Ugly Assembly Language
+</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Jay Bosamiya</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Sydney Gibson</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Yao Li</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Chris Hawblitzel</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">In Proceedings of the 12th Conference on Verified Software: Theories, Tools, and Experiments (VSTTE)</span>
+      </span>
+      <span itemprop="datePublished">2020</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="/assets/vale-transformers.pdf">[pdf]</a>
+      <a href="https://doi.org/10.1007/978-3-030-63618-0_7">[doi]</a>
     </span>
   </td>
 </tr>

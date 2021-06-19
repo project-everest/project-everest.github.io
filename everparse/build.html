@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>How to build EverParse from source &mdash; EverParse Manual  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="static/jquery.js"></script>
+        <script type="text/javascript" src="static/underscore.js"></script>
+        <script type="text/javascript" src="static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="The 3d Dependent Data Description language" href="3d-lang.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EverParse Manual
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to build EverParse from source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-dependencies">Install dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compile-the-sources">Compile the sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-a-binary-package">Build a binary package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-in-the-source-tree">Build in the source tree</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">EverParse Manual</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>How to build EverParse from source</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-build-everparse-from-source">
+<span id="build"></span><h1>How to build EverParse from source<a class="headerlink" href="#how-to-build-everparse-from-source" title="Permalink to this headline">¶</a></h1>
+<p>You may want to use the sources instead of the binary package in any
+of the following cases:</p>
+<ul class="simple">
+<li>You are on a non-amd64 platform (however, there is no guarantee that
+the sources will compile under any such non-amd64 platform.)</li>
+<li>You are not on Windows or Linux (however, there is no guarantee that
+the sources will compile under any such non-Windows-Linux system.)</li>
+<li>You want to use your own copy of F*, KReMLin or z3.</li>
+<li>You want to contribute to EverParse.</li>
+</ul>
+<p>To this end, you must first install dependencies, then compile the
+sources.</p>
+<div class="section" id="install-dependencies">
+<h2>Install dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>EverParse, F* and KReMLin are all components of the Everest
+project. Thus, the best way to install dependencies is to use the
+Everest script, as described below following the <a class="reference external" href="https://project-everest.github.io/">website of the
+Everest project</a>, which
+EverParse is a member of.</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Building EverParse on Windows requires Cygwin. Instead, you could also
+use the <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux (WSL)</a> and act
+as if you were on Linux (see below), but this has not been officially
+tested by anyone in the Everest project; you will obtain Linux
+binaries instead.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://www.cygwin.com/">Install Cygwin</a>.</li>
+<li>Clone the <a class="reference external" href="https://github.com/project-everest/everest">Everest repository from GitHub</a>.</li>
+<li>From inside the origin directory of the clone, run <code class="docutils literal notranslate"><span class="pre">./everest</span>
+<span class="pre">check</span></code> and follow the instructions on how to install compilation
+dependencies (OCaml, etc.) <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">check</span></code> will automatically
+install all such compilation dependencies, but you may need to
+re-run it several times after refreshing the environment.</li>
+</ol>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="https://opam.ocaml.org/doc/Install.html">Install opam</a>, a
+package manager for the <a class="reference external" href="https://ocaml.org/doc/Install.html">OCaml</a> ecosystem.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to install opam 2.x, so beware of older distributions
+such as Ubuntu 18.04 packaging opam 1.x by default. The opam web
+page gives detailed installation instructions to install opam
+2.x.</p>
+</div>
+</li>
+<li><p class="first">Make sure the system packages corresponding to the following
+commands are installed:</p>
+<ul class="simple">
+<li>GNU cp</li>
+<li>diff</li>
+<li>find</li>
+<li>gcc</li>
+<li>GNU getopt</li>
+<li>git</li>
+<li>GNU make</li>
+<li>patch</li>
+<li>GNU sed</li>
+<li>wget</li>
+<li>which</li>
+</ul>
+</li>
+<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">init</span> <span class="pre">--compiler=4.12.0</span></code> and follow the instructions. This will install OCaml.</p>
+<p>This step will modify your configuration scripts to add the path to
+OCaml and its libraries to the PATH environment variable every time
+you login, so you may need to evaluate those configuration scripts
+again or log out and back in for such changes to take effect.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need to specify an OCaml version number (between 4.08.0 and
+4.12.x), so that OCaml will be installed in your user profile,
+because some EverParse dependencies do not work well with a
+system-wide OCaml. Thus, if opam says that there is an
+ambiguity, you should re-run <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">init</span></code> with the non-system
+package for OCaml.</p>
+</div>
+<p>If this step fails, then you will need to remove the <code class="docutils literal notranslate"><span class="pre">~/.opam</span></code>
+directory before trying again.</p>
+</li>
+<li><p class="first">Clone the <a class="reference external" href="https://github.com/project-everest/everest">Everest repository from GitHub</a>.</p>
+</li>
+<li><p class="first">From inside the origin directory of the clone, run <code class="docutils literal notranslate"><span class="pre">./everest</span>
+<span class="pre">opam</span></code> and follow the instructions. This step will install the
+relevant opam packages on which EverParse depends.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="compile-the-sources">
+<h2>Compile the sources<a class="headerlink" href="#compile-the-sources" title="Permalink to this headline">¶</a></h2>
+<p>There are two possible ways.</p>
+<ul class="simple">
+<li>If your platform is not supported (or if binary releases do not work
+for some reason) and if you just want to rebuild EverParse, then you
+can build a binary package.</li>
+<li>If you want to contribute to the EverParse sources, then you need to
+build in the source tree.</li>
+</ul>
+<div class="section" id="build-a-binary-package">
+<h3>Build a binary package<a class="headerlink" href="#build-a-binary-package" title="Permalink to this headline">¶</a></h3>
+<p>If you just want to rebuild EverParse without contributing to its
+sources, you can build a binary package:</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="https://github.com/project-everest/everparse">Clone the EverParse repository</a> .</p>
+</li>
+<li><p class="first">In the root directory of that EverParse clone, run one of the following commands:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">everparse</span></code></p>
+<p>That command will build ready-to-use binaries into the
+<code class="docutils literal notranslate"><span class="pre">everparse/</span></code> subdirectory. That directory will behave as if you
+had downloaded and extracted a binary package archive from the
+releases page.</p>
+<p>This process is fully automatic. In particular, it automatically
+downloads a binary release of z3, and downloads and builds F*,
+KReMLin and EverCrypt.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">z3 is downloaded only for Windows or Linux. On other platforms, you need to have Z3 4.8.5
+reachable from your PATH. You will most likely need to compile it from <a class="reference external" href="https://github.com/z3prover/z3/tree/Z3-4.8.5">its sources</a>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you encounter a linking issue when building <code class="docutils literal notranslate"><span class="pre">3d.exe</span></code>,
+then it may be due to EverCrypt not supported on your platform
+(e.g. FreeBSD.) As a workaround, you can set the
+<code class="docutils literal notranslate"><span class="pre">NO_EVERCRYPT</span></code> environment variable to any nonzero value, to
+use <a class="reference external" href="https://opam.ocaml.org/packages/sha/">ocaml-sha</a>
+instead of EverCrypt. In that case, <code class="docutils literal notranslate"><span class="pre">ocaml-sha</span></code> will be
+automatically installed while building EverParse.</p>
+</div>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code></p>
+<p>That command will build a binary package,
+<code class="docutils literal notranslate"><span class="pre">everparse-&lt;version&gt;-&lt;platform&gt;.zip</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> on
+Linux, by producing the <code class="docutils literal notranslate"><span class="pre">everparse/</span></code> subdirectory as with
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">everparse</span></code> and compressing it into an archive.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package-noversion</span></code></p>
+<p>That command will build a binary package, as with <code class="docutils literal notranslate"><span class="pre">make</span>
+<span class="pre">package</span></code>, but only the name of the archive will change:
+<code class="docutils literal notranslate"><span class="pre">everparse.zip</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">everparse.tar.gz</span></code> on Linux.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>In all cases, the produced package offers <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> on
+Windows, <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> on Linux, which you can use as directed
+elsewhere in this manual.</p>
+</div>
+<div class="section" id="build-in-the-source-tree">
+<h3>Build in the source tree<a class="headerlink" href="#build-in-the-source-tree" title="Permalink to this headline">¶</a></h3>
+<p>If you want to contribute to the sources of EverParse, you need to
+rebuild in the source tree. To do so, you first need to setup a
+development environment for Everest (steps 1 to 6 below). Then you can
+fetch and build EverParse sources:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You cannot use <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> from the
+source tree. You need to use <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span></code> instead.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">In the root directory of the Everest clone, run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">z3</span></code>
+and follow the instructions to install z3 on your system.</p>
+<p>This step will modify your configuration scripts to add the path to
+z3 to the PATH environment variable every time you login, so you
+may need to evaluate those configuration scripts again or log out
+and back in for such changes to take effect.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">z3 is downloaded only for Windows or Linux. On other platforms, you need to have Z3 4.8.5
+reachable from your PATH. You will most likely need to compile it from <a class="reference external" href="https://github.com/z3prover/z3/tree/Z3-4.8.5">its sources</a>.</p>
+</div>
+</li>
+<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">pull</span></code> to fetch and pull the latest versions of F*,
+KReMLin and EverParse.</p>
+</li>
+<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">-j</span> <span class="pre">1</span> <span class="pre">FStar</span> <span class="pre">make</span> <span class="pre">kremlin</span> <span class="pre">make</span></code> to
+build F* and KReMLin. The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option introduces a
+parallelism factor. You can also speed up the build by skipping
+F*, KReMLin and EverCrypt library proofs by setting the
+<code class="docutils literal notranslate"><span class="pre">OTHERFLAGS</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">&quot;--admit_smt_queries</span>
+<span class="pre">true&quot;</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If, at this point, you immediately get an error of the form
+“menhir not found”, then it means that the path to opam packages
+is not properly set up in your environment. To do so, you need
+to run <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">$(opam</span> <span class="pre">env)</span></code> (as instructed during <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">init</span></code>
+or <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">opam</span></code>), or log out and back in.</p>
+</div>
+</li>
+<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-C</span> <span class="pre">hacl-star/dist/gcc-compatible</span> <span class="pre">install-ocaml</span></code> to
+build and install EverCrypt (needed for hash checking with
+<code class="docutils literal notranslate"><span class="pre">--check_hashes</span></code>, etc.)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In fact, this step builds and installs the <code class="docutils literal notranslate"><span class="pre">hacl-star-raw</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hacl-star</span></code> OCaml packages. If, at this point, you get an
+error of the form “hacl-star-raw already installed” or
+“hacl-star already installed”, it means that either package is
+already present because of an earlier compilation, so you can
+remove it, using <code class="docutils literal notranslate"><span class="pre">ocamlfind</span> <span class="pre">remove</span> <span class="pre">hacl-star-raw</span></code>
+and/or <code class="docutils literal notranslate"><span class="pre">ocamlfind</span> <span class="pre">remove</span> <span class="pre">hacl-star</span></code>, and try again.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Even if you manage to build EverCrypt at this stage, you may
+still encounter a linking issue when building <code class="docutils literal notranslate"><span class="pre">3d.exe</span></code> later,
+maybe due to EverCrypt not supported on your platform
+(e.g. FreeBSD.) As a workaround, you can set the
+<code class="docutils literal notranslate"><span class="pre">NO_EVERCRYPT</span></code> environment variable to any nonzero value, to
+use <a class="reference external" href="https://opam.ocaml.org/packages/sha/">ocaml-sha</a> instead
+of EverCrypt. In that case, you first need to run <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">install</span>
+<span class="pre">ocaml-sha</span></code> to install that package beforehand.</p>
+</div>
+</li>
+<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">FStar</span></code>
+subdirectory of your Everest clone, which contains a clone of the
+latest F*.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">KREMLIN_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">kremlin</span></code>
+subdirectory of your Everest clone, which contains a clone of the
+latest KReMLin.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you already have your own copy of F* or KReMLin, and if you
+already know how to build them, then you can skip steps 1 to 5
+and set the environment variables accordingly.)</p>
+</div>
+</li>
+<li><p class="first">Everest contains a clone of the EverParse sources in the
+<code class="docutils literal notranslate"><span class="pre">quackyducky</span></code> subdirectory. You can work from
+there. Alternatively, you can <a class="reference external" href="https://github.com/project-everest/everparse">clone it yourself</a>
+anywhere else.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">QD_HOME</span></code> environment variable to your EverParse clone
+as you chose it.</p>
+</li>
+<li><p class="first">Then, once you are all set up in your EverParse clone, you can
+build EverParse by <code class="docutils literal notranslate"><span class="pre">make</span></code>. Then, the EverParse/3d executable will
+be located at <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span></code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="3d-lang.html" class="btn btn-neutral float-left" title="The 3d Dependent Data Description language" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Microsoft Research.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -114,6 +114,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#modular-structure-and-files">Modular structure and files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-handling">Error handling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#a-fully-worked-example-tcp-segment-headers">A fully worked example: TCP Segment Headers</a></li>
 </ul>
 </li>
@@ -867,6 +868,81 @@ using a fully qualified name of the form <code class="docutils literal notransla
 </div>
 <p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/">in the EverParse repository</a>.</p>
 </div>
+<div class="section" id="error-handling">
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>When a validator fails, EverParse supports invoking a user-provided
+callback with contextual information about the failure.</p>
+<p>An error handling callback is a C procedure with the following signature:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">ErrorHandler</span><span class="p">)(</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">FieldName</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ErrorReason</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">Context</span><span class="p">,</span>
+  <span class="kt">uint32_t</span> <span class="n">Length</span><span class="p">,</span>
+  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">Base</span><span class="p">,</span>
+  <span class="kt">uint64_t</span> <span class="n">StartPosition</span><span class="p">,</span>
+  <span class="kt">uint64_t</span> <span class="n">EndPosition</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Every EverParse validator is parameterized by:</p>
+<ul class="simple">
+<li>A function pointer, of type <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></li>
+<li>A context parameter, <code class="docutils literal notranslate"><span class="pre">uint8_t*</span> <span class="pre">Context</span></code></li>
+</ul>
+<p>At the top-level, when calling into EverParse from an application, one
+can instantiate both the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> with a function of one’s
+choosing and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument with a pointer to some
+application-specific context.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> expects</p>
+<blockquote>
+<div><ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointers to refer to live and
+disjoint pieces of memory.</li>
+<li>For <code class="docutils literal notranslate"><span class="pre">Length</span></code> to be the length in bytes of valid memory pointed
+to by <code class="docutils literal notranslate"><span class="pre">Base</span></code> and for <code class="docutils literal notranslate"><span class="pre">StartPosition</span> <span class="pre">&lt;=</span> <span class="pre">EndPosition</span> <span class="pre">&lt;=</span> <span class="pre">Length</span></code>.</li>
+</ul>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> can</p>
+<blockquote>
+<div><ul class="simple">
+<li>Read from all the pointers</li>
+<li>May only modify the memory reference by <code class="docutils literal notranslate"><span class="pre">Context</span></code>.</li>
+</ul>
+</div></blockquote>
+<p>When validating a field <code class="docutils literal notranslate"><span class="pre">f</span></code> in a type <code class="docutils literal notranslate"><span class="pre">T</span></code>, in case the validator
+fails, EverParse calls the user-provided <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code>, passing in
+the following arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">TypeName</span></code> argument is the name of the type <code class="docutils literal notranslate"><span class="pre">T</span></code></li>
+<li>The <code class="docutils literal notranslate"><span class="pre">FieldName</span></code> argument is name of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></li>
+<li>The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> argument is one of the following:<ul>
+<li>“generic error”</li>
+<li>“not enough data”</li>
+<li>“impossible”</li>
+<li>“list size not multiple of element size”</li>
+<li>“action failed”</li>
+<li>“constraint failed”</li>
+<li>“unexpected padding”</li>
+<li>“unspecified”</li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument is the user-provided <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointer</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Length</span></code> argument is the length in bytes of the input buffer</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> argument is a pointer to the base of the input buffer</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
+start of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></li>
+<li>The <code class="docutils literal notranslate"><span class="pre">EndPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
+end of the field <code class="docutils literal notranslate"><span class="pre">f</span></code> at which the validation failure occurred.</li>
+</ul>
+</div></blockquote>
+<p>Following a validation failure at a given field, EverParse will invoke
+the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> at each enclosing type as well. This allows a
+caller to reconstruct a stack trace of a failing validation.</p>
+<p>EverParse generates a default error handler that records just the
+deepest validation failure that occurred.</p>
+</div>
 <div class="section" id="a-fully-worked-example-tcp-segment-headers">
 <h2>A fully worked example: TCP Segment Headers<a class="headerlink" href="#a-fully-worked-example-tcp-segment-headers" title="Permalink to this headline">¶</a></h2>
 <p>The classic <a class="reference external" href="https://tools.ietf.org/html/rfc793">IETF RFC 793</a> from
@@ -1115,6 +1191,21 @@ of <code class="docutils literal notranslate"><span class="pre">base</span></cod
 guarantees of memory safety, arithmetic safety, double-fetch freedom,
 not modifying any of the caller’s memory, not allocating any heap
 data, and being provably functional correct.</p>
+</div>
+<div class="section" id="id1">
+<h3>Error handling<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> includes a default error handler to report the leaf
+validation failure. It also expects a client module to supply an
+implementation of</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">TcpEverParseError</span><span class="p">(</span>
+     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
+     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">FieldName</span><span class="p">,</span>
+     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Reason</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This can be instantiated with a procedure to, say, log an error.</p>
+<p>Alternatively, the default error handler in <code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> can be
+replaced by a custom error handler of your choosing.</p>
 </div>
 </div>
 </div>

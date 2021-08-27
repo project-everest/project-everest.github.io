@@ -229,10 +229,10 @@ show an example of this <a class="reference internal" href="#sec-constraints"><s
 <p>We would like to extract a validator for a simple point type, with X
 and Y coordinates. So we create a file, <code class="docutils literal notranslate"><span class="pre">HelloWorld.3d</span></code>, with the
 following 3d data format description:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
-  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
-  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_point</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">point</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This data format is very similar to a C type description, where
@@ -248,7 +248,7 @@ entrypoint function definitions for data validators that the user
 should ultimately use in their client code. More precisely, here is
 the contents of <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>:</li>
 </ul>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">HelloWorldCheckPoint</span></code> function is the actual validator for the
@@ -259,16 +259,16 @@ that fits in <code class="docutils literal notranslate"><span class="pre">len</s
 marked with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> tells 3d to expose its validator in
 <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> which will bear the name <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>.</p>
 <p>Structs can be nested, such as in the following instance:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
-  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
-  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_point</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">point</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_triangle</span> <span class="p">{</span>
-  <span class="n">point</span> <span class="n">a</span><span class="p">;</span>
-  <span class="n">point</span> <span class="n">b</span><span class="p">;</span>
-  <span class="n">point</span> <span class="n">c</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">triangle</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_triangle</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">point</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">point</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">point</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">triangle</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then, since in this file the definition of <code class="docutils literal notranslate"><span class="pre">point</span></code> is not prefixed
@@ -281,20 +281,20 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 <p>3d does not enforce any alignment constraints, and does not
 introduce any implicit alignment padding. So, for instance, in the
 following data format description:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_point</span> <span class="p">{</span>
-  <span class="n">UINT16</span> <span class="n">x</span><span class="p">;</span>
-  <span class="n">UINT16</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">point</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_point</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">point</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint1</span> <span class="p">{</span>
-  <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
-  <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">coloredPoint1</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_coloredPoint1</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">point</span><span class="w"> </span><span class="n">pt</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">coloredPoint1</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint2</span> <span class="p">{</span>
-  <span class="n">point</span> <span class="n">pt</span><span class="p">;</span>
-  <span class="n">UINT8</span> <span class="n">color</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">coloredPoint2</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_coloredPoint2</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">point</span><span class="w"> </span><span class="n">pt</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">coloredPoint2</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <ul class="last simple">
@@ -310,10 +310,10 @@ the <code class="docutils literal notranslate"><span class="pre">color</span></c
 <p>Validators for structs alone are only layout-related. Beyond that, 3d
 provides a way to actually check for constraints on their field
 values:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_smoker</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">age</span> <span class="p">{</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">21</span> <span class="p">};</span>
-  <span class="n">UINT8</span> <span class="n">cigarettesConsumed</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">smoker</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_smoker</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">cigarettesConsumed</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">smoker</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this example, the validator for <code class="docutils literal notranslate"><span class="pre">smoker</span></code> will check that the
@@ -324,29 +324,29 @@ Boolean propositional logic (<code class="docutils literal notranslate"><span cl
 <p>Constraints on a field can also depend on the values of the previous
 fields of the struct. For instance, here is a type definition for a
 pair ordered by increasing values:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_orderedPair</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">lesser</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">greater</span> <span class="p">{</span> <span class="n">lesser</span> <span class="o">&lt;=</span> <span class="n">greater</span> <span class="p">};</span>
-<span class="p">}</span> <span class="n">orderedPair</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_orderedPair</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">lesser</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">lesser</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">orderedPair</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>Arithmetics on constraints are evaluated in machine integers, not
 mathematical integers. Thus, the following naive definition:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="p">};</span>
-<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_boundedSum</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">boundedSum</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>will fail at F* verification because the expression <code class="docutils literal notranslate"><span class="pre">left</span> <span class="pre">+</span> <span class="pre">right</span></code>
 must be proven to not overflow <em>before</em> evaluating the condition. The
 correct way of stating the condition is as follows:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="mi">42</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
-<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_boundedSum</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">boundedSum</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p class="last">This verifies because F* evaluates the right-hand-side
@@ -361,11 +361,11 @@ i.e., unsigned integer types of user-specified width represented
 packed within unsigned integer fields of the canonical sizes
 UINT16, UINT32 and UINT64.</p>
 <p>Consider the following example:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_BF</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="nl">x</span> <span class="p">:</span> <span class="mi">6</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="nl">y</span> <span class="p">:</span> <span class="mi">10</span> <span class="p">{</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">900</span> <span class="p">};</span>
-  <span class="n">UINT32</span> <span class="nl">z</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">{</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">60000</span> <span class="p">}</span>
-<span class="p">}</span> <span class="n">BF</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_BF</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="nl">x</span> <span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="nl">y</span> <span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">900</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="nl">z</span> <span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">60000</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">BF</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This defines a struct <code class="docutils literal notranslate"><span class="pre">BF</span></code> occupying 32 bits of memory, where the
@@ -376,11 +376,11 @@ and are implicitly promoted to the underlying integer type, <code class="docutil
 in this case, although the 3d verifier is aware of suitable bounds on
 the types, e.g., that <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">64</span></code>.</p>
 <p>3d implements C’s rules for packing bit fields. For instance,</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_BF2</span> <span class="p">{</span>
-  <span class="n">UINT16</span> <span class="nl">x</span> <span class="p">:</span> <span class="mi">6</span><span class="p">;</span>
-  <span class="n">UINT16</span> <span class="nl">y</span> <span class="p">:</span> <span class="mi">12</span><span class="p">;</span>
-  <span class="n">UINT8</span> <span class="n">z</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">BF2</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_BF2</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="nl">x</span> <span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="nl">y</span> <span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">BF2</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In <code class="docutils literal notranslate"><span class="pre">BF2</span></code>, although <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code> cumulatively consume only
@@ -388,12 +388,12 @@ the types, e.g., that <code class="docutils literal notranslate"><span class="pr
 40 bits, since a given field must be represented within the bounds of
 a single underlying type—we have 10 unused bits after <code class="docutils literal notranslate"><span class="pre">x</span></code> and 4
 unused bits after <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>                   <span class="mi">4</span>
- <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span>
-<span class="o">|</span>     <span class="n">x</span>     <span class="o">|</span>       <span class="n">Unused</span>      <span class="o">|</span>           <span class="n">y</span>           <span class="o">|</span><span class="n">Unused</span> <span class="o">|</span>        <span class="n">z</span>      <span class="o">|</span>
-<span class="o">|</span>           <span class="o">|</span>                   <span class="o">|</span>                       <span class="o">|</span>       <span class="o">|</span>               <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="mi">0</span><span class="w">                   </span><span class="mi">1</span><span class="w">                   </span><span class="mi">2</span><span class="w">                   </span><span class="mi">3</span><span class="w">                   </span><span class="mi">4</span><span class="w"></span>
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span><span class="w"></span>
+<span class="o">|</span><span class="w">     </span><span class="n">x</span><span class="w">     </span><span class="o">|</span><span class="w">       </span><span class="n">Unused</span><span class="w">      </span><span class="o">|</span><span class="w">           </span><span class="n">y</span><span class="w">           </span><span class="o">|</span><span class="n">Unused</span><span class="w"> </span><span class="o">|</span><span class="w">        </span><span class="n">z</span><span class="w">      </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w">           </span><span class="o">|</span><span class="w">                   </span><span class="o">|</span><span class="w">                       </span><span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w">               </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -406,17 +406,17 @@ unused bits after <code class="docutils literal notranslate"><span class="pre">y
 </pre></div>
 </div>
 <p>Alternatively, 3d provides a way to define enumerated types:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span> <span class="k">enum</span> <span class="n">color</span> <span class="p">{</span>
-  <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="n">green</span><span class="p">,</span>
-  <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
-<span class="p">}</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">green</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_coloredPoint</span> <span class="p">{</span>
-  <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">x</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">coloredPoint</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_coloredPoint</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">color</span><span class="w"> </span><span class="n">col</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">coloredPoint</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The validator for <code class="docutils literal notranslate"><span class="pre">coloredPoint</span></code> will check that the value of
@@ -428,23 +428,23 @@ of the values associated to each label.</p>
 <p>Due to a limitation in the way 3d currently checks for the absence of
 double-fetches, values with enum type cannot be used in
 constraints. For example, the following code is currently rejected.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span> <span class="k">enum</span> <span class="n">color</span> <span class="p">{</span>
-  <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="n">green</span><span class="p">,</span>
-  <span class="n">blue</span> <span class="o">=</span> <span class="mi">42</span>
-<span class="p">};</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UINT32</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">green</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_enum_constraint</span> <span class="p">{</span>
-  <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">x</span>
-  <span class="p">{</span>
-     <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">color</span> <span class="o">==</span> <span class="n">green</span>
-  <span class="p">};</span>
-<span class="p">}</span> <span class="n">_enum_constraint</span> <span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_enum_constraint</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">color</span><span class="w"> </span><span class="n">col</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">green</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">_enum_constraint</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>With the following error message:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Error</span><span class="p">)</span> <span class="n">The</span> <span class="n">type</span> <span class="n">of</span> <span class="n">this</span> <span class="n">field</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">a</span> <span class="n">reader</span><span class="p">,</span> <span class="n">either</span> <span class="n">because</span> <span class="n">its</span> <span class="n">values</span> <span class="n">are</span> <span class="n">too</span> <span class="n">large</span> <span class="n">or</span> <span class="n">because</span> <span class="n">reading</span> <span class="n">it</span> <span class="n">may</span> <span class="n">incur</span> <span class="n">a</span> <span class="kt">double</span> <span class="n">fetch</span><span class="p">;</span> <span class="n">subsequent</span> <span class="n">fields</span> <span class="n">cannot</span> <span class="n">depend</span> <span class="n">on</span> <span class="n">it</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Error</span><span class="p">)</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">reader</span><span class="p">,</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">too</span><span class="w"> </span><span class="n">large</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">may</span><span class="w"> </span><span class="n">incur</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">fetch</span><span class="p">;</span><span class="w"> </span><span class="n">subsequent</span><span class="w"> </span><span class="n">fields</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">depend</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">it</span><span class="w"></span>
 </pre></div>
 </div>
 <p>One must instead write:</p>
@@ -478,34 +478,34 @@ with arguments that can then be reused in constraints. For instance,
 the following <code class="docutils literal notranslate"><span class="pre">BoundedSum.3d</span></code> data description defines a pair of two
 integers whose sum is bounded by a bound provided by the user as
 argument:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
-<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_boundedSum</span><span class="w"> </span><span class="p">(</span><span class="n">UINT32</span><span class="w"> </span><span class="n">bound</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">boundedSum</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then, these arguments will show up as arguments of the
 corresponding validator in the <code class="docutils literal notranslate"><span class="pre">BoundedSumWrapper.h</span></code> header produced
 by 3d:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">BoundedSumCheckBoundedSum</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">bound</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">BoundedSumCheckBoundedSum</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bound</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Parameterized data types can also be instantiated within the <code class="docutils literal notranslate"><span class="pre">.3d</span></code>
 file itself, including by the value of the field of a struct:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">mySum</span> <span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">bound</span><span class="p">;</span>
-  <span class="n">boundedSum</span><span class="p">(</span><span class="n">bound</span><span class="p">)</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">mySum</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">mySum</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">bound</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">boundedSum</span><span class="p">(</span><span class="n">bound</span><span class="p">)</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">mySum</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>A parameterized data type can also check whether a condition on its
 arguments holds before even trying to check its contents:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_boundedSum</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">bound</span><span class="p">)</span>
-<span class="n">where</span> <span class="n">bound</span> <span class="o">&lt;=</span> <span class="mi">1729</span>
-<span class="p">{</span>
-  <span class="n">UINT32</span> <span class="n">left</span><span class="p">;</span>
-  <span class="n">UINT32</span> <span class="n">right</span> <span class="p">{</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">&amp;&amp;</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">bound</span> <span class="o">-</span> <span class="n">left</span> <span class="p">};</span>
-<span class="p">}</span> <span class="n">boundedSum</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_boundedSum</span><span class="w"> </span><span class="p">(</span><span class="n">UINT32</span><span class="w"> </span><span class="n">bound</span><span class="p">)</span><span class="w"></span>
+<span class="n">where</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1729</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">bound</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">boundedSum</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In this case, the validator for <code class="docutils literal notranslate"><span class="pre">boundedSum</span></code> would check
@@ -523,18 +523,18 @@ prefixed by its size in bits.</p>
 <span class="cp">#define size16 16</span>
 <span class="cp">#define size32 32</span>
 
-<span class="n">casetype</span> <span class="nf">_int_payload</span> <span class="p">(</span><span class="n">UINT32</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">switch</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nl">size8</span><span class="p">:</span>  <span class="n">UINT8</span>  <span class="n">value8</span><span class="p">;</span>
-    <span class="k">case</span> <span class="nl">size16</span><span class="p">:</span> <span class="n">UINT16</span> <span class="n">value16</span><span class="p">;</span>
-    <span class="k">case</span> <span class="nl">size32</span><span class="p">:</span> <span class="n">UINT32</span> <span class="n">value32</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span> <span class="n">int_payload</span><span class="p">;</span>
+<span class="n">casetype</span><span class="w"> </span><span class="nf">_int_payload</span><span class="w"> </span><span class="p">(</span><span class="n">UINT32</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">size8</span><span class="p">:</span><span class="w">  </span><span class="n">UINT8</span><span class="w">  </span><span class="n">value8</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">size16</span><span class="p">:</span><span class="w"> </span><span class="n">UINT16</span><span class="w"> </span><span class="n">value16</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">size32</span><span class="p">:</span><span class="w"> </span><span class="n">UINT32</span><span class="w"> </span><span class="n">value32</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">int_payload</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_integer</span> <span class="p">{</span>
-  <span class="n">UINT32</span>                <span class="n">size</span><span class="p">;</span>
-  <span class="n">int_payload</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="n">payload</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">integer</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_integer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w">                </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">int_payload</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="n">payload</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">integer</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -601,22 +601,22 @@ validation.</p>
 <p>Let’s start with a simple example. Suppose you want to validate that a
 byte array contains a pair of integers, and then read them into a
 couple of mutable locations of your choosing. Here’s how:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Pair</span><span class="p">(</span><span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">x</span><span class="p">,</span>
-                     <span class="n">mutable</span> <span class="n">UINT32</span><span class="o">*</span> <span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-   <span class="n">UINT32</span> <span class="n">first</span>
-   <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
-        <span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="n">first</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-   <span class="p">};</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Pair</span><span class="p">(</span><span class="n">mutable</span><span class="w"> </span><span class="n">UINT32</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">mutable</span><span class="w"> </span><span class="n">UINT32</span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">UINT32</span><span class="w"> </span><span class="n">first</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span><span class="w"></span>
+<span class="w">        </span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">};</span><span class="w"></span>
 
-   <span class="n">UINT32</span> <span class="n">second</span>
-   <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
-        <span class="o">*</span><span class="n">y</span> <span class="o">=</span> <span class="n">second</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-   <span class="p">};</span>
-<span class="p">}</span> <span class="n">Pair</span><span class="p">;</span>
+<span class="w">   </span><span class="n">UINT32</span><span class="w"> </span><span class="n">second</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span><span class="w"></span>
+<span class="w">        </span><span class="o">*</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">second</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Pair</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The struct <code class="docutils literal notranslate"><span class="pre">Pair</span></code> takes two out-parameters, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. Out
@@ -689,16 +689,16 @@ false.</li>
 <div class="section" id="another-example">
 <h4>Another example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h4>
 <p>Consider the following definition:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
-    <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
-        <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">field_ptr</span><span class="p">;</span>
-        <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">};</span>
-<span class="p">}</span> <span class="n">T</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span><span class="w"> </span><span class="n">PUINT8</span><span class="o">*</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UINT8</span><span class="w"> </span><span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">UINT8</span><span class="w"> </span><span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span><span class="w"></span>
+<span class="w">        </span><span class="n">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">field_ptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="o">*</span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Here, we define a type <code class="docutils literal notranslate"><span class="pre">T</span></code> with an out-parameter <code class="docutils literal notranslate"><span class="pre">PUINT8*</span> <span class="pre">out</span></code>,
@@ -744,38 +744,38 @@ alignment padding between struct fields that a C compiler is sometimes
 requires to insert.</p>
 <p>To assist with this, 3d provides the following feature:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// SNIPPET_START: GetFieldPtr.T</span>
-<span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span> <span class="n">PUINT8</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">UINT8</span> <span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
-    <span class="n">UINT8</span> <span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span>
-        <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">field_ptr</span><span class="p">;</span>
-        <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">};</span>
-<span class="p">}</span> <span class="n">T</span><span class="p">;</span>
+<span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_T</span><span class="p">(</span><span class="n">mutable</span><span class="w"> </span><span class="n">PUINT8</span><span class="o">*</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UINT8</span><span class="w"> </span><span class="n">f1</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">UINT8</span><span class="w"> </span><span class="n">f2</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span><span class="w"></span>
+<span class="w">        </span><span class="n">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">field_ptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="o">*</span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">T</span><span class="p">;</span><span class="w"></span>
 <span class="c1">// SNIPPET_END: GetFieldPtr.T</span>
 
-<span class="n">refining</span> <span class="s">&quot;GetFieldPtrBase.h&quot;</span> <span class="p">{</span>
-   <span class="n">S</span> <span class="n">as</span> <span class="n">T</span>
-<span class="p">}</span>
+<span class="n">refining</span><span class="w"> </span><span class="s">&quot;GetFieldPtrBase.h&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">S</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">T</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Following the type definitions, the <code class="docutils literal notranslate"><span class="pre">refining</span></code> section states that
 the type <code class="docutils literal notranslate"><span class="pre">S</span></code> defined in the C header file <code class="docutils literal notranslate"><span class="pre">GetFieldPtrBase.h</span></code> is
 refined by the type <code class="docutils literal notranslate"><span class="pre">T</span></code> defined here. As a result of this
 declaration, 3d emits a static assertion in the C code of the form</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;GetFieldPtrBase.h&quot;</span><span class="cp"></span>
-<span class="n">C_ASSERT</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="mi">30</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;GetFieldPtrBase.h&quot;</span><span class="cp"></span>
+<span class="n">C_ASSERT</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>checking that the <code class="docutils literal notranslate"><span class="pre">sizeof(S)</span></code> as computed by the C compiler matches
 3d’s computation of the <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span></code>.</p>
 <p>In generality, the refining declaration takes the following form:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">refining</span> <span class="s">&quot;I1.h&quot;</span><span class="p">,</span> <span class="p">...,</span> <span class="s">&quot;In.h&quot;</span> <span class="p">{</span>
-    <span class="n">S1</span> <span class="n">as</span> <span class="n">T1</span><span class="p">,</span> <span class="p">...</span>
-    <span class="n">Sm</span> <span class="n">as</span> <span class="n">Tm</span>
-<span class="p">}</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">refining</span><span class="w"> </span><span class="s">&quot;I1.h&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">...,</span><span class="w"> </span><span class="s">&quot;In.h&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">S1</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">T1</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="n">Sm</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">Tm</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where each <code class="docutils literal notranslate"><span class="pre">Si</span></code> is a type defined in one of the C header files
@@ -828,19 +828,19 @@ named <code class="docutils literal notranslate"><span class="pre">A</span></cod
 another module <code class="docutils literal notranslate"><span class="pre">Base</span></code> (in Base.3d) by its name, allowing definitions
 in <code class="docutils literal notranslate"><span class="pre">Derived</span></code> to reuse the definitions that are exported in <code class="docutils literal notranslate"><span class="pre">Base</span></code>.</p>
 <p>For example, in module <code class="docutils literal notranslate"><span class="pre">Base</span></code> we could define the following types:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">export</span>
-<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">ULONG</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">export</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT32</span><span class="w"> </span><span class="n">ULONG</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">export</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Pair</span> <span class="p">{</span>
-   <span class="n">ULONG</span> <span class="n">first</span><span class="p">;</span>
-   <span class="n">ULONG</span> <span class="n">second</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Pair</span><span class="p">;</span>
+<span class="n">export</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Pair</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">ULONG</span><span class="w"> </span><span class="n">first</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">ULONG</span><span class="w"> </span><span class="n">second</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Pair</span><span class="p">;</span><span class="w"></span>
 
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Mine</span> <span class="p">{</span>
-   <span class="n">UINT8</span> <span class="n">f</span><span class="p">;</span>
-   <span class="n">UINT8</span> <span class="n">g</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Mine</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Mine</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">UINT8</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">UINT8</span><span class="w"> </span><span class="n">g</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Mine</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note, the <code class="docutils literal notranslate"><span class="pre">export</span></code> qualifier indicate that these definitions may be
@@ -848,22 +848,22 @@ referenced from another module. Types that are not exproted (like
 <code class="docutils literal notranslate"><span class="pre">Mine</span></code>) are not visible from another module.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">Derived</span></code> we can use the type from <code class="docutils literal notranslate"><span class="pre">Base</span></code> by referring to it
 using a fully qualified name of the form <code class="docutils literal notranslate"><span class="pre">&lt;MODULE</span> <span class="pre">NAME&gt;.&lt;IDENTIFIER&gt;</span></code>.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Triple</span> <span class="p">{</span>
-   <span class="n">Base</span><span class="p">.</span><span class="n">Pair</span> <span class="n">pair</span><span class="p">;</span>
-   <span class="n">Base</span><span class="p">.</span><span class="n">ULONG</span> <span class="n">third</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Triple</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Triple</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">Base</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">pair</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">Base</span><span class="p">.</span><span class="n">ULONG</span><span class="w"> </span><span class="n">third</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Triple</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>3d also allows defining module abbreviations. For example, using
 <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">B</span> <span class="pre">=</span> <span class="pre">Base</span></code> we introduce a shorter name for the module
 <code class="docutils literal notranslate"><span class="pre">Base</span></code> for use within the current module.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Base</span>
-<span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_Quad</span> <span class="p">{</span>
-   <span class="n">B</span><span class="p">.</span><span class="n">Pair</span> <span class="n">_12</span><span class="p">;</span>
-   <span class="n">B</span><span class="p">.</span><span class="n">Pair</span> <span class="n">_34</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Quad</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Base</span><span class="w"></span>
+<span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Quad</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">B</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">_12</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">B</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">_34</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Quad</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/">in the EverParse repository</a>.</p>
@@ -873,16 +873,16 @@ using a fully qualified name of the form <code class="docutils literal notransla
 <p>When a validator fails, EverParse supports invoking a user-provided
 callback with contextual information about the failure.</p>
 <p>An error handling callback is a C procedure with the following signature:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">ErrorHandler</span><span class="p">)(</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">FieldName</span><span class="p">,</span>
-  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ErrorReason</span><span class="p">,</span>
-  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">Context</span><span class="p">,</span>
-  <span class="kt">uint32_t</span> <span class="n">Length</span><span class="p">,</span>
-  <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">Base</span><span class="p">,</span>
-  <span class="kt">uint64_t</span> <span class="n">StartPosition</span><span class="p">,</span>
-  <span class="kt">uint64_t</span> <span class="n">EndPosition</span>
-<span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ErrorHandler</span><span class="p">)(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">FieldName</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">ErrorReason</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Context</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Length</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Base</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">StartPosition</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">EndPosition</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Every EverParse validator is parameterized by:</p>
@@ -953,25 +953,25 @@ provides a good summary.</p>
 <p>Reproduced below is an ASCII depiction of the format of TCP
 headers. In this section, we show how to specify this format in
 3d. The full specification can be found <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/tcpip/TCP.3d">here</a>.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
- <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>          <span class="n">Source</span> <span class="n">Port</span>          <span class="o">|</span>       <span class="n">Destination</span> <span class="n">Port</span>        <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                        <span class="n">Sequence</span> <span class="n">Number</span>                        <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                    <span class="n">Acknowledgment</span> <span class="n">Number</span>                      <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>  <span class="n">Data</span> <span class="o">|</span>     <span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">U</span><span class="o">|</span><span class="n">A</span><span class="o">|</span><span class="n">P</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">F</span><span class="o">|</span>                               <span class="o">|</span>
-<span class="o">|</span> <span class="n">Offset</span><span class="o">|</span> <span class="n">Rese</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">W</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">Y</span><span class="o">|</span><span class="n">I</span><span class="o">|</span>            <span class="n">Window</span>             <span class="o">|</span>
-<span class="o">|</span>       <span class="o">|</span> <span class="n">rved</span><span class="o">|</span> <span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">G</span><span class="o">|</span><span class="n">K</span><span class="o">|</span><span class="n">H</span><span class="o">|</span><span class="n">T</span><span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">N</span><span class="o">|</span>                               <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>           <span class="n">Checksum</span>            <span class="o">|</span>         <span class="n">Urgent</span> <span class="n">Pointer</span>        <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                    <span class="n">Options</span>                    <span class="o">|</span>    <span class="n">Padding</span>    <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                             <span class="n">data</span>                              <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="mi">0</span><span class="w">                   </span><span class="mi">1</span><span class="w">                   </span><span class="mi">2</span><span class="w">                   </span><span class="mi">3</span><span class="w"></span>
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">          </span><span class="n">Source</span><span class="w"> </span><span class="n">Port</span><span class="w">          </span><span class="o">|</span><span class="w">       </span><span class="n">Destination</span><span class="w"> </span><span class="n">Port</span><span class="w">        </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">                        </span><span class="n">Sequence</span><span class="w"> </span><span class="n">Number</span><span class="w">                        </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">                    </span><span class="n">Acknowledgment</span><span class="w"> </span><span class="n">Number</span><span class="w">                      </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">  </span><span class="n">Data</span><span class="w"> </span><span class="o">|</span><span class="w">     </span><span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">U</span><span class="o">|</span><span class="n">A</span><span class="o">|</span><span class="n">P</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">F</span><span class="o">|</span><span class="w">                               </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">Offset</span><span class="o">|</span><span class="w"> </span><span class="n">Rese</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">W</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">C</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">Y</span><span class="o">|</span><span class="n">I</span><span class="o">|</span><span class="w">            </span><span class="n">Window</span><span class="w">             </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w">       </span><span class="o">|</span><span class="w"> </span><span class="n">rved</span><span class="o">|</span><span class="w"> </span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">G</span><span class="o">|</span><span class="n">K</span><span class="o">|</span><span class="n">H</span><span class="o">|</span><span class="n">T</span><span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="w">                               </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">           </span><span class="n">Checksum</span><span class="w">            </span><span class="o">|</span><span class="w">         </span><span class="n">Urgent</span><span class="w"> </span><span class="n">Pointer</span><span class="w">        </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">                    </span><span class="n">Options</span><span class="w">                    </span><span class="o">|</span><span class="w">    </span><span class="n">Padding</span><span class="w">    </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
+<span class="o">|</span><span class="w">                             </span><span class="n">data</span><span class="w">                              </span><span class="o">|</span><span class="w"></span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Each <code class="docutils literal notranslate"><span class="pre">-</span></code> in the diagram represents a single bit, with fioelds
@@ -993,12 +993,12 @@ Acknowledgement number can only be non-zero when the <code class="docutils liter
 set.</p>
 <p>To specify the type of a TCP header, we begin by defining some basic
 types.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">PORT</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">SEQ_NUMBER</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">UINT32</span> <span class="n">ACK_NUMBER</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">WINDOW</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">CHECK_SUM</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">UINT16</span> <span class="n">URGENT_PTR</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">UINT16</span><span class="w"> </span><span class="n">PORT</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT32</span><span class="w"> </span><span class="n">SEQ_NUMBER</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT32</span><span class="w"> </span><span class="n">ACK_NUMBER</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT16</span><span class="w"> </span><span class="n">WINDOW</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT16</span><span class="w"> </span><span class="n">CHECK_SUM</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">UINT16</span><span class="w"> </span><span class="n">URGENT_PTR</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The source and destination port each occupy 16 bits and are
@@ -1022,43 +1022,43 @@ which constraints when the <code class="docutils literal notranslate"><span clas
 be present—it turns out, the <code class="docutils literal notranslate"><span class="pre">SYN</span></code> bit in the header must be set
 for this option to be allowed. The general shape of an <code class="docutils literal notranslate"><span class="pre">OPTION</span></code> is
 as below.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_OPTION</span><span class="p">(</span><span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">UINT8</span> <span class="n">OptionKind</span><span class="p">;</span>
-    <span class="n">OPTION_PAYLOAD</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">,</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span> <span class="n">OptionPayload</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">OPTION</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_OPTION</span><span class="p">(</span><span class="n">Bool</span><span class="w"> </span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UINT8</span><span class="w"> </span><span class="n">OptionKind</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">OPTION_PAYLOAD</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">,</span><span class="w"> </span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span><span class="w"> </span><span class="n">OptionPayload</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">OPTION</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>We have an <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code> field followed by an <code class="docutils literal notranslate"><span class="pre">OptionPayload</span></code> that
 depends on the <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code> and the <code class="docutils literal notranslate"><span class="pre">MaxSegSizeAllowed</span></code> flag.</p>
 <p>Next, to define the <code class="docutils literal notranslate"><span class="pre">OPTION_PAYLOAD</span></code> type, we use a <code class="docutils literal notranslate"><span class="pre">casetype</span></code>, as
 shown below.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">casetype</span> <span class="nf">_OPTION_PAYLOAD</span><span class="p">(</span><span class="n">UINT8</span> <span class="n">OptionKind</span><span class="p">,</span> <span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="k">switch</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">)</span>
-  <span class="p">{</span>
-   <span class="k">case</span> <span class="nl">OPTION_KIND_END_OF_OPTION_LIST</span><span class="p">:</span>
-     <span class="n">unit</span> <span class="n">EndOfList</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">casetype</span><span class="w"> </span><span class="nf">_OPTION_PAYLOAD</span><span class="p">(</span><span class="n">UINT8</span><span class="w"> </span><span class="n">OptionKind</span><span class="p">,</span><span class="w"> </span><span class="n">Bool</span><span class="w"> </span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="n">OptionKind</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_END_OF_OPTION_LIST</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">unit</span><span class="w"> </span><span class="n">EndOfList</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_NO_OPERATION</span><span class="p">:</span>
-     <span class="n">unit</span> <span class="n">Noop</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_NO_OPERATION</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">unit</span><span class="w"> </span><span class="n">Noop</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_MAX_SEG_SIZE</span><span class="p">:</span>
-     <span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span> <span class="n">MaxSegSizePayload</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_MAX_SEG_SIZE</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span><span class="w"> </span><span class="n">MaxSegSizePayload</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_WINDOW_SCALE</span><span class="p">:</span>
-     <span class="n">WINDOW_SCALE_PAYLOAD</span> <span class="n">WindowScalePayload</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_WINDOW_SCALE</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">WINDOW_SCALE_PAYLOAD</span><span class="w"> </span><span class="n">WindowScalePayload</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_SACK_PERMITTED</span><span class="p">:</span>
-     <span class="n">UINT8</span> <span class="n">SackPermittedPayload</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_SACK_PERMITTED</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">UINT8</span><span class="w"> </span><span class="n">SackPermittedPayload</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_SACK</span><span class="p">:</span>
-     <span class="n">SELECTIVE_ACK_PAYLOAD</span> <span class="n">SelectiveAckPayload</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_SACK</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">SELECTIVE_ACK_PAYLOAD</span><span class="w"> </span><span class="n">SelectiveAckPayload</span><span class="p">;</span><span class="w"></span>
 
-   <span class="k">case</span> <span class="nl">OPTION_KIND_TIMESTAMP</span><span class="p">:</span>
-     <span class="n">TIMESTAMP_PAYLOAD</span> <span class="n">TimestampPayload</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span> <span class="n">OPTION_PAYLOAD</span><span class="p">;</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nl">OPTION_KIND_TIMESTAMP</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="n">TIMESTAMP_PAYLOAD</span><span class="w"> </span><span class="n">TimestampPayload</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">OPTION_PAYLOAD</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>In the first two cases of <code class="docutils literal notranslate"><span class="pre">OptionKind</span></code>, no payload is expected. The
@@ -1068,15 +1068,15 @@ message format.</p>
 use of the <code class="docutils literal notranslate"><span class="pre">where`</span> <span class="pre">constraint</span> <span class="pre">ensures</span> <span class="pre">that</span> <span class="pre">this</span> <span class="pre">case</span> <span class="pre">is</span> <span class="pre">present</span> <span class="pre">only</span>
 <span class="pre">when</span> <span class="pre">`MaxSegSizeAllowed</span> <span class="pre">==</span> <span class="pre">true</span></code>. The payload is a length field (4
 bytes) and a 2-byte <code class="docutils literal notranslate"><span class="pre">MaxSegSize</span></code> value.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">Bool</span> <span class="n">MaxSegSizeAllowed</span><span class="p">)</span>
-<span class="n">where</span> <span class="n">MaxSegSizeAllowed</span>
-<span class="p">{</span>
-  <span class="n">UINT8</span> <span class="n">Length</span>
-  <span class="p">{</span>
-    <span class="n">Length</span> <span class="o">==</span> <span class="mi">4</span>
-  <span class="p">};</span>
-  <span class="n">UINT16</span> <span class="n">MaxSegSize</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_MAX_SEG_SIZE_PAYLOAD</span><span class="p">(</span><span class="n">Bool</span><span class="w"> </span><span class="n">MaxSegSizeAllowed</span><span class="p">)</span><span class="w"></span>
+<span class="n">where</span><span class="w"> </span><span class="n">MaxSegSizeAllowed</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">Length</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w"> </span><span class="n">MaxSegSize</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">MAX_SEG_SIZE_PAYLOAD</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The other cases are relatively straightforward, where
@@ -1096,48 +1096,48 @@ EverParse, however we leave it as is for simplicity of this example.</p>
 <span class="cm">  * UINT32 SegmentLength, the size of the segment,</span>
 <span class="cm">    including both header and data, passed in by the caller</span>
 
-<span class="cm">  --*/</span>
-<span class="n">entrypoint</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">_TCP_HEADER</span><span class="p">(</span><span class="n">UINT32</span> <span class="n">SegmentLength</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="n">PORT</span>            <span class="n">SourcePort</span><span class="p">;</span>
-  <span class="n">PORT</span>            <span class="n">DestinationPort</span><span class="p">;</span>
-  <span class="n">SEQ_NUMBER</span>      <span class="n">SeqNumber</span><span class="p">;</span>
-  <span class="n">ACK_NUMBER</span>      <span class="n">AckNumber</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">DataOffset</span><span class="p">:</span><span class="mi">4</span>
-  <span class="p">{</span> <span class="c1">//DataOffset is in units of 32 bit words</span>
-    <span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="c1">//DataOffset points after the static fields</span>
-    <span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="n">SegmentLength</span> <span class="c1">//and within the current segment</span>
-  <span class="p">};</span>
-  <span class="n">UINT16</span>          <span class="nl">Reserved</span><span class="p">:</span><span class="mi">3</span>
-  <span class="p">{</span>
-    <span class="n">Reserved</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">//Reserved bytes are unused</span>
-  <span class="p">};</span>
-  <span class="n">UINT16</span>          <span class="nl">NS</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">CWR</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">ECE</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">URG</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">ACK</span><span class="p">:</span><span class="mi">1</span>
-  <span class="p">{</span>
-    <span class="n">AckNumber</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
-    <span class="n">ACK</span> <span class="o">==</span> <span class="mi">1</span> <span class="c1">//AckNumber can only be set if the ACK flag is set</span>
-  <span class="p">}</span> <span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">PSH</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">RST</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">SYN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">UINT16</span>          <span class="nl">FIN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">WINDOW</span>          <span class="n">Window</span><span class="p">;</span>
-  <span class="n">CHECK_SUM</span>       <span class="n">CheckSum</span><span class="p">;</span>
-  <span class="n">URGENT_PTR</span>      <span class="n">UrgentPointer</span>
-  <span class="p">{</span>
-    <span class="n">UrgentPointer</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
-    <span class="n">URG</span> <span class="o">==</span> <span class="mi">1</span> <span class="c1">//UrgentPointer can only be set if the URG flag is set</span>
-  <span class="p">};</span>
-  <span class="c1">//The SYN=1 condition indicates when MAX_SEG_SIZE option can be received</span>
-  <span class="c1">//This is an array of options consuming</span>
-  <span class="n">OPTION</span><span class="p">(</span><span class="n">SYN</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>  <span class="n">Options</span><span class="p">[</span><span class="o">:</span><span class="n">byte</span><span class="o">-</span><span class="n">size</span> <span class="p">(</span><span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)];</span>
-  <span class="n">UINT8</span>           <span class="n">Data</span><span class="p">[</span><span class="n">SegmentLength</span> <span class="o">-</span> <span class="p">(</span><span class="n">DataOffset</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)];</span>
-<span class="p">}</span> <span class="n">TCP_HEADER</span><span class="p">;</span>
+<span class="cm">  --*/</span><span class="w"></span>
+<span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_TCP_HEADER</span><span class="p">(</span><span class="n">UINT32</span><span class="w"> </span><span class="n">SegmentLength</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">PORT</span><span class="w">            </span><span class="n">SourcePort</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">PORT</span><span class="w">            </span><span class="n">DestinationPort</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">SEQ_NUMBER</span><span class="w">      </span><span class="n">SeqNumber</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">ACK_NUMBER</span><span class="w">      </span><span class="n">AckNumber</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">DataOffset</span><span class="p">:</span><span class="mi">4</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="c1">//DataOffset is in units of 32 bit words</span>
+<span class="w">    </span><span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">DataOffset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="c1">//DataOffset points after the static fields</span>
+<span class="w">    </span><span class="n">DataOffset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">SegmentLength</span><span class="w"> </span><span class="c1">//and within the current segment</span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">Reserved</span><span class="p">:</span><span class="mi">3</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Reserved</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c1">//Reserved bytes are unused</span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">NS</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">CWR</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">ECE</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">URG</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">ACK</span><span class="p">:</span><span class="mi">1</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">AckNumber</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">    </span><span class="n">ACK</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">//AckNumber can only be set if the ACK flag is set</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">PSH</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">RST</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">SYN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT16</span><span class="w">          </span><span class="nl">FIN</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">WINDOW</span><span class="w">          </span><span class="n">Window</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">CHECK_SUM</span><span class="w">       </span><span class="n">CheckSum</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">URGENT_PTR</span><span class="w">      </span><span class="n">UrgentPointer</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UrgentPointer</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">    </span><span class="n">URG</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">//UrgentPointer can only be set if the URG flag is set</span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//The SYN=1 condition indicates when MAX_SEG_SIZE option can be received</span>
+<span class="w">  </span><span class="c1">//This is an array of options consuming</span>
+<span class="w">  </span><span class="n">OPTION</span><span class="p">(</span><span class="n">SYN</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="w">  </span><span class="n">Options</span><span class="p">[</span><span class="o">:</span><span class="n">byte</span><span class="o">-</span><span class="n">size</span><span class="w"> </span><span class="p">(</span><span class="n">DataOffset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">this</span><span class="p">)];</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w">           </span><span class="n">Data</span><span class="p">[</span><span class="n">SegmentLength</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">DataOffset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">)];</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">TCP_HEADER</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The type is parameterized by <code class="docutils literal notranslate"><span class="pre">SegmentLength</span></code>, the size in bytes
@@ -1174,7 +1174,7 @@ the computed expression.</p>
 <h3>Generated code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
 <p>Running the EverParse toolchain on the TCP segment header
 specification produces a C procedure with the following signature, in <code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code>:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span> <span class="nf">TcpCheckTcpHeader</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">___SegmentLength</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">TcpCheckTcpHeader</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">___SegmentLength</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This procedure is a validator for the <code class="docutils literal notranslate"><span class="pre">TCP_HEADER</span></code> type. The caller
@@ -1197,10 +1197,10 @@ data, and being provably functional correct.</p>
 <p><code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> includes a default error handler to report the leaf
 validation failure. It also expects a client module to supply an
 implementation of</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">TcpEverParseError</span><span class="p">(</span>
-     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">FieldName</span><span class="p">,</span>
-     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Reason</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">TcpEverParseError</span><span class="p">(</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">FieldName</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">Reason</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This can be instantiated with a procedure to, say, log an error.</p>

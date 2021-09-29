@@ -760,8 +760,8 @@ referenced from another module. Types that are not exproted (like
 using a fully qualified name of the form <code class="docutils literal notranslate"><span class="pre">&lt;MODULE</span> <span class="pre">NAME&gt;.&lt;IDENTIFIER&gt;</span></code>.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">entrypoint</span><span class="w"></span>
 <span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Triple</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">Base</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">pair</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">Base</span><span class="p">.</span><span class="n">ULONG</span><span class="w"> </span><span class="n">third</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">Base</span><span class="o">::</span><span class="n">Pair</span><span class="w"> </span><span class="n">pair</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">Base</span><span class="o">::</span><span class="n">ULONG</span><span class="w"> </span><span class="n">third</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"> </span><span class="n">Triple</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
@@ -771,8 +771,8 @@ using a fully qualified name of the form <code class="docutils literal notransla
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Base</span><span class="w"></span>
 <span class="n">entrypoint</span><span class="w"></span>
 <span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">_Quad</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">B</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">_12</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">B</span><span class="p">.</span><span class="n">Pair</span><span class="w"> </span><span class="n">_34</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">B</span><span class="o">::</span><span class="n">Pair</span><span class="w"> </span><span class="n">_12</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">B</span><span class="o">::</span><span class="n">Pair</span><span class="w"> </span><span class="n">_34</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"> </span><span class="n">Quad</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>

@@ -186,7 +186,7 @@ like. No need to configure it anyhow.</li>
 actual entrypoint executable is <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> (for Windows) or
 <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> (for Linux.)</p>
 <p>Binary packages already contain all dependencies required by
-EverParse, such as F*, KReMLin and z3, so no need to install anything
+EverParse, such as F*, KaRaMeL and z3, so no need to install anything
 beforehand.</p>
 <p>The Windows binary package contains a <a class="reference external" href="https://llvm.org/builds/">binary snapshot of clang-format</a> to pretty-print the produced <code class="docutils literal notranslate"><span class="pre">.c</span></code> and
 <code class="docutils literal notranslate"><span class="pre">.h</span></code> files. On Linux, you may want to install clang-format (more
@@ -260,9 +260,9 @@ files produced for all the <code class="docutils literal notranslate"><span clas
 <p>By default, with <code class="docutils literal notranslate"><span class="pre">--batch</span></code>, given a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> specification, EverParse
 produces <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files by first producing <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> and
 <code class="docutils literal notranslate"><span class="pre">.fst</span></code> files files containing verified F* specifications and
-implementations of validators, and then calling F* and KReMLin on each
+implementations of validators, and then calling F* and KaRaMeL on each
 such file to verify and extract them to C. EverParse will issue all
-such calls to F* and KReMLin sequentially.</p>
+such calls to F* and KaRaMeL sequentially.</p>
 <p>Alternatively, with <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">--makefile</span> <span class="pre">gmake</span> <span class="pre">Test.3d</span></code> (on
 Windows; use <code class="docutils literal notranslate"><span class="pre">./everparse.sh</span></code> on Linux), instead of producing <code class="docutils literal notranslate"><span class="pre">.c</span></code>
 and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files, EverParse will take <code class="docutils literal notranslate"><span class="pre">Test.3d</span></code> and all of the

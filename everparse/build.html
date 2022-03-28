@@ -96,14 +96,14 @@ of the following cases:</p>
 the sources will compile under any such non-x86_64 platform.)</li>
 <li>You are not on Windows or Linux (however, there is no guarantee that
 the sources will compile under any such non-Windows-Linux system.)</li>
-<li>You want to use your own copy of F*, KReMLin or z3.</li>
+<li>You want to use your own copy of F*, KaRaMeL or z3.</li>
 <li>You want to contribute to EverParse.</li>
 </ul>
 <p>To this end, you must first install dependencies, then compile the
 sources.</p>
 <div class="section" id="install-dependencies">
 <h2>Install dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h2>
-<p>EverParse, F* and KReMLin are all components of the Everest
+<p>EverParse, F* and KaRaMeL are all components of the Everest
 project. Thus, the best way to install dependencies is to use the
 Everest script, as described below following the <a class="reference external" href="https://project-everest.github.io/">website of the
 Everest project</a>, which
@@ -207,7 +207,7 @@ had downloaded and extracted a binary package archive from the
 releases page.</p>
 <p>This process is fully automatic. In particular, it automatically
 downloads a binary release of z3, and downloads and builds F*,
-KReMLin and EverCrypt.</p>
+KaRaMeL and EverCrypt.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">z3 is downloaded only for Windows or Linux. On other platforms, you need to have Z3 4.8.5
@@ -267,12 +267,12 @@ reachable from your PATH. You will most likely need to compile it from <a class=
 </div>
 </li>
 <li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">pull</span></code> to fetch and pull the latest versions of F*,
-KReMLin and EverParse.</p>
+KaRaMeL and EverParse.</p>
 </li>
-<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">-j</span> <span class="pre">1</span> <span class="pre">FStar</span> <span class="pre">make</span> <span class="pre">kremlin</span> <span class="pre">make</span></code> to
-build F* and KReMLin. The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option introduces a
+<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">-j</span> <span class="pre">1</span> <span class="pre">FStar</span> <span class="pre">make</span> <span class="pre">karamel</span> <span class="pre">make</span></code> to
+build F* and KaRaMeL. The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option introduces a
 parallelism factor. You can also speed up the build by skipping
-F*, KReMLin and EverCrypt library proofs by setting the
+F*, KaRaMeL and EverCrypt library proofs by setting the
 <code class="docutils literal notranslate"><span class="pre">OTHERFLAGS</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">&quot;--admit_smt_queries</span>
 <span class="pre">true&quot;</span></code>.</p>
 <div class="admonition note">
@@ -313,12 +313,12 @@ of EverCrypt. In that case, you first need to run <code class="docutils literal 
 subdirectory of your Everest clone, which contains a clone of the
 latest F*.</p>
 </li>
-<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">KREMLIN_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">kremlin</span></code>
+<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">KRML_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">karamel</span></code>
 subdirectory of your Everest clone, which contains a clone of the
-latest KReMLin.</p>
+latest KaRaMeL.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you already have your own copy of F* or KReMLin, and if you
+<p class="last">If you already have your own copy of F* or KaRaMeL, and if you
 already know how to build them, then you can skip steps 1 to 5
 and set the environment variables accordingly.)</p>
 </div>
@@ -328,7 +328,7 @@ and set the environment variables accordingly.)</p>
 there. Alternatively, you can <a class="reference external" href="https://github.com/project-everest/everparse">clone it yourself</a>
 anywhere else.</p>
 </li>
-<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">QD_HOME</span></code> environment variable to your EverParse clone
+<li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">EVERPARSE_HOME</span></code> environment variable to your EverParse clone
 as you chose it.</p>
 </li>
 <li><p class="first">Then, once you are all set up in your EverParse clone, you can

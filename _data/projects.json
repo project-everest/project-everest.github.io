@@ -35,9 +35,9 @@
     "description" : "A proof assistant and verification language for effectful programs"
 },
 {
-    "name" : "KreMLin",
-    "repo" : "https://github.com/FStarLang/kremlin/",
-    "website" :  "https://github.com/FStarLang/kremlin/",
+    "name" : "KaRaMeL",
+    "repo" : "https://github.com/FStarLang/karamel/",
+    "website" :  "https://github.com/FStarLang/karamel/",
     "description" : "a compiler from a subset of F* to C; used by EverParse, miTLS and HACL*"
 },
 {

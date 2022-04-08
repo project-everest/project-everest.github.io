@@ -177,7 +177,7 @@ multiple architectures, such as x86, x64, and ARM, and multiple
 platforms, such as Windows, Mac, and Linux. Additional architectures
 and platforms can be supported with no changes to the Vale tool.
 
-### Low* and KReMLin: A proof-oriented subset of C embedded in F\*
+### Low* and KaRaMeL: A proof-oriented subset of C embedded in F\*
 
 Low\* is a subset of F\* and a set of F\* libraries that models a
 fragment of the C programming language, including its memory model,
@@ -185,7 +185,7 @@ stack- and heap-allocated arrays, machine integers, C string literals,
 and a few system-level functions from the C standard library, enabling
 formal proofs of low-level, sequential, imperative programs in
 F\*. Low\* programs are compilable to C by
-[KReMLin](https://fstarlang.github.io/lowstar/html/). [This
+[KaRaMeL](https://fstarlang.github.io/lowstar/html/). [This
 paper](https://doi.org/10.1145/3110261) provides more details.
 
 ### EverParse: A parser generator for binary data formats
@@ -217,7 +217,7 @@ projects.
 
 - [F*], a verification language for effectful programs
 - [miTLS], reference implementation of the TLS protocol in [F\*]
-- [KreMLin], a compiler from a subset of [F\*] to C
+- [KaRaMeL], a compiler from a subset of [F\*] to C
 - [HACL*], a verified library of cryptographic primitives written in [F\*], including
   the EverCrypt cryptographic provider.
 - [Vale], a domain-specific language for verified cryptographic
@@ -229,7 +229,7 @@ projects.
 
 [F*]: https://github.com/FStarLang/FStar
 [miTLS]: https://github.com/project-everest/mitls-fstar
-[KreMLin]: https://github.com/FStarLang/kremlin
+[KaRaMeL]: https://github.com/FStarLang/karamel
 [HACL*]: https://github.com/project-everest/hacl-star
 [Vale]: https://github.com/project-everest/vale
 [EverParse]: https://github.com/project-everest/everparse

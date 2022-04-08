@@ -1,5 +1,12 @@
 [
   {
+    "title" : "EverParse: Hardening critical attack surfaces with formally proven message parsers",
+    "url" : "https://www.microsoft.com/en-us/research/blog/everparse-hardening-critical-attack-surfaces-with-formally-proven-message-parsers/",
+    "venue" : "Microsoft Research Blog",
+    "description": "",
+    "date" : "May 3, 2021"
+  },
+  {
     "title" : "Performance Improvements via Formally-Verified Cryptography in Firefox",
     "url" : "https://blog.mozilla.org/security/2020/07/06/performance-improvements-via-formally-verified-cryptography-in-firefox/",
     "venue" : "Mozilla Security Blog",

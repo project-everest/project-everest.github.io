@@ -25,7 +25,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Arti Gupta</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
-        Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation (PLDI '22), June 13--17, 2022, San Diego, CA, USA<</span>
+        Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation (PLDI '22), June 13--17, 2022, San Diego, CA, USA</span>
       </span>
       <span itemprop="datePublished">2022</span>.
     </span>

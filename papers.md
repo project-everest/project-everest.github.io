@@ -9,6 +9,32 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2021</td></tr>
 
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="19"></a>[20]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everquic.pdf">
+      <span class="bibtitle" itemprop="name">Hardening Attack Surfaces with Formally Proven Binary Format Parsers</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Nikhil Swamy</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Aseem Rastogi</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Irina Spiridonova</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Haobin Ni</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Dmitry Malloy</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Juan Vazquez</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Michael Tang</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Omar Cardona</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Arti Gupta</span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">
+        Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation (PLDI '22), June 13--17, 2022, San Diego, CA, USA<</span>
+      </span>
+      <span itemprop="datePublished">2022</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="/assets/EverParse3D.pdf">[pdf]</a>
+    </span>
+  </td>
+</tr>
+
 <tr class="bibline"><td class="bibref"><a class="bibanchor" name="19"></a>[19]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everquic.pdf">

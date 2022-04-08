@@ -22,7 +22,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Juan Vazquez</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Michael Tang</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Omar Cardona</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Arti Gupta</span>)
+<span itemprop="author" itemtype="http://schema.org/Person">Arti Gupta</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
         Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation (PLDI '22), June 13--17, 2022, San Diego, CA, USA<</span>
@@ -49,7 +49,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Sydney Gibson</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Guido Martinez</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Denis Merigoux</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro</span>)
+<span itemprop="author" itemtype="http://schema.org/Person">Tahina Ramananandro</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">26th ACM SIGPLAN International Conference on Functional Programming</span>
       </span>

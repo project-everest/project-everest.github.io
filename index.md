@@ -97,15 +97,13 @@ SHA3), and verified cryptographic data structures like Merkle trees.
 Code from HACL\*, ValeCrypt and EverCrypt is deployed in several
 production systems, including [Mozilla
 Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
-[Azure Confidential Consortium
-Framework](https://www.microsoft.com/en-us/research/project/confidential-consortium-framework/),
-the [Wireguard](https://www.wireguard.com) VPN, the upcoming [Zinc
-crypto library](https://lwn.net/Articles/770750/) for the Linux
-kernel, the [MirageOS unikernel](https://mirage.io/), the
-[ElectionGuard](https://www.electionguard.vote/) electronic voting
-SDK, and in the
+the Linux kernel, the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from)
-and [Concordium](https://www.concordium.com) blockchains.
+blockchain, 
+the
+[ElectionGuard](https://www.electionguard.vote/) electronic voting
+SDK, and
+the [Wireguard](https://www.wireguard.com) VPN.
 
 ### The QUIC record Layer
 

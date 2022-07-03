@@ -97,7 +97,7 @@ SHA3), and verified cryptographic data structures like Merkle trees.
 Code from HACL\*, ValeCrypt and EverCrypt is deployed in several
 production systems, including [Mozilla
 Firefox](https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-57/),
-the Linux kernel, the
+the Linux kernel, mbedTLS, the
 [Tezos](https://www.reddit.com/r/tezos/comments/8hrsz2/tezos_switches_cryptographic_libraries_from)
 blockchain, 
 the

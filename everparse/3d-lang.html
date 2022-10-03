@@ -788,6 +788,7 @@ callback with contextual information about the failure.</p>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">FieldName</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">ErrorReason</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">ErrorCode</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Context</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Length</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Base</span><span class="p">,</span><span class="w"></span>
@@ -828,15 +829,15 @@ the following arguments:</p>
 <div><ul class="simple">
 <li>The <code class="docutils literal notranslate"><span class="pre">TypeName</span></code> argument is the name of the type <code class="docutils literal notranslate"><span class="pre">T</span></code></li>
 <li>The <code class="docutils literal notranslate"><span class="pre">FieldName</span></code> argument is name of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></li>
-<li>The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> argument is one of the following:<ul>
-<li>“generic error”</li>
-<li>“not enough data”</li>
-<li>“impossible”</li>
-<li>“list size not multiple of element size”</li>
-<li>“action failed”</li>
-<li>“constraint failed”</li>
-<li>“unexpected padding”</li>
-<li>“unspecified”</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> arguments are related and can be one of the following pairs:<ul>
+<li>“generic error”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_GENERIC</span></code> (1uL)</li>
+<li>“not enough data”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_NOT_ENOUGH_DATA</span></code> (2uL)</li>
+<li>“impossible”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_IMPOSSIBLE</span></code> (3uL)</li>
+<li>“list size not multiple of element size”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_LIST_SIZE_NOT_MULTIPLE</span></code> (4uL)</li>
+<li>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (5uL)</li>
+<li>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</li>
+<li>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</li>
+<li>“unspecified”, with the <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">7uL</span></code></li>
 </ul>
 </li>
 <li>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument is the user-provided <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointer</li>
@@ -1108,10 +1109,11 @@ data, and being provably functional correct.</p>
 <p><code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> includes a default error handler to report the leaf
 validation failure. It also expects a client module to supply an
 implementation of</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">TcpEverParseError</span><span class="p">(</span><span class="w"></span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">TcpEverParseError</span><span class="p">(</span><span class="w"></span>
 <span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span><span class="w"></span>
 <span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">FieldName</span><span class="p">,</span><span class="w"></span>
-<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">Reason</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">Reason</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">ErrorCode</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This can be instantiated with a procedure to, say, log an error.</p>

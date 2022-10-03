@@ -249,11 +249,15 @@ This option automatically toggles <code class="docutils literal notranslate"><sp
 right-most options. Thus, any <code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code> will override any
 occurrence of <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code> or <code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code> to
 its left, and vice-versa.</p>
-<p>You can provide one or more <code class="docutils literal notranslate"><span class="pre">input_files</span></code> to EverParse. They must
-all bear the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file name extension, and their names must start
-with a capital letter. Then, <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> and
-<code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> will be shared across <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code>
-files produced for all the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files that you provided.</p>
+<p>You can provide one or more <code class="docutils literal notranslate"><span class="pre">input_files</span></code> to EverParse. Then,
+<code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> and <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> will be shared across
+<code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files produced for all the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files that you
+provided.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">EverParse input files must all bear the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file name extension,
+and their names must start with a capital letter.</p>
+</div>
 </div>
 <div class="section" id="alternate-mode-generating-a-makefile">
 <h3>Alternate mode: generating a Makefile<a class="headerlink" href="#alternate-mode-generating-a-makefile" title="Permalink to this headline">¶</a></h3>

@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#tagged-unions">Tagged unions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#arrays">Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#actions">Actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generating-code-with-for-several-compile-time-configurations">Generating code with for several compile-time configurations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#checking-3d-types-for-correspondence-with-existing-c-types">Checking 3d types for correspondence with existing C types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
@@ -92,9 +93,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a> &raquo;</li>
-      <li>The 3d Dependent Data Description language</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a></li>
+      <li class="breadcrumb-item active">The 3d Dependent Data Description language</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -275,7 +276,7 @@ UINT16, UINT32 and UINT64.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_BF</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">900</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">60000</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">60000</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 <span class="p">}</span><span class="w"> </span><span class="n">BF</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
@@ -639,6 +640,71 @@ the array elements themselves are defined types, in which case they
 can be associated with the fields of that type, if any.</li>
 <li>Actions cannot be associated with bit fields.</li>
 </ul>
+</div>
+</div>
+<div class="section" id="generating-code-with-for-several-compile-time-configurations">
+<h2>Generating code with for several compile-time configurations<a class="headerlink" href="#generating-code-with-for-several-compile-time-configurations" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes one wants to write a single format specification to
+accommodate several compile-time configurations, e.g., to support
+multiple architectures. 3D offers some limited support for decorating
+a specification with compile-time conditionals familiar to C
+programmmers, e.g., <code class="docutils literal notranslate"><span class="pre">#if</span></code> and <code class="docutils literal notranslate"><span class="pre">#else</span></code>, and to generate C code
+while preserving these C preprocessor directives.</p>
+<p>For example, the listing below shows an integer type that can either
+be represented using 64 bits (if <code class="docutils literal notranslate"><span class="pre">ARCH64</span></code> is true) or 32 bits.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_INT</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cp">#if ARCH64</span>
+<span class="w">   </span><span class="n">UINT64</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#else</span>
+<span class="w">   </span><span class="n">UINT32</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#endif   </span>
+<span class="p">}</span><span class="w"> </span><span class="n">INT</span><span class="p">;</span><span class="w"></span>
+
+
+<span class="n">entrypoint</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_POINT</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="n">INT</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">INT</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">POINT</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To compile such a file using 3D, we also need to provide a
+<code class="docutils literal notranslate"><span class="pre">.3d.config</span></code> file that declares all the compile-time flags used in
+the specification and mentions a C header file in which to find
+definitions for those flags. Here is a sample config file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">&quot;compile_time_flags&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;flags&quot;</span><span class="p">:[</span><span class="s2">&quot;ARCH64&quot;</span><span class="p">],</span>
+      <span class="s2">&quot;include_file&quot;</span><span class="p">:</span><span class="s2">&quot;arch_flags.h&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then, one can invoke <code class="docutils literal notranslate"><span class="pre">3d.exe</span> <span class="pre">--config</span> <span class="pre">Arch.3d.config</span>
+<span class="pre">PointArch_32_64.3d</span> <span class="pre">--batch</span></code>, which produces the following C code as
+output.</p>
+<p>In the header file <code class="docutils literal notranslate"><span class="pre">PointArch_32_64.h</span></code>, we see an include for
+the header file mentioned in the config:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;arch_flags.h&quot;</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>In the generated C file, <code class="docutils literal notranslate"><span class="pre">PointArch_32_64.c</span></code>, we see the code below,
+with the suitable preprocessor directives protecting the two variants
+of the the <code class="docutils literal notranslate"><span class="pre">Int</span></code> type declared in the source 3d file.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"></span>
+<span class="nf">ValidateInt</span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="cp">#if ARCH64</span>
+<span class="w">   </span><span class="cm">/* Validating field x */</span><span class="w"></span>
+<span class="w">   </span><span class="cm">/* Checking that we have enough space for a UINT64, i.e., 8 bytes */</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="cp">#else</span>
+<span class="w">   </span><span class="cm">/* Validating field x */</span><span class="w"></span>
+<span class="w">   </span><span class="cm">/* Checking that we have enough space for a UINT32, i.e., 4 bytes */</span><span class="w"></span>
+<span class="w">   </span><span class="p">...</span><span class="w"></span>
+<span class="w">   </span><span class="cp">#endif</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="checking-3d-types-for-correspondence-with-existing-c-types">

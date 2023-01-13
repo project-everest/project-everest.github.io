@@ -300,29 +300,29 @@ produced C files.</li>
 meant to be included in the main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> of your project. On
 Linux, such a typical main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for use with GNU Make may look
 like:</p>
-<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span> <span class="n">test</span>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">test</span>
 
 <span class="nv">EVERPARSE_CMD</span><span class="o">=</span>/path/to/everparse.sh
 <span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="o">=</span>obj
 <span class="nv">EVERPARSE_INPUT_DIR</span><span class="o">=</span>src
 
 <span class="nv">everparse_makefile</span><span class="o">=</span><span class="k">$(</span>EVERPARSE_OUTPUT_DIR<span class="k">)</span>/EverParse.Makefile
-<span class="nv">source_files</span><span class="o">=</span><span class="k">$(</span>wildcard <span class="k">$(</span>EVERPARSE_INPUT_DIR<span class="k">)</span>/*.3d<span class="k">)</span>
+<span class="nv">source_files</span><span class="o">=</span><span class="k">$(</span>wildcard<span class="w"> </span><span class="k">$(</span>EVERPARSE_INPUT_DIR<span class="k">)</span>/*.3d<span class="k">)</span>
 
 <span class="nf">$(EVERPARSE_OUTPUT_DIR)</span><span class="o">:</span>
-	mkdir -p <span class="nv">$@</span>
+<span class="w">	</span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$@</span>
 
-<span class="nf">$(everparse_makefile)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">source_files</span><span class="k">)</span> <span class="k">$(</span><span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="k">)</span>
-	<span class="k">$(</span>EVERPARSE_CMD<span class="k">)</span> --makefile gmake --makefile_name <span class="nv">$@</span> <span class="k">$(</span>source_files<span class="k">)</span>
+<span class="nf">$(everparse_makefile)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">source_files</span><span class="k">)</span> <span class="k">$(</span><span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="k">)</span>
+<span class="w">	</span><span class="k">$(</span>EVERPARSE_CMD<span class="k">)</span><span class="w"> </span>--makefile<span class="w"> </span>gmake<span class="w"> </span>--makefile_name<span class="w"> </span><span class="nv">$@</span><span class="w"> </span><span class="k">$(</span>source_files<span class="k">)</span>
 
 <span class="cp">include $(everparse_makefile)</span>
 
-<span class="nf">test</span><span class="o">:</span> <span class="k">$(</span><span class="nv">EVERPARSE_ALL_O_FILES</span><span class="k">)</span>
+<span class="nf">test</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">EVERPARSE_ALL_O_FILES</span><span class="k">)</span>
 
 <span class="nf">clean</span><span class="o">:</span>
-	rm -rf <span class="k">$(</span>EVERPARSE_OUTPUT_DIR<span class="k">)</span>
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>EVERPARSE_OUTPUT_DIR<span class="k">)</span>
 
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">test</span> <span class="n">clean</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">test</span> <span class="n">clean</span>
 </pre></div>
 </div>
 <p>A fully commented version of that main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/Makefile">in

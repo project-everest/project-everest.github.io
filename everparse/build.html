@@ -211,21 +211,11 @@ had downloaded and extracted a binary package archive from the
 releases page.</p>
 <p>This process is fully automatic. In particular, it automatically
 downloads a binary release of z3, and downloads and builds F*,
-KaRaMeL and EverCrypt.</p>
+and KaRaMeL.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">z3 is downloaded only for Windows or Linux. On other platforms, you need to have Z3 4.8.5
 reachable from your PATH. You will most likely need to compile it from <a class="reference external" href="https://github.com/z3prover/z3/tree/Z3-4.8.5">its sources</a>.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you encounter a linking issue when building <code class="docutils literal notranslate"><span class="pre">3d.exe</span></code>,
-then it may be due to EverCrypt not supported on your platform
-(e.g. FreeBSD.) As a workaround, you can set the
-<code class="docutils literal notranslate"><span class="pre">NO_EVERCRYPT</span></code> environment variable to any nonzero value, to
-use <a class="reference external" href="https://opam.ocaml.org/packages/sha/">ocaml-sha</a>
-instead of EverCrypt. In that case, <code class="docutils literal notranslate"><span class="pre">ocaml-sha</span></code> will be
-automatically installed while building EverParse.</p>
 </div>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code></p>
@@ -276,7 +266,7 @@ KaRaMeL and EverParse.</p>
 <li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">-j</span> <span class="pre">1</span> <span class="pre">FStar</span> <span class="pre">make</span> <span class="pre">karamel</span> <span class="pre">make</span></code> to
 build F* and KaRaMeL. The <code class="docutils literal notranslate"><span class="pre">-j</span></code> option introduces a
 parallelism factor. You can also speed up the build by skipping
-F*, KaRaMeL and EverCrypt library proofs by setting the
+F* and KaRaMeL library proofs by setting the
 <code class="docutils literal notranslate"><span class="pre">OTHERFLAGS</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">&quot;--admit_smt_queries</span>
 <span class="pre">true&quot;</span></code>.</p>
 <div class="admonition note">
@@ -286,31 +276,6 @@ F*, KaRaMeL and EverCrypt library proofs by setting the
 is not properly set up in your environment. To do so, you need
 to run <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">$(opam</span> <span class="pre">env)</span></code> (as instructed during <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">init</span></code>
 or <code class="docutils literal notranslate"><span class="pre">./everest</span> <span class="pre">opam</span></code>), or log out and back in.</p>
-</div>
-</li>
-<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-C</span> <span class="pre">hacl-star/dist/gcc-compatible</span> <span class="pre">install-ocaml</span></code> to
-build and install EverCrypt (needed for hash checking with
-<code class="docutils literal notranslate"><span class="pre">--check_hashes</span></code>, etc.)</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In fact, this step builds and installs the <code class="docutils literal notranslate"><span class="pre">hacl-star-raw</span></code> and
-<code class="docutils literal notranslate"><span class="pre">hacl-star</span></code> OCaml packages. If, at this point, you get an
-error of the form “hacl-star-raw already installed” or
-“hacl-star already installed”, it means that either package is
-already present because of an earlier compilation, so you can
-remove it, using <code class="docutils literal notranslate"><span class="pre">ocamlfind</span> <span class="pre">remove</span> <span class="pre">hacl-star-raw</span></code>
-and/or <code class="docutils literal notranslate"><span class="pre">ocamlfind</span> <span class="pre">remove</span> <span class="pre">hacl-star</span></code>, and try again.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Even if you manage to build EverCrypt at this stage, you may
-still encounter a linking issue when building <code class="docutils literal notranslate"><span class="pre">3d.exe</span></code> later,
-maybe due to EverCrypt not supported on your platform
-(e.g. FreeBSD.) As a workaround, you can set the
-<code class="docutils literal notranslate"><span class="pre">NO_EVERCRYPT</span></code> environment variable to any nonzero value, to
-use <a class="reference external" href="https://opam.ocaml.org/packages/sha/">ocaml-sha</a> instead
-of EverCrypt. In that case, you first need to run <code class="docutils literal notranslate"><span class="pre">opam</span> <span class="pre">install</span>
-<span class="pre">ocaml-sha</span></code> to install that package beforehand.</p>
 </div>
 </li>
 <li><p class="first">Set the <code class="docutils literal notranslate"><span class="pre">FSTAR_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">FStar</span></code>

@@ -7,6 +7,50 @@ permalink: /papers/
 <table class="result">
 <tbody>
 
+<tr><td colspan="2" class="sheader">2023</td></tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[22]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">
+      <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardwares</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Sarah Cai</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Menucha Winchell</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">
+       Proceedings of the ACM Conference on Computer and Communications Security (CCS), November, 2023</span>
+      </span>
+      <span itemprop="datePublished">2023</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">[pdf]</a>
+    </span>
+  </td>
+</tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[22]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/owl.pdf">
+      <span class="bibtitle" itemprop="name">Owl: Compositional Verification of Security Protocols via an Information-Flow Type System</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Joshua Gancher</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Sydney Gibson</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Pratap Singh</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Samvid Dharanikota</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">
+       Proceedings of the IEEE Symposium on Security and Privacy, May, 2023</span>
+      </span>
+      <span itemprop="datePublished">2023</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="https://www.andrew.cmu.edu/user/bparno/papers/owl.pdf">[pdf]</a>
+    </span>
+  </td>
+</tr>
+
+
 <tr><td colspan="2" class="sheader">2022</td></tr>
 
 <tr class="bibline"><td class="bibref"><a class="bibanchor" name="21"></a>[21]</td>

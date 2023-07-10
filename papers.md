@@ -19,9 +19,9 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
-       Proceedings of the ACM Conference on Computer and Communications Security (CCS), November, 2023</span>
+       Proceedings of the ACM Conference on Computer and Communications Security (CCS)</span>
       </span>
-      <span itemprop="datePublished">2023</span>.
+      <span itemprop="datePublished">November, 2023</span>.
     </span>
     <span class="bibmenu">
       <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">[pdf]</a>
@@ -40,9 +40,9 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
-       Proceedings of the IEEE Symposium on Security and Privacy, May, 2023</span>
+       Proceedings of the IEEE Symposium on Security and Privacy</span>
       </span>
-      <span itemprop="datePublished">2023</span>.
+      <span itemprop="datePublished">May, 2023</span>.
     </span>
     <span class="bibmenu">
       <a href="https://www.andrew.cmu.edu/user/bparno/papers/owl.pdf">[pdf]</a>

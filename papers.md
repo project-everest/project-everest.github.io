@@ -9,14 +9,14 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2023</td></tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[22]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[23]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">
-      <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardwares</span></a>
+      <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardware</span></a>
       (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Sarah Cai</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Menucha Winchell</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>)
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
        Proceedings of the ACM Conference on Computer and Communications Security (CCS), November, 2023</span>
@@ -37,7 +37,7 @@ permalink: /papers/
 <span itemprop="author" itemtype="http://schema.org/Person">Sydney Gibson</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Pratap Singh</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Samvid Dharanikota</span>,
-<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span>)
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)
       <span class="bibbooktitle">
         <span itemprop="isPartOf">
        Proceedings of the IEEE Symposium on Security and Privacy, May, 2023</span>

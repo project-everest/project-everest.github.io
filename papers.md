@@ -33,7 +33,7 @@ permalink: /papers/
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/mariposa.pdf">
       <span class="bibtitle" itemprop="name">Mariposa: Measuring SMT Instability in Automated Program Verification</span></a>
-      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
+      (<span class="bibauthor">
 <span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Jay Bosamiya</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Yoshiki Takashima</span>,

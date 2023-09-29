@@ -48,6 +48,7 @@ permalink: /papers/
     </span>
     <span class="bibmenu">
       <a href="https://www.andrew.cmu.edu/user/bparno/papers/mariposa.pdf">[pdf]</a>
+      <a href="https://doi.org/10.1184/R1/23905905">[tech-report]</a>
     </span>
   </td>
 </tr>

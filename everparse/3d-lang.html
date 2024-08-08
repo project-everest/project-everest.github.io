@@ -563,6 +563,7 @@ should halt and signal failure.</p>
 <li>Atomic actions: Basic commands to read and write variables</li>
 <li>Variable bindings and sequential composition</li>
 <li>Conditionals</li>
+<li>External function calls</li>
 </ul>
 <p>An action is evaluated with respect to a handler (e.g.,
 <code class="docutils literal notranslate"><span class="pre">on-success</span></code>) associated with a given field. We refer to this field
@@ -592,8 +593,6 @@ the base of the validation buffer as a <code class="docutils literal notranslate
 <li><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">e</span></code> Returns a boolean value <code class="docutils literal notranslate"><span class="pre">e</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">abort</span></code>: Causes the current validation process to fail.</li>
 </ul>
-<p>We plan to support additional user-defined actions as callbacks to
-external C functions.</p>
 </div>
 <div class="section" id="composing-atomic-actions-sequentially-and-conditionally">
 <h4>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Permalink to this headline">¶</a></h4>
@@ -612,6 +611,18 @@ composite actions <code class="docutils literal notranslate"><span class="pre">p
 true. Additionally, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p0</span> <span class="pre">}</span> <span class="pre">else</span> <span class="pre">{</span> <span class="pre">p1</span> <span class="pre">}</span></code> is also legal,
 with the expected semantics, i.e., <code class="docutils literal notranslate"><span class="pre">p1`</span> <span class="pre">is</span> <span class="pre">run</span> <span class="pre">in</span> <span class="pre">case</span> <span class="pre">``e</span></code> is
 false.</li>
+<li>External function calls: an action can call a user-defined callback
+C function. The user first needs to declare the callback function with
+a top-level declaration in the 3D file: for instance,
+<code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">UINT8</span> <span class="pre">myFunction(UINT32</span> <span class="pre">myArg1,</span> <span class="pre">UINT16</span> <span class="pre">myArg2)</span></code>
+Then the user can call this function in an action, with
+<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">myReturnValue</span> <span class="pre">=</span> <span class="pre">myFunction(e1,</span> <span class="pre">e2);</span></code>
+The user can also declare a function that returns no value, with
+<code class="docutils literal notranslate"><span class="pre">void</span></code> as its return type. Then, the user can call this function
+directly as a statement in an action, without <code class="docutils literal notranslate"><span class="pre">var</span></code> :
+<code class="docutils literal notranslate"><span class="pre">myFunction(e1,</span> <span class="pre">e2);</span></code>
+An external function can also accept out-parameters, using
+<code class="docutils literal notranslate"><span class="pre">mutable</span> <span class="pre">myType*</span> <span class="pre">myArg</span></code> in its 3D declaration.</li>
 </ul>
 </div>
 <div class="section" id="another-example">

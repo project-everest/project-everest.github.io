@@ -815,7 +815,7 @@ an error message:</p>
 </div>
 <p>Finally, there is one more variation in using probes. Consider the following
 type:</p>
-<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=9)
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
 <span class="k">typedef</span> <span class="k">struct</span> _Indirect {
   UINT32 fst;
   UINT32 snd;
@@ -845,9 +845,9 @@ fields.:</p>
   UINT8 tag;
 } TT;
 
-<span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=9)
+<span class="k">entrypoint</span>
 <span class="k">typedef</span> <span class="k">struct</span> _I(EVERPARSE_COPY_BUFFER_T dest) {
-  TT *ttptr <span class="k">probe</span> ProbeAndCopy(length=9, destination=dest);
+  TT *ttptr <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(TT), destination=dest);
 } I;
 </pre></div>
 </div>

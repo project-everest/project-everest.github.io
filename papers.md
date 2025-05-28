@@ -13,7 +13,7 @@ permalink: /papers/
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everest-perspectives-2025.pdf">
       <span class="bibtitle" itemprop="name">Project Everest: Perspectives from Developing Industrial-grade High-Assurance Software</span></a>
-      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Project Everest Team</span>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Project Everest Team</span>)
       <span itemprop="datePublished">May, 2025</span>.
     </span>
     <span class="bibmenu">

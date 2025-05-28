@@ -9,22 +9,7 @@ permalink: /papers/
 
 <tr><td colspan="2" class="sheader">2025</td></tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[24]</td>
-  <td class="bibitem">
-    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everest-perspectives-2025.pdf">
-      <span class="bibtitle" itemprop="name">Project Everest: Perspectives from Developing Industrial-grade High-Assurance Software</span></a>
-      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Project Everest Team</span>)
-      <span itemprop="datePublished">May, 2025</span>.
-    </span>
-    <span class="bibmenu">
-      <a href="/assets/everest-perspectives-2025.pdf">[pdf]</a>
-    </span>
-  </td>
-</tr>
-
-<tr><td colspan="2" class="sheader">2023</td></tr>
-
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[24]</td>
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="24"></a>[24]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">
       <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardware</span></a>
@@ -44,7 +29,29 @@ permalink: /papers/
   </td>
 </tr>
 
-<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[23]</td>
+<tr><td colspan="2" class="sheader">2023</td></tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="24"></a>[24]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">
+      <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardware</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Sarah Cai</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Menucha Winchell</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)
+      <span class="bibbooktitle">
+        <span itemprop="isPartOf">
+       Proceedings of the ACM Conference on Computer and Communications Security (CCS)</span>
+      </span>
+      <span itemprop="datePublished">November, 2023</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">[pdf]</a>
+    </span>
+  </td>
+</tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="23"></a>[23]</td>
   <td class="bibitem">
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/mariposa.pdf">
       <span class="bibtitle" itemprop="name">Mariposa: Measuring SMT Instability in Automated Program Verification</span></a>

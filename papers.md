@@ -29,6 +29,7 @@ permalink: /papers/
     <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="https://www.andrew.cmu.edu/user/bparno/papers/galapagos.pdf">
       <span class="bibtitle" itemprop="name">Galapagos: Developing Verified Low-Level Cryptography on Heterogeneous Hardware</span></a>
       (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Yi Zhou</span>,
+<span itemprop="author" itemtype="http://schema.org/Person">Sydney Gibson</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Sarah Cai</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Menucha Winchell</span>,
 <span itemprop="author" itemtype="http://schema.org/Person">Bryan Parno</span></span>)

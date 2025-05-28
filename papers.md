@@ -7,6 +7,21 @@ permalink: /papers/
 <table class="result">
 <tbody>
 
+<tr><td colspan="2" class="sheader">2025</td></tr>
+
+<tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[24]</td>
+  <td class="bibitem">
+    <span itemscope="" itemtype="http://schema.org/ScholarlyArticle"> <a href="/assets/everest-perspectives-2025.pdf">
+      <span class="bibtitle" itemprop="name">Project Everest: Perspectives from Developing Industrial-grade High-Assurance Software</span></a>
+      (<span class="bibauthor"><span itemprop="author" itemtype="http://schema.org/Person">Project Everest Team</span>
+      <span itemprop="datePublished">May, 2025</span>.
+    </span>
+    <span class="bibmenu">
+      <a href="/assets/everest-perspectives-2025.pdf">[pdf]</a>
+    </span>
+  </td>
+</tr>
+
 <tr><td colspan="2" class="sheader">2023</td></tr>
 
 <tr class="bibline"><td class="bibref"><a class="bibanchor" name="22"></a>[24]</td>

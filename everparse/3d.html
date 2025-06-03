@@ -27,7 +27,7 @@
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The 3d Dependent Data Description language" href="3d-lang.html" />
+    <link rel="next" title="Overview" href="3d-lang.html" />
     <link rel="prev" title="Verified efficient parsing for binary data formats" href="index.html" /> 
 </head>
 
@@ -57,16 +57,36 @@
 <li class="toctree-l3"><a class="reference internal" href="#formal-guarantees">Formal guarantees</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#the-3d-dependent-data-description-language">The 3d Dependent Data Description language</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="3d-lang.html">The 3d Dependent Data Description language</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#download-and-install">Download and install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#default-mode">Default mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#alternate-mode-generating-a-makefile">Alternate mode: generating a Makefile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#alternate-mode-hash-checking">Alternate mode: hash checking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#alternate-mode-help-and-version">Alternate mode: help and version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#language-reference">Language Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#base-types">Base types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#structs">Structs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#bitfields">Bitfields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#constants-and-enumerations">Constants and Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#parameterized-data-types">Parameterized data types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#tagged-unions-or-casetype">Tagged unions or <code class="docutils literal notranslate"><span class="pre">casetype</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#arrays">Arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#actions">Actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#alignment">Alignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#explicitly-checking-3d-types-for-correspondence-with-existing-c-types">Explicitly checking 3d types for correspondence with existing C types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#generating-code-with-for-several-compile-time-configurations">Generating code with for several compile-time configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#validating-data-with-indirections-or-pointers">Validating Data with Indirections or Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#specialization-for-different-pointer-sizes">Specialization for Different Pointer Sizes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#modular-structure-and-files">Modular structure and files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#error-handling">Error handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#fully-worked-examples-elf-files">Fully worked examples: ELF files</a></li>
 </ul>
 </li>
 </ul>
@@ -103,7 +123,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The documentation from this page covers the EverParse/3d releases
-v2021.03.05 or later. Documentations for earlier versions may be
+v2025.05.20 or later. Documentations for earlier versions may be
 found in the Git history.</p>
 </div>
 <p>EverParse/3d lets you write a data format description and
@@ -166,14 +186,6 @@ the heap.</li>
 <li><em>Functionally correct</em>: The validator accepts all input arrays that
 contain valid representations of the message according to its
 specification, rejecting all others.</li>
-</ul>
-</div>
-</div>
-<div class="section" id="the-3d-dependent-data-description-language">
-<h2>The 3d Dependent Data Description language<a class="headerlink" href="#the-3d-dependent-data-description-language" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="3d-lang.html">The 3d Dependent Data Description language</a></li>
 </ul>
 </div>
 </div>
@@ -404,6 +416,87 @@ files at all.)</p>
 </ul>
 </div>
 </div>
+<div class="section" id="language-reference">
+<h2>Language Reference<a class="headerlink" href="#language-reference" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#base-types">Base types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#structs">Structs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#constraints">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#bitfields">Bitfields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#constants-and-enumerations">Constants and Enumerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#parameterized-data-types">Parameterized data types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#tagged-unions-or-casetype">Tagged unions or <code class="docutils literal notranslate"><span class="pre">casetype</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#arrays">Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#byte-sized-arrays">Byte-sized arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#singleton-arrays-of-variable-size">Singleton arrays of variable size</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#actions">Actions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#action-basics">Action basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#atomic-actions">Atomic actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#composing-atomic-actions-sequentially-and-conditionally">Composing atomic actions sequentially and conditionally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#another-example">Another example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#actions-that-always-succeed">Actions that always succeed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#restrictions">Restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#alignment">Alignment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#variable-length-types">Variable-length Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#static-assertions-to-validate-alignment">Static Assertions to Validate Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#explicitly-checking-3d-types-for-correspondence-with-existing-c-types">Explicitly checking 3d types for correspondence with existing C types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#generating-code-with-for-several-compile-time-configurations">Generating code with for several compile-time configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#validating-data-with-indirections-or-pointers">Validating Data with Indirections or Pointers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#pointer-types">Pointer Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#probing-pointers-a-first-example">Probing Pointers: A first example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#probing-multiple-indirections">Probing Multiple Indirections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#top-level-probes">Top-level Probes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#coercing-pointer-types">Coercing Pointer Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#multiple-probe-callbacks">Multiple Probe Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#nullable-pointers">Nullable Pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#specialization-for-different-pointer-sizes">Specialization for Different Pointer Sizes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#a-first-example">A First Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#a-first-manual-attempt">A First Manual Attempt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#a-second-manual-attempt">A Second Manual Attempt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#automated-specialization">Automated Specialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#first-example-in-its-entirety">First Example in its Entirety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#what-is-proven-about-specialization">What is Proven About Specialization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#an-end-to-end-executable-example-1">An End-to-end Executable Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#limitations-on-variable-length-structures">Limitations on Variable-length Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3d-lang.html#data-dependency-for-well-formedness">Data Dependency for Well-formedness</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#and-end-to-end-example-with-variable-length-structures">And End-to-end Example with Variable-length Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#other-forms-of-specialization">Other forms of Specialization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#comments">Comments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#modular-structure-and-files">Modular structure and files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#error-handling">Error handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#generated-code">Generated code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#error-handling-1">Error handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#fully-worked-examples-elf-files">Fully worked examples: ELF files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#integrating-elf-validator-in-existing-code">Integrating ELF validator in existing code</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -412,7 +505,7 @@ files at all.)</p>
 
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Verified efficient parsing for binary data formats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="3d-lang.html" class="btn btn-neutral float-right" title="The 3d Dependent Data Description language" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3d-lang.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

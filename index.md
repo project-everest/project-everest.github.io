@@ -18,25 +18,43 @@ joint center.
 
 # Provably Secure Communication Software
 
-Focusing on the HTTPS ecosystem, including components such as the TLS
-protocol and its underlying cryptographic algorithms, Project Everest
-began in 2016 aiming to build and deploy formally verified
-implementations of several of these components in the [F\* proof
-assistant](https://fstar-lang.org).
+Focusing on the HTTPS ecosystem, including components such as the TLS protocol
+and its underlying cryptographic algorithms, Project Everest ran from 2016 to
+2021, aiming to build and deploy formally verified implementations of several of
+these components in the [F\* proof-oriented programming
+language](https://fstar-lang.org). Many offshoots of Project Everest continue to
+thrive today.
 
-While we have yet to complete a fully verified implementation of
-HTTPS, we have branched out to tackle a broader range of problems,
-including verified implementations of newer security protocols like
-[QUIC](https://datatracker.ietf.org/doc/draft-ietf-quic-transport/),
-[Signal](https://signal.org/) and
-[DICE](https://trustedcomputinggroup.org/work-groups/dice-architectures/),
-as well as securing networking infrastructure used in commerical cloud
-platforms.
+Project Everest produced provably correct and secure software deployed in a
+range of production systems, including the Windows kernel, Hyper-V, Linux,
+Firefox, Python, and several others, improving the security and reliability of
+software used by *billions* of people every day.
 
-Everest software is deployed in systems ranging from the Linux kernel
-and the Windows kernel to Microsoft Azure and Mozilla Firefox,
-improving the security and reliability of software used by *billions*
-of people every day.
+Our paper, [Project Everest: Perspectives from Developing Industrial-grade
+High-assurance Software](/assets/everest-perspectives-2025.pdf) provides a
+detailed overview of our work. The picture below (from the paper) is a summary
+of the software developed by Project Everest, with arrows indicating dependences
+among components:
+
+![Project Everest Architecture](/assets/EverestArch.png){:class="img-arch"}
+
+All our code was implemented and proven correct in F\*, except for the proof of
+the TLS handshake in miTLS-fstar, which was left incomplete. However, we
+developed the State Separating Proof technique for analyzing cryptographic
+protocols, and produced a pen-and-paper formal proof of the TLS key schedule.
+Recently, our manual proof of the key schedule was mechanically checked and
+proven correct, in the context of [Bert13](https://eprint.iacr.org/2025/980), a
+Rust implementation of TLS-1.3.
+
+Lessons learned from developing Project Everest inform several ongoing projects,
+including
+[Pulse](https://fstar-lang.org/tutorial/book/pulse/pulse.html#pulse-proof-oriented-programming-in-concurrent-separation-logic)
+for proofs in concurrent separation logic; [EverParse and
+PulseParse](https://project-everest.github.io/everparse/) for hardening software
+attack surfaces with verified parsers; and [Hax](https://hax.cryspen.com/),
+ [Verus](https://github.com/verus-lang/verus) and
+[Aeneas](https://github.com/AeneasVerif/aeneas), which target the verification
+of Rust programs.
 
 ## Everest Artifacts with Formal Proofs
 

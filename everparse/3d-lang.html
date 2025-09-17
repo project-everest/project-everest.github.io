@@ -828,13 +828,10 @@ more limited:</p>
 </pre></div>
 </div>
 <p>Here, we have an aligned “union”. 3d checks that every branch of the union
-describes field with the same size. It <em>does not</em> insert padding to make every
-type have the same size. For example, if the <code class="docutils literal notranslate"><span class="pre">UINT16</span> <span class="pre">other</span></code> fields were left out
-of the default case of <code class="docutils literal notranslate"><span class="pre">Value</span></code>, the 3d compiler would emit the following error
-message:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">With</span> <span class="n">the</span> <span class="s1">&#39;aligned&#39;</span> <span class="n">qualifier</span><span class="p">,</span> <span class="nb">all</span> <span class="n">cases</span> <span class="n">of</span> <span class="n">a</span> <span class="n">union</span> <span class="k">with</span> <span class="n">a</span> <span class="n">fixed</span> <span class="n">size</span> <span class="n">must</span> <span class="n">have</span> <span class="n">the</span> <span class="n">same</span> <span class="n">size</span><span class="p">;</span> <span class="n">union</span> <span class="n">padding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">yet</span> <span class="n">supported</span>
-</pre></div>
-</div>
+describes a field with a fixed size. It then inserts padding at the end of each
+field whose size is smaller than the maximum-sized field, to make it so that
+every field of the union has the same size. As such, the <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute
+on a <code class="docutils literal notranslate"><span class="pre">casetype</span></code> allows one to model the layout of a C union.</p>
 <p>Note, the <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute is not allowed on typedefs, enums, or other kinds
 of 3d declarations.</p>
 <div class="section" id="variable-length-types">
@@ -1733,14 +1730,14 @@ into a 64-bit layout, and then to validate that the copied bytes is a valid
 buffer, preparing it to receive <code class="docutils literal notranslate"><span class="pre">sizeof(S64)</span></code> bytes. Then, within the probe
 block, it executes a sequence of actions:</p>
 <ul class="simple">
-<li>Copy the first 4 bytes references by <code class="docutils literal notranslate"><span class="pre">ptrS</span></code>–this is the <code class="docutils literal notranslate"><span class="pre">s1</span></code> field</li>
+<li>Copy the first 4 bytes referenced by <code class="docutils literal notranslate"><span class="pre">ptrS</span></code>–this is the <code class="docutils literal notranslate"><span class="pre">s1</span></code> field</li>
 <li>Skip 4 bytes of alignment padding</li>
-<li>Then read a 32 bit pointer <code class="docutils literal notranslate"><span class="pre">ptrT</span></code>, coerce it to 64-butes, and write it into
+<li>Then read a 32 bit pointer <code class="docutils literal notranslate"><span class="pre">ptrT</span></code>, coerce it to 64-bytes, and write it into
 the destination buffer</li>
 <li>Then copy the next 4 bytes from the input buffer (field <code class="docutils literal notranslate"><span class="pre">s2</span></code>)</li>
 <li>Finally, skip 4 bytes of padding at the end</li>
 </ul>
-<p>After the probe block executed, we validate the <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> to
+<p>After the probe block executes, we validate the <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> to
 contain a valid  <code class="docutils literal notranslate"><span class="pre">S64(r1,</span> <span class="pre">destT)</span></code>, which in turn will probe <code class="docutils literal notranslate"><span class="pre">ptrT</span></code> etc.</p>
 <p>This does what we want, in the sense that if validation succeeds, then <code class="docutils literal notranslate"><span class="pre">destS</span></code>
 contains a 64-bit representation of the input, regardless of <code class="docutils literal notranslate"><span class="pre">requestor32</span></code>,
@@ -1766,7 +1763,7 @@ callbacks.</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">specialize</span> (<span class="k">pointer</span>(*), <span class="k">pointer</span>(UINT32)) R64 R32;
 </pre></div>
 </div>
-<p>The first callback, a <code class="docutils literal notranslate"><span class="pre">UlongToPtr</span></code> coercions, we saw <a class="reference internal" href="#coercing-pointers"><span class="std std-ref">before</span></a>: we’ll need it to coerce a 32-bit pointer to 64-bits. It
+<p>The first callback, a <code class="docutils literal notranslate"><span class="pre">UlongToPtr</span></code> coercion, we saw <a class="reference internal" href="#coercing-pointers"><span class="std std-ref">before</span></a>: we’ll need it to coerce a 32-bit pointer to 64-bits. It
 produces the following C signature:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">UlongToPtr</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ptr</span><span class="p">);</span>
 </pre></div>
@@ -1815,6 +1812,7 @@ specialization. Here is the final specification in its entirety:</p>
   <span class="k">extern</span> <span class="k">probe</span> (INIT) ProbeInit
   <span class="k">extern</span> <span class="k">PURE</span> UINT64 UlongToPtr(UINT32 ptr)
   <span class="k">extern</span> <span class="k">probe</span> (READ UINT32) ProbeAndReadU32
+  <span class="k">extern</span> <span class="k">probe</span> (WRITE UINT32) WriteU32
   <span class="k">extern</span> <span class="k">probe</span> (WRITE UINT64) WriteU64
 
   <span class="k">aligned</span>
@@ -1994,7 +1992,7 @@ on the data being coerced. We illustrate with a couple of examples:</p>
 } TLV;
 </pre></div>
 </div>
-<p>Now, let’s say one wanted to prove a pointer to a <code class="docutils literal notranslate"><span class="pre">TLV</span></code>, one could attempt
+<p>Now, let’s say one wanted to probe a pointer to a <code class="docutils literal notranslate"><span class="pre">TLV</span></code>, one could attempt
 this:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _WRAPPER(EVERPARSE_COPY_BUFFER_T Output)
 {
@@ -2034,28 +2032,11 @@ advance:</p>
 </div>
 <p>This works: if the caller can bound the entire size of the pointed to data and
 pass it to <code class="docutils literal notranslate"><span class="pre">WRAPPER</span></code> as a parameter <code class="docutils literal notranslate"><span class="pre">Len</span></code>, then we can use that as a bound.</p>
-<p>However, if now we try to specialize <code class="docutils literal notranslate"><span class="pre">WRAPPER</span></code> as follows:</p>
-<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">specialize</span> (<span class="k">pointer</span>(*), <span class="k">pointer</span>(UINT32)) WRAPPER WRAPPER_32;
-</pre></div>
-</div>
-<p>We get the following error:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>./SpecializeDep1.3d:(22,11): (Error) Cannot coerce a type with data-dependency;
-  field payload of type SpecializeDep1.UNION(tag) may depend on the field `tag`
-</pre></div>
-</div>
-<p>That is, in order to coerce a <code class="docutils literal notranslate"><span class="pre">UNION(tag)</span></code> from a 32- to 64-bit
-representation, in genneral, a coercion would have to read the <code class="docutils literal notranslate"><span class="pre">tag</span></code> field of
-<code class="docutils literal notranslate"><span class="pre">TLV</span></code>, then branch on it, and then coerce each case of <code class="docutils literal notranslate"><span class="pre">UNION</span></code> accordingly.
-As mentioned earlier, coercions cannot depend on the data being coerced—so 3d
-rejects this specification.</p>
-<p>Note, in this case, one could argue that <code class="docutils literal notranslate"><span class="pre">UNION(tag)</span></code> has the same
-representation in 32- and 64-bits, so 3d could accept the specification:
-however, 3d does not yet recognize such special cases.</p>
-<p>One could play the same game again, and try to get the caller to provide the
-<code class="docutils literal notranslate"><span class="pre">tag</span></code> as a parameter (although as we do this, increasingly, the caller has to
-be able to predict the cases of the data). The listing below works:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span> <span class="k">probe</span> ProbeAndCopy
+<span class="k">extern</span> <span class="k">probe</span> (READ UINT8) ProbeAndReadU8
+<span class="k">extern</span> <span class="k">probe</span> (WRITE UINT8) WriteU8
 <span class="k">extern</span> <span class="k">probe</span> (READ UINT32) ProbeAndReadU32
+<span class="k">extern</span> <span class="k">probe</span> (WRITE UINT32) WriteU32
 <span class="k">extern</span> <span class="k">probe</span> (WRITE UINT64) WriteU64
 <span class="k">extern</span> <span class="k">probe</span> (INIT) ProbeInit
 <span class="k">extern</span> <span class="k">PURE</span> UINT64 UlongToPtr(UINT32 ptr)
@@ -2071,17 +2052,17 @@ be able to predict the cases of the data). The listing below works:</p>
     } field;
 } UNION;
 
-<span class="k">typedef</span> <span class="k">struct</span> _TLV(UINT8 Expected, UINT16 Len)
+<span class="k">typedef</span> <span class="k">struct</span> _TLV(UINT16 Len)
 {
-    UINT8 tag { tag == Expected };
+    UINT8 tag;
     UINT32 length { length == Len };
-    UNION(Expected) payload[:byte-size Len];
+    UNION(tag) payload[:byte-size Len];
 } TLV;
 
-<span class="k">typedef</span> <span class="k">struct</span> _WRAPPER(UINT8 Expected, UINT16 Len, EVERPARSE_COPY_BUFFER_T Output)
+<span class="k">typedef</span> <span class="k">struct</span> _WRAPPER(UINT16 Len, EVERPARSE_COPY_BUFFER_T Output)
 <span class="k">where</span> (Len &gt; 5)
 {
-    TLV(Expected, Len - 5) *tlv
+    TLV(Len - 5) *tlv
         <span class="k">probe</span> ProbeAndCopy(length=Len, destination=Output);
 } WRAPPER;
 
@@ -2090,40 +2071,57 @@ be able to predict the cases of the data). The listing below works:</p>
 <span class="k">entrypoint</span>
 <span class="k">casetype</span> _ENTRY(
     Bool Requestor32,
-    UINT8 Expected,
     UINT16 Len,
     EVERPARSE_COPY_BUFFER_T Output)
 {
     <span class="k">switch</span> (Requestor32)
     {
         <span class="k">case</span> true:
-            WRAPPER_32(Expected, Len, Output) w32;
+            WRAPPER_32(Len, Output) w32;
 
         <span class="k">case</span> false:
-            WRAPPER(Expected, Len, Output) w64;
+            WRAPPER(Len, Output) w64;
     }
 } ENTRY;
 </pre></div>
 </div>
-<p>However, we remark on a few points:</p>
-<blockquote>
-<div><ul>
-<li><p class="first">First, this specification is far from ideal, since it requires the caller to
-predict both the <code class="docutils literal notranslate"><span class="pre">tag</span></code> and <code class="docutils literal notranslate"><span class="pre">length</span></code> of the TLV message.</p>
-</li>
-<li><p class="first">Second, 3d’s determination of data dependence is a syntactic criterion:
-notice how we have changed the type of the payload field to only mention the
-parameters in scope, rather than the fields.</p>
-<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span>UNION(Expected) payload[:byte-size Len];
+<p>However, we remark on a few limitations:</p>
+<p>First, 3d does not support arbitrary data dependences in coercions. One can only
+depend on fields with simple, unconstrained types. For example, replacing the
+TLV type in the listing above with the following specification is rejected:</p>
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _TLV(UINT16 Len)
+{
+    UINT8 tag { tag == 0 || tag == 1 || tag == 2 };
+    UINT32 length { length == Len };
+    UNION(tag) payload[:byte-size Len];
+} TLV;
 </pre></div>
 </div>
-</li>
-</ul>
-</div></blockquote>
+<p>The error message reported by 3d is as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>./SpecializeDep1.3d:(24,11):
+(Error) Coercive probes cannot read integer or pointer types with constraints or enum types;
+field tag has type UINT8 with constraint (((tag = 0uy) || (tag = 1uy)) || (tag = 2uy))
+</pre></div>
+</div>
+<p>3d’s determination of data dependence is a syntactic criterion, e.g., if one
+were to use <code class="docutils literal notranslate"><span class="pre">length</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Len</span></code> in the specification, as shown below,
+then once again 3d’s reports an error:</p>
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _TLV(UINT16 Len)
+{
+    UINT8 tag;
+    UINT32 length { length == Len };
+    UNION(tag) payload[:byte-size length];
+} TLV;
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>./SpecializeDep1.3d:(25,12): (Error) Coercive probes cannot read integer or pointer types with constraints or enum types;
+field length has type UINT32 with constraint (length = (UINT32) Len)
+</pre></div>
+</div>
 <p>Note, one does not always need the calling context to pass in arguments like
-<code class="docutils literal notranslate"><span class="pre">Len</span></code> or <code class="docutils literal notranslate"><span class="pre">Expected</span></code>: these just need to be values in scope at the point at
-which the probe is used. For instance, the following would work too, for a
-pointer to a variable length array, each of whose elements is a <code class="docutils literal notranslate"><span class="pre">UNION(tag)</span></code>:</p>
+<code class="docutils literal notranslate"><span class="pre">Len</span></code>: these just need to be values in scope at the point at which the probe
+is used. For instance, the following would work too, for a pointer to a variable
+length array, each of whose elements is a <code class="docutils literal notranslate"><span class="pre">UNION(tag)</span></code>:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _UNION_ARRAY(UINT8 tag, UINT32 len)
 {
     UNION(tag) payload[:byte-size len];
@@ -2190,6 +2188,8 @@ variable-length structures fit well with 3d’s support for auto-specialization.
 <p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_test2">of specialization with variable-length
 structures is available in the EverParse repository</a>,
 including a main file driving the generated code with test input.</p>
+<p>Another example, <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_tagged_union_array">with data dependent tagged unions</a>,
+is also available.</p>
 </div>
 <div class="section" id="other-forms-of-specialization">
 <h2>Other forms of Specialization<a class="headerlink" href="#other-forms-of-specialization" title="Permalink to this headline">¶</a></h2>

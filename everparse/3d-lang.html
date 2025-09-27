@@ -1313,6 +1313,7 @@ length of the buffer.</p>
 <span class="pre">ProbeInit</span></code>. This results in the following extern C declaration in
 <code class="docutils literal notranslate"><span class="pre">Probe_ExternalAPI.h</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w"> </span><span class="n">ProbeInit</span><span class="p">(</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">typeAndFieldName</span><span class="p">,</span>
 <span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">dst</span>
 <span class="p">)</span>
@@ -1352,8 +1353,8 @@ structure, which is represented in 4 bytes, with 2 bytes each for its <code clas
 <blockquote>
 <div><ul class="simple">
 <li>First, read the contents of the <code class="docutils literal notranslate"><span class="pre">tpointer</span></code> field into a local vairable <code class="docutils literal notranslate"><span class="pre">src</span></code></li>
-<li>Then, call <code class="docutils literal notranslate"><span class="pre">ProbeInit(4,</span> <span class="pre">dest)</span></code> to prepare the destination buffer, where
-<code class="docutils literal notranslate"><span class="pre">sizeof(T)=4</span></code>.</li>
+<li>Then, call <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;S.tpointer&quot;,</span> <span class="pre">4,</span> <span class="pre">dest)</span></code> to prepare the destination
+buffer, where <code class="docutils literal notranslate"><span class="pre">sizeof(T)=4</span></code>.</li>
 <li>Then, if <code class="docutils literal notranslate"><span class="pre">ProbeInit</span></code> succeeds, use <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(T),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">src,</span>
 <span class="pre">destS)</span></code> check that the <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span></code> bytes starting at the address pointed
 to by <code class="docutils literal notranslate"><span class="pre">tpointer</span></code> is valid memory, using the <code class="docutils literal notranslate"><span class="pre">dest</span></code> parameter as its copy
@@ -1393,7 +1394,7 @@ and <code class="docutils literal notranslate"><span class="pre">destT</span></c
 <ul class="simple">
 <li>First, validating the tag field (in this case, it is a noop)</li>
 <li>Then, reading <code class="docutils literal notranslate"><span class="pre">spointer</span></code> into <code class="docutils literal notranslate"><span class="pre">srcS</span></code> and<ul>
-<li>Calling <code class="docutils literal notranslate"><span class="pre">ProbeInit(sizeof(S),</span> <span class="pre">destS)</span></code></li>
+<li>Calling <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;U.spointer&quot;,</span> <span class="pre">sizeof(S),</span> <span class="pre">destS)</span></code></li>
 <li>Then, <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(S),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">srcS,</span> <span class="pre">destS)</span></code></li>
 <li>Then, validate <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> contains a valid <code class="docutils literal notranslate"><span class="pre">S(destT)</span></code>.</li>
 </ul>

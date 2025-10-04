@@ -1538,17 +1538,19 @@ different probe and copy function.</li>
 </ul>
 <p>The resulting C interface contains multiple entry points, one for each variant
 of probing entry point, and one for the non-probing variant:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckMultiProbe</span><span class="p">(</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckMultiProbe</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT1</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT2</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 
-<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyAltCheckMultiProbe</span><span class="p">(</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyAltCheckMultiProbe</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT1</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT2</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 
 <span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckMultiProbe</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT1</span><span class="p">,</span>
@@ -1557,6 +1559,15 @@ of probing entry point, and one for the non-probing variant:</p>
 <span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">providedSize</span></code> argument on the first two function signatures allows the
+caller to provide a claimed size of valid probed memory.</p>
+<p>If the requested size of greater than this claimed size, the function failed
+immediately with the error code <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_INCORRECT_SIZE</span></code>
+without doing anything else.</p>
+<p>If the probe init function itself fails, we return
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_INIT</span></code>; if the probe function itself fails we return
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_PROBE</span></code>; if the underlying validator fails, we return
+<code class="docutils literal notranslate"><span class="pre">EVERPARE_PROBE_FAILURE_VALIDATION</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>External declarations for probe callbacks and for pointer coercions are in

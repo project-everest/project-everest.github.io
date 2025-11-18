@@ -52,7 +52,6 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">How to build EverParse from source</a></li>
 </ul>
 
         </div>
@@ -83,9 +82,9 @@
 <h1>Verified efficient parsing for binary data formats<a class="headerlink" href="#verified-efficient-parsing-for-binary-data-formats" title="Permalink to this headline">¶</a></h1>
 <p>EverParse is a framework for generating verified secure parsers and
 formatters from domain-specific format specification languages.</p>
-<p>The framework contains three components:</p>
+<p>The framework contains several components:</p>
 <p><strong>LowParse</strong>: At the core of EverParse is <em>LowParse</em>, a verified library
-of parsing and formatting combinators programmed and verified in F*.</p>
+of parsing and formatting combinators programmed and verified in F* and Pulse.</p>
 <p><strong>3D</strong>: A frontend for EverParse to enable specifying data
 formats in an style resembling type definitions in the C programming
 language. We have used it to generate message validation code for use
@@ -94,20 +93,34 @@ within several low-level C programs.</p>
 in a style common to many RFCs. We have used it to generate message
 processing code for several networking protocols, including TLS and
 QUIC.</p>
+<p><strong>EverCBOR</strong>: A verified C and Rust library for CBOR parsing and
+serialization. Currently, EverCBOR supports the deterministic encoding
+(RFC 8949 Section 4.2) without floating-point numbers; supporting the
+full CBOR is work in progress.</p>
+<p><strong>EverCDDL</strong>: An experimental frontend for EverParse that accepts data
+formats for CBOR objects in CDDL, and generates C or Rust data types,
+parsers and serializers. We have used it to generate message
+processing code for COSE signing.</p>
 <p>EverParse is open-source and available on <a class="reference external" href="https://github.com/project-everest/everparse/">GitHub</a>. EverParse is part
 of <a class="reference external" href="https://project-everest.github.io/">Project Everest</a>.</p>
 <div class="section" id="releases">
 <h2>Releases<a class="headerlink" href="#releases" title="Permalink to this headline">¶</a></h2>
-<p>We produce public releases under the form of a Windows or Linux
-standalone binary (x86_64) package and a platform-independent source
+<p>We produce public releases under the form of a Windows, Linux (x86_64) or MacOS
+standalone binary package and a platform-independent source
 package.</p>
 <p>The latest release of EverParse can be found <a class="reference external" href="https://github.com/project-everest/everparse/releases">here</a>.</p>
+<p>We produce <a class="reference external" href="https://github.com/project-everest/everparse/pkgs/container/everparse">pre-built linux/amd64 Docker images</a></p>
 </div>
 <div class="section" id="manual">
 <h2>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="3d.html#d"><span class="std std-ref">3d: Dependent Data Descriptions for Verified Validation</span></a> (includes the full documentation of the EverParse binary package)</li>
-<li><a class="reference internal" href="build.html#build"><span class="std std-ref">How to build EverParse from source</span></a></li>
+<li>EverCBOR:<ul>
+<li><a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/cbor/pulse/det/c/example/main.c">Documented C example</a></li>
+<li><a class="reference external" href="https://project-everest.github.io/everparse/evercbor-rust/cborrs/">Rust API reference</a></li>
+</ul>
+</li>
+<li>EverParse build instructions are available in the <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/README.md">README</a></li>
 </ul>
 </div>
 <div class="section" id="in-the-news">
@@ -121,18 +134,30 @@ Microsoft Research blog</dd>
 <div class="section" id="papers">
 <h2>Papers<a class="headerlink" href="#papers" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
+<dt><a class="reference external" href="https://arxiv.org/abs/2505.17335">Secure Parsing and Serializing with Separation Logic Applied to CBOR, CDDL and COSE</a>;</dt>
+<dd><p class="first">Tahina Ramananandro, Gabriel Ebner, Guido Martinez, Nikhil Swamy;</p>
+<p class="last">32nd ACM SIGSAC Conference on Computer and Communications Security (CCS), 2025 (accepted for publication, to appear)</p>
+</dd>
+<dt><a class="reference external" href="https://www.microsoft.com/en-us/research/publication/asn1-provably-correct-non-malleable-parsing-for-asn-1-der/">ASN1*: Provably Correct Non-Malleable Parsing for ASN.1 DER</a>;</dt>
+<dd><p class="first">Haobin Ni, Antoine Delignat-Lavaud, Cédric Fournet, Tahina Ramananandro, Nikhil Swamy;</p>
+<p class="last">In Proceedings of the ACM SIGPLAN international conference on Certified Programs and Proofs (CPP), 2022</p>
+</dd>
 <dt><a class="reference external" href="https://www.microsoft.com/en-us/research/publication/hardening-attack-surfaces-with-formally-proven-binary-format-parsers/">Hardening Attack Surfaces with Formally Proven Binary Format Parsers</a>;</dt>
-<dd>Nikhil Swamy, Tahina Ramananandro, Aseem Rastogi, Irina Spiridonova, Haobin Ni, Dmitry Malloy, Juan Vazquez, Michael Tang, Omar Cardona, Arti Gupta;
-In Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation, 2022</dd>
+<dd><p class="first">Nikhil Swamy, Tahina Ramananandro, Aseem Rastogi, Irina Spiridonova, Haobin Ni, Dmitry Malloy, Juan Vazquez, Michael Tang, Omar Cardona, Arti Gupta;</p>
+<p class="last">In Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation, 2022</p>
+</dd>
 <dt><a class="reference external" href="https://www.microsoft.com/en-us/research/publication/dice-a-formally-verified-implementation-of-dice-measured-boot/">DICE*: A Formally Verified Implementation of DICE Measured Boot</a>;</dt>
-<dd>Zhe Tao, Aseem Rastogi, Naman Gupta, Kapil Vaswani and Aditya V. Thakur;
-In Proceedings of the 30th USENIX Security Symposium, 2021</dd>
+<dd><p class="first">Zhe Tao, Aseem Rastogi, Naman Gupta, Kapil Vaswani and Aditya V. Thakur;</p>
+<p class="last">In Proceedings of the 30th USENIX Security Symposium, 2021</p>
+</dd>
 <dt><a class="reference external" href="https://project-everest.github.io/assets/everquic.pdf">A Security Model and Fully Verified Implementation for the IETF QUIC Record Layer</a>;</dt>
-<dd>Antoine Delignat-Lavaud, Cedric Fournet, Bryan Parno, Jonathan Protzenko, Tahina Ramananandro, Jay Bosamiya, Joseph Lallemand, Itsaka Rakotonirina, and Yi Zhou;
-In Proceedings of the 42nd IEEE Symposium on Security and Privacy, 2021</dd>
+<dd><p class="first">Antoine Delignat-Lavaud, Cedric Fournet, Bryan Parno, Jonathan Protzenko, Tahina Ramananandro, Jay Bosamiya, Joseph Lallemand, Itsaka Rakotonirina, and Yi Zhou;</p>
+<p class="last">In Proceedings of the 42nd IEEE Symposium on Security and Privacy, 2021</p>
+</dd>
 <dt><a class="reference external" href="https://project-everest.github.io/assets/everparse.pdf">EverParse: Verified Secure Zero-Copy Parsers for Authenticated Message Formats</a>;</dt>
-<dd>Tahina Ramananandro, Antoine Delignat-Lavaud, Cedric Fournet, Nikhil Swamy, Tej Chajed, Nadim Kobeissi, and Jonathan Protzenko;
-In Proceedings of the 28th USENIX Security Symposium, 2019</dd>
+<dd><p class="first">Tahina Ramananandro, Antoine Delignat-Lavaud, Cedric Fournet, Nikhil Swamy, Tej Chajed, Nadim Kobeissi, and Jonathan Protzenko;</p>
+<p class="last">In Proceedings of the 28th USENIX Security Symposium, 2019</p>
+</dd>
 </dl>
 <div class="toctree-wrapper compound">
 </div>

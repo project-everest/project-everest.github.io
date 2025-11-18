@@ -98,7 +98,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">How to build EverParse from source</a></li>
 </ul>
 
         </div>
@@ -698,10 +697,9 @@ used with <code class="docutils literal notranslate"><span class="pre">-z3_test<
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_executable</span> <span class="pre">path/to/z3.exe</span></code></p>
 <p>Specify a path to the Z3 executable that should be used to generate
 the test cases. This option does not affect the verification of the
-generated F* files. Test cases are best generated with z3 4.13.3,
-but verification of the generated F* files works only with Z3 4.8.5
-at the moment. The standalone binary package on Linux includes both
-versions of z3 and <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> already sets
+generated F* files. EverParse has been tested with Z3 4.13.3 for both
+test case generation and verification of the generated F* files.
+<code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> already sets
 <code class="docutils literal notranslate"><span class="pre">--z3_executable</span></code> accordingly.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">'option1</span> <span class="pre">...</span> <span class="pre">optionK'</span></code></p>

@@ -1,0 +1,104 @@
+# Rebuild the EverParse manual from EverParse's master branch and commit the
+# result into this repository's everparse/ directory.
+#
+# This is inspired by the "ci-3d" job of EverParse's own CI
+# (project-everest/everparse, .github/workflows/ci.yml), which builds the
+# manual with `make 3d-doc-ci` and then, via doc/ci.sh, clones THIS repository
+# and pushes the refreshed manual using a cross-repository personal access
+# token (DZOMO_GITHUB_TOKEN). That cross-repository write permission is a
+# security risk.
+#
+# Running the refresh from inside this repository instead lets it use the
+# built-in GITHUB_TOKEN, which is scoped to this repository only, so no
+# cross-repository credentials are required.
+name: Update EverParse manual
+
+on:
+  # Once a day, every night, at 03:00 UTC.
+  schedule:
+    - cron: '0 3 * * *'
+  # Allow manual runs from the Actions tab. Intentionally NOT triggered by
+  # push or pull_request events.
+  workflow_dispatch:
+
+# The built-in GITHUB_TOKEN only needs write access to this repository's
+# contents in order to commit and push the refreshed manual.
+permissions:
+  contents: write
+
+# Never run two refreshes concurrently (e.g. a manual run overlapping with the
+# nightly run), so they cannot race when committing and pushing.
+concurrency:
+  group: update-everparse-manual
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  update-everparse-manual:
+    # Only run on the canonical repository, never on forks (where the push
+    # would fail and the long build would be wasted).
+    if: github.repository == 'project-everest/project-everest.github.io'
+    runs-on: ubuntu-latest
+    # `make 3d-doc-ci` builds F*, KaRaMeL, Pulse, Z3, etc. from scratch, which
+    # can be slow; give it the full GitHub-hosted runner budget.
+    timeout-minutes: 360
+    steps:
+      - name: Check out project-everest.github.io
+        uses: actions/checkout@v4
+
+      # As in EverParse's "ci-3d" job, opam is the only prerequisite that has
+      # to be set up by hand; `make 3d-doc-ci` and its dependencies build
+      # everything else (F*, KaRaMeL, Pulse, Z3, the opam package
+      # dependencies, etc.).
+      - name: Set up OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: 5
+
+      - name: Check out EverParse (master)
+        uses: actions/checkout@v4
+        with:
+          repository: project-everest/everparse
+          ref: master
+          submodules: true
+          path: everparse-src
+
+      # Build the manual. This mirrors the build dependencies of EverParse's
+      # `3d-doc-ci` target (`3d-doc-test cbor`) but stops short of its final
+      # `make -C doc 3d-ci` step, whose doc/ci.sh is what pushed across
+      # repositories. `cbor` regenerates the EverCBOR Rust documentation that
+      # copy.sh copies in. ADMIT=1 matches EverParse's CI, since we only need
+      # the documentation artifacts, not a full reverification.
+      - name: Build the EverParse manual
+        run: |
+          ADMIT=1 make -C everparse-src -j"$(nproc)" -k 3d-doc-test cbor
+
+      # Refresh everparse/ from the freshly built docs using EverParse's own
+      # copy.sh, so the file layout (static/, _sources, evercbor-rust/, ...)
+      # stays in sync with upstream. This is the local equivalent of what
+      # doc/ci.sh did after cloning this repository.
+      - name: Refresh the everparse/ directory
+        run: |
+          rm -rf everparse
+          mkdir everparse
+          bash everparse-src/doc/copy.sh "$PWD/everparse"
+
+      # Commit and push only if the rebuilt manual actually changed, reusing
+      # the historical "Dzomo" identity and commit message for continuity with
+      # the existing refresh commits. The push uses the GITHUB_TOKEN persisted
+      # by actions/checkout for this repository.
+      - name: Commit and push the refreshed manual
+        run: |
+          git add -A everparse
+          if git diff --cached --quiet; then
+            echo "No change in the EverParse manual; nothing to commit."
+            exit 0
+          fi
+          git \
+            -c 'user.name=Dzomo, the Everest Yak' \
+            -c 'user.email=24394600+dzomo@users.noreply.github.com' \
+            commit -m '[CI] Refresh EverParse doc'
+          git push

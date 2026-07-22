@@ -89,6 +89,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#coercing-pointer-types">Coercing Pointer Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#multiple-probe-callbacks">Multiple Probe Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#nullable-pointers">Nullable Pointers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selective-entrypoint-generation-1">Selective Entrypoint Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-entrypoints-1">Named Entrypoints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
 </ul>
 </li>
@@ -1455,13 +1457,15 @@ fields.:</p>
 <span class="n">TT</span><span class="p">:{</span>        <span class="n">x</span>                          <span class="o">|</span>                 <span class="n">y</span>                 <span class="o">|</span>   <span class="n">tag</span>    <span class="p">}</span>
 </pre></div>
 </div>
-<p>This yields the following C interface, with two entry points. The first is to
-probe and validate a pointer to the type <code class="docutils literal notranslate"><span class="pre">Indirect</span></code>, while the second is to
-validate a <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Indirect</span></code>.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckIndirect</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">);</span>
-<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckIndirect</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<p>This yields the following C interface with the probe entry point to
+probe and validate a pointer to the type <code class="docutils literal notranslate"><span class="pre">Indirect</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckIndirect</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Since only <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> is declared (and not a plain <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>),
+only the probe entry point appears in the header. If we also wanted a plain
+validation entry point, we would additionally write <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> before
+the type definition (see <a class="reference internal" href="#selective-entrypoint-generation"><span class="std std-ref">Selective Entrypoint Generation</span></a> below).</p>
 <p>The specification is equivalent to the following, though more concise:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _TT {
   UINT32 fst;
@@ -1537,7 +1541,7 @@ different probe and copy function.</li>
 <li>One can also associate different probes on each field of a type.</li>
 </ul>
 <p>The resulting C interface contains multiple entry points, one for each variant
-of probing entry point, and one for the non-probing variant:</p>
+of probing entry point:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckMultiProbe</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT1</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT2</span><span class="p">,</span>
@@ -1551,14 +1555,12 @@ of probing entry point, and one for the non-probing variant:</p>
 <span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span>
 <span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span>
 <span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
-
-<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckMultiProbe</span><span class="p">(</span>
-<span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT1</span><span class="p">,</span>
-<span class="w">  </span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">destT2</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Since only <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> attributes are declared on <code class="docutils literal notranslate"><span class="pre">MultiProbe</span></code> (no plain
+<code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>), only the probe entry points appear in the public header. If a
+plain validation entry point were also desired, the user would add a plain
+<code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> attribute to the type definition.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">providedSize</span></code> argument on the first two function signatures allows the
 caller to provide a claimed size of valid probed memory.</p>
 <p>If the requested size of greater than this claimed size, the function failed
@@ -1608,6 +1610,80 @@ pointer is non-null:</p>
 <li>If the pointer is non-null, the probe function is called, and validation
 proceeds as in the non-null case.</li>
 </ul>
+</div>
+<div class="section" id="selective-entrypoint-generation-1">
+<span id="selective-entrypoint-generation"></span><h2>Selective Entrypoint Generation<a class="headerlink" href="#selective-entrypoint-generation-1" title="Permalink to this headline">¶</a></h2>
+<p>By default, when a type is marked as an <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>, 3d generates a
+validation entry point in the wrapper header. When combined with probe
+attributes, 3d generates entry points <em>only</em> for the kinds of entry points
+that the user explicitly declares.</p>
+<p>For example, if a type only has <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> attributes, only the
+probe entry points appear in the public header—the underlying validation
+wrapper is still generated in the <code class="docutils literal notranslate"><span class="pre">.c</span></code> file (as a <code class="docutils literal notranslate"><span class="pre">static</span></code> function)
+but is not exposed publicly:</p>
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
+<span class="k">typedef</span> <span class="k">struct</span> _ProbeOnly {
+  UINT32 x;
+  UINT32 y;
+} ProbeOnly;
+
+<span class="k">entrypoint</span>
+<span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
+<span class="k">typedef</span> <span class="k">struct</span> _BothEntrypoints {
+  UINT32 x;
+  UINT32 y;
+} BothEntrypoints;
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">ProbeOnly</span></code>, since only <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> is specified, only the probe
+entry point is public:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckProbeOnly</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">BothEntrypoints</span></code>, since both a plain <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> and an
+<code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> are declared, both entry points are public:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckBothEntrypoints</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckBothEntrypoints</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="named-entrypoints-1">
+<span id="named-entrypoints"></span><h2>Named Entrypoints<a class="headerlink" href="#named-entrypoints-1" title="Permalink to this headline">¶</a></h2>
+<p>By default, the names of entry points are auto-generated from the module name,
+probe function name, and type name (e.g., <code class="docutils literal notranslate"><span class="pre">ProbeProbeAndCopyCheckIndirect</span></code>).
+One can override these names using the <code class="docutils literal notranslate"><span class="pre">entrypoint(Name)</span></code> syntax:</p>
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span>(ValidateMyData)
+<span class="k">typedef</span> <span class="k">struct</span> _NamedPlainEp {
+  UINT32 x;
+  UINT32 y;
+} NamedPlainEp;
+
+<span class="k">entrypoint</span>(ProbeMyData) <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
+<span class="k">typedef</span> <span class="k">struct</span> _NamedProbeEp {
+  UINT32 x;
+  UINT32 y;
+} NamedProbeEp;
+
+<span class="k">entrypoint</span>(CheckAll)
+<span class="k">entrypoint</span>(ProbeAll) <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
+<span class="k">typedef</span> <span class="k">struct</span> _NamedBothEp {
+  UINT32 x;
+  UINT32 y;
+} NamedBothEp;
+</pre></div>
+</div>
+<p>This produces the following public entry points:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ValidateMyData</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeMyData</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+
+<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">CheckAll</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeAll</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The name argument is optional: <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> without parentheses continues to
+use the auto-generated name. Named and unnamed entry points can be freely mixed
+on the same type.</p>
 </div>
 <div class="section" id="an-end-to-end-executable-example">
 <h2>An End-to-end Executable Example<a class="headerlink" href="#an-end-to-end-executable-example" title="Permalink to this headline">¶</a></h2>

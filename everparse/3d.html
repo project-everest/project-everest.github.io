@@ -1,29 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3d: Dependent Data Descriptions for Verified Validation &mdash; EverParse Manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>3d: Dependent Data Descriptions for Verified Validation &mdash; EverParse Manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=9edc463e" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="static/jquery.js?v=5d32c60e"></script>
+      <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="static/documentation_options.js?v=5929fcd5"></script>
+      <script src="static/doctools.js?v=fd6eb6e6"></script>
+      <script src="static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -50,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3d: Dependent Data Descriptions for Verified Validation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a><ul>
@@ -124,11 +116,11 @@
 
            <div itemprop="articleBody">
              
-  <div class="section" id="d-dependent-data-descriptions-for-verified-validation">
-<span id="d"></span><h1>3d: Dependent Data Descriptions for Verified Validation<a class="headerlink" href="#d-dependent-data-descriptions-for-verified-validation" title="Permalink to this headline">¶</a></h1>
+  <section id="d-dependent-data-descriptions-for-verified-validation">
+<span id="d"></span><h1>3d: Dependent Data Descriptions for Verified Validation<a class="headerlink" href="#d-dependent-data-descriptions-for-verified-validation" title="Link to this heading"></a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The documentation from this page covers the EverParse/3d releases
+<p class="admonition-title">Note</p>
+<p>The documentation from this page covers the EverParse/3d releases
 v2025.05.20 or later. Documentations for earlier versions may be
 found in the Git history.</p>
 </div>
@@ -140,69 +132,70 @@ correctness (validation is correct wrt. your data format) and security
 verification is available in the <a class="reference external" href="https://hacl-star.github.io/Overview.html#what-is-verified-software">documentation of EverCrypt</a>;
 EverParse provides similar formal guarantees except
 secret-independence.</p>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li>Write your data format description in the 3d language, as
-<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</li>
-<li>Give MyFile1.3d and MyFile2.3d to EverParse:<ul>
-<li>with the Windows binary package: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
-<li>with the Linux binary package: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
-<li>with the source tree: <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span> <span class="pre">--batch</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></li>
+<li><p>Write your data format description in the 3d language, as
+<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</p></li>
+<li><p>Give MyFile1.3d and MyFile2.3d to EverParse:</p>
+<ul class="simple">
+<li><p>with the Windows binary package: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
+<li><p>with the Linux binary package: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
+<li><p>with the source tree: <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span> <span class="pre">--batch</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
 </ul>
 </li>
 </ol>
 <p>Then, EverParse/3d produces:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">MyFile1.fsti</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.fst</span></code>: the verified F* specification
+<li><p><code class="docutils literal notranslate"><span class="pre">MyFile1.fsti</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.fst</span></code>: the verified F* specification
 and Low* implementation of parsers and validators for your data
-format from <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">MyFile1.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.h</span></code>: the verified C code generated from the verified
-F* and Low* files, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.h</span></code>: an entrypoint API to call into the
-verified C code, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
+format from <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MyFile1.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.h</span></code>: the verified C code generated from the verified
+F* and Low* files, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.h</span></code>: an entrypoint API to call into the
+verified C code, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
 helpers for the implementation of verified validators, common to
-<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></li>
+<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
 </ul>
 <ol class="arabic simple" start="3">
-<li>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFile1Wrapper.h&quot;</span></code> into any of your C
+<li><p>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFile1Wrapper.h&quot;</span></code> into any of your C
 compilation units that need to call a validator from
-<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</li>
+<code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>.</p></li>
 </ol>
-<div class="section" id="formal-guarantees">
-<h3>Formal guarantees<a class="headerlink" href="#formal-guarantees" title="Permalink to this headline">¶</a></h3>
+<section id="formal-guarantees">
+<h3>Formal guarantees<a class="headerlink" href="#formal-guarantees" title="Link to this heading"></a></h3>
 <p>For each message type in the source data formats, the generated C code
 provides a _validator_, a procedure to determine if a given input
 array of bytes contains a valid representation of a message, with the
 following properties:</p>
 <ul class="simple">
-<li><em>Memory safety</em>: The validator is <a class="reference external" href="http://www.pl-enthusiast.net/2014/07/21/memory-safety/">memory safe</a>, meaning it never
+<li><p><em>Memory safety</em>: The validator is <a class="reference external" href="http://www.pl-enthusiast.net/2014/07/21/memory-safety/">memory safe</a>, meaning it never
 accesses memory out of bounds, accesses memory at an incompatible
-type, uses memory after it has been freed, etc.</li>
-<li><em>Arithmetic safety</em>: The validator has no integer overflows or underflows.</li>
-<li><em>Double-fetch freedom</em>: The validator reads every byte in the input array at
+type, uses memory after it has been freed, etc.</p></li>
+<li><p><em>Arithmetic safety</em>: The validator has no integer overflows or underflows.</p></li>
+<li><p><em>Double-fetch freedom</em>: The validator reads every byte in the input array at
 most once, defending against certain kinds of
-<a class="reference external" href="https://cwe.mitre.org/data/definitions/367.html">time-of-check/time-of-use</a> bugs.</li>
-<li><em>Write footprint</em>: The validator does not modify the input array,
+<a class="reference external" href="https://cwe.mitre.org/data/definitions/367.html">time-of-check/time-of-use</a> bugs.</p></li>
+<li><p><em>Write footprint</em>: The validator does not modify the input array,
 and only modifies memory as described by user-controlled imperative
-actions that are explicit in the specification.</li>
-<li><em>No heap allocation</em>: The validator does not allocate any memory on
-the heap.</li>
-<li><em>Functionally correct</em>: The validator accepts all input arrays that
+actions that are explicit in the specification.</p></li>
+<li><p><em>No heap allocation</em>: The validator does not allocate any memory on
+the heap.</p></li>
+<li><p><em>Functionally correct</em>: The validator accepts all input arrays that
 contain valid representations of the message according to its
-specification, rejecting all others.</li>
+specification, rejecting all others.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="download-and-install">
-<h2>Download and install<a class="headerlink" href="#download-and-install" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="download-and-install">
+<h2>Download and install<a class="headerlink" href="#download-and-install" title="Link to this heading"></a></h2>
 <p>We provide binary (x86_64 only) packages for Windows and Linux.</p>
 <ol class="arabic simple">
-<li>Download the binary package corresponding to your platform, from
-the <a class="reference external" href="https://github.com/project-everest/everparse/releases">latest EverParse/3d release</a>.</li>
-<li>Extract it (Windows: <code class="docutils literal notranslate"><span class="pre">unzip</span></code>; Linux: <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xzf</span></code>) anywhere you
-like. No need to configure it anyhow.</li>
+<li><p>Download the binary package corresponding to your platform, from
+the <a class="reference external" href="https://github.com/project-everest/everparse/releases">latest EverParse/3d release</a>.</p></li>
+<li><p>Extract it (Windows: <code class="docutils literal notranslate"><span class="pre">unzip</span></code>; Linux: <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xzf</span></code>) anywhere you
+like. No need to configure it anyhow.</p></li>
 </ol>
 <p>Then, everything is contained in a <code class="docutils literal notranslate"><span class="pre">everparse</span></code> directory, whose
 actual entrypoint executable is <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> (for Windows) or
@@ -215,9 +208,9 @@ beforehand.</p>
 info at the <a class="reference external" href="https://releases.llvm.org/download.html">LLVM download page</a>), but this is optional.</p>
 <p>The Windows binary package is fully native, in the sense that it does
 not require any POSIX emulation layer such as Cygwin or WSL.</p>
-</div>
-<div class="section" id="run">
-<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Link to this heading"></a></h2>
 <p>On Windows: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> [options] input_files</p>
 <p>On Linux: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> [options] input_files</p>
 <p>From the source tree: <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span></code>. Caveat: in that case, no options
@@ -232,31 +225,31 @@ its left, and vice-versa.</p>
 <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files produced for all the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files that you
 provided.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">EverParse input files must all bear the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file name extension,
+<p class="admonition-title">Note</p>
+<p>EverParse input files must all bear the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file name extension,
 and their names must start with a capital letter.</p>
 </div>
-<div class="section" id="default-mode">
-<h3>Default mode<a class="headerlink" href="#default-mode" title="Permalink to this headline">¶</a></h3>
+<section id="default-mode">
+<h3>Default mode<a class="headerlink" href="#default-mode" title="Link to this heading"></a></h3>
 <p>In default mode, EverParse3d produces C code corresponding to
 validators proven correct with respect to the 3d specification.</p>
 <p>Options are treated from left to right:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--odir</span> <span class="pre">output_directory_name</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--odir</span> <span class="pre">output_directory_name</span></code></p>
 <p>Tell EverParse to write all files to the directory
 <code class="docutils literal notranslate"><span class="pre">output_directory_name</span></code>. This directory must already exist
 (EverParse will not create it.) The default is <code class="docutils literal notranslate"><span class="pre">.</span></code> (current
 directory)</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--batch</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code></p>
 <p>Verify the produced F* <code class="docutils literal notranslate"><span class="pre">.fst</span></code> and <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> files and generate C
 <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files. This is toggled by default.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--no_batch</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--no_batch</span></code></p>
 <p>Do not verify the produced F* <code class="docutils literal notranslate"><span class="pre">.fst</span></code> and <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> files or
 generate C <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--clang_format</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format</span></code></p>
 <p>Call <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> on extracted .c/.h files. This option
 automatically toggles <code class="docutils literal notranslate"><span class="pre">--batch</span></code>.</p>
 <p>This is toggled by default on Windows, since the Windows binary
@@ -264,56 +257,55 @@ package contains a copy of clang-format. On Linux, this is toggled
 by default only if <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> is reachable through the
 <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code></p>
 <p>Do not call clang-format on extracted .c/.h files.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code></p>
 <p>Provide the path to clang-format if not reachable through <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
 (or to override the one provided in the Windows binary package.)
 This option automatically toggles <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code> and
 <code class="docutils literal notranslate"><span class="pre">--batch</span></code>.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--clang_format_use_custom_config</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format_use_custom_config</span></code></p>
 <p>With <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, skip copying the <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code> file
 from the EverParse distribution, and assume that there is already an
 existing <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code></p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--cleanup</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cleanup</span></code></p>
 <p>With <code class="docutils literal notranslate"><span class="pre">--batch</span></code>, remove all produced intermediate files other than
 <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h`</span> <span class="pre">files</span> <span class="pre">(thus:</span> <span class="pre">``.fst</span></code>, <code class="docutils literal notranslate"><span class="pre">.fsti</span></code>, <code class="docutils literal notranslate"><span class="pre">.checked</span></code>,
 <code class="docutils literal notranslate"><span class="pre">.krml</span></code>)</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--no_cleanup</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--no_cleanup</span></code></p>
 <p>Keep all produced intermediate files. This is toggled by default.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--skip_c_makefiles</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--skip_c_makefiles</span></code></p>
 <p>Skip generating the default Makefiles produced by Karamel to compile
 the produced C code.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--add_include</span> <span class="pre">&lt;myinclude.h&gt;</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--add_include</span> <span class="pre">&lt;myinclude.h&gt;</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">--add_include</span> <span class="pre">&quot;myinclude.h&quot;</span></code></p>
 <p>Prepend each produced C file with a <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;myinclude.h&gt;</span></code> or a
 <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;myinclude.h&quot;</span></code> C preprocessor directive.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">myfile.config</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">myfile.config</span></code></p>
 <p>Use the specified JSON file <code class="docutils literal notranslate"><span class="pre">myfile.config</span></code> to declare
 compile-time flags (see compile-time configuration in the 3D
 language reference.)</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--fstar</span> <span class="pre">path/to/fstar.exe</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--fstar</span> <span class="pre">path/to/fstar.exe</span></code></p>
 <p>Allows to specify the location of the F* executable. The
 <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> script in the EverParse binary
 package is already configured to use the F* executable provided in
 the package. Otherwise, the default is to use the <code class="docutils literal notranslate"><span class="pre">fstar.exe</span></code>
 found from the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer|extern|static</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer|extern|static</span></code></p>
 <p>Specifies the format of validator input buffers:</p>
 <ul>
-<li><p class="first">With <code class="docutils literal notranslate"><span class="pre">buffer</span></code> (which is the default), a validator takes as
-argument a byte array and its length.</p>
-</li>
-<li><p class="first">With <code class="docutils literal notranslate"><span class="pre">extern</span></code>, a validator takes as argument a value of a
+<li><p>With <code class="docutils literal notranslate"><span class="pre">buffer</span></code> (which is the default), a validator takes as
+argument a byte array and its length.</p></li>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">extern</span></code>, a validator takes as argument a value of a
 user-defined <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> type, representing an
 input byte stream, for which the following functions need to be
 defined:</p>
@@ -375,9 +367,8 @@ returns the number of bytes so skipped, without reading them.</p>
 type for the context used for error handling (see “Error handling”
 in the 3d language reference.)</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">static</span></code> is like <code class="docutils literal notranslate"><span class="pre">extern</span></code> except that the functions on
-<code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> are declared <code class="docutils literal notranslate"><span class="pre">static</span></code>.</p>
-</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">static</span></code> is like <code class="docutils literal notranslate"><span class="pre">extern</span></code> except that the functions on
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> are declared <code class="docutils literal notranslate"><span class="pre">static</span></code>.</p></li>
 </ul>
 <p>In any case, to compile the C code produced by EverParse, you need
 to add to the include path the subdirectory
@@ -385,15 +376,15 @@ to add to the include path the subdirectory
 package or repository; this directory contains the <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>
 corresponding to the input stream format given by <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code></p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--input_stream_include</span> <span class="pre">myinclude.h</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--input_stream_include</span> <span class="pre">myinclude.h</span></code></p>
 <p>With <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>, defines the name of the C include file that
 provides definitions for <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> and its
 associated functions.</p>
 </li>
 </ul>
-</div>
-<div class="section" id="alternate-mode-generating-a-makefile">
-<h3>Alternate mode: generating a Makefile<a class="headerlink" href="#alternate-mode-generating-a-makefile" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="alternate-mode-generating-a-makefile">
+<h3>Alternate mode: generating a Makefile<a class="headerlink" href="#alternate-mode-generating-a-makefile" title="Link to this heading"></a></h3>
 <p>By default, with <code class="docutils literal notranslate"><span class="pre">--batch</span></code>, given a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> specification, EverParse
 produces <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files by first producing <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> and
 <code class="docutils literal notranslate"><span class="pre">.fst</span></code> files files containing verified F* specifications and
@@ -411,23 +402,23 @@ another. Other build systems are supported with variations of the
 <code class="docutils literal notranslate"><span class="pre">--makefile</span></code> option, as stated below.</p>
 <p>The produced Makefile will make use of three variables:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_CMD</span></code>: the command to run EverParse. This variable must
+<li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_CMD</span></code>: the command to run EverParse. This variable must
 contain the path and name of the EverParse executable, and any
-options (<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, etc.) useful to produce .</li>
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_DIR</span></code>: the path to the input files.</li>
+options (<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, etc.) useful to produce .</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_DIR</span></code>: the path to the input files.</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Currently, all <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files must be located in the same input
+<p class="admonition-title">Note</p>
+<p>Currently, all <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files must be located in the same input
 directory.</p>
 </div>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSE_OUTPUT_DIR</span></code>: the path to the output files. EverParse
-will append the <code class="docutils literal notranslate"><span class="pre">--odir</span></code> option appropriately.</li>
-<li><code class="docutils literal notranslate"><span class="pre">CC</span></code>: the path and name of the C compiler that will be used to
-compile the produced C files.</li>
-<li><code class="docutils literal notranslate"><span class="pre">CFLAGS</span></code>: options to provide to the C compiler to compile the
-produced C files.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_OUTPUT_DIR</span></code>: the path to the output files. EverParse
+will append the <code class="docutils literal notranslate"><span class="pre">--odir</span></code> option appropriately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CC</span></code>: the path and name of the C compiler that will be used to
+compile the produced C files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CFLAGS</span></code>: options to provide to the C compiler to compile the
+produced C files.</p></li>
 </ul>
 <p>The produced Makefile, by default called <code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>, is
 meant to be included in the main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> of your project. On
@@ -435,11 +426,11 @@ Linux, such a typical main <code class="docutils literal notranslate"><span clas
 like:</p>
 <p>Also valid in Makefile generation mode are the following options:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--clang_format</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format</span></code></p>
 <p>Add <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code> as a dependency of generated <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code>
 files, and produce a rule to generate <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code></p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--clang_format_use_custom_config</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format_use_custom_config</span></code></p>
 <p>Same as <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, but do not produce a rule to generate
 <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code></p>
 </li>
@@ -474,18 +465,18 @@ the EverParse repository</a>.</p>
 <p>EverParse supports the following command-line options relevant to this
 mode:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">gmake</span></code>: produce a Makefile for use with GNU Make.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">nmake</span></code>: produce a Makefile for use with Microsoft
-NMAKE.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--makefile_name</span> <span class="pre">my_file_name</span></code>: the name of the produced Makefile
+<li><p><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">gmake</span></code>: produce a Makefile for use with GNU Make.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">nmake</span></code>: produce a Makefile for use with Microsoft
+NMAKE.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--makefile_name</span> <span class="pre">my_file_name</span></code>: the name of the produced Makefile
 shall be <code class="docutils literal notranslate"><span class="pre">my_file_name</span></code> instead of the default
-<code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--skip_o_rules</span></code>: do not output rules that would produce <code class="docutils literal notranslate"><span class="pre">.o</span></code>
-files by compiling <code class="docutils literal notranslate"><span class="pre">.c</span></code> files.</li>
+<code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--skip_o_rules</span></code>: do not output rules that would produce <code class="docutils literal notranslate"><span class="pre">.o</span></code>
+files by compiling <code class="docutils literal notranslate"><span class="pre">.c</span></code> files.</p></li>
 </ul>
-</div>
-<div class="section" id="alternate-mode-hash-checking">
-<h3>Alternate mode: hash checking<a class="headerlink" href="#alternate-mode-hash-checking" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="alternate-mode-hash-checking">
+<h3>Alternate mode: hash checking<a class="headerlink" href="#alternate-mode-hash-checking" title="Link to this heading"></a></h3>
 <p>To speed up some scenarios where the user maintains a snapshot of the
 generated .c and .h files to skip unnecessary verification time when
 .3d files are not changed, EverParse provides an optional mechanism to
@@ -502,33 +493,33 @@ at all.</p>
 cryptographic library, which is included in EverParse binary packages.</p>
 <p>Options relevant to this mode:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>: save the hashes of the contents of source .3d, .c
+<li><p><code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>: save the hashes of the contents of source .3d, .c
 and .h files into a .json file. This option can be added in default
-mode when generating .c and .h files.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">strong</span></code> : checks the hashes of the contents of
+mode when generating .c and .h files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">strong</span></code> : checks the hashes of the contents of
 source .3d, .c and .h files, by reading the recorded hash from the
-.json file created by <code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code> : checks the hashes of the contents of
+.json file created by <code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code> : checks the hashes of the contents of
 source .3d files only, by reading the recorded hash from the .json
 file created by <code class="docutils literal notranslate"><span class="pre">--save_hashes</span></code>, leaving the option for the user
 to manually change the generated .c and .h files (<strong>WARNING:</strong> this
-will void all verification guarantees!)</li>
-<li><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code>: same as <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code>, but
+will void all verification guarantees!)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code>: same as <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">weak</span></code>, but
 uses the hash recorded in the copyright header of the generated .c
 and .h files instead of the .json file. The hash is introduced by
 using the <code class="docutils literal notranslate"><span class="pre">EVERPARSEHASHES</span></code> keyword in the corresponding
 <code class="docutils literal notranslate"><span class="pre">.copyright.txt</span></code> used to prepend generated .c and .h files with
 copyright headers; see <a class="reference external" href="3d-lang.html#adding-copyright-notices-to-produced-c-h-files">Copyright headers</a> for
-more details.</li>
-<li><code class="docutils literal notranslate"><span class="pre">--check_inplace_hash</span> <span class="pre">MyFile.3d=MyFile.h</span></code>: same as
+more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check_inplace_hash</span> <span class="pre">MyFile.3d=MyFile.h</span></code>: same as
 <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code>, but instead manually specifies the pair
 of the source <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file and the already-generated <code class="docutils literal notranslate"><span class="pre">.h</span></code> (or
 <code class="docutils literal notranslate"><span class="pre">.c</span></code>) file in which to check the hash. This option can be
-specified several times to provide several such pairs to check.</li>
+specified several times to provide several such pairs to check.</p></li>
 </ul>
-</div>
-<div class="section" id="alternate-mode-test-case-generation">
-<h3>Alternate mode: test case generation<a class="headerlink" href="#alternate-mode-test-case-generation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="alternate-mode-test-case-generation">
+<h3>Alternate mode: test case generation<a class="headerlink" href="#alternate-mode-test-case-generation" title="Link to this heading"></a></h3>
 <p>Given a 3d specification, EverParse can now generate positive (resp.
 negative) test cases. Internally, EverParse converts the 3d
 specification into a
@@ -537,28 +528,26 @@ theory, and then asks <a class="reference external" href="https://github.com/z3p
 there any sequence of bytes passing (resp.  failing) the parser
 specification?</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Test case generation currently does not work with probes that
+<p class="admonition-title">Note</p>
+<p>Test case generation currently does not work with probes that
 coerce pointer types or specialization for different pointer sizes.</p>
 </div>
 <p>The following options are mutually exclusive:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_test</span> <span class="pre">MyModule.my_parser</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_test</span> <span class="pre">MyModule.my_parser</span></code></p>
 <p>(requires <code class="docutils literal notranslate"><span class="pre">MyModule.3d</span></code> to be specified on the command line)
 produces positive and negative test cases for <code class="docutils literal notranslate"><span class="pre">my_parser</span></code> defined
 in <code class="docutils literal notranslate"><span class="pre">MyModule.3d</span></code> .</p>
 <p>This option produces the following results:</p>
 <ul>
-<li><p class="first">a series of binary files containing the contents of each test
+<li><p>a series of binary files containing the contents of each test
 case. Each binary file is named as follows:</p>
 <p><code class="docutils literal notranslate"><span class="pre">witness.n.POS.i.validatorname.args.dat</span></code></p>
 <p>where:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">n</span></code> is the test case number</p>
-</li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">POS</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">NEG</span></code>) indicates a positive (resp. negative) test case</p>
-</li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">i</span></code> is a <em>probe counter</em>: <code class="docutils literal notranslate"><span class="pre">0</span></code> corresponds to the input
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> is the test case number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POS</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">NEG</span></code>) indicates a positive (resp. negative) test case</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> is a <em>probe counter</em>: <code class="docutils literal notranslate"><span class="pre">0</span></code> corresponds to the input
 buffer passed to the validator; a positive value corresponds to
 the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th time a <code class="docutils literal notranslate"><span class="pre">probe</span></code> 3d construct is encountered. (If
 the 3d specification contains no <code class="docutils literal notranslate"><span class="pre">probe</span></code> construct, then only
@@ -570,16 +559,14 @@ big-endian representation of a positive 64-bit integer <code class="docutils lit
 that the contents of the file with probe index <code class="docutils literal notranslate"><span class="pre">i</span></code> is meant to
 be passed to the validator for <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">validatorname</span></code> is the name of the validator function produced
-by EverParse. It has the shape <code class="docutils literal notranslate"><span class="pre">ModuleValidateMyParser</span></code></p>
-</li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">args</span></code> is the sequence of the non-outparameter argument values
+<li><p><code class="docutils literal notranslate"><span class="pre">validatorname</span></code> is the name of the validator function produced
+by EverParse. It has the shape <code class="docutils literal notranslate"><span class="pre">ModuleValidateMyParser</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code> is the sequence of the non-outparameter argument values
 passed to the validator, separated by <code class="docutils literal notranslate"><span class="pre">.</span></code> ; all of those
-argument values are integers.</p>
-</li>
+argument values are integers.</p></li>
 </ul>
 </li>
-<li><p class="first">a C test program, <code class="docutils literal notranslate"><span class="pre">testcases.c</span></code>, that produces C definitions of
+<li><p>a C test program, <code class="docutils literal notranslate"><span class="pre">testcases.c</span></code>, that produces C definitions of
 the test cases, and calls to the validator with those test cases.</p>
 <p>A given test case is an array of <em>layers</em>; a layer is a byte array
 and its length. Layer 0 contains the byte array passed to the
@@ -587,7 +574,7 @@ validator; layer of a positive index <code class="docutils literal notranslate">
 passed to the validator corresponding to the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th time a
 <code class="docutils literal notranslate"><span class="pre">probe</span></code> pointer field is encountered.</p>
 </li>
-<li><p class="first">with <code class="docutils literal notranslate"><span class="pre">--batch</span></code> (set by default when using the <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> /
+<li><p>with <code class="docutils literal notranslate"><span class="pre">--batch</span></code> (set by default when using the <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> /
 <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> script from the binary package), this option
 also compiles the C test program into <code class="docutils literal notranslate"><span class="pre">test.exe</span></code> and runs it to
 check whether the generated test cases are actually accepted or
@@ -598,7 +585,7 @@ standard output the C definitions of the test cases.</p>
 </li>
 </ul>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span> <span class="pre">MyModule1.my_parser1,MyModule2.my_parser2</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span> <span class="pre">MyModule1.my_parser1,MyModule2.my_parser2</span></code></p>
 <p>(requires <code class="docutils literal notranslate"><span class="pre">MyModule1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyModule2.3d</span></code> to be specified on
 the command line) produces a set of test cases that are positive for
 <code class="docutils literal notranslate"><span class="pre">my_parser1</span></code> but negative for <code class="docutils literal notranslate"><span class="pre">my_parser2</span></code>, and a set of test
@@ -610,91 +597,91 @@ negative.</p>
 </li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If Z3 produces no test cases and instead answers <code class="docutils literal notranslate"><span class="pre">unsat</span></code> both
+<p class="admonition-title">Note</p>
+<p>If Z3 produces no test cases and instead answers <code class="docutils literal notranslate"><span class="pre">unsat</span></code> both
 ways (<code class="docutils literal notranslate"><span class="pre">my_parser1</span></code> and not <code class="docutils literal notranslate"><span class="pre">my_parser2</span></code>; and <code class="docutils literal notranslate"><span class="pre">my_parser2</span></code> and
 not <code class="docutils literal notranslate"><span class="pre">my_parser1</span></code>), then the two specifications are equivalent in
 terms of validation: they accept the exact same inputs. However,
 they do not necessarily write the same values into outparameters.</p>
 </div>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--emit_smt_encoding</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--emit_smt_encoding</span></code></p>
 <p>produces the SMT2 encoding corresponding to the <code class="docutils literal notranslate"><span class="pre">.3d</span></code> files passed
 as argument. Such encoding is printed on standard output.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--test_checker</span> <span class="pre">MyModule.my_parser</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--test_checker</span> <span class="pre">MyModule.my_parser</span></code></p>
 <p>(requires <code class="docutils literal notranslate"><span class="pre">MyModule.3d</span></code> to be specified on the command line)
 produces a test checker executable for the given parser,
 <code class="docutils literal notranslate"><span class="pre">test.exe</span></code>. The test checker takes as arguments:</p>
 <ul class="simple">
-<li>a binary file name containing the contents of the input buffer to
-be passed to the validator</li>
-<li>the non-outparameter integer argument values to be passed to the
-validator</li>
+<li><p>a binary file name containing the contents of the input buffer to
+be passed to the validator</p></li>
+<li><p>the non-outparameter integer argument values to be passed to the
+validator</p></li>
 </ul>
 <p>The test checker executable returns exit code:</p>
 <ul class="simple">
-<li>0 if validation succeeds and consumes all input bytes</li>
-<li>1 if validation succeeds but the validator does not consume all input bytes</li>
-<li>2 if validation fails</li>
-<li>3 if the input file is larger than 4 GB, or if any system error
-occurs (file does not exist, read error, etc.)</li>
+<li><p>0 if validation succeeds and consumes all input bytes</p></li>
+<li><p>1 if validation succeeds but the validator does not consume all input bytes</p></li>
+<li><p>2 if validation fails</p></li>
+<li><p>3 if the input file is larger than 4 GB, or if any system error
+occurs (file does not exist, read error, etc.)</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The test checker executable currently does not work with 3d
+<p class="admonition-title">Note</p>
+<p>The test checker executable currently does not work with 3d
 specifications containing probes.</p>
 </div>
 </li>
 </ul>
-<div class="section" id="options-for-z3-test">
-<h4>Options for <code class="docutils literal notranslate"><span class="pre">--z3_test</span></code><a class="headerlink" href="#options-for-z3-test" title="Permalink to this headline">¶</a></h4>
+<section id="options-for-z3-test">
+<h4>Options for <code class="docutils literal notranslate"><span class="pre">--z3_test</span></code><a class="headerlink" href="#options-for-z3-test" title="Link to this heading"></a></h4>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_test_mode</span> <span class="pre">pos</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_test_mode</span> <span class="pre">pos</span></code></p>
 <p>Only produces positive test cases</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_test_mode</span> <span class="pre">neg</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_test_mode</span> <span class="pre">neg</span></code></p>
 <p>Only produces negative test cases</p>
 </li>
 </ul>
-</div>
-<div class="section" id="options-related-to-the-c-test-program">
-<h4>Options related to the C test program<a class="headerlink" href="#options-related-to-the-c-test-program" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="options-related-to-the-c-test-program">
+<h4>Options related to the C test program<a class="headerlink" href="#options-related-to-the-c-test-program" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
 used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_skip_testcases_c</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_skip_testcases_c</span></code></p>
 <p>Do not produce the C test program <code class="docutils literal notranslate"><span class="pre">testcases.c</span></code></p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_flight_name</span> <span class="pre">myflight</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_flight_name</span> <span class="pre">myflight</span></code></p>
 <p>In the produced C test program and on its standard output, prefixes
 each C test case with <code class="docutils literal notranslate"><span class="pre">witnessmyflight</span></code> instead of <code class="docutils literal notranslate"><span class="pre">witness</span></code>.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_skip_c_initializers</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_skip_c_initializers</span></code></p>
 <p>Do not use C99 designated initializers (struct initializers with
 field labels, of the form <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">.field</span> <span class="pre">=</span> <span class="pre">value,</span> <span class="pre">...</span> <span class="pre">}</span></code>) for test
 cases. This option is needed if the code is meant to be used with a
 C++ compiler in a mode older than C++20.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">-z3_use_ptr</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">-z3_use_ptr</span></code></p>
 <p>In the produced C test program, use pointers rather than array
 indices for probe pointer field values. The architecture-specific
 binary representation of pointers will be used.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This option currently only works with 64-bit pointers.</p>
+<p class="admonition-title">Note</p>
+<p>This option currently only works with 64-bit pointers.</p>
 </div>
 <p>This option does not affect the produced <code class="docutils literal notranslate"><span class="pre">*.dat</span></code> binary test
 files, which will still use array indices.</p>
 </li>
 </ul>
-</div>
-<div class="section" id="options-related-to-z3-and-smt2">
-<h4>Options related to Z3 and SMT2<a class="headerlink" href="#options-related-to-z3-and-smt2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="options-related-to-z3-and-smt2">
+<h4>Options related to Z3 and SMT2<a class="headerlink" href="#options-related-to-z3-and-smt2" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
 used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_executable</span> <span class="pre">path/to/z3.exe</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_executable</span> <span class="pre">path/to/z3.exe</span></code></p>
 <p>Specify a path to the Z3 executable that should be used to generate
 the test cases. This option does not affect the verification of the
 generated F* files. EverParse has been tested with Z3 4.13.3 for both
@@ -702,23 +689,23 @@ test case generation and verification of the generated F* files.
 <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> already sets
 <code class="docutils literal notranslate"><span class="pre">--z3_executable</span></code> accordingly.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">'option1</span> <span class="pre">...</span> <span class="pre">optionK'</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">'option1</span> <span class="pre">...</span> <span class="pre">optionK'</span></code></p>
 <p>Pass command-line options to Z3 verbatim.</p>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">-t:1000</span></code> imposes a per-query timeout of
 <code class="docutils literal notranslate"><span class="pre">1000</span></code> milliseconds.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--save_z3_transcript</span> <span class="pre">file.smt2</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save_z3_transcript</span> <span class="pre">file.smt2</span></code></p>
 <p>Saves the Z3 transcript (SMT2 commands sent to Z3, and response from
 Z3 as comments) to the specified <code class="docutils literal notranslate"><span class="pre">file.smt2</span></code></p>
 </li>
 </ul>
-</div>
-<div class="section" id="branch-coverage-analysis">
-<h4>Branch coverage analysis<a class="headerlink" href="#branch-coverage-analysis" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="branch-coverage-analysis">
+<h4>Branch coverage analysis<a class="headerlink" href="#branch-coverage-analysis" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
 used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_branch_depth</span> <span class="pre">n</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_branch_depth</span> <span class="pre">n</span></code></p>
 <p>Ask z3 to generate test cases for all possible branches of a 3D
 specification up to depth <code class="docutils literal notranslate"><span class="pre">n</span></code>, by depth-first search.  Branching
 points in a 3D specification are field constraints and <code class="docutils literal notranslate"><span class="pre">casetype</span></code>;
@@ -726,36 +713,36 @@ a <em>branch</em> is a sequence of choices performed at successive
 branching points. Default value for <code class="docutils literal notranslate"><span class="pre">n</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code> to not perform
 branch coverage analysis.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--z3_witnesses</span> <span class="pre">n</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_witnesses</span> <span class="pre">n</span></code></p>
 <p>If <code class="docutils literal notranslate"><span class="pre">--z3_test_mode</span></code> is specified, then this option produces <code class="docutils literal notranslate"><span class="pre">n</span></code>
 test cases for each branch. Otherwise, produce <code class="docutils literal notranslate"><span class="pre">n</span></code> positive and
 <code class="docutils literal notranslate"><span class="pre">n</span></code> negative tests for each branch. In both cases, <code class="docutils literal notranslate"><span class="pre">n</span></code> must be a
 positive integer.</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="alternate-mode-help-and-version">
-<h3>Alternate mode: help and version<a class="headerlink" href="#alternate-mode-help-and-version" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="alternate-mode-help-and-version">
+<h3>Alternate mode: help and version<a class="headerlink" href="#alternate-mode-help-and-version" title="Link to this heading"></a></h3>
 <p>Some options make EverParse do nothing other than show a help or
 version message:</p>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--version</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--version</span></code></p>
 <p>Print the version of EverParse/3d and exit (do not process any
 further options to the right, nor any files at all.)</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">--help</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code></p>
 <p>Show the usage message and the status of some options given so far,
 and exit (do not process any further options to the right, nor any
 files at all.)</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="language-reference">
-<h2>Language Reference<a class="headerlink" href="#language-reference" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="language-reference">
+<h2>Language Reference<a class="headerlink" href="#language-reference" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#base-types">Base types</a></li>
@@ -796,8 +783,8 @@ files at all.)</p>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#coercing-pointer-types">Coercing Pointer Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#multiple-probe-callbacks">Multiple Probe Callbacks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#nullable-pointers">Nullable Pointers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#selective-entrypoint-generation-1">Selective Entrypoint Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#named-entrypoints-1">Named Entrypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#selective-entrypoint-generation">Selective Entrypoint Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#named-entrypoints">Named Entrypoints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
 </ul>
 </li>
@@ -810,7 +797,7 @@ files at all.)</p>
 <li class="toctree-l3"><a class="reference internal" href="3d-lang.html#what-is-proven-about-specialization">What is Proven About Specialization</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#an-end-to-end-executable-example-1">An End-to-end Executable Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#id3">An End-to-end Executable Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#limitations-on-variable-length-structures">Limitations on Variable-length Structures</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="3d-lang.html#data-dependency-for-well-formedness">Data Dependency for Well-formedness</a></li>
 </ul>
@@ -825,7 +812,7 @@ files at all.)</p>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#error-handling">Error handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#generated-code">Generated code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#error-handling-1">Error handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#id4">Error handling</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#fully-worked-examples-elf-files">Fully worked examples: ELF files</a><ul>
@@ -834,8 +821,8 @@ files at all.)</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

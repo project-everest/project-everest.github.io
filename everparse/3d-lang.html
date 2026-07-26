@@ -1,29 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; EverParse Manual  documentation</title><link rel="stylesheet" href="static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Overview &mdash; EverParse Manual  documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=9edc463e" />
+
   
-      <script>
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="static/jquery.js?v=5d32c60e"></script>
+      <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="static/documentation_options.js?v=5929fcd5"></script>
+      <script src="static/doctools.js?v=fd6eb6e6"></script>
+      <script src="static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="3d.html#summary">Summary</a></li>
@@ -89,14 +81,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#coercing-pointer-types">Coercing Pointer Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#multiple-probe-callbacks">Multiple Probe Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#nullable-pointers">Nullable Pointers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#selective-entrypoint-generation-1">Selective Entrypoint Generation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#named-entrypoints-1">Named Entrypoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selective-entrypoint-generation">Selective Entrypoint Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-entrypoints">Named Entrypoints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#specialization-for-different-pointer-sizes">Specialization for Different Pointer Sizes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#a-first-example">A First Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#an-end-to-end-executable-example-1">An End-to-end Executable Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">An End-to-end Executable Example</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#limitations-on-variable-length-structures">Limitations on Variable-length Structures</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#and-end-to-end-example-with-variable-length-structures">And End-to-end Example with Variable-length Structures</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#other-forms-of-specialization">Other forms of Specialization</a></li>
@@ -108,7 +100,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#error-handling">Error handling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#generated-code">Generated code</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#error-handling-1">Error handling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Error handling</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#fully-worked-examples-elf-files">Fully worked examples: ELF files</a><ul>
@@ -146,8 +138,8 @@
 
            <div itemprop="articleBody">
              
-  <div class="section" id="overview">
-<span id="d-lang"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+  <section id="overview">
+<span id="d-lang"></span><h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
 <p>3d supports several fixed-width integer base types, (nested) structs,
 constraints, enums, parameterized data types, tagged or otherwise
 value-dependent unions, fixed-size arrays, and variable-size arrays.</p>
@@ -155,25 +147,26 @@ value-dependent unions, fixed-size arrays, and variable-size arrays.</p>
 read from the data structure, or pointers to them, to the caller code.</p>
 <p>3d also supports validating structures that contain pointers, probing pointers
 for validity and traversing them in order to validate the data they refer to.</p>
-</div>
-<div class="section" id="base-types">
-<h1>Base types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="base-types">
+<h1>Base types<a class="headerlink" href="#base-types" title="Link to this heading"></a></h1>
 <p>The primitive types in 3d include unsigned integers of the following
 flavors:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">UINT8</span></code>: 8-bit unsigned little-endian integer</li>
-<li>UINT16: 16-bit unsigned little-endian integer<ul>
-<li>Literal values of <code class="docutils literal notranslate"><span class="pre">UINT8</span></code> are integers with the <code class="docutils literal notranslate"><span class="pre">uy</span></code> suffix, e.g.,
-<code class="docutils literal notranslate"><span class="pre">0uy,</span> <span class="pre">8uy</span> <span class="pre">255uy</span></code> etc.</li>
-<li>Literals can also be specified in hexadecimal, with hex digits in either
-lower or upper case``0xabuy, 0x1Auy, 0xFFuy, 0xFfuy`` etc.</li>
-<li>Literal values of <code class="docutils literal notranslate"><span class="pre">UINT8</span></code> are integers with the <code class="docutils literal notranslate"><span class="pre">uy</span></code> suffix, e.g.,
-<code class="docutils literal notranslate"><span class="pre">0uy,</span> <span class="pre">8uy</span> <span class="pre">255uy</span></code> etc.</li>
-<li>Literals can also be specified in hexadecimal, e.g., <code class="docutils literal notranslate"><span class="pre">0xabuy,</span> <span class="pre">0xffuy</span></code> etc.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UINT8</span></code>: 8-bit unsigned little-endian integer</p></li>
+<li><p>UINT16: 16-bit unsigned little-endian integer</p>
+<ul>
+<li><p>Literal values of <code class="docutils literal notranslate"><span class="pre">UINT8</span></code> are integers with the <code class="docutils literal notranslate"><span class="pre">uy</span></code> suffix, e.g.,
+<code class="docutils literal notranslate"><span class="pre">0uy,</span> <span class="pre">8uy</span> <span class="pre">255uy</span></code> etc.</p></li>
+<li><p>Literals can also be specified in hexadecimal, with hex digits in either
+lower or upper case``0xabuy, 0x1Auy, 0xFFuy, 0xFfuy`` etc.</p></li>
+<li><p>Literal values of <code class="docutils literal notranslate"><span class="pre">UINT8</span></code> are integers with the <code class="docutils literal notranslate"><span class="pre">uy</span></code> suffix, e.g.,
+<code class="docutils literal notranslate"><span class="pre">0uy,</span> <span class="pre">8uy</span> <span class="pre">255uy</span></code> etc.</p></li>
+<li><p>Literals can also be specified in hexadecimal, e.g., <code class="docutils literal notranslate"><span class="pre">0xabuy,</span> <span class="pre">0xffuy</span></code> etc.</p></li>
 </ul>
 </li>
-<li>UINT32: 32-bit unsigned little-endian integer</li>
-<li>UINT64: 64-bit unsigned little-endian integer</li>
+<li><p>UINT32: 32-bit unsigned little-endian integer</p></li>
+<li><p>UINT64: 64-bit unsigned little-endian integer</p></li>
 </ul>
 <p>Literal values of unsigned integer types can be specified in either decimal or
 hexadecimal, e.g., <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">255</span></code> etc. in decimal; or in with hexadecimal with
@@ -190,17 +183,17 @@ width can also be specified explicitly.</p>
 <span class="pre">255uL</span></code> etc.</p>
 <p>We also provide big-endian unsigned integers:</p>
 <ul class="simple">
-<li>UINT16BE: 16-bit unsigned big-endian integer</li>
-<li>UINT32BE: 32-bit unsigned big-endian integer</li>
-<li>UINT64BE: 64-bit unsigned big-endian integer</li>
+<li><p>UINT16BE: 16-bit unsigned big-endian integer</p></li>
+<li><p>UINT32BE: 32-bit unsigned big-endian integer</p></li>
+<li><p>UINT64BE: 64-bit unsigned big-endian integer</p></li>
 </ul>
 <p>Big-endian integers are often useful in describing network message formats. 3d
 ensures suitable endianness conversions are applied when comparing or equating
 integers represented in different endianness. We show an example of this
 <a class="reference internal" href="#sec-constraints"><span class="std std-ref">below</span></a>.</p>
-</div>
-<div class="section" id="structs">
-<h1>Structs<a class="headerlink" href="#structs" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="structs">
+<h1>Structs<a class="headerlink" href="#structs" title="Link to this heading"></a></h1>
 <p>We would like to extract a validator for a simple point type, with X
 and Y coordinates. So we create a file, <code class="docutils literal notranslate"><span class="pre">HelloWorld.3d</span></code>, with the
 following 3d data format description:</p>
@@ -216,12 +209,12 @@ as little-endian; with the addition of the <code class="docutils literal notrans
 which tells 3d to expose the validator for the type to the final user.</p>
 <p>Once we run <code class="docutils literal notranslate"><span class="pre">3d</span></code> with this file, we obtain several files:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">HelloWorld.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorld.h</span></code>, which contain the actual verified
-validators;</li>
-<li><code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>, which contain
+<li><p><code class="docutils literal notranslate"><span class="pre">HelloWorld.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorld.h</span></code>, which contain the actual verified
+validators;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>, which contain
 entrypoint function definitions for data validators that the user
 should ultimately use in their client code. More precisely, here is
-the contents of <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>:</li>
+the contents of <code class="docutils literal notranslate"><span class="pre">HelloWorldWrapper.h</span></code>:</p></li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
 </pre></div>
@@ -252,7 +245,7 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 <p>There can be multiple definitions marked <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> in a given
 <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>By default, 3d does not enforce any alignment constraints, and does not
 introduce any implicit alignment padding. So, for instance, in the following
 data format description:</p>
@@ -273,18 +266,18 @@ data format description:</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>in <code class="docutils literal notranslate"><span class="pre">coloredPoint1</span></code>, 3d will not introduce any padding between
-the <code class="docutils literal notranslate"><span class="pre">color</span></code> field and the <code class="docutils literal notranslate"><span class="pre">pt</span></code> field;</li>
-<li>in <code class="docutils literal notranslate"><span class="pre">coloredPoint2</span></code>, 3d will not introduce any padding after the
-<code class="docutils literal notranslate"><span class="pre">color</span></code> field.</li>
+<li><p>in <code class="docutils literal notranslate"><span class="pre">coloredPoint1</span></code>, 3d will not introduce any padding between
+the <code class="docutils literal notranslate"><span class="pre">color</span></code> field and the <code class="docutils literal notranslate"><span class="pre">pt</span></code> field;</p></li>
+<li><p>in <code class="docutils literal notranslate"><span class="pre">coloredPoint2</span></code>, 3d will not introduce any padding after the
+<code class="docutils literal notranslate"><span class="pre">color</span></code> field.</p></li>
 </ul>
-<p class="last">This is in the spirit of keeping 3d specifications explicit. However, 3d does
+<p>This is in the spirit of keeping 3d specifications explicit. However, 3d does
 support an option to add alignment padding to a structure, as described
 <a class="reference internal" href="#sec-alignment"><span class="std std-ref">below</span></a>.</p>
 </div>
-</div>
-<div class="section" id="constraints">
-<span id="sec-constraints"></span><h1>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="constraints">
+<span id="sec-constraints"></span><h1>Constraints<a class="headerlink" href="#constraints" title="Link to this heading"></a></h1>
 <p>Validators for structs alone are only layout-related. Beyond that, 3d
 provides a way to actually check for constraints on their field
 values:</p>
@@ -309,7 +302,7 @@ pair ordered by increasing values:</p>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>Arithmetics on constraints are evaluated in machine integers, not
 mathematical integers. Thus, the following naive definition:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span> <span class="k">typedef</span> <span class="k">struct</span> _boundedSum {
@@ -327,13 +320,13 @@ correct way of stating the condition is as follows:</p>
 } boundedSum;
 </pre></div>
 </div>
-<p class="last">This verifies because F* evaluates the right-hand-side
+<p>This verifies because F* evaluates the right-hand-side
 condition of a <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code> in a context where the left-hand-side
 condition is assumed to be true (thus <code class="docutils literal notranslate"><span class="pre">42</span> <span class="pre">-</span> <span class="pre">left</span></code> will not underflow.)</p>
 </div>
-</div>
-<div class="section" id="bitfields">
-<h1>Bitfields<a class="headerlink" href="#bitfields" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="bitfields">
+<h1>Bitfields<a class="headerlink" href="#bitfields" title="Link to this heading"></a></h1>
 <p>Like in C, the fields of a struct type in 3d can include bitfields,
 i.e., unsigned integer types of user-specified width represented
 packed within unsigned integer fields of the canonical sizes
@@ -384,9 +377,9 @@ with the most-significant bit (MSB) first, which is necessary for many
 IETF network protocols (“network byte order”.) Those versions of
 EverParse introduce the integer type <code class="docutils literal notranslate"><span class="pre">UINT8BE</span></code> to read a 8-bit
 bitfield as MSB-first.</p>
-</div>
-<div class="section" id="constants-and-enumerations">
-<h1>Constants and Enumerations<a class="headerlink" href="#constants-and-enumerations" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="constants-and-enumerations">
+<h1>Constants and Enumerations<a class="headerlink" href="#constants-and-enumerations" title="Link to this heading"></a></h1>
 <p>3d provides a way to define numerical constants:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span>#define red   1
 #define green 2
@@ -458,9 +451,9 @@ constraints. For example, the following code is currently rejected.</p>
 </pre></div>
 </div>
 <p>We expect to lift this limitation soon.</p>
-</div>
-<div class="section" id="parameterized-data-types">
-<h1>Parameterized data types<a class="headerlink" href="#parameterized-data-types" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="parameterized-data-types">
+<h1>Parameterized data types<a class="headerlink" href="#parameterized-data-types" title="Link to this heading"></a></h1>
 <p>3d also offers the possibility to parameterize a data type description
 with arguments that can then be reused in constraints. For instance,
 the following <code class="docutils literal notranslate"><span class="pre">BoundedSum.3d</span></code> data description defines a pair of two
@@ -498,9 +491,9 @@ arguments holds before even trying to check its contents:</p>
 </div>
 <p>In this case, the validator for <code class="docutils literal notranslate"><span class="pre">boundedSum</span></code> would check
 that <code class="docutils literal notranslate"><span class="pre">bound</span> <span class="pre">&lt;=</span> <span class="pre">1729</span></code>, before validating its fields.</p>
-</div>
-<div class="section" id="tagged-unions-or-casetype">
-<h1>Tagged unions or <code class="docutils literal notranslate"><span class="pre">casetype</span></code><a class="headerlink" href="#tagged-unions-or-casetype" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="tagged-unions-or-casetype">
+<h1>Tagged unions or <code class="docutils literal notranslate"><span class="pre">casetype</span></code><a class="headerlink" href="#tagged-unions-or-casetype" title="Link to this heading"></a></h1>
 <p>3d supports <em>tagged unions</em>: a data type can store a value named <em>tag</em>
 and a <em>payload</em> whose type depends on the tag value. The tag does not
 need to be stored with the payload (e.g. it could be a parameter to the
@@ -526,8 +519,8 @@ prefixed by its size in bits.</p>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">3d does not enforce that all cases of a union be of the same size,
+<p class="admonition-title">Warning</p>
+<p>3d does not enforce that all cases of a union be of the same size,
 and 3d does not introduce any implicit padding to enforce it. Nor
 does 3d introduce any alignment padding. This is in the spirit of
 keeping 3d specifications explicit: if you want padding, you need to
@@ -550,34 +543,34 @@ before:</p>
 } integer_alt;
 </pre></div>
 </div>
-</div>
-<div class="section" id="arrays">
-<h1>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="arrays">
+<h1>Arrays<a class="headerlink" href="#arrays" title="Link to this heading"></a></h1>
 <p>A field in a struct or a casetype can be an array.</p>
 <p>Arrays in 3d differ from arrays in C in a few important ways:</p>
 <ul class="simple">
-<li>Rather than counting elements, the size of an array in 3d is always
-given in bytes.</li>
-<li>Array sizes need not be a constant expression: any integer
+<li><p>Rather than counting elements, the size of an array in 3d is always
+given in bytes.</p></li>
+<li><p>Array sizes need not be a constant expression: any integer
 expression is permissible for an array, so long as it fits in
-<code class="docutils literal notranslate"><span class="pre">UINT32</span></code>. This allows expressing variable-sized arrays.</li>
+<code class="docutils literal notranslate"><span class="pre">UINT32</span></code>. This allows expressing variable-sized arrays.</p></li>
 </ul>
 <p>3d supports several kinds of arrays.</p>
-<div class="section" id="byte-sized-arrays">
-<h2>Byte-sized arrays<a class="headerlink" href="#byte-sized-arrays" title="Permalink to this headline">¶</a></h2>
+<section id="byte-sized-arrays">
+<h2>Byte-sized arrays<a class="headerlink" href="#byte-sized-arrays" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size</span> <span class="pre">n]</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size</span> <span class="pre">n]</span></code></p></li>
 </ul>
 <p>The notation <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size</span> <span class="pre">n]</span></code> describes a field named <code class="docutils literal notranslate"><span class="pre">f</span></code> holding an
 array of elements of type <code class="docutils literal notranslate"><span class="pre">T</span></code> whose cumulative size in bytes is <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">=</span> <span class="pre">1</span></code>, 3d supports the notation <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[n]</span></code>, i.e., for
 byte arrays, since the byte size and element count coincide, you need
 not qualify the size of the array with a <code class="docutils literal notranslate"><span class="pre">:byte-size</span></code> qualifier.</p>
-</div>
-<div class="section" id="singleton-arrays-of-variable-size">
-<h2>Singleton arrays of variable size<a class="headerlink" href="#singleton-arrays-of-variable-size" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="singleton-arrays-of-variable-size">
+<h2>Singleton arrays of variable size<a class="headerlink" href="#singleton-arrays-of-variable-size" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array</span> <span class="pre">n]</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array</span> <span class="pre">n]</span></code></p></li>
 </ul>
 <p>In some cases, it is required to specify that a field contains a
 single variable-sized element whose size in bytes is equal to a given
@@ -585,7 +578,7 @@ expression. The notation above introduces a field <code class="docutils literal 
 a single element of type <code class="docutils literal notranslate"><span class="pre">T</span></code> occupying exactly <code class="docutils literal notranslate"><span class="pre">n</span></code> bytes.</p>
 <p>A variation is:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array-at-most</span> <span class="pre">n]</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">f[:byte-size-single-element-array-at-most</span> <span class="pre">n]</span></code></p></li>
 </ul>
 <p>which describes a field <code class="docutils literal notranslate"><span class="pre">f</span></code> that contains a single element of type
 <code class="docutils literal notranslate"><span class="pre">T</span></code> occupying at most <code class="docutils literal notranslate"><span class="pre">n</span></code> bytes, followed by padding bytes to make
@@ -593,10 +586,10 @@ up to <code class="docutils literal notranslate"><span class="pre">n</span></cod
 bytes.</p>
 <p>We expect to add several other kinds of variable-length array-like
 types in the uture.</p>
-</div>
-</div>
-<div class="section" id="actions">
-<h1>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="actions">
+<h1>Actions<a class="headerlink" href="#actions" title="Link to this heading"></a></h1>
 <p>In addition to semantic constraints on types, 3d allows augmenting the
 the fields of a struct or union with imperative actions, which allows
 running certain user-chosen commands at specified points during
@@ -631,14 +624,14 @@ runs a small program snippet, which writes the <code class="docutils literal not
 cases. Actions can also return <code class="docutils literal notranslate"><span class="pre">false</span></code>, to signal that validation
 should halt and signal failure.</p>
 <p>Now, in greater detail:</p>
-<div class="section" id="action-basics">
-<h2>Action basics<a class="headerlink" href="#action-basics" title="Permalink to this headline">¶</a></h2>
+<section id="action-basics">
+<h2>Action basics<a class="headerlink" href="#action-basics" title="Link to this heading"></a></h2>
 <p>An action is a program composed from a few elements:</p>
 <ul class="simple">
-<li>Atomic actions: Basic commands to read and write variables</li>
-<li>Variable bindings and sequential composition</li>
-<li>Conditionals</li>
-<li>External function calls</li>
+<li><p>Atomic actions: Basic commands to read and write variables</p></li>
+<li><p>Variable bindings and sequential composition</p></li>
+<li><p>Conditionals</p></li>
+<li><p>External function calls</p></li>
 </ul>
 <p>An action is evaluated with respect to a handler (e.g.,
 <code class="docutils literal notranslate"><span class="pre">on-success</span></code>) associated with a given field. We refer to this field
@@ -655,38 +648,38 @@ the error code associated with the validator mentions that an
 on-error handler failed; if it returns true, the error code is the
 error code associated with the failed validation of the base field. In
 both cases, validation halts with an error.</p>
-<div class="section" id="atomic-actions">
-<h3>Atomic actions<a class="headerlink" href="#atomic-actions" title="Permalink to this headline">¶</a></h3>
+<section id="atomic-actions">
+<h3>Atomic actions<a class="headerlink" href="#atomic-actions" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li>Expression <code class="docutils literal notranslate"><span class="pre">e</span></code> consist of variables and constants.</li>
-<li><code class="docutils literal notranslate"><span class="pre">*i</span> <span class="pre">=</span> <span class="pre">e</span></code>: Assigns the value of the expressions <code class="docutils literal notranslate"><span class="pre">e</span></code> to the memory referenced by the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">*i</span></code>: Dereferences the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">field_pos</span></code>: Returns the offset of base field of the action from
-the base of the validation buffer as a <code class="docutils literal notranslate"><span class="pre">UINT32</span></code> value.</li>
-<li><code class="docutils literal notranslate"><span class="pre">field_ptr</span></code>: Returns a pointer to base field of the action as a
-<code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>, i.e., an abstract pointer to a <code class="docutils literal notranslate"><span class="pre">UINT8</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">e</span></code> Returns a boolean value <code class="docutils literal notranslate"><span class="pre">e</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">abort</span></code>: Causes the current validation process to fail.</li>
+<li><p>Expression <code class="docutils literal notranslate"><span class="pre">e</span></code> consist of variables and constants.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*i</span> <span class="pre">=</span> <span class="pre">e</span></code>: Assigns the value of the expressions <code class="docutils literal notranslate"><span class="pre">e</span></code> to the memory referenced by the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*i</span></code>: Dereferences the pointer <code class="docutils literal notranslate"><span class="pre">i</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_pos</span></code>: Returns the offset of base field of the action from
+the base of the validation buffer as a <code class="docutils literal notranslate"><span class="pre">UINT32</span></code> value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_ptr</span></code>: Returns a pointer to base field of the action as a
+<code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>, i.e., an abstract pointer to a <code class="docutils literal notranslate"><span class="pre">UINT8</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">e</span></code> Returns a boolean value <code class="docutils literal notranslate"><span class="pre">e</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abort</span></code>: Causes the current validation process to fail.</p></li>
 </ul>
-</div>
-<div class="section" id="composing-atomic-actions-sequentially-and-conditionally">
-<h3>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="composing-atomic-actions-sequentially-and-conditionally">
+<h3>Composing atomic actions sequentially and conditionally<a class="headerlink" href="#composing-atomic-actions-sequentially-and-conditionally" title="Link to this heading"></a></h3>
 <p>Composite actions can be built in a few ways:</p>
 <ul class="simple">
-<li>Atomic actions: For any atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">a;</span></code> (with a trailing
-semicolon) is a composite action <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
-<li>Sequential composition: <code class="docutils literal notranslate"><span class="pre">`a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, and
-a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">a;p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code> then <code class="docutils literal notranslate"><span class="pre">p</span></code>.</li>
-<li>Variable binding: <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+<li><p>Atomic actions: For any atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">a;</span></code> (with a trailing
+semicolon) is a composite action <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p></li>
+<li><p>Sequential composition: <code class="docutils literal notranslate"><span class="pre">`a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>, and
+a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">a;p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code> then <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p></li>
+<li><p>Variable binding: <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> Given an atomic action <code class="docutils literal notranslate"><span class="pre">a</span></code>,
 and a compositite action <code class="docutils literal notranslate"><span class="pre">p</span></code>, the form <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">a;</span> <span class="pre">p</span></code> runs <code class="docutils literal notranslate"><span class="pre">a</span></code>,
 stores its result in the new variable <code class="docutils literal notranslate"><span class="pre">x</span></code> (local to the
-action), and then runs <code class="docutils literal notranslate"><span class="pre">p</span></code> (where <code class="docutils literal notranslate"><span class="pre">p</span></code> may mention <cite>x</cite></li>
-<li>Conditionals: <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a conditional action that runs the
+action), and then runs <code class="docutils literal notranslate"><span class="pre">p</span></code> (where <code class="docutils literal notranslate"><span class="pre">p</span></code> may mention <cite>x</cite></p></li>
+<li><p>Conditionals: <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p</span> <span class="pre">}</span></code> is a conditional action that runs the
 composite actions <code class="docutils literal notranslate"><span class="pre">p</span></code> only if the condition <code class="docutils literal notranslate"><span class="pre">e</span></code> is
 true. Additionally, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(e)</span> <span class="pre">{</span> <span class="pre">p0</span> <span class="pre">}</span> <span class="pre">else</span> <span class="pre">{</span> <span class="pre">p1</span> <span class="pre">}</span></code> is also legal,
 with the expected semantics, i.e., <code class="docutils literal notranslate"><span class="pre">p1`</span> <span class="pre">is</span> <span class="pre">run</span> <span class="pre">in</span> <span class="pre">case</span> <span class="pre">``e</span></code> is
-false.</li>
-<li>External function calls: an action can call a user-defined callback
+false.</p></li>
+<li><p>External function calls: an action can call a user-defined callback
 C function. The user first needs to declare the callback function with
 a top-level declaration in the 3D file: for instance,
 <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">UINT8</span> <span class="pre">myFunction(UINT32</span> <span class="pre">myArg1,</span> <span class="pre">UINT16</span> <span class="pre">myArg2)</span></code>
@@ -697,11 +690,11 @@ The user can also declare a function that returns no value, with
 directly as a statement in an action, without <code class="docutils literal notranslate"><span class="pre">var</span></code> :
 <code class="docutils literal notranslate"><span class="pre">myFunction(e1,</span> <span class="pre">e2);</span></code>
 An external function can also accept out-parameters, using
-<code class="docutils literal notranslate"><span class="pre">mutable</span> <span class="pre">myType*</span> <span class="pre">myArg</span></code> in its 3D declaration.</li>
+<code class="docutils literal notranslate"><span class="pre">mutable</span> <span class="pre">myType*</span> <span class="pre">myArg</span></code> in its 3D declaration.</p></li>
 </ul>
-</div>
-<div class="section" id="another-example">
-<h3>Another example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="another-example">
+<h3>Another example<a class="headerlink" href="#another-example" title="Link to this heading"></a></h3>
 <p>Consider the following definition:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span>
 <span class="k">typedef</span> <span class="k">struct</span> _T(<span class="k">mutable</span> PUINT8* out) {
@@ -721,8 +714,8 @@ i.e., pointer to a pointer to a <code class="docutils literal notranslate"><span
 read a pointer to the field <code class="docutils literal notranslate"><span class="pre">f2</span></code> into the local variable <code class="docutils literal notranslate"><span class="pre">x</span></code>;
 then, we write <code class="docutils literal notranslate"><span class="pre">x</span></code> into <code class="docutils literal notranslate"><span class="pre">*out</span></code>; and finally return <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The return type of <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> is <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>. In
+<p class="admonition-title">Note</p>
+<p>The return type of <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> is <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code>. In
 EverParse, a <code class="docutils literal notranslate"><span class="pre">PUINT8</span></code> is a pointer into the input buffer, unlike
 a <code class="docutils literal notranslate"><span class="pre">UINT8*</span></code> which may point to any other memory. This distinction
 between pointers into the input buffer and other pointers allows
@@ -731,9 +724,9 @@ input buffer more than once, i.e., there are no double fetches from
 the input buffer. As such, the <code class="docutils literal notranslate"><span class="pre">out</span></code> parameter should have type
 <code class="docutils literal notranslate"><span class="pre">PUINT8*</span></code> rather than <code class="docutils literal notranslate"><span class="pre">UINT8*</span></code>.</p>
 </div>
-</div>
-<div class="section" id="actions-that-always-succeed">
-<h3>Actions that always succeed<a class="headerlink" href="#actions-that-always-succeed" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="actions-that-always-succeed">
+<h3>Actions that always succeed<a class="headerlink" href="#actions-that-always-succeed" title="Link to this heading"></a></h3>
 <p>For actions that always succeed, 3d supports a more concise notation, using the
 <code class="docutils literal notranslate"><span class="pre">:act</span></code> form, as shown below:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span>
@@ -745,21 +738,21 @@ the input buffer. As such, the <code class="docutils literal notranslate"><span 
 </pre></div>
 </div>
 <p>This is equivalent to the prior <code class="docutils literal notranslate"><span class="pre">:on-success</span></code> action shown earlier.</p>
-</div>
-</div>
-<div class="section" id="restrictions">
-<h2>Restrictions<a class="headerlink" href="#restrictions" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="restrictions">
+<h2>Restrictions<a class="headerlink" href="#restrictions" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li>Actions can only be associated with fields.</li>
-<li>Actions cannot be associated with the elements of an array, unless
+<li><p>Actions can only be associated with fields.</p></li>
+<li><p>Actions cannot be associated with the elements of an array, unless
 the array elements themselves are defined types, in which case they
-can be associated with the fields of that type, if any.</li>
-<li>Actions cannot be associated with bit fields.</li>
+can be associated with the fields of that type, if any.</p></li>
+<li><p>Actions cannot be associated with bit fields.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="alignment">
-<span id="sec-alignment"></span><h1>Alignment<a class="headerlink" href="#alignment" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="alignment">
+<span id="sec-alignment"></span><h1>Alignment<a class="headerlink" href="#alignment" title="Link to this heading"></a></h1>
 <p>As mentioned previously, 3d does not introduce any implicit alignment padding.
 However, it is often convenient to use 3d to model the in-memory layout of a C
 structure, including the alignment padding that a C compiler would insert.
@@ -791,17 +784,17 @@ This page provides a useful reference about <a class="reference external" href="
 between fields.</p>
 <blockquote>
 <div><ul class="simple">
-<li>Both fields of the type <code class="docutils literal notranslate"><span class="pre">point</span></code> are aligned at 2-byte boundaries; so no
-padding is inserted between them.</li>
-<li>In type <code class="docutils literal notranslate"><span class="pre">coloredPoint1</span></code> the field <code class="docutils literal notranslate"><span class="pre">color</span></code> is aligned at a 1-byte boundary,
+<li><p>Both fields of the type <code class="docutils literal notranslate"><span class="pre">point</span></code> are aligned at 2-byte boundaries; so no
+padding is inserted between them.</p></li>
+<li><p>In type <code class="docutils literal notranslate"><span class="pre">coloredPoint1</span></code> the field <code class="docutils literal notranslate"><span class="pre">color</span></code> is aligned at a 1-byte boundary,
 while <code class="docutils literal notranslate"><span class="pre">pr</span></code> is aligned at a 2-byte boundary; so 1 byte of padding is inserted
 between them. So, the whole struct consumes six bytes, aligned at a 2-byte
-boundary.</li>
-<li>In type <code class="docutils literal notranslate"><span class="pre">coloredPoint2</span></code> the field <code class="docutils literal notranslate"><span class="pre">pt</span></code> is aligned at a 2-byte boundary, but
+boundary.</p></li>
+<li><p>In type <code class="docutils literal notranslate"><span class="pre">coloredPoint2</span></code> the field <code class="docutils literal notranslate"><span class="pre">pt</span></code> is aligned at a 2-byte boundary, but
 the type <code class="docutils literal notranslate"><span class="pre">color</span></code> is aligned at a 1-byte boundary. So, no padding is inserted
 between them. But, the resulting type must be aligned at a 2-byte boundary,
 so 1 byte of padding is inserted after the <code class="docutils literal notranslate"><span class="pre">color</span></code> field—so, the whole
-struct consumes six bytes.</li>
+struct consumes six bytes.</p></li>
 </ul>
 </div></blockquote>
 <p>The 3d compiler emits diagnostics describing the padding it inserts:</p>
@@ -834,8 +827,8 @@ every field of the union has the same size. As such, the <code class="docutils l
 on a <code class="docutils literal notranslate"><span class="pre">casetype</span></code> allows one to model the layout of a C union.</p>
 <p>Note, the <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute is not allowed on typedefs, enums, or other kinds
 of 3d declarations.</p>
-<div class="section" id="variable-length-types">
-<h2>Variable-length Types<a class="headerlink" href="#variable-length-types" title="Permalink to this headline">¶</a></h2>
+<section id="variable-length-types">
+<h2>Variable-length Types<a class="headerlink" href="#variable-length-types" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute is also supported on variable-length types, but use it
 with care. 3d inserts alignment padding to mimic the behavior of a C compiler;
 but C does not support variable-length types! There are many idioms that C
@@ -860,12 +853,12 @@ to the fixed-size prefix of the type. For example, consider the following type:<
 </pre></div>
 </div>
 <ul class="simple">
-<li>3d adds 3 bytes after <code class="docutils literal notranslate"><span class="pre">tag</span></code> and preceding <code class="docutils literal notranslate"><span class="pre">length</span></code>, since <code class="docutils literal notranslate"><span class="pre">length</span></code> is 4-byte
-aligned.</li>
-<li>It adds 1 byte after <code class="docutils literal notranslate"><span class="pre">other</span></code> and preceding the <code class="docutils literal notranslate"><span class="pre">payload</span></code> field, since the
-payload is a <code class="docutils literal notranslate"><span class="pre">Value</span></code> array and is 2-byte aligned.</li>
-<li>But, notice, it does not add a padding field after <code class="docutils literal notranslate"><span class="pre">payload</span></code> to align the
-<code class="docutils literal notranslate"><span class="pre">other2</span></code> field, since <code class="docutils literal notranslate"><span class="pre">other2</span></code> follows a variable-length field.</li>
+<li><p>3d adds 3 bytes after <code class="docutils literal notranslate"><span class="pre">tag</span></code> and preceding <code class="docutils literal notranslate"><span class="pre">length</span></code>, since <code class="docutils literal notranslate"><span class="pre">length</span></code> is 4-byte
+aligned.</p></li>
+<li><p>It adds 1 byte after <code class="docutils literal notranslate"><span class="pre">other</span></code> and preceding the <code class="docutils literal notranslate"><span class="pre">payload</span></code> field, since the
+payload is a <code class="docutils literal notranslate"><span class="pre">Value</span></code> array and is 2-byte aligned.</p></li>
+<li><p>But, notice, it does not add a padding field after <code class="docutils literal notranslate"><span class="pre">payload</span></code> to align the
+<code class="docutils literal notranslate"><span class="pre">other2</span></code> field, since <code class="docutils literal notranslate"><span class="pre">other2</span></code> follows a variable-length field.</p></li>
 </ul>
 <p>In contrast, consider the following type in C:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_tlv</span><span class="w"> </span><span class="p">{</span>
@@ -879,11 +872,11 @@ payload is a <code class="docutils literal notranslate"><span class="pre">Value<
 <p>The alignment of the <code class="docutils literal notranslate"><span class="pre">Value</span> <span class="pre">payload[0]</span></code> field is 2, but its size is zero. So,
 a C compiler adds the following padding:</p>
 <ul class="simple">
-<li>3 bytes after <code class="docutils literal notranslate"><span class="pre">tag</span></code> and preceding <code class="docutils literal notranslate"><span class="pre">length</span></code>, since <code class="docutils literal notranslate"><span class="pre">length</span></code> is 4-byte
-aligned.</li>
-<li>1 byte after <code class="docutils literal notranslate"><span class="pre">other</span></code> and preceding the <code class="docutils literal notranslate"><span class="pre">payload</span></code> field, since the payload
-is 2-byte aligned.</li>
-<li>2 bytes of end padding, since the alignment of <code class="docutils literal notranslate"><span class="pre">TLV</span></code> is 4</li>
+<li><p>3 bytes after <code class="docutils literal notranslate"><span class="pre">tag</span></code> and preceding <code class="docutils literal notranslate"><span class="pre">length</span></code>, since <code class="docutils literal notranslate"><span class="pre">length</span></code> is 4-byte
+aligned.</p></li>
+<li><p>1 byte after <code class="docutils literal notranslate"><span class="pre">other</span></code> and preceding the <code class="docutils literal notranslate"><span class="pre">payload</span></code> field, since the payload
+is 2-byte aligned.</p></li>
+<li><p>2 bytes of end padding, since the alignment of <code class="docutils literal notranslate"><span class="pre">TLV</span></code> is 4</p></li>
 </ul>
 <p>In such cases, if one really intends to model a variable-length C type, it is
 better to explicitly insert alignment padding to match a given layout, rather
@@ -900,9 +893,9 @@ have in mind.</p>
 } TLV_ALT;
 </pre></div>
 </div>
-</div>
-<div class="section" id="static-assertions-to-validate-alignment">
-<h2>Static Assertions to Validate Alignment<a class="headerlink" href="#static-assertions-to-validate-alignment" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="static-assertions-to-validate-alignment">
+<h2>Static Assertions to Validate Alignment<a class="headerlink" href="#static-assertions-to-validate-alignment" title="Link to this heading"></a></h2>
 <p>To confirm that the alignment 3d inserts matches the layout of a C type, 3d
 automatically generates C types corresponding to every type with an <code class="docutils literal notranslate"><span class="pre">aligned</span></code>
 attribute, and emits C static assertions to check that the sizes and field
@@ -980,14 +973,14 @@ padding yourself:</p>
 <p>This is becase the C compiler inserts 3 bytes of end padding after the field
 <code class="docutils literal notranslate"><span class="pre">other</span></code>, whereas with the variable-length field, 3d adds 1 byte of padding.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Arguably, due to these potential discrepancies, 3d could simply forbid the
+<p class="admonition-title">Note</p>
+<p>Arguably, due to these potential discrepancies, 3d could simply forbid the
 <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute on variable-length types.</p>
 </div>
-</div>
-</div>
-<div class="section" id="explicitly-checking-3d-types-for-correspondence-with-existing-c-types">
-<h1>Explicitly checking 3d types for correspondence with existing C types<a class="headerlink" href="#explicitly-checking-3d-types-for-correspondence-with-existing-c-types" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="explicitly-checking-3d-types-for-correspondence-with-existing-c-types">
+<h1>Explicitly checking 3d types for correspondence with existing C types<a class="headerlink" href="#explicitly-checking-3d-types-for-correspondence-with-existing-c-types" title="Link to this heading"></a></h1>
 <p>In addition to automatically generating static assertions for types with the
 <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute, 3d allows one to explicitly assert the correspondence
 between some 3d typed and C types.</p>
@@ -1123,9 +1116,9 @@ defined in the header file <cite>AlignBase.h</cite> shown below:</p>
 <p>As before, the <code class="docutils literal notranslate"><span class="pre">sizeof(TLV)==10</span></code> fails, because of differences in alignment
 padding with variable-length structures, a good indication to use explicit
 alignment padding for variable-length types.</p>
-</div>
-<div class="section" id="generating-code-with-for-several-compile-time-configurations">
-<h1>Generating code with for several compile-time configurations<a class="headerlink" href="#generating-code-with-for-several-compile-time-configurations" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="generating-code-with-for-several-compile-time-configurations">
+<h1>Generating code with for several compile-time configurations<a class="headerlink" href="#generating-code-with-for-several-compile-time-configurations" title="Link to this heading"></a></h1>
 <p>Sometimes one wants to write a single format specification to
 accommodate several compile-time configurations, e.g., to support
 multiple architectures. 3D offers some limited support for decorating
@@ -1188,9 +1181,9 @@ of the the <code class="docutils literal notranslate"><span class="pre">Int</spa
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="validating-data-with-indirections-or-pointers">
-<h1>Validating Data with Indirections or Pointers<a class="headerlink" href="#validating-data-with-indirections-or-pointers" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="validating-data-with-indirections-or-pointers">
+<h1>Validating Data with Indirections or Pointers<a class="headerlink" href="#validating-data-with-indirections-or-pointers" title="Link to this heading"></a></h1>
 <p>In some cases, rather than parsing from a flat array of contiguous memory, one
 wants to parse a structure with indirections, i.e., the input buffer may contain
 pointers to other chunks of memory containing sub-structures to be parsed.</p>
@@ -1201,8 +1194,8 @@ pointer is valid. However, in some scenarios, such checks are possible, e.g., in
 kernel code, it may be possible to probe a pointer to check that it is valid,
 and only then proceed to read from it. 3d supports parsing structures containing
 pointers, provided safe probing functions can be provided by the caller.</p>
-<div class="section" id="pointer-types">
-<h2>Pointer Types<a class="headerlink" href="#pointer-types" title="Permalink to this headline">¶</a></h2>
+<section id="pointer-types">
+<h2>Pointer Types<a class="headerlink" href="#pointer-types" title="Link to this heading"></a></h2>
 <p>Let’s start by looking at some basic support for pointer types in 3d.</p>
 <p>As in C, any field of a structure can be marked as a pointer: here, below, the
 second field <code class="docutils literal notranslate"><span class="pre">y</span></code> is marked as pointer to a <code class="docutils literal notranslate"><span class="pre">UINT32</span></code>.</p>
@@ -1254,9 +1247,9 @@ into an out parameter.</p>
 </div>
 <p>Note, in all these examples, the <em>type</em> of pointed-to data is irrelevant: 3d
 simply treats the pointer as an integer value.</p>
-</div>
-<div class="section" id="probing-pointers-a-first-example">
-<h2>Probing Pointers: A first example<a class="headerlink" href="#probing-pointers-a-first-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="probing-pointers-a-first-example">
+<h2>Probing Pointers: A first example<a class="headerlink" href="#probing-pointers-a-first-example" title="Link to this heading"></a></h2>
 <p>We now look at how to traverse pointers, dereferencing them and validating the
 data they point to.</p>
 <p>Let’s start with a simple example. Our goal is to validate a format that
@@ -1354,16 +1347,16 @@ structure, which is represented in 4 bytes, with 2 bytes each for its <code clas
 <p>Instructs the parser to:</p>
 <blockquote>
 <div><ul class="simple">
-<li>First, read the contents of the <code class="docutils literal notranslate"><span class="pre">tpointer</span></code> field into a local vairable <code class="docutils literal notranslate"><span class="pre">src</span></code></li>
-<li>Then, call <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;S.tpointer&quot;,</span> <span class="pre">4,</span> <span class="pre">dest)</span></code> to prepare the destination
-buffer, where <code class="docutils literal notranslate"><span class="pre">sizeof(T)=4</span></code>.</li>
-<li>Then, if <code class="docutils literal notranslate"><span class="pre">ProbeInit</span></code> succeeds, use <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(T),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">src,</span>
+<li><p>First, read the contents of the <code class="docutils literal notranslate"><span class="pre">tpointer</span></code> field into a local vairable <code class="docutils literal notranslate"><span class="pre">src</span></code></p></li>
+<li><p>Then, call <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;S.tpointer&quot;,</span> <span class="pre">4,</span> <span class="pre">dest)</span></code> to prepare the destination
+buffer, where <code class="docutils literal notranslate"><span class="pre">sizeof(T)=4</span></code>.</p></li>
+<li><p>Then, if <code class="docutils literal notranslate"><span class="pre">ProbeInit</span></code> succeeds, use <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(T),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">src,</span>
 <span class="pre">destS)</span></code> check that the <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span></code> bytes starting at the address pointed
 to by <code class="docutils literal notranslate"><span class="pre">tpointer</span></code> is valid memory, using the <code class="docutils literal notranslate"><span class="pre">dest</span></code> parameter as its copy
-buffer.</li>
-<li>Finally, if <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> succeeds, then validate that
+buffer.</p></li>
+<li><p>Finally, if <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> succeeds, then validate that
 <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(dest)</span></code> buffer contains a valid <code class="docutils literal notranslate"><span class="pre">T(bound)</span></code> structure,
-in <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen(dest)</span></code> bytes.</li>
+in <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen(dest)</span></code> bytes.</p></li>
 </ul>
 </div></blockquote>
 <p>Ultimately, the generated code provides the following signature for a C caller,
@@ -1372,9 +1365,9 @@ at least <code class="docutils literal notranslate"><span class="pre">len</span>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckS</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">dest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="probing-multiple-indirections">
-<h2>Probing Multiple Indirections<a class="headerlink" href="#probing-multiple-indirections" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="probing-multiple-indirections">
+<h2>Probing Multiple Indirections<a class="headerlink" href="#probing-multiple-indirections" title="Link to this heading"></a></h2>
 <p>Continuing our simple example, let’s add another layer of indirection:, with a
 structure <code class="docutils literal notranslate"><span class="pre">U</span></code> containing a pointer to <code class="docutils literal notranslate"><span class="pre">S</span></code>. This can be specified as shown
 below:</p>
@@ -1386,19 +1379,20 @@ below:</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>The type <code class="docutils literal notranslate"><span class="pre">U</span></code> packages a pointer to an <code class="docutils literal notranslate"><span class="pre">S</span></code> structure with a tag.</li>
-<li>The specification of <code class="docutils literal notranslate"><span class="pre">U</span></code> is parameterized by <cite>two</cite> destintation buffers:
+<li><p>The type <code class="docutils literal notranslate"><span class="pre">U</span></code> packages a pointer to an <code class="docutils literal notranslate"><span class="pre">S</span></code> structure with a tag.</p></li>
+<li><p>The specification of <code class="docutils literal notranslate"><span class="pre">U</span></code> is parameterized by <cite>two</cite> destintation buffers:
 <code class="docutils literal notranslate"><span class="pre">destS</span></code> to receive the contents of the memory referenced by <code class="docutils literal notranslate"><span class="pre">spointer</span></code>;
 and <code class="docutils literal notranslate"><span class="pre">destT</span></code> to receive the contents of the memory referenced by
-<code class="docutils literal notranslate"><span class="pre">tpointer</span></code>.</li>
+<code class="docutils literal notranslate"><span class="pre">tpointer</span></code>.</p></li>
 </ul>
 <p>Operationally, the validator for <code class="docutils literal notranslate"><span class="pre">U</span></code> proceeds by:</p>
 <ul class="simple">
-<li>First, validating the tag field (in this case, it is a noop)</li>
-<li>Then, reading <code class="docutils literal notranslate"><span class="pre">spointer</span></code> into <code class="docutils literal notranslate"><span class="pre">srcS</span></code> and<ul>
-<li>Calling <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;U.spointer&quot;,</span> <span class="pre">sizeof(S),</span> <span class="pre">destS)</span></code></li>
-<li>Then, <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(S),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">srcS,</span> <span class="pre">destS)</span></code></li>
-<li>Then, validate <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> contains a valid <code class="docutils literal notranslate"><span class="pre">S(destT)</span></code>.</li>
+<li><p>First, validating the tag field (in this case, it is a noop)</p></li>
+<li><p>Then, reading <code class="docutils literal notranslate"><span class="pre">spointer</span></code> into <code class="docutils literal notranslate"><span class="pre">srcS</span></code> and</p>
+<ul>
+<li><p>Calling <code class="docutils literal notranslate"><span class="pre">ProbeInit(&quot;U.spointer&quot;,</span> <span class="pre">sizeof(S),</span> <span class="pre">destS)</span></code></p></li>
+<li><p>Then, <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy(sizeof(S),</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">srcS,</span> <span class="pre">destS)</span></code></p></li>
+<li><p>Then, validate <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> contains a valid <code class="docutils literal notranslate"><span class="pre">S(destT)</span></code>.</p></li>
 </ul>
 </li>
 </ul>
@@ -1429,9 +1423,9 @@ issues an error message:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">Probe</span><span class="mf">.3</span><span class="n">d</span><span class="p">:(</span><span class="mi">30</span><span class="p">,</span><span class="mi">16</span><span class="p">):</span> <span class="p">(</span><span class="n">Error</span><span class="p">)</span> <span class="n">Nested</span> <span class="n">mutation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">copy</span> <span class="n">buffer</span> <span class="p">[</span><span class="n">destT</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="top-level-probes">
-<h2>Top-level Probes<a class="headerlink" href="#top-level-probes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="top-level-probes">
+<h2>Top-level Probes<a class="headerlink" href="#top-level-probes" title="Link to this heading"></a></h2>
 <p>Rather than attaching a probe to a field, one can also attach a probe to an
 entire type. For instance, one can write the following:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">entrypoint</span> <span class="k">probe</span> ProbeAndCopy(length=<span class="k">sizeof</span>(<span class="k">this</span>))
@@ -1479,9 +1473,9 @@ the type definition (see <a class="reference internal" href="#selective-entrypoi
 } I;
 </pre></div>
 </div>
-</div>
-<div class="section" id="coercing-pointer-types">
-<span id="coercing-pointers"></span><h2>Coercing Pointer Types<a class="headerlink" href="#coercing-pointer-types" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="coercing-pointer-types">
+<span id="coercing-pointers"></span><h2>Coercing Pointer Types<a class="headerlink" href="#coercing-pointer-types" title="Link to this heading"></a></h2>
 <p>One can also add a probe to a pointer with an explicit pointer size, so long as
 one also provides a callback to convert a value from that explicit pointer size
 to <code class="docutils literal notranslate"><span class="pre">UINT64</span></code>, as in the example below:</p>
@@ -1504,18 +1498,18 @@ signature:</p>
 compiler will automatically insert the <code class="docutils literal notranslate"><span class="pre">UlongToPtr</span></code> coercion on the 32-bit
 pointer value before called <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> with the coerced pointer value.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>If you declare more than one coercion to coerce between a pair of types, 3d
 will likely complain with the following error:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>./Probe.3d:(132,33): (Error) Multiple extern coercions found for UINT32 -&gt; UINT64: Probe.UlongToPtr, Probe.UlongToPtr2
 </pre></div>
 </div>
-<p class="last">This is because 3d applies coercions implicitly, and if multiple coercions are
+<p>This is because 3d applies coercions implicitly, and if multiple coercions are
 found between a pair of types, it cannot choose which coercion to apply.</p>
 </div>
-</div>
-<div class="section" id="multiple-probe-callbacks">
-<h2>Multiple Probe Callbacks<a class="headerlink" href="#multiple-probe-callbacks" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="multiple-probe-callbacks">
+<h2>Multiple Probe Callbacks<a class="headerlink" href="#multiple-probe-callbacks" title="Link to this heading"></a></h2>
 <p>Sometimes, it can be useful to have several probe callbacks, e.g., some of them
 may copy, while for others it might be safe to validate the data in place.</p>
 <p>The example below shows how to use multiple probes:</p>
@@ -1533,12 +1527,12 @@ may copy, while for others it might be safe to validate the data in place.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>The extern declaration of <code class="docutils literal notranslate"><span class="pre">ProbeAndCopyAlt</span></code> produces a second extern
+<li><p>The extern declaration of <code class="docutils literal notranslate"><span class="pre">ProbeAndCopyAlt</span></code> produces a second extern
 declaration in <code class="docutils literal notranslate"><span class="pre">Probe_ExternalAPI.h</span></code> for the client code to provide and link
-with.</li>
-<li>One can associate multiple entrypoint probe attributes on a type, each with a
-different probe and copy function.</li>
-<li>One can also associate different probes on each field of a type.</li>
+with.</p></li>
+<li><p>One can associate multiple entrypoint probe attributes on a type, each with a
+different probe and copy function.</p></li>
+<li><p>One can also associate different probes on each field of a type.</p></li>
 </ul>
 <p>The resulting C interface contains multiple entry points, one for each variant
 of probing entry point:</p>
@@ -1571,7 +1565,7 @@ without doing anything else.</p>
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_PROBE</span></code>; if the underlying validator fails, we return
 <code class="docutils literal notranslate"><span class="pre">EVERPARE_PROBE_FAILURE_VALIDATION</span></code>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>External declarations for probe callbacks and for pointer coercions are in
 scope for the entire file, since 3d can call these functions implicitly when
 elaborating a specification. So, unless you are an expert and have a
@@ -1579,20 +1573,20 @@ particular need for multiple probe callbacks, it is possible that declaring
 multiple probe callbacks can result in errors such as the one below,
 especially when using multiple probe callbacks in conjuction with
 <a class="reference internal" href="#specialization"><span class="std std-ref">specialization</span></a>.</p>
-<div class="last highlight-text notranslate"><div class="highlight"><pre><span></span>./Specialize1.3d:(10,30): (Error) Found multiple probe functions: Specialize1.ProbeAndCopyAlt, Specialize1.ProbeAndCopy
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>./Specialize1.3d:(10,30): (Error) Found multiple probe functions: Specialize1.ProbeAndCopyAlt, Specialize1.ProbeAndCopy
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="nullable-pointers">
-<h2>Nullable Pointers<a class="headerlink" href="#nullable-pointers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="nullable-pointers">
+<h2>Nullable Pointers<a class="headerlink" href="#nullable-pointers" title="Link to this heading"></a></h2>
 <p>By default, all probed pointer fields are expected to be non-null. If a pointer
 value happens to be null, then either</p>
 <ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> function can return false, in which case validation fails</li>
-<li>Or, the <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> function can return true, in which the generated code
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> function can return false, in which case validation fails</p></li>
+<li><p>Or, the <code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code> function can return true, in which the generated code
 would proceed to try to validate the contents of the destination buffer, which
-will likely fail.</li>
+will likely fail.</p></li>
 </ul>
 <p>If a pointer in a data structure is allowed to be null, then one can mark it as
 such with a nullable qualifier, <code class="docutils literal notranslate"><span class="pre">pointer?</span></code> as shown below.</p>
@@ -1606,13 +1600,13 @@ such with a nullable qualifier, <code class="docutils literal notranslate"><span
 <p>For a pointer with a nullable qualifier, the generated code first checks if the
 pointer is non-null:</p>
 <ul class="simple">
-<li>If the pointer is null, validation succeeds without calling the probe function</li>
-<li>If the pointer is non-null, the probe function is called, and validation
-proceeds as in the non-null case.</li>
+<li><p>If the pointer is null, validation succeeds without calling the probe function</p></li>
+<li><p>If the pointer is non-null, the probe function is called, and validation
+proceeds as in the non-null case.</p></li>
 </ul>
-</div>
-<div class="section" id="selective-entrypoint-generation-1">
-<span id="selective-entrypoint-generation"></span><h2>Selective Entrypoint Generation<a class="headerlink" href="#selective-entrypoint-generation-1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="selective-entrypoint-generation">
+<span id="id1"></span><h2>Selective Entrypoint Generation<a class="headerlink" href="#selective-entrypoint-generation" title="Link to this heading"></a></h2>
 <p>By default, when a type is marked as an <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>, 3d generates a
 validation entry point in the wrapper header. When combined with probe
 attributes, 3d generates entry points <em>only</em> for the kinds of entry points
@@ -1646,9 +1640,9 @@ entry point is public:</p>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckBothEntrypoints</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="named-entrypoints-1">
-<span id="named-entrypoints"></span><h2>Named Entrypoints<a class="headerlink" href="#named-entrypoints-1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="named-entrypoints">
+<span id="id2"></span><h2>Named Entrypoints<a class="headerlink" href="#named-entrypoints" title="Link to this heading"></a></h2>
 <p>By default, the names of entry points are auto-generated from the module name,
 probe function name, and type name (e.g., <code class="docutils literal notranslate"><span class="pre">ProbeProbeAndCopyCheckIndirect</span></code>).
 One can override these names using the <code class="docutils literal notranslate"><span class="pre">entrypoint(Name)</span></code> syntax:</p>
@@ -1684,17 +1678,17 @@ One can override these names using the <code class="docutils literal notranslate
 <p>The name argument is optional: <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> without parentheses continues to
 use the auto-generated name. Named and unnamed entry points can be freely mixed
 on the same type.</p>
-</div>
-<div class="section" id="an-end-to-end-executable-example">
-<h2>An End-to-end Executable Example<a class="headerlink" href="#an-end-to-end-executable-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="an-end-to-end-executable-example">
+<h2>An End-to-end Executable Example<a class="headerlink" href="#an-end-to-end-executable-example" title="Link to this heading"></a></h2>
 <p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/probe">is available in the EverParse repository</a>.</p>
 <p>It shows the use of multiple probe functions, linked with callbacks implemented
 in C, as well as a main C driver program that validates several example inputs
 containing pointers.</p>
-</div>
-</div>
-<div class="section" id="specialization-for-different-pointer-sizes">
-<span id="specialization"></span><h1>Specialization for Different Pointer Sizes<a class="headerlink" href="#specialization-for-different-pointer-sizes" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="specialization-for-different-pointer-sizes">
+<span id="specialization"></span><h1>Specialization for Different Pointer Sizes<a class="headerlink" href="#specialization-for-different-pointer-sizes" title="Link to this heading"></a></h1>
 <p>Consider writing a specification to handle messages that could be sent from both
 32- and 64-bit machines, particularly if those messages contain pointers. This
 scenario happens in practice, e.g., when a 64-bit OS kernel shares memory with
@@ -1705,8 +1699,8 @@ specification with 64-bit clients in mind, and then have the compiler specialize
 the 64-bit specification also for use with a 32-bit clients. There are many
 subtle elements to consider, and we describe them gradually, starting with a
 simple first example.</p>
-<div class="section" id="a-first-example">
-<h2>A First Example<a class="headerlink" href="#a-first-example" title="Permalink to this headline">¶</a></h2>
+<section id="a-first-example">
+<h2>A First Example<a class="headerlink" href="#a-first-example" title="Link to this heading"></a></h2>
 <p>As in the previous section, we have a format with two levels of indirection:
 <code class="docutils literal notranslate"><span class="pre">R64</span></code> with a pointer to <code class="docutils literal notranslate"><span class="pre">S64</span></code>, and <code class="docutils literal notranslate"><span class="pre">S64</span></code> with a pointer to <code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span> <span class="k">probe</span> ProbeAndCopy
@@ -1732,8 +1726,8 @@ simple first example.</p>
 } R64;
 </pre></div>
 </div>
-<div class="section" id="a-first-manual-attempt">
-<h3>A First Manual Attempt<a class="headerlink" href="#a-first-manual-attempt" title="Permalink to this headline">¶</a></h3>
+<section id="a-first-manual-attempt">
+<h3>A First Manual Attempt<a class="headerlink" href="#a-first-manual-attempt" title="Link to this heading"></a></h3>
 <p>If we wanted to specify a variant of <code class="docutils literal notranslate"><span class="pre">R32</span></code> with a 32-bit pointer to a <code class="docutils literal notranslate"><span class="pre">S32</span></code>
 which in turn had a 32-bit pointer to a <code class="docutils literal notranslate"><span class="pre">T</span></code>, we could explicitly rewrite our
 entire specification, as shown below.</p>
@@ -1783,9 +1777,9 @@ to handle either 32- or 64-bit inputs, but after validation, we would like the
 contents of the destination buffers to always be in 64-bit form, for easy
 manipulation by native 64-bit kernel code, without needing to bifurcate further
 handling of 32- and 64-bit inputs.</p>
-</div>
-<div class="section" id="a-second-manual-attempt">
-<h3>A Second Manual Attempt<a class="headerlink" href="#a-second-manual-attempt" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="a-second-manual-attempt">
+<h3>A Second Manual Attempt<a class="headerlink" href="#a-second-manual-attempt" title="Link to this heading"></a></h3>
 <p>Here’s another attempt at specializing <code class="docutils literal notranslate"><span class="pre">R64</span></code>:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _R32Manual(UINT32 bound, EVERPARSE_COPY_BUFFER_T destS, EVERPARSE_COPY_BUFFER_T destT) {
     UINT32 r1 { r1 &lt;= bound };
@@ -1816,12 +1810,12 @@ into a 64-bit layout, and then to validate that the copied bytes is a valid
 buffer, preparing it to receive <code class="docutils literal notranslate"><span class="pre">sizeof(S64)</span></code> bytes. Then, within the probe
 block, it executes a sequence of actions:</p>
 <ul class="simple">
-<li>Copy the first 4 bytes referenced by <code class="docutils literal notranslate"><span class="pre">ptrS</span></code>–this is the <code class="docutils literal notranslate"><span class="pre">s1</span></code> field</li>
-<li>Skip 4 bytes of alignment padding</li>
-<li>Then read a 32 bit pointer <code class="docutils literal notranslate"><span class="pre">ptrT</span></code>, coerce it to 64-bytes, and write it into
-the destination buffer</li>
-<li>Then copy the next 4 bytes from the input buffer (field <code class="docutils literal notranslate"><span class="pre">s2</span></code>)</li>
-<li>Finally, skip 4 bytes of padding at the end</li>
+<li><p>Copy the first 4 bytes referenced by <code class="docutils literal notranslate"><span class="pre">ptrS</span></code>–this is the <code class="docutils literal notranslate"><span class="pre">s1</span></code> field</p></li>
+<li><p>Skip 4 bytes of alignment padding</p></li>
+<li><p>Then read a 32 bit pointer <code class="docutils literal notranslate"><span class="pre">ptrT</span></code>, coerce it to 64-bytes, and write it into
+the destination buffer</p></li>
+<li><p>Then copy the next 4 bytes from the input buffer (field <code class="docutils literal notranslate"><span class="pre">s2</span></code>)</p></li>
+<li><p>Finally, skip 4 bytes of padding at the end</p></li>
 </ul>
 <p>After the probe block executes, we validate the <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf(destS)</span></code> to
 contain a valid  <code class="docutils literal notranslate"><span class="pre">S64(r1,</span> <span class="pre">destT)</span></code>, which in turn will probe <code class="docutils literal notranslate"><span class="pre">ptrT</span></code> etc.</p>
@@ -1830,9 +1824,9 @@ contains a 64-bit representation of the input, regardless of <code class="docuti
 and the caller can then proceed uniformly, without needing to bifurcate its
 handling of 32- and 64-bit clients.</p>
 <p>However, writing low-level coercions like this is impractical and error prone.</p>
-</div>
-<div class="section" id="automated-specialization">
-<h3>Automated Specialization<a class="headerlink" href="#automated-specialization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="automated-specialization">
+<h3>Automated Specialization<a class="headerlink" href="#automated-specialization" title="Link to this heading"></a></h3>
 <p>Instead, 3d offers a <code class="docutils literal notranslate"><span class="pre">specialize</span></code> directive, to automatically rewrite a tree
 of definitions rooted at a given type, replacing each occurrence of an
 <em>unqualified</em> pointer type with an <code class="docutils literal notranslate"><span class="pre">pointer(UINT32)</span></code>.</p>
@@ -1889,9 +1883,9 @@ layer, as shown below.</p>
 } R;
 </pre></div>
 </div>
-</div>
-<div class="section" id="first-example-in-its-entirety">
-<h3>First Example in its Entirety<a class="headerlink" href="#first-example-in-its-entirety" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="first-example-in-its-entirety">
+<h3>First Example in its Entirety<a class="headerlink" href="#first-example-in-its-entirety" title="Link to this heading"></a></h3>
 <p>We’ve gone through several iterations to arrive at our first example of
 specialization. Here is the final specification in its entirety:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span>  <span class="k">extern</span> <span class="k">probe</span> ProbeAndCopy
@@ -1931,16 +1925,16 @@ specialization. Here is the final specification in its entirety:</p>
   } R;
 </pre></div>
 </div>
-</div>
-<div class="section" id="what-is-proven-about-specialization">
-<h3>What is Proven About Specialization<a class="headerlink" href="#what-is-proven-about-specialization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="what-is-proven-about-specialization">
+<h3>What is Proven About Specialization<a class="headerlink" href="#what-is-proven-about-specialization" title="Link to this heading"></a></h3>
 <p><strong>Safety</strong></p>
 <p>As with all code produced by 3d, we prove that the generated code is:</p>
 <ul class="simple">
-<li>memory safe</li>
-<li>arithmetically safe</li>
-<li>has no undefined behaviors</li>
-<li>is double-fetch free</li>
+<li><p>memory safe</p></li>
+<li><p>arithmetically safe</p></li>
+<li><p>has no undefined behaviors</p></li>
+<li><p>is double-fetch free</p></li>
 </ul>
 <p>For specifications with probes, these guarantees are, of course, conditional on
 the behavior of the extern callbacks. In particular, the callbacks implemnted in
@@ -2043,18 +2037,18 @@ the following C code:</p>
 <span class="n">EVERPARSE_STATIC_ASSERT</span><span class="p">(</span><span class="n">offsetof</span><span class="p">(</span><span class="n">R32</span><span class="p">,</span><span class="w"> </span><span class="n">ptrS</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="an-end-to-end-executable-example-1">
-<h2>An End-to-end Executable Example<a class="headerlink" href="#an-end-to-end-executable-example-1" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id3">
+<h2>An End-to-end Executable Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_test">of specialization is available in the
 EverParse repository</a>.</p>
 <p>It shows an example similar to the one developed above, but linked with a main C
 program and test driver. It also illustrates the use of nullable pointers in
 conjunct with probing and specialization.</p>
-</div>
-<div class="section" id="limitations-on-variable-length-structures">
-<h2>Limitations on Variable-length Structures<a class="headerlink" href="#limitations-on-variable-length-structures" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="limitations-on-variable-length-structures">
+<h2>Limitations on Variable-length Structures<a class="headerlink" href="#limitations-on-variable-length-structures" title="Link to this heading"></a></h2>
 <p>Automated specialization has only limited support for variable-length
 structures. The main restriction is that a coercion between types cannot depend
 on the data being coerced. We illustrate with a couple of examples:</p>
@@ -2224,8 +2218,8 @@ length array, each of whose elements is a <code class="docutils literal notransl
 <span class="k">specialize</span> (<span class="k">pointer</span>(*), <span class="k">pointer</span>(UINT32)) TLV_ALT TLV_ALT_32;
 </pre></div>
 </div>
-<div class="section" id="data-dependency-for-well-formedness">
-<h3>Data Dependency for Well-formedness<a class="headerlink" href="#data-dependency-for-well-formedness" title="Permalink to this headline">¶</a></h3>
+<section id="data-dependency-for-well-formedness">
+<h3>Data Dependency for Well-formedness<a class="headerlink" href="#data-dependency-for-well-formedness" title="Link to this heading"></a></h3>
 <p>There is another form of data dependency that is also not supported: dependence
 on data constraints that ensure well-formedness of specifications. The following
 variant of our previous example illustrates.</p>
@@ -2265,10 +2259,10 @@ subtraction <code class="docutils literal notranslate"><span class="pre">Len</sp
 of <code class="docutils literal notranslate"><span class="pre">TLV</span></code> from 32- to 64-bits is not data dependent, and as such, the
 constraint on the <code class="docutils literal notranslate"><span class="pre">length</span></code> field is not enforced by the coercion, and F*
 rightfully rejects the subtraction as unsafe.</p>
-</div>
-</div>
-<div class="section" id="and-end-to-end-example-with-variable-length-structures">
-<h2>And End-to-end Example with Variable-length Structures<a class="headerlink" href="#and-end-to-end-example-with-variable-length-structures" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="and-end-to-end-example-with-variable-length-structures">
+<h2>And End-to-end Example with Variable-length Structures<a class="headerlink" href="#and-end-to-end-example-with-variable-length-structures" title="Link to this heading"></a></h2>
 <p>Although data dependency is forbidden in coercions, there are many cases where
 variable-length structures fit well with 3d’s support for auto-specialization.</p>
 <p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_test2">of specialization with variable-length
@@ -2276,32 +2270,32 @@ structures is available in the EverParse repository</a>,
 including a main file driving the generated code with test input.</p>
 <p>Another example, <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_tagged_union_array">with data dependent tagged unions</a>,
 is also available.</p>
-</div>
-<div class="section" id="other-forms-of-specialization">
-<h2>Other forms of Specialization<a class="headerlink" href="#other-forms-of-specialization" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="other-forms-of-specialization">
+<h2>Other forms of Specialization<a class="headerlink" href="#other-forms-of-specialization" title="Link to this heading"></a></h2>
 <p>Today, 3d only supports specialized 64-bit pointer types to 32-bit pointers. In
 the future, we envision adding support for other forms of specialization, e.g.,
 automatically specializing little-endian to big-endian types.</p>
-</div>
-</div>
-<div class="section" id="comments">
-<h1>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="comments">
+<h1>Comments<a class="headerlink" href="#comments" title="Link to this heading"></a></h1>
 <p>The user can insert comments in their <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file, some of which will
 be inserted into the <code class="docutils literal notranslate"><span class="pre">.c</span></code> file:</p>
 <p>There are three kinds of comments:</p>
 <ul class="simple">
-<li>Block comments are delimited by <code class="docutils literal notranslate"><span class="pre">/*</span></code> and <code class="docutils literal notranslate"><span class="pre">*/</span></code> and do not
-nest. These are never propagated to the C code.</li>
-<li>Line comments begin with <code class="docutils literal notranslate"><span class="pre">//</span></code> and are propagated to C
-heuristically close to the translated source construct.</li>
-<li>Each top-level declaration can be preceded by a type declaration
+<li><p>Block comments are delimited by <code class="docutils literal notranslate"><span class="pre">/*</span></code> and <code class="docutils literal notranslate"><span class="pre">*/</span></code> and do not
+nest. These are never propagated to the C code.</p></li>
+<li><p>Line comments begin with <code class="docutils literal notranslate"><span class="pre">//</span></code> and are propagated to C
+heuristically close to the translated source construct.</p></li>
+<li><p>Each top-level declaration can be preceded by a type declaration
 comment delimited by <code class="docutils literal notranslate"><span class="pre">/*++</span></code> and <code class="docutils literal notranslate"><span class="pre">--*/</span></code>: These are propagated to
 the C code preceding the C procedure corresponding to the validator
-of the source type.</li>
+of the source type.</p></li>
 </ul>
-</div>
-<div class="section" id="adding-copyright-notices-to-produced-c-h-files">
-<h1>Adding copyright notices to produced .c/.h files<a class="headerlink" href="#adding-copyright-notices-to-produced-c-h-files" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="adding-copyright-notices-to-produced-c-h-files">
+<h1>Adding copyright notices to produced .c/.h files<a class="headerlink" href="#adding-copyright-notices-to-produced-c-h-files" title="Link to this heading"></a></h1>
 <p>If, along with some <code class="docutils literal notranslate"><span class="pre">MyFile.3d</span></code>, in the same directory, you provide
 a file <code class="docutils literal notranslate"><span class="pre">MyFile.3d.copyright.txt</span></code> that contains syntactically correct
 C comments (with <code class="docutils literal notranslate"><span class="pre">//</span></code> or <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code>), then EverParse will prepend
@@ -2310,18 +2304,18 @@ these comments. You do not need to mention this file on the command
 line.</p>
 <p>These comments can contain the following special symbols:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSEVERSION</span></code>, which EverParse will automatically replace
-with its version number;</li>
-<li><code class="docutils literal notranslate"><span class="pre">FILENAME</span></code>, which EverParse will automatically replace with the
-name of the <code class="docutils literal notranslate"><span class="pre">.c</span></code> / <code class="docutils literal notranslate"><span class="pre">.h</span></code> file being generated.</li>
-<li><code class="docutils literal notranslate"><span class="pre">EVERPARSEHASHES</span></code>, which EverParse will automatically replace with
+<li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSEVERSION</span></code>, which EverParse will automatically replace
+with its version number;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FILENAME</span></code>, which EverParse will automatically replace with the
+name of the <code class="docutils literal notranslate"><span class="pre">.c</span></code> / <code class="docutils literal notranslate"><span class="pre">.h</span></code> file being generated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSEHASHES</span></code>, which EverParse will automatically replace with
 a hash of the contents of the corresponding .3d file for the purpose
 of <code class="docutils literal notranslate"><span class="pre">--check_hashes</span> <span class="pre">inplace</span></code> or <code class="docutils literal notranslate"><span class="pre">--check_inplace_hash</span></code> (see <a class="reference external" href="3d.html#alternate-mode-hash-checking">Hash
-checking</a>).</li>
+checking</a>).</p></li>
 </ul>
-</div>
-<div class="section" id="modular-structure-and-files">
-<h1>Modular structure and files<a class="headerlink" href="#modular-structure-and-files" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="modular-structure-and-files">
+<h1>Modular structure and files<a class="headerlink" href="#modular-structure-and-files" title="Link to this heading"></a></h1>
 <p>A 3d specification is described in a collection of modules, each
 stored in a file with a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> extension. The name of a module is
 derived from its filename, i.e., the file <code class="docutils literal notranslate"><span class="pre">A.3d</span></code> defines a module
@@ -2368,9 +2362,9 @@ using a fully qualified name of the form <code class="docutils literal notransla
 </pre></div>
 </div>
 <p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/">in the EverParse repository</a>.</p>
-</div>
-<div class="section" id="error-handling">
-<h1>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="error-handling">
+<h1>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
 <p>When a validator fails, EverParse supports invoking a user-provided
 callback with contextual information about the failure.</p>
 <p>An error handling callback is a C procedure with the following signature:</p>
@@ -2389,8 +2383,8 @@ callback with contextual information about the failure.</p>
 </div>
 <p>Every EverParse validator is parameterized by:</p>
 <ul class="simple">
-<li>A function pointer, of type <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></li>
-<li>A context parameter, <code class="docutils literal notranslate"><span class="pre">uint8_t*</span> <span class="pre">Context</span></code></li>
+<li><p>A function pointer, of type <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></p></li>
+<li><p>A context parameter, <code class="docutils literal notranslate"><span class="pre">uint8_t*</span> <span class="pre">Context</span></code></p></li>
 </ul>
 <p>At the top-level, when calling into EverParse from an application, one
 can instantiate both the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> with a function of one’s
@@ -2399,17 +2393,17 @@ application-specific context.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> expects</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointers to refer to live and
-disjoint pieces of memory.</li>
-<li>For <code class="docutils literal notranslate"><span class="pre">Length</span></code> to be the length in bytes of valid memory pointed
-to by <code class="docutils literal notranslate"><span class="pre">Base</span></code> and for <code class="docutils literal notranslate"><span class="pre">StartPosition</span> <span class="pre">&lt;=</span> <span class="pre">EndPosition</span> <span class="pre">&lt;=</span> <span class="pre">Length</span></code>.</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointers to refer to live and
+disjoint pieces of memory.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">Length</span></code> to be the length in bytes of valid memory pointed
+to by <code class="docutils literal notranslate"><span class="pre">Base</span></code> and for <code class="docutils literal notranslate"><span class="pre">StartPosition</span> <span class="pre">&lt;=</span> <span class="pre">EndPosition</span> <span class="pre">&lt;=</span> <span class="pre">Length</span></code>.</p></li>
 </ul>
 </div></blockquote>
 <p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> can</p>
 <blockquote>
 <div><ul class="simple">
-<li>Read from all the pointers</li>
-<li>May only modify the memory reference by <code class="docutils literal notranslate"><span class="pre">Context</span></code>.</li>
+<li><p>Read from all the pointers</p></li>
+<li><p>May only modify the memory reference by <code class="docutils literal notranslate"><span class="pre">Context</span></code>.</p></li>
 </ul>
 </div></blockquote>
 <p>When validating a field <code class="docutils literal notranslate"><span class="pre">f</span></code> in a type <code class="docutils literal notranslate"><span class="pre">T</span></code>, in case the validator
@@ -2417,26 +2411,27 @@ fails, EverParse calls the user-provided <code class="docutils literal notransla
 the following arguments:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">TypeName</span></code> argument is the name of the type <code class="docutils literal notranslate"><span class="pre">T</span></code></li>
-<li>The <code class="docutils literal notranslate"><span class="pre">FieldName</span></code> argument is name of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></li>
-<li>The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> arguments are related and can be one of the following pairs:<ul>
-<li>“generic error”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_GENERIC</span></code> (1uL)</li>
-<li>“not enough data”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_NOT_ENOUGH_DATA</span></code> (2uL)</li>
-<li>“impossible”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_IMPOSSIBLE</span></code> (3uL)</li>
-<li>“list size not multiple of element size”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_LIST_SIZE_NOT_MULTIPLE</span></code> (4uL)</li>
-<li>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (5uL)</li>
-<li>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</li>
-<li>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</li>
-<li>“unspecified”, with the <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">7uL</span></code></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">TypeName</span></code> argument is the name of the type <code class="docutils literal notranslate"><span class="pre">T</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">FieldName</span></code> argument is name of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> arguments are related and can be one of the following pairs:</p>
+<ul>
+<li><p>“generic error”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_GENERIC</span></code> (1uL)</p></li>
+<li><p>“not enough data”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_NOT_ENOUGH_DATA</span></code> (2uL)</p></li>
+<li><p>“impossible”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_IMPOSSIBLE</span></code> (3uL)</p></li>
+<li><p>“list size not multiple of element size”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_LIST_SIZE_NOT_MULTIPLE</span></code> (4uL)</p></li>
+<li><p>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (5uL)</p></li>
+<li><p>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</p></li>
+<li><p>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</p></li>
+<li><p>“unspecified”, with the <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">7uL</span></code></p></li>
 </ul>
 </li>
-<li>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument is the user-provided <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointer</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">Length</span></code> argument is the length in bytes of the input buffer</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> argument is a pointer to the base of the input buffer</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
-start of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></li>
-<li>The <code class="docutils literal notranslate"><span class="pre">EndPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
-end of the field <code class="docutils literal notranslate"><span class="pre">f</span></code> at which the validation failure occurred.</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument is the user-provided <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointer</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Length</span></code> argument is the length in bytes of the input buffer</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> argument is a pointer to the base of the input buffer</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
+start of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">EndPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
+end of the field <code class="docutils literal notranslate"><span class="pre">f</span></code> at which the validation failure occurred.</p></li>
 </ul>
 </div></blockquote>
 <p>Following a validation failure at a given field, EverParse will invoke
@@ -2444,9 +2439,9 @@ the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</s
 caller to reconstruct a stack trace of a failing validation.</p>
 <p>EverParse generates a default error handler that records just the
 deepest validation failure that occurred.</p>
-</div>
-<div class="section" id="fully-worked-examples-tcp-segment-headers">
-<h1>Fully worked examples: TCP Segment Headers<a class="headerlink" href="#fully-worked-examples-tcp-segment-headers" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="fully-worked-examples-tcp-segment-headers">
+<h1>Fully worked examples: TCP Segment Headers<a class="headerlink" href="#fully-worked-examples-tcp-segment-headers" title="Link to this heading"></a></h1>
 <p>The classic <a class="reference external" href="https://tools.ietf.org/html/rfc793">IETF RFC 793</a> from
 1981 introduces the TCP protocol, including the format of the header
 of TCP segments. The format has been extended slightly since then, to
@@ -2705,8 +2700,8 @@ it will permit options arrays where the end-of-list option kind is not
 necessarily only the last element.</p>
 <p>Finally, we have the data field itself, whose byte size is bytes is
 the computed expression.</p>
-<div class="section" id="generated-code">
-<h2>Generated code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h2>
+<section id="generated-code">
+<h2>Generated code<a class="headerlink" href="#generated-code" title="Link to this heading"></a></h2>
 <p>Running the EverParse toolchain on the TCP segment header
 specification produces a C procedure with the following signature, in <code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">TcpCheckTcpHeader</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">___SegmentLength</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
@@ -2715,20 +2710,20 @@ specification produces a C procedure with the following signature, in <code clas
 <p>This procedure is a validator for the <code class="docutils literal notranslate"><span class="pre">TCP_HEADER</span></code> type. The caller
 passes in three parameters:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">__SegmentLength</span></code>, representing the <code class="docutils literal notranslate"><span class="pre">SegmentLength</span></code> argument of
-the <code class="docutils literal notranslate"><span class="pre">TCPHeader</span></code> type in the 3d specification.</li>
-<li><code class="docutils literal notranslate"><span class="pre">base</span></code>: a pointer to an array of bytes</li>
-<li><code class="docutils literal notranslate"><span class="pre">len</span></code>: a lower bound on the length of that array that <code class="docutils literal notranslate"><span class="pre">base</span></code>
-points to.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__SegmentLength</span></code>, representing the <code class="docutils literal notranslate"><span class="pre">SegmentLength</span></code> argument of
+the <code class="docutils literal notranslate"><span class="pre">TCPHeader</span></code> type in the 3d specification.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code>: a pointer to an array of bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len</span></code>: a lower bound on the length of that array that <code class="docutils literal notranslate"><span class="pre">base</span></code>
+points to.</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">TcpCheckTcpHeader</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if, and only if, the contents
 of <code class="docutils literal notranslate"><span class="pre">base</span></code> represent a valid <code class="docutils literal notranslate"><span class="pre">TCPHeader</span></code>, while enjoying all the
 guarantees of memory safety, arithmetic safety, double-fetch freedom,
 not modifying any of the caller’s memory, not allocating any heap
 data, and being provably functional correct.</p>
-</div>
-<div class="section" id="error-handling-1">
-<h2>Error handling<a class="headerlink" href="#error-handling-1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id4">
+<h2>Error handling<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> includes a default error handler to report the leaf
 validation failure. It also expects a client module to supply an
 implementation of</p>
@@ -2742,10 +2737,10 @@ implementation of</p>
 <p>This can be instantiated with a procedure to, say, log an error.</p>
 <p>Alternatively, the default error handler in <code class="docutils literal notranslate"><span class="pre">TCPWrapper.h</span></code> can be
 replaced by a custom error handler of your choosing.</p>
-</div>
-</div>
-<div class="section" id="fully-worked-examples-elf-files">
-<h1>Fully worked examples: ELF files<a class="headerlink" href="#fully-worked-examples-elf-files" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="fully-worked-examples-elf-files">
+<h1>Fully worked examples: ELF files<a class="headerlink" href="#fully-worked-examples-elf-files" title="Link to this heading"></a></h1>
 <p>ELF (Executable and Linkable Format) is a common, standard file format
 for various kinds of binary files (object files, executables, shared
 libraries, and core dumps). The file format is described as
@@ -2972,8 +2967,8 @@ array of entries.</p>
 } ELF;
 </pre></div>
 </div>
-<div class="section" id="integrating-elf-validator-in-existing-code">
-<h2>Integrating ELF validator in existing code<a class="headerlink" href="#integrating-elf-validator-in-existing-code" title="Permalink to this headline">¶</a></h2>
+<section id="integrating-elf-validator-in-existing-code">
+<h2>Integrating ELF validator in existing code<a class="headerlink" href="#integrating-elf-validator-in-existing-code" title="Link to this heading"></a></h2>
 <p>To compile the 3d specification to C code, download the latest
 <a class="reference external" href="https://github.com/project-everest/everparse/releases">EverParse release</a> and compile
 the 3d spec with the EverParse binary, e.g. for Windows:
@@ -2987,8 +2982,8 @@ validation function as follows:</p>
 integrate these validators into existing C code, drop in these
 generated <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files
 in the development and invoke <code class="docutils literal notranslate"><span class="pre">`ElfCheckElf</span></code> as necessary.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

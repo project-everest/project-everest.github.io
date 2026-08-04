@@ -2452,8 +2452,8 @@
 <a href=#2452 id=2452 data-nosnippet>2452</a>    cbor_raw
 <a href=#2453 id=2453 data-nosnippet>2453</a>    &lt;<span class="lifetime">'a</span>&gt;
 <a href=#2454 id=2454 data-nosnippet>2454</a>{
-<a href=#2455 id=2455 data-nosnippet>2455</a>    <span class="kw">let </span>i0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = pi[<span class="number">0</span>];
-<a href=#2456 id=2456 data-nosnippet>2456</a>    <span class="kw">match </span>i0
+<a href=#2455 id=2455 data-nosnippet>2455</a>    <span class="kw">let </span>iter: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = pi[<span class="number">0</span>];
+<a href=#2456 id=2456 data-nosnippet>2456</a>    <span class="kw">match </span>iter
 <a href=#2457 id=2457 data-nosnippet>2457</a>    {
 <a href=#2458 id=2458 data-nosnippet>2458</a>        cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw::CBOR_Raw_Iterator_Slice { _0: i1 } =&gt;
 <a href=#2459 id=2459 data-nosnippet>2459</a>          {
@@ -2558,8 +2558,8 @@
 <a href=#2558 id=2558 data-nosnippet>2558</a>    cbor_map_entry
 <a href=#2559 id=2559 data-nosnippet>2559</a>    &lt;<span class="lifetime">'a</span>&gt;
 <a href=#2560 id=2560 data-nosnippet>2560</a>{
-<a href=#2561 id=2561 data-nosnippet>2561</a>    <span class="kw">let </span>i0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry = pi[<span class="number">0</span>];
-<a href=#2562 id=2562 data-nosnippet>2562</a>    <span class="kw">match </span>i0
+<a href=#2561 id=2561 data-nosnippet>2561</a>    <span class="kw">let </span>iter: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry = pi[<span class="number">0</span>];
+<a href=#2562 id=2562 data-nosnippet>2562</a>    <span class="kw">match </span>iter
 <a href=#2563 id=2563 data-nosnippet>2563</a>    {
 <a href=#2564 id=2564 data-nosnippet>2564</a>        cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry::CBOR_Raw_Iterator_Slice { _0: i1 } =&gt;
 <a href=#2565 id=2565 data-nosnippet>2565</a>          {
@@ -4357,9 +4357,9 @@
 <a href=#4357 id=4357 data-nosnippet>4357</a>                        <span class="kw">while
 <a href=#4358 id=4358 data-nosnippet>4358</a>                        </span>cond
 <a href=#4359 id=4359 data-nosnippet>4359</a>                        {
-<a href=#4360 id=4360 data-nosnippet>4360</a>                            <span class="kw">let </span>i0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = (<span class="kw-2">&amp;</span>pi1)[<span class="number">0</span>];
+<a href=#4360 id=4360 data-nosnippet>4360</a>                            <span class="kw">let </span>iter: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = (<span class="kw-2">&amp;</span>pi1)[<span class="number">0</span>];
 <a href=#4361 id=4361 data-nosnippet>4361</a>                            <span class="kw">let </span>elt1: cbor_raw =
-<a href=#4362 id=4362 data-nosnippet>4362</a>                                <span class="kw">match </span>i0
+<a href=#4362 id=4362 data-nosnippet>4362</a>                                <span class="kw">match </span>iter
 <a href=#4363 id=4363 data-nosnippet>4363</a>                                {
 <a href=#4364 id=4364 data-nosnippet>4364</a>                                    cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw::CBOR_Raw_Iterator_Slice
 <a href=#4365 id=4365 data-nosnippet>4365</a>                                    { _0: i }
@@ -4386,9 +4386,9 @@
 <a href=#4386 id=4386 data-nosnippet>4386</a>                                    =&gt; cbor_serialized_array_iterator_next_with_depth(<span class="kw-2">&amp;mut </span>pi1, i),
 <a href=#4387 id=4387 data-nosnippet>4387</a>                                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Incomplete pattern matching"</span>)
 <a href=#4388 id=4388 data-nosnippet>4388</a>                                };
-<a href=#4389 id=4389 data-nosnippet>4389</a>                            <span class="kw">let </span>i00: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = (<span class="kw-2">&amp;</span>pi2)[<span class="number">0</span>];
+<a href=#4389 id=4389 data-nosnippet>4389</a>                            <span class="kw">let </span>iter0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw = (<span class="kw-2">&amp;</span>pi2)[<span class="number">0</span>];
 <a href=#4390 id=4390 data-nosnippet>4390</a>                            <span class="kw">let </span>elt2: cbor_raw =
-<a href=#4391 id=4391 data-nosnippet>4391</a>                                <span class="kw">match </span>i00
+<a href=#4391 id=4391 data-nosnippet>4391</a>                                <span class="kw">match </span>iter0
 <a href=#4392 id=4392 data-nosnippet>4392</a>                                {
 <a href=#4393 id=4393 data-nosnippet>4393</a>                                    cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_raw::CBOR_Raw_Iterator_Slice
 <a href=#4394 id=4394 data-nosnippet>4394</a>                                    { _0: i }
@@ -4551,10 +4551,10 @@
 <a href=#4551 id=4551 data-nosnippet>4551</a>                        <span class="kw">while
 <a href=#4552 id=4552 data-nosnippet>4552</a>                        </span>cond
 <a href=#4553 id=4553 data-nosnippet>4553</a>                        {
-<a href=#4554 id=4554 data-nosnippet>4554</a>                            <span class="kw">let </span>i0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry =
+<a href=#4554 id=4554 data-nosnippet>4554</a>                            <span class="kw">let </span>iter: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry =
 <a href=#4555 id=4555 data-nosnippet>4555</a>                                (<span class="kw-2">&amp;</span>pi1)[<span class="number">0</span>];
 <a href=#4556 id=4556 data-nosnippet>4556</a>                            <span class="kw">let </span>elt1: cbor_map_entry =
-<a href=#4557 id=4557 data-nosnippet>4557</a>                                <span class="kw">match </span>i0
+<a href=#4557 id=4557 data-nosnippet>4557</a>                                <span class="kw">match </span>iter
 <a href=#4558 id=4558 data-nosnippet>4558</a>                                {
 <a href=#4559 id=4559 data-nosnippet>4559</a>                                    cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry::CBOR_Raw_Iterator_Slice
 <a href=#4560 id=4560 data-nosnippet>4560</a>                                    { _0: i }
@@ -4581,10 +4581,10 @@
 <a href=#4581 id=4581 data-nosnippet>4581</a>                                    =&gt; cbor_serialized_map_iterator_next_with_depth(<span class="kw-2">&amp;mut </span>pi1, i),
 <a href=#4582 id=4582 data-nosnippet>4582</a>                                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Incomplete pattern matching"</span>)
 <a href=#4583 id=4583 data-nosnippet>4583</a>                                };
-<a href=#4584 id=4584 data-nosnippet>4584</a>                            <span class="kw">let </span>i00: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry =
+<a href=#4584 id=4584 data-nosnippet>4584</a>                            <span class="kw">let </span>iter0: cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry =
 <a href=#4585 id=4585 data-nosnippet>4585</a>                                (<span class="kw-2">&amp;</span>pi2)[<span class="number">0</span>];
 <a href=#4586 id=4586 data-nosnippet>4586</a>                            <span class="kw">let </span>elt2: cbor_map_entry =
-<a href=#4587 id=4587 data-nosnippet>4587</a>                                <span class="kw">match </span>i00
+<a href=#4587 id=4587 data-nosnippet>4587</a>                                <span class="kw">match </span>iter0
 <a href=#4588 id=4588 data-nosnippet>4588</a>                                {
 <a href=#4589 id=4589 data-nosnippet>4589</a>                                    cbor_raw_iterator__CBOR_Pulse_Raw_Type_cbor_map_entry::CBOR_Raw_Iterator_Slice
 <a href=#4590 id=4590 data-nosnippet>4590</a>                                    { _0: i }

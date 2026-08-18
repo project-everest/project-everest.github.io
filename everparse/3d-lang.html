@@ -1017,7 +1017,7 @@ padding between struct fields that a C compiler is sometimes requires to insert.
 <span class="c">// SNIPPET_END: GetFieldPtr.T act$</span>
 
 
-<span class="k">refining</span> &quot;GetFieldPtrBase.h&quot; {
+<span class="k">refining</span> "GetFieldPtrBase.h" {
    S <span class="k">as</span> T
 }
 </pre></div>
@@ -1026,14 +1026,14 @@ padding between struct fields that a C compiler is sometimes requires to insert.
 the type <code class="docutils literal notranslate"><span class="pre">S</span></code> defined in the C header file <code class="docutils literal notranslate"><span class="pre">GetFieldPtrBase.h</span></code> is
 refined by the type <code class="docutils literal notranslate"><span class="pre">T</span></code> defined here. As a result of this
 declaration, 3d emits a static assertion in the C code of the form</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;GetFieldPtrBase.h&quot;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"GetFieldPtrBase.h"</span>
 <span class="n">C_ASSERT</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>checking that the <code class="docutils literal notranslate"><span class="pre">sizeof(S)</span></code> as computed by the C compiler matches
 3d’s computation of the <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span></code>.</p>
 <p>In generality, the refining declaration takes the following form:</p>
-<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">refining</span> &quot;I1.h&quot;, ..., &quot;In.h&quot; {
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">refining</span> "I1.h", ..., "In.h" {
     S1 <span class="k">as</span> T1, ...
     Sm <span class="k">as</span> Tm
 }
@@ -1079,7 +1079,7 @@ defined in the header file <cite>AlignBase.h</cite> shown below:</p>
 </pre></div>
 </div>
 <p>Let’s also decorate the 3d file with the following refining declaration:</p>
-<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">refining</span> &quot;AlignBase.h&quot; {
+<div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">refining</span> "AlignBase.h" {
    TLV, Value, coloredPoint2, coloredPoint1, point
 }
 </pre></div>
@@ -1090,7 +1090,7 @@ defined in the header file <cite>AlignBase.h</cite> shown below:</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stddef.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
 
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;AlignBase.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"AlignBase.h"</span>
 <span class="k">typedef</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">UINT8</span><span class="p">;</span>
 <span class="k">typedef</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">UINT16</span><span class="p">;</span>
 <span class="k">typedef</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">UINT32</span><span class="p">;</span>
@@ -1147,10 +1147,10 @@ be represented using 64 bits (if <code class="docutils literal notranslate"><spa
 <code class="docutils literal notranslate"><span class="pre">.3d.config</span></code> file that declares all the compile-time flags used in
 the specification and mentions a C header file in which to find
 definitions for those flags. Here is a sample config file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">&quot;compile_time_flags&quot;</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">"compile_time_flags"</span><span class="p">:</span>
     <span class="p">{</span>
-      <span class="s2">&quot;flags&quot;</span><span class="p">:[</span><span class="s2">&quot;ARCH64&quot;</span><span class="p">],</span>
-      <span class="s2">&quot;include_file&quot;</span><span class="p">:</span><span class="s2">&quot;arch_flags.h&quot;</span>
+      <span class="s2">"flags"</span><span class="p">:[</span><span class="s2">"ARCH64"</span><span class="p">],</span>
+      <span class="s2">"include_file"</span><span class="p">:</span><span class="s2">"arch_flags.h"</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1160,7 +1160,7 @@ definitions for those flags. Here is a sample config file:</p>
 output.</p>
 <p>In the header file <code class="docutils literal notranslate"><span class="pre">PointArch_32_64.h</span></code>, we see an include for
 the header file mentioned in the config:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;arch_flags.h&quot;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"arch_flags.h"</span>
 </pre></div>
 </div>
 <p>In the generated C file, <code class="docutils literal notranslate"><span class="pre">PointArch_32_64.c</span></code>, we see the code below,

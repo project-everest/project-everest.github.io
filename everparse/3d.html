@@ -157,6 +157,9 @@ verified C code, and similarly for <code class="docutils literal notranslate"><s
 <li><p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
 helpers for the implementation of verified validators, common to
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+<li><p>with <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>, two additional headers, <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code> and
+<code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code>, which play the same role for the Pulse
+backend</p></li>
 </ul>
 <ol class="arabic simple" start="3">
 <li><p>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFile1Wrapper.h&quot;</span></code> into any of your C
@@ -300,6 +303,15 @@ package is already configured to use the F* executable provided in
 the package. Otherwise, the default is to use the <code class="docutils literal notranslate"><span class="pre">fstar.exe</span></code>
 found from the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pulse</span></code></p>
+<p>Generates the verified validators with the Pulse backend instead of the
+default Low* backend. The entrypoint API in <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.h</span></code> is
+unchanged, so client code that only calls the entrypoints ports over
+unchanged; but the error-code constants, the error-handler signature,
+the copy-buffer projections and the <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> client primitives
+all differ. See the <em>Pulse backend primitives</em> part of
+<code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> below, and, in the <a class="reference internal" href="3d-lang.html#d-lang"><span class="std std-ref">3d language reference</span></a>, <a class="reference internal" href="3d-lang.html#sec-error-handling-pulse"><span class="std std-ref">Error handling under --pulse</span></a> and <a class="reference internal" href="3d-lang.html#sec-probing-pulse"><span class="std std-ref">Probing under --pulse</span></a>.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer|extern|static</span></code></p>
 <p>Specifies the format of validator input buffers:</p>
 <ul>
@@ -307,8 +319,11 @@ found from the <code class="docutils literal notranslate"><span class="pre">PATH
 argument a byte array and its length.</p></li>
 <li><p>With <code class="docutils literal notranslate"><span class="pre">extern</span></code>, a validator takes as argument a value of a
 user-defined <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> type, representing an
-input byte stream, for which the following functions need to be
-defined:</p>
+input byte stream. The client must define that type, and a set of
+functions over it that <strong>depends on the backend</strong>: Low* and Pulse
+do not ask for the same primitives, nor even for the same argument
+types. Both sets are given below.</p>
+<p><strong>Low* backend primitives</strong> (the default)</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">EverParseHas</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">_extra_t</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
@@ -366,15 +381,138 @@ returns the number of bytes so skipped, without reading them.</p>
 <p>In all such functions, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_EXTRA_T</span></code> is a user-defined
 type for the context used for error handling (see “Error handling”
 in the 3d language reference.)</p>
+<p><strong>Pulse backend primitives</strong> (with <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>)</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>, none of the primitives above are used. The
+<code class="docutils literal notranslate"><span class="pre">extern</span></code> and <code class="docutils literal notranslate"><span class="pre">static</span></code> input streams instead require the
+following set. As in Low*, each one receives the
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_EXTRA_T</span></code> context that was passed to the validator, but
+byte counts are <code class="docutils literal notranslate"><span class="pre">size_t</span></code> rather than <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w">  </span><span class="nf">EverParseStreamGetPosition</span><span class="p">(</span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">EverParseStreamHas</span><span class="w">        </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">EverParseStreamHasAt</span><span class="w">      </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">off</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w">    </span><span class="nf">EverParseStreamReadBytes</span><span class="w">  </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">dst</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w">    </span><span class="nf">EverParseStreamSkip</span><span class="w">       </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w">  </span><span class="nf">EverParseStreamEmpty</span><span class="w">      </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">);</span>
+
+<span class="cm">/* only if the grammar uses the `field_ptr_after` action */</span>
+<span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w">  </span><span class="nf">EverParseFieldPtrAfterImpl</span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">sz</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">**</span><span class="n">w</span><span class="p">,</span>
+<span class="w">                                           </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">EverParseNullPtr</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">static</span></code>, every one of these is declared
+<code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">inline</span></code> rather than <code class="docutils literal notranslate"><span class="pre">extern</span></code>, except
+<code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code>; see the <code class="docutils literal notranslate"><span class="pre">static</span></code> bullet below.
+<code class="docutils literal notranslate"><span class="pre">share/everparse/tests/3d/static</span></code> is a worked example, and the
+<code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> that <code class="docutils literal notranslate"><span class="pre">--pulse</span></code> copies into the output directory is
+the authoritative declaration of this set.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition(base)</span></code> returns the <em>absolute</em>
+position of the stream, that is, the total number of bytes it has
+consumed since it was created. The generated wrapper samples it on
+both sides of the validator call and subtracts the two, to recover
+the parsed size; it must therefore be cumulative, and in particular
+must keep counting across successive validations on the same
+stream. It is the one primitive whose signature has no
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_EXTRA_T</span></code> parameter; besides being used inside the
+validators, it is called directly from the generated
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.c</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamHas(extra,</span> <span class="pre">base,</span> <span class="pre">n)</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> iff <code class="docutils literal notranslate"><span class="pre">n</span></code>
+bytes are available at the current position, and must consume
+nothing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamHasAt(extra,</span> <span class="pre">base,</span> <span class="pre">off,</span> <span class="pre">n)</span></code> returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> iff
+<code class="docutils literal notranslate"><span class="pre">n</span></code> bytes are available starting <code class="docutils literal notranslate"><span class="pre">off</span></code> bytes <strong>after the
+current position</strong>, and must consume nothing. Unlike
+<code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code>’s result, <code class="docutils literal notranslate"><span class="pre">off</span></code> is <em>relative</em>; an
+implementation that treats it as an absolute offset will read out
+of bounds and accept truncated input, since this call is the entire
+bounds check performed by the non-consuming validators. The
+validators never ask about an <code class="docutils literal notranslate"><span class="pre">off</span></code> beyond the end of the stream,
+so the answer in that case is unspecified – but the implementation
+must still reach it safely, in particular by guarding against
+<code class="docutils literal notranslate"><span class="pre">off</span> <span class="pre">+</span> <span class="pre">n</span></code> overflowing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamReadBytes(extra,</span> <span class="pre">base,</span> <span class="pre">n,</span> <span class="pre">dst)</span></code> copies the next
+<code class="docutils literal notranslate"><span class="pre">n</span></code> bytes of the stream into <code class="docutils literal notranslate"><span class="pre">dst</span></code> and advances the stream by
+<code class="docutils literal notranslate"><span class="pre">n</span></code>. It is only ever called to read a leaf integer, so <code class="docutils literal notranslate"><span class="pre">n</span></code> is
+at most 8.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamSkip(extra,</span> <span class="pre">base,</span> <span class="pre">n)</span></code> advances the stream by
+<code class="docutils literal notranslate"><span class="pre">n</span></code> bytes without reading them.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseStreamEmpty(extra,</span> <span class="pre">base)</span></code> returns the number of bytes
+remaining <strong>and consumes all of them</strong>; it backs <code class="docutils literal notranslate"><span class="pre">all_bytes</span></code>. It
+is only ever called on an unbounded stream: within a size-bounded
+field such as <code class="docutils literal notranslate"><span class="pre">t_at_most</span></code>, the generated code instead computes
+what the bound says is left and drains it with
+<code class="docutils literal notranslate"><span class="pre">EverParseStreamSkip</span></code>, so that the bytes following the bounded
+region are not swallowed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseFieldPtrAfterImpl(extra,</span> <span class="pre">sz,</span> <span class="pre">w,</span> <span class="pre">base)</span></code> backs the
+<code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> action, which the <code class="docutils literal notranslate"><span class="pre">buffer</span></code> input stream does
+not have. It should store into <code class="docutils literal notranslate"><span class="pre">*w</span></code> a pointer to the next <code class="docutils literal notranslate"><span class="pre">sz</span></code>
+bytes of the stream, advance the stream by <code class="docutils literal notranslate"><span class="pre">sz</span></code>, and return
+<code class="docutils literal notranslate"><span class="pre">TRUE</span></code>; if it cannot, it must return <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> and leave <code class="docutils literal notranslate"><span class="pre">*w</span></code>
+alone, in which case the generated code reports a failure. Its F*
+specification constrains neither the pointer written nor the
+stream, so – exactly as for <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code> in Low* – it is the
+responsibility of the application to ensure double-fetch freedom on
+the contents of the returned field is preserved.
+<code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code> is the value the generated code stores into
+<code class="docutils literal notranslate"><span class="pre">*w</span></code> before the call.</p>
+<p>Finally, and exactly as in Low*, the client supplies the two
+wrapper-level callbacks below. These are common to both backends,
+and their signatures are unchanged by <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EverParseHandleError</span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">parsedSize</span><span class="p">,</span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">typename</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">fieldname</span><span class="p">,</span>
+<span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">reason</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">error_code</span><span class="p">);</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EverParseRetreat</span><span class="w">    </span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">base</span><span class="p">,</span>
+<span class="w">                                 </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">parsedSize</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EverParseHandleError</span></code> is the error callback described under
+“Error handling” in the 3d language reference. <code class="docutils literal notranslate"><span class="pre">EverParseRetreat</span></code>
+is called by the generated wrapper on the way out, with the number
+of bytes the validator consumed; a client that makes it genuinely
+rewind the stream must nevertheless <em>not</em> let it rewind
+<code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code>, on which the wrapper’s arithmetic
+depends.</p>
+<p>Three differences from the Low* contract are worth calling out
+when porting a client:</p>
+<ul class="simple">
+<li><p><strong>The stream tracks its own position.</strong> The generated
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Check&lt;Type&gt;</span></code> wrapper has the same signature as in Low*,
+but the Pulse validator it calls returns a plain <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>
+error code rather than a packed <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>, so the wrapper
+cannot read the parsed size out of the result. It recovers that
+size by sampling <code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code> on either side of
+the call and subtracting – which is why that primitive has to be
+cumulative.</p></li>
+<li><p><strong>Reads always copy.</strong> <code class="docutils literal notranslate"><span class="pre">EverParseStreamReadBytes</span></code> returns
+<code class="docutils literal notranslate"><span class="pre">void</span></code>, so, unlike <code class="docutils literal notranslate"><span class="pre">EverParseRead</span></code>, it cannot hand back a
+pointer into the client’s own storage.</p></li>
+<li><p><strong>There is no</strong> <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code>. The <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> action is
+restricted to the <code class="docutils literal notranslate"><span class="pre">buffer</span></code> input stream on both Low* and
+Pulse, so nothing is lost there; but <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> is
+backed by the explicit <code class="docutils literal notranslate"><span class="pre">EverParseFieldPtrAfterImpl</span></code> primitive
+above rather than by <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code>, and it needs
+<code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code> as well.</p></li>
+</ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">static</span></code> is like <code class="docutils literal notranslate"><span class="pre">extern</span></code> except that the functions on
-<code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> are declared <code class="docutils literal notranslate"><span class="pre">static</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> are declared <code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">inline</span></code>
+rather than <code class="docutils literal notranslate"><span class="pre">extern</span></code>, so that the compiler sees each stream
+operation at every validator call site instead of linking against
+it. This holds under both backends. The client must therefore
+<em>define</em> those functions, not merely implement them in a separate
+translation unit: the header named by <code class="docutils literal notranslate"><span class="pre">--input_stream_include</span></code> is
+included into every generated <code class="docutils literal notranslate"><span class="pre">.c</span></code> file, so that is where the
+definitions belong. <code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code> is the exception – it is a
+value, not a function, and stays <code class="docutils literal notranslate"><span class="pre">extern</span></code> under both input
+streams.</p></li>
 </ul>
 <p>In any case, to compile the C code produced by EverParse, you need
 to add to the include path the subdirectory
 <code class="docutils literal notranslate"><span class="pre">src/3d/prelude/&lt;input_stream_format&gt;</span></code> of the EverParse binary
 package or repository; this directory contains the <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>
-corresponding to the input stream format given by <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code></p>
+corresponding to the input stream format given by <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>
+(with <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> is copied into the output
+directory instead, and <code class="docutils literal notranslate"><span class="pre">src/3d/prelude</span></code> is not used at all).</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--input_stream_include</span> <span class="pre">myinclude.h</span></code></p>
 <p>With <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>, defines the name of the C include file that
@@ -786,6 +924,7 @@ files at all.)</p>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#selective-entrypoint-generation">Selective Entrypoint Generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#named-entrypoints">Named Entrypoints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#probing-under-pulse">Probing under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#specialization-for-different-pointer-sizes">Specialization for Different Pointer Sizes</a><ul>
@@ -809,7 +948,10 @@ files at all.)</p>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#comments">Comments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#modular-structure-and-files">Modular structure and files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#error-handling">Error handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3d-lang.html#error-handling">Error handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3d-lang.html#error-handling-under-pulse">Error handling under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="3d-lang.html#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#generated-code">Generated code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3d-lang.html#id4">Error handling</a></li>

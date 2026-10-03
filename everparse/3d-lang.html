@@ -230,6 +230,25 @@ that fits in <code class="docutils literal notranslate"><span class="pre">len</s
 <p>More generally, for a given <code class="docutils literal notranslate"><span class="pre">Module.3d</span></code>, a type definition <code class="docutils literal notranslate"><span class="pre">typ</span></code>
 marked with <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> tells 3d to expose its validator in
 <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> which will bear the name <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>.</p>
+<p id="complete-wrappers">If 3d is called with <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code>, then, next to
+<code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>, it also exposes <code class="docutils literal notranslate"><span class="pre">ModuleCheckCompleteTyp</span></code>, with
+the same signature. It behaves like <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code>, except
+that it additionally checks that the validator consumed the <em>whole</em>
+input buffer: it returns 0 if <code class="docutils literal notranslate"><span class="pre">base</span></code> starts with valid <code class="docutils literal notranslate"><span class="pre">typ</span></code> data
+but some bytes remain unparsed at the end of the <code class="docutils literal notranslate"><span class="pre">len</span></code> bytes. In that
+case, <code class="docutils literal notranslate"><span class="pre">ModuleEverParseError</span></code> is called with the type name, an empty
+field name, and <code class="docutils literal notranslate"><span class="pre">&quot;unexpected</span> <span class="pre">trailing</span> <span class="pre">bytes&quot;</span></code> as the reason.</p>
+<p>Thus, use <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code> if the input buffer may contain trailing
+data beyond the message (for instance because it is a fixed-size
+receive buffer), and <code class="docutils literal notranslate"><span class="pre">ModuleCheckCompleteTyp</span></code> if the input buffer is
+meant to contain exactly one message and nothing else.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Complete</span></code> wrappers are generated only for the default
+(<code class="docutils literal notranslate"><span class="pre">buffer</span></code>) input stream binding, since only there does the wrapper
+know the length of the whole input. Thus <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code> has
+no effect with <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">static</span></code>.</p>
+</div>
 <p>Structs can be nested, such as in the following instance:</p>
 <div class="highlight-3d notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> _point {
   UINT16 x;
@@ -1478,6 +1497,12 @@ probe and validate a pointer to the type <code class="docutils literal notransla
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckIndirect</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>As for plain entry points, with <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code> a <code class="docutils literal notranslate"><span class="pre">Complete</span></code>
+counterpart is also exposed, which additionally checks that the whole
+probed region was consumed by the validator:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckCompleteIndirect</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>Since only <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> is declared (and not a plain <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code>),
 only the probe entry point appears in the header. If we also wanted a plain
 validation entry point, we would additionally write <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> before
@@ -1652,14 +1677,18 @@ but is not exposed publicly:</p>
 </pre></div>
 </div>
 <p>For <code class="docutils literal notranslate"><span class="pre">ProbeOnly</span></code>, since only <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> is specified, only the probe
-entry point is public:</p>
+entry point is public (here and below, the <code class="docutils literal notranslate"><span class="pre">Complete</span></code> wrappers are
+those produced by <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code>):</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckProbeOnly</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckCompleteProbeOnly</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For <code class="docutils literal notranslate"><span class="pre">BothEntrypoints</span></code>, since both a plain <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> and an
 <code class="docutils literal notranslate"><span class="pre">entrypoint</span> <span class="pre">probe</span></code> are declared, both entry points are public:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckBothEntrypoints</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckBothEntrypoints</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ProbeCheckCompleteBothEntrypoints</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeProbeAndCopyCheckCompleteBothEntrypoints</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -1697,6 +1726,20 @@ One can override these names using the <code class="docutils literal notranslate
 <span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeAll</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>together with, under <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code>, their complete-check
+counterparts, whose names are obtained by suffixing the user-provided
+name with <code class="docutils literal notranslate"><span class="pre">Complete</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">ValidateMyDataComplete</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeMyDataComplete</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+
+<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">CheckAllComplete</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">ProbeAllComplete</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">probeDest</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">probeAddr</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">providedSize</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Consequently, 3d rejects a <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file in which two entry point names
+collide, including, under <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code>, when one is the
+<code class="docutils literal notranslate"><span class="pre">Complete</span></code> counterpart of the other.</p>
 <p>The name argument is optional: <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> without parentheses continues to
 use the auto-generated name. Named and unnamed entry points can be freely mixed
 on the same type.</p>

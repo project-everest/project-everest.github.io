@@ -153,7 +153,11 @@ format from <code class="docutils literal notranslate"><span class="pre">MyFile1
 <li><p><code class="docutils literal notranslate"><span class="pre">MyFile1.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.h</span></code>: the verified C code generated from the verified
 F* and Low* files, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.h</span></code>: an entrypoint API to call into the
-verified C code, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+verified C code, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>. Note that an entrypoint
+<code class="docutils literal notranslate"><span class="pre">Check</span></code> wrapper accepts an input buffer that holds a valid message
+<em>followed by unparsed trailing bytes</em>; pass <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code> to also
+get, for each entrypoint, a wrapper that rejects those, as described
+<a class="reference internal" href="#complete-wrappers-option"><span class="std std-ref">below</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
 helpers for the implementation of verified validators, common to
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
@@ -189,6 +193,20 @@ the heap.</p></li>
 contain valid representations of the message according to its
 specification, rejecting all others.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These guarantees are those of the validator, in <code class="docutils literal notranslate"><span class="pre">MyFile1.c</span></code>, which is
+extracted from verified F* code. The entrypoint wrappers in
+<code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.c</span></code> are ordinary generated C glue around it, and are not
+themselves verified.</p>
+<p>Note also that “a valid representation of a message” is about what the
+input array <em>starts with</em>: a validator accepts an array that holds a
+valid message followed by trailing bytes, and reports how many bytes it
+consumed, so that an enclosing format can carry on from there. The
+<code class="docutils literal notranslate"><span class="pre">Check</span></code> wrapper propagates that, returning <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> in such a case. See
+the <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code> option <a class="reference internal" href="#complete-wrappers-option"><span class="std std-ref">below</span></a>
+for a wrapper that does not.</p>
+</div>
 </section>
 </section>
 <section id="download-and-install">
@@ -311,6 +329,49 @@ unchanged; but the error-code constants, the error-handler signature,
 the copy-buffer projections and the <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> client primitives
 all differ. See the <em>Pulse backend primitives</em> part of
 <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> below, and, in the <a class="reference internal" href="3d-lang.html#d-lang"><span class="std std-ref">3d language reference</span></a>, <a class="reference internal" href="3d-lang.html#sec-error-handling-pulse"><span class="std std-ref">Error handling under --pulse</span></a> and <a class="reference internal" href="3d-lang.html#sec-probing-pulse"><span class="std std-ref">Probing under --pulse</span></a>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code></p>
+<p id="complete-wrappers-option">For each entrypoint, generate a second wrapper that additionally checks
+that the validator consumed the <em>whole</em> input buffer.</p>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Check&lt;Typ&gt;(base,</span> <span class="pre">len)</span></code> wrapper recognizes a
+<em>prefix</em>: it returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> as soon as <code class="docutils literal notranslate"><span class="pre">base</span></code> starts with valid
+<code class="docutils literal notranslate"><span class="pre">&lt;Typ&gt;</span></code> data fitting within <code class="docutils literal notranslate"><span class="pre">len</span></code> bytes, and says nothing about the
+bytes that follow. For instance, the <code class="docutils literal notranslate"><span class="pre">point</span></code> entrypoint of the
+<code class="docutils literal notranslate"><span class="pre">HelloWorld.3d</span></code> of the <a class="reference internal" href="3d-lang.html#d-lang"><span class="std std-ref">3d language reference</span></a> is two
+<code class="docutils literal notranslate"><span class="pre">UINT16</span></code>s, hence 4 bytes wide, so <code class="docutils literal notranslate"><span class="pre">HelloWorldCheckPoint(base,</span> <span class="pre">5)</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> on any buffer whose first 4 bytes are a valid
+<code class="docutils literal notranslate"><span class="pre">point</span></code>, whatever the fifth byte is. This is deliberate – a message
+is routinely read
+into a fixed-size buffer larger than itself, and the underlying
+verified validator reports how many bytes it consumed, which is what
+lets an enclosing format resume parsing after the message – but it is
+not what a caller validating a standalone message wants.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">--complete_wrappers</span></code>, the usual wrapper keeps that behavior, and
+3d emits alongside it a second one, with <code class="docutils literal notranslate"><span class="pre">Complete</span></code> in its name and
+the same signature, that returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> only if validation succeeded
+<em>and</em> consumed exactly <code class="docutils literal notranslate"><span class="pre">len</span></code> bytes. On trailing bytes it calls
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;EverParseError</span></code> with the type name, an empty field name, and
+<code class="docutils literal notranslate"><span class="pre">&quot;unexpected</span> <span class="pre">trailing</span> <span class="pre">bytes&quot;</span></code> as the reason, then returns <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
+So, for that <code class="docutils literal notranslate"><span class="pre">point</span></code> entrypoint:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">HelloWorldCheckCompletePoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The naming rule, the behavior of probe entrypoints, and the treatment of
+user-named entrypoints (whose complete-check counterpart is the given
+name suffixed with <code class="docutils literal notranslate"><span class="pre">Complete</span></code>) are described in the <a class="reference internal" href="3d-lang.html#complete-wrappers"><span class="std std-ref">3d language
+reference</span></a>.</p>
+<p>This option works with both backends, and in particular is compatible
+with <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>. It is, however, only meaningful with <code class="docutils literal notranslate"><span class="pre">--input_stream</span>
+<span class="pre">buffer</span></code> (the default): with <code class="docutils literal notranslate"><span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code> the wrapper is
+handed an opaque stream rather than a byte array and a length, so it has
+no notion of the end of the input, and the option has no effect.</p>
+<p>Both wrappers are unverified glue code, generated into
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.c</span></code>; the formal guarantees listed above are those of the
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Validate&lt;Typ&gt;</span></code> validator that they call.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--no_complete_wrappers</span></code></p>
+<p>Generate only the plain entrypoint wrappers. This is toggled by default.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer|extern|static</span></code></p>
 <p>Specifies the format of validator input buffers:</p>

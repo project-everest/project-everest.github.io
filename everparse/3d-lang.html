@@ -84,7 +84,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#selective-entrypoint-generation">Selective Entrypoint Generation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#named-entrypoints">Named Entrypoints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#an-end-to-end-executable-example">An End-to-end Executable Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#probing-under-pulse">Probing under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#probing-under-api-pulse">Probing under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#specialization-for-different-pointer-sizes">Specialization for Different Pointer Sizes</a><ul>
@@ -99,7 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#adding-copyright-notices-to-produced-c-h-files">Adding copyright notices to produced .c/.h files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modular-structure-and-files">Modular structure and files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#error-handling">Error handling</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#error-handling-under-pulse">Error handling under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-handling-under-api-pulse">Error handling under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#fully-worked-examples-tcp-segment-headers">Fully worked examples: TCP Segment Headers</a><ul>
@@ -269,16 +269,26 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The entrypoint API described here is the same under both backends:
-<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--pulse</span></code> generates a <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> declaring the very same
+<p><code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">lowstar</span></code> uses verified Pulse adapters while preserving the
+Low* C API described here, including direct validator calls, packed
+results, error callbacks, and copy-buffer projections. The original
+implementation remains the default, <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code>.
+<code class="docutils literal notranslate"><span class="pre">--no_api</span></code> restores that default; the former <code class="docutils literal notranslate"><span class="pre">--pulse</span></code> option is no
+longer accepted. <code class="docutils literal notranslate"><span class="pre">--api</span></code> selects the implementation and C API, while
+<code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> independently selects <code class="docutils literal notranslate"><span class="pre">buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code>.
+See <a class="reference internal" href="3d.html#d-api-option"><span class="std std-ref">the –api option</span></a> for the runtime headers required
+by each selection, including when using <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>.</p>
+<p>The entrypoint API is also the same under the native Pulse API:
+<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> generates a <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> declaring the very same
 <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code> prototypes, so client code that only calls the
 entrypoints ports over unchanged.</p>
-<p>Three things do differ. <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> includes
-<code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> instead of <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>, and
-its <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> constants are numbered differently (see
-<a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --pulse</span></a>). <code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--pulse</span></code> accordingly writes two
+<p><code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> includes <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>; its named <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> kinds use the
+same numbers (see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>).
+<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> accordingly writes two
 extra headers, <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> and <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code>,
-into the output directory alongside the ones listed above. Finally, the
+into the output directory alongside the ones listed above, unless
+<code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code> is specified. Finally, the
 client primitives that <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> and <code class="docutils literal notranslate"><span class="pre">extern</span></code> specifications
 require are not the same; those are documented in
 <a class="reference internal" href="3d.html#d"><span class="std std-ref">the 3d user manual</span></a>.</p>
@@ -866,6 +876,10 @@ every field of the union has the same size. As such, the <code class="docutils l
 on a <code class="docutils literal notranslate"><span class="pre">casetype</span></code> allows one to model the layout of a C union.</p>
 <p>Note, the <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute is not allowed on typedefs, enums, or other kinds
 of 3d declarations.</p>
+<p>Note also that every struct or casetype embedded by value in the fields of an
+<code class="docutils literal notranslate"><span class="pre">aligned</span></code> type must itself be <code class="docutils literal notranslate"><span class="pre">aligned</span></code>. Otherwise, 3d would lay the embedded
+type out without padding while a C compiler would pad it, and the generated
+static assertions would not compile. 3d rejects such specifications.</p>
 <section id="variable-length-types">
 <h2>Variable-length Types<a class="headerlink" href="#variable-length-types" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">aligned</span></code> attribute is also supported on variable-length types, but use it
@@ -1342,9 +1356,9 @@ in <code class="docutils literal notranslate"><span class="pre">EverParseEndiann
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code> (since it is just a <code class="docutils literal notranslate"><span class="pre">void*</span></code>), so long as it can
 also provide two functions: <code class="docutils literal notranslate"><span class="pre">EverParseStreamOf</span></code> to extract a buffer of bytes
 from a <code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code>; and <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen</span></code> to extract the
-length of the buffer. (Under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>, a third function is needed, and
+length of the buffer. (Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>, a third function is needed, and
 <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen</span></code> has a different return type; see
-<a class="reference internal" href="#sec-probing-pulse"><span class="std std-ref">Probing under --pulse</span></a>.)</p>
+<a class="reference internal" href="#sec-probing-pulse"><span class="std std-ref">Probing under --api pulse</span></a>.)</p>
 <p>The second line defines another extern callback for <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">probe</span> <span class="pre">(INIT)</span>
 <span class="pre">ProbeInit</span></code>. This results in the following extern C declaration in
 <code class="docutils literal notranslate"><span class="pre">Probe_ExternalAPI.h</span></code>:</p>
@@ -1746,13 +1760,13 @@ on the same type.</p>
 </section>
 <section id="an-end-to-end-executable-example">
 <h2>An End-to-end Executable Example<a class="headerlink" href="#an-end-to-end-executable-example" title="Link to this heading"></a></h2>
-<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/probe">is available in the EverParse repository</a>.</p>
+<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/lowstar/probe">is available in the EverParse repository</a>.</p>
 <p>It shows the use of multiple probe functions, linked with callbacks implemented
 in C, as well as a main C driver program that validates several example inputs
 containing pointers.</p>
 </section>
-<section id="probing-under-pulse">
-<span id="sec-probing-pulse"></span><h2>Probing under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code><a class="headerlink" href="#probing-under-pulse" title="Link to this heading"></a></h2>
+<section id="probing-under-api-pulse">
+<span id="sec-probing-pulse"></span><h2>Probing under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code><a class="headerlink" href="#probing-under-api-pulse" title="Link to this heading"></a></h2>
 <p>Everything above carries over to the Pulse backend unchanged: the
 <code class="docutils literal notranslate"><span class="pre">Probe_ExternalAPI.h</span></code> callbacks (<code class="docutils literal notranslate"><span class="pre">ProbeAndCopy</span></code>, <code class="docutils literal notranslate"><span class="pre">ProbeInit</span></code>, the
 coercion and specialization variants, and the <code class="docutils literal notranslate"><span class="pre">extern</span></code> readers and
@@ -1762,16 +1776,17 @@ addresses and sizes remain <code class="docutils literal notranslate"><span clas
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Probing itself is, however, supported only with <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer</span></code>
-(the default) under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>. A <code class="docutils literal notranslate"><span class="pre">probe</span></code> declaration combined with
+(the default) under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>. A <code class="docutils literal notranslate"><span class="pre">probe</span></code> declaration combined with
 <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">static</span></code> is rejected with
-<em>“Probes are only supported by the buffer backend under –pulse”</em>. The
-default backend has no such restriction.</p>
+<em>“Probes are only supported by the buffer backend under –api pulse”</em>.
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> have no such restriction
+for field probes.</p>
 <p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code> on its own — as a type parameter, or as the
 parameter of an <code class="docutils literal notranslate"><span class="pre">extern</span></code> action — is <em>not</em> restricted, and works with
 every <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> binding on both backends.</p>
 </div>
 <p>What changes is the small set of projections the client provides on
-<code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code>. Under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> declares:</p>
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code>. Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> declares:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="nf">EverParseStreamOf</span><span class="w"> </span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
 
 <span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w">   </span><span class="nf">EverParseStreamLen</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
@@ -1800,11 +1815,11 @@ validation reached.</p></li>
 <li><p>The client should not read or write it concurrently with a validator
 call; after a validation failure, the error handler receives this same
 pointer as its <code class="docutils literal notranslate"><span class="pre">Position</span></code> argument and must treat it as read-only
-(see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --pulse</span></a>).</p></li>
+(see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>).</p></li>
 </ul>
 </div></blockquote>
 <p>A reference implementation that satisfies both backends from a single source
-file is in <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/pulse-diff">src/3d/tests/pulse-diff/harness.c</a>.</p>
+file is in <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/pulse-lowstar-diff">share/everparse/tests/3d/pulse-lowstar-diff/harness.c</a>.</p>
 </section>
 </section>
 <section id="specialization-for-different-pointer-sizes">
@@ -2161,7 +2176,7 @@ the following C code:</p>
 </section>
 <section id="id3">
 <h2>An End-to-end Executable Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_test">of specialization is available in the
+<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/lowstar/specialize_test">of specialization is available in the
 EverParse repository</a>.</p>
 <p>It shows an example similar to the one developed above, but linked with a main C
 program and test driver. It also illustrates the use of nullable pointers in
@@ -2385,10 +2400,10 @@ rightfully rejects the subtraction as unsafe.</p>
 <h2>And End-to-end Example with Variable-length Structures<a class="headerlink" href="#and-end-to-end-example-with-variable-length-structures" title="Link to this heading"></a></h2>
 <p>Although data dependency is forbidden in coercions, there are many cases where
 variable-length structures fit well with 3d’s support for auto-specialization.</p>
-<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_test2">of specialization with variable-length
+<p>A small but fully worked out example <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/lowstar/specialize_test2">of specialization with variable-length
 structures is available in the EverParse repository</a>,
 including a main file driving the generated code with test input.</p>
-<p>Another example, <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/specialize_tagged_union_array">with data dependent tagged unions</a>,
+<p>Another example, <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/lowstar/specialize_tagged_union_array">with data dependent tagged unions</a>,
 is also available.</p>
 </section>
 <section id="other-forms-of-specialization">
@@ -2481,48 +2496,51 @@ using a fully qualified name of the form <code class="docutils literal notransla
 } Quad;
 </pre></div>
 </div>
-<p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/modules/">in the EverParse repository</a>.</p>
+<p>A commented example is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/share/everparse/tests/3d/lowstar/modules/">in the EverParse repository</a>.</p>
 </section>
 <section id="error-handling">
 <h1>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
 <p>When a validator fails, EverParse supports invoking a user-provided
 callback with contextual information about the failure.</p>
-<p>An error handling callback is a C procedure with the following signature:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ErrorHandler</span><span class="p">)(</span>
+<p>With <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> or <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, an error handling callback
+is a C procedure with the following seven-argument signature:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">EVERPARSE_ERROR_HANDLER</span><span class="p">)(</span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">FieldName</span><span class="p">,</span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">ErrorReason</span><span class="p">,</span>
 <span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">ErrorCode</span><span class="p">,</span>
 <span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Context</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">Length</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">Base</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">StartPosition</span><span class="p">,</span>
-<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">EndPosition</span>
+<span class="w">  </span><span class="n">EVERPARSE_INPUT_BUFFER</span><span class="w"> </span><span class="n">Input</span><span class="p">,</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">StartPosition</span>
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>EverParse also emits this type as a public <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_HANDLER</span></code>
-typedef in the generated <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, under both backends, and the
-generated validator prototypes in <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;.h</span></code> name that typedef.</p>
-<p>The signature above, and the error codes listed below, are those of the
-default, Low* backend. Both differ under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>; see
-<a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --pulse</span></a> for the details.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> supplies this typedef, and the generated validator prototypes
+in <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;.h</span></code> name it. <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_BUFFER</span></code> is <code class="docutils literal notranslate"><span class="pre">uint8_t</span> <span class="pre">*</span></code> for
+<code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer</span></code>. For <code class="docutils literal notranslate"><span class="pre">extern</span></code> and <code class="docutils literal notranslate"><span class="pre">static</span></code>, it is a record
+containing the client’s stream <code class="docutils literal notranslate"><span class="pre">base</span></code>, a <code class="docutils literal notranslate"><span class="pre">has_length</span></code> flag and a
+<code class="docutils literal notranslate"><span class="pre">uint64_t</span> <span class="pre">length</span></code>.</p>
+<p>The signature above, and the error codes listed below, describe
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>. Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> the
+signature differs but the
+named error kinds retain the same numbers; see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>.</p>
 <p>Every EverParse validator is parameterized by:</p>
 <ul class="simple">
-<li><p>A function pointer, of type <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></p></li>
+<li><p>A function pointer, of type <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_HANDLER</span></code> (unless
+<code class="docutils literal notranslate"><span class="pre">--use_error_handler_macro</span></code> selects a macro instead)</p></li>
 <li><p>A context parameter, <code class="docutils literal notranslate"><span class="pre">uint8_t*</span> <span class="pre">Context</span></code></p></li>
 </ul>
 <p>At the top-level, when calling into EverParse from an application, one
 can instantiate both the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> with a function of one’s
 choosing and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument with a pointer to some
 application-specific context.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> expects</p>
+<p>For the buffer input stream, the handler expects</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointers to refer to live and
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointers to refer to live and
 disjoint pieces of memory.</p></li>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">Length</span></code> to be the length in bytes of valid memory pointed
-to by <code class="docutils literal notranslate"><span class="pre">Base</span></code> and for <code class="docutils literal notranslate"><span class="pre">StartPosition</span> <span class="pre">&lt;=</span> <span class="pre">EndPosition</span> <span class="pre">&lt;=</span> <span class="pre">Length</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> to be within the input buffer. The callback does
+not receive the buffer length or the position at which validation failed.</p></li>
 </ul>
 </div></blockquote>
 <p>The <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> can</p>
@@ -2548,33 +2566,37 @@ the following arguments:</p>
 <li><p>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (5uL)</p></li>
 <li><p>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</p></li>
 <li><p>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</p></li>
-<li><p>“unspecified”, with the <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">7uL</span></code></p></li>
+<li><p>“probe failed”, <code class="docutils literal notranslate"><span class="pre">8uL</span></code> (no <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> wrapper
+macro in these two APIs)</p></li>
+<li><p>“unspecified”, for other unrecognized kinds</p></li>
 </ul>
 </li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> argument is the user-provided <code class="docutils literal notranslate"><span class="pre">Context</span></code> pointer</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Length</span></code> argument is the length in bytes of the input buffer</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">Base</span></code> argument is a pointer to the base of the input buffer</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Input</span></code> argument is the input buffer or stream view</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> argument is the offset from the input’s origin of the
 start of the field <code class="docutils literal notranslate"><span class="pre">f</span></code></p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">EndPosition</span></code> argument is the offset from <code class="docutils literal notranslate"><span class="pre">Base</span></code> of the
-end of the field <code class="docutils literal notranslate"><span class="pre">f</span></code> at which the validation failure occurred.</p></li>
 </ul>
 </div></blockquote>
+<p>The callback receives the unshifted error kind, not the packed validator
+result. Direct validators return a <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> containing the error kind in
+the high four bits and the position in the low 60 bits; use
+<code class="docutils literal notranslate"><span class="pre">EverParseGetValidatorErrorKind</span></code> and <code class="docutils literal notranslate"><span class="pre">EverParseGetValidatorErrorPos</span></code> to
+extract them. A successful result has kind zero.</p>
 <p>Following a validation failure at a given field, EverParse will invoke
 the <code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code> at each enclosing type as well. This allows a
 caller to reconstruct a stack trace of a failing validation.</p>
 <p>EverParse generates a default error handler that records just the
 deepest validation failure that occurred.</p>
-<section id="error-handling-under-pulse">
-<span id="sec-error-handling-pulse"></span><h2>Error handling under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code><a class="headerlink" href="#error-handling-under-pulse" title="Link to this heading"></a></h2>
+<section id="error-handling-under-api-pulse">
+<span id="sec-error-handling-pulse"></span><h2>Error handling under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code><a class="headerlink" href="#error-handling-under-api-pulse" title="Link to this heading"></a></h2>
 <p>The Pulse backend keeps the whole of the design above: the same
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_HANDLER</span></code> typedef in <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, the same
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_FRAME</span></code> structure and <code class="docutils literal notranslate"><span class="pre">EverParseDefaultErrorHandler</span></code>
 (shipped as plain C in <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code> rather than generated into
 <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>), the same per-module <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;EverParseError</span></code> callback, and
 the same stack trace of enclosing types. What changes is the handler’s
-argument list and the numbering of the error codes.</p>
-<p><strong>The handler signature.</strong> Under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code> the handler takes nine
+argument list and the width of the error code, not its kind number.</p>
+<p><strong>The handler signature.</strong> Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> the handler takes nine
 arguments rather than seven, because the input stream is passed as its
 constituent parts rather than as a single <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_BUFFER</span></code>. With
 the default <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer</span></code>:</p>
@@ -2592,8 +2614,8 @@ the default <code class="docutils literal notranslate"><span class="pre">--input
 </pre></div>
 </div>
 <p>With <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">static</span></code>, the three
-stream arguments are instead the client’s stream object, a truncation bound
-and an origin, of the client’s own types. Consult the
+stream arguments are instead the client’s <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code>
+object, a <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> truncation bound and a <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code> origin. Consult the
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_HANDLER</span></code> typedef in the generated <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> for the
 exact signature in any given configuration.</p>
 <p>Three points deserve attention:</p>
@@ -2605,38 +2627,41 @@ field of <code class="docutils literal notranslate"><span class="pre">EVERPARSE_
 <li><p>There is no <code class="docutils literal notranslate"><span class="pre">EndPosition</span></code> argument. <code class="docutils literal notranslate"><span class="pre">Position</span></code> is a pointer to the
 validator’s own position cell, which the handler may read but must not
 write to; the position it holds has already moved past whatever the
-failing field consumed, and, under <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or
-<code class="docutils literal notranslate"><span class="pre">static</span></code>, is relative to the origin rather than to the start of the
-input.</p></li>
+failing field consumed. Under <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code>,
+there is no position-cell argument: the stream maintains its own
+absolute position, read with <code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code>; subtract
+the supplied origin to obtain the position relative to this validation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> — the trailing argument, and the one that carries
 the same meaning as under the default backend — is the offset from
 the start of the input of the beginning of the field <code class="docutils literal notranslate"><span class="pre">f</span></code>. It is what
 a handler should report.</p></li>
 </ul>
 </div></blockquote>
-<p><strong>The error codes.</strong> <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.h</span></code> defines a different set of
-<code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> constants under <code class="docutils literal notranslate"><span class="pre">--pulse</span></code>. Code <code class="docutils literal notranslate"><span class="pre">1uL</span></code> is
-reassigned from “generic error” to “action failed”, so that the verified
-validators can use the shortcut <code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">&gt;</span> <span class="pre">validator_error_action_failed</span></code>, and
-the codes above it shift down by one. The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code>
-pairs are therefore:</p>
+<p><strong>The error codes.</strong> <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.h</span></code> defines <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code>
+constants under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> with the same kind numbers as Low*.
+The validator still returns a byte, not a packed position/error value.
+The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> pairs are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (1uL)</p></li>
+<li><p>“action failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_ACTION_FAILED</span></code> (5uL)</p></li>
 <li><p>“not enough data”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_NOT_ENOUGH_DATA</span></code> (2uL)</p></li>
 <li><p>“impossible”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_IMPOSSIBLE</span></code> (3uL)</p></li>
 <li><p>“list size not multiple of element size”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_LIST_SIZE_NOT_MULTIPLE</span></code> (4uL)</p></li>
-<li><p>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (5uL)</p></li>
-<li><p>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (6uL)</p></li>
-<li><p>“probe failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> (7uL)</p></li>
-<li><p>“unspecified”, with the <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">7uL</span></code></p></li>
+<li><p>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</p></li>
+<li><p>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</p></li>
+<li><p>“probe failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> (8uL)</p></li>
+<li><p>“unspecified”, with <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">==</span> <span class="pre">1uL</span></code> or <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">8uL</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>In particular, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_GENERIC</span></code> is not defined and never
 reported, and <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> exists only under
-<code class="docutils literal notranslate"><span class="pre">--pulse</span></code>. Client code that compares <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> against these macros
-ports unchanged between the two backends; client code that hardcodes the
-numeric values does not.</p>
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> (the packed <code class="docutils literal notranslate"><span class="pre">EVERPARSE_VALIDATOR_ERROR_PROBE_FAILED</span></code>
+constant also exists in the Low*-compatible runtime headers).
+Comparisons against the error-kind macros common to all three APIs keep
+the same meaning. Earlier Pulse releases used 1
+for action failure and 5, 6, 7 for constraint, padding, and probe failures.
+Clients that hardcoded those Pulse-specific numbers must update them;
+the callback signatures and byte return type are unchanged.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_*</span></code> codes returned by the probe wrappers are
 unaffected and keep the same values under both backends.</p>
 </section>
@@ -2650,7 +2675,7 @@ accommodate new options and flags—this <a class="reference external" href="htt
 provides a good summary.</p>
 <p>Reproduced below is an ASCII depiction of the format of TCP
 headers. In this section, we show how to specify this format in
-3d. The full specification can be found <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/src/3d/tests/tcpip/TCP.3d">here</a>.</p>
+3d. The full specification can be found <a class="reference external" href="https://github.com/project-everest/everparse/tree/master/share/everparse/tests/3d/lowstar/tcpip/TCP.3d">here</a>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span> 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -2949,7 +2974,7 @@ C-structures in the <a class="reference external" href="https://man7.org/linux/m
 <p>In this section we develop (parts of) a 3d specification for 64-bits
 ELF files and describe how it can be integrated in existing projects
 for validating potentially untrusted ELF files. A complete ELF
-specification can be found in the <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/ELF.3d">3d test suite</a>.</p>
+specification can be found in the <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/share/everparse/tests/3d/lowstar/ELF.3d">3d test suite</a>.</p>
 <p>An ELF file consists of an ELF header, followed by a program header
 table and a section header table. Both the tables are optional and
 describe the rest of the ELF file. The ELF header specifies the
@@ -2989,7 +3014,7 @@ be able to constrain the individual bytes of this array, we specify in
 } E_IDENT;
 </pre></div>
 </div>
-<p>(The omitted definitions can be found in the <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/3d/tests/ELF.3d">full development</a>.)</p>
+<p>(The omitted definitions can be found in the <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/share/everparse/tests/3d/lowstar/ELF.3d">full development</a>.)</p>
 <p>Following this 16 byte array, the ELF header specifies the file type,
 file version, followed by fields of our interest: <code class="docutils literal notranslate"><span class="pre">E_PHOFF</span></code>,
 <code class="docutils literal notranslate"><span class="pre">E_SHOFF</span></code> (offsets of the two tables), and <code class="docutils literal notranslate"><span class="pre">E_PHNUM</span></code>, <code class="docutils literal notranslate"><span class="pre">E_SHNUM</span></code>

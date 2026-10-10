@@ -269,12 +269,13 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">lowstar</span></code> uses verified Pulse adapters while preserving the
-Low* C API described here, including direct validator calls, packed
-results, error callbacks, and copy-buffer projections. The original
-implementation remains the default, <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code>.
-<code class="docutils literal notranslate"><span class="pre">--no_api</span></code> restores that default; the former <code class="docutils literal notranslate"><span class="pre">--pulse</span></code> option is no
-longer accepted. <code class="docutils literal notranslate"><span class="pre">--api</span></code> selects the implementation and C API, while
+<p><code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> is the default, and <code class="docutils literal notranslate"><span class="pre">--no_api</span></code> restores it; the former
+<code class="docutils literal notranslate"><span class="pre">--pulse</span></code> option is no longer accepted. It uses verified Pulse adapters
+to preserve the
+Low*-compatible C API described here, including direct validator calls,
+packed results, error callbacks, and copy-buffer projections.
+<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> instead exposes the native Pulse API.
+<code class="docutils literal notranslate"><span class="pre">--api</span></code> selects the implementation and C API, while
 <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> independently selects <code class="docutils literal notranslate"><span class="pre">buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code>.
 See <a class="reference internal" href="3d.html#d-api-option"><span class="std std-ref">the –api option</span></a> for the runtime headers required
 by each selection, including when using <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>.</p>
@@ -1779,8 +1780,7 @@ addresses and sizes remain <code class="docutils literal notranslate"><span clas
 (the default) under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>. A <code class="docutils literal notranslate"><span class="pre">probe</span></code> declaration combined with
 <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">static</span></code> is rejected with
 <em>“Probes are only supported by the buffer backend under –api pulse”</em>.
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> have no such restriction
-for field probes.</p>
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> has no such restriction for field probes.</p>
 <p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_COPY_BUFFER_T</span></code> on its own — as a type parameter, or as the
 parameter of an <code class="docutils literal notranslate"><span class="pre">extern</span></code> action — is <em>not</em> restricted, and works with
 every <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> binding on both backends.</p>
@@ -1794,11 +1794,12 @@ every <code class="docutils literal notranslate"><span class="pre">--input_strea
 <span class="k">extern</span><span class="w"> </span><span class="kt">size_t</span><span class="w">  </span><span class="o">*</span><span class="nf">EverParseStreamPos</span><span class="p">(</span><span class="n">EVERPARSE_COPY_BUFFER_T</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>So, relative to the default backend, <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen</span></code> returns a
+<p>So, relative to <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseStreamLen</span></code> returns a
 <code class="docutils literal notranslate"><span class="pre">size_t</span></code> rather than a <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>, and there is a third function to
 implement. <code class="docutils literal notranslate"><span class="pre">EverParseStreamPos</span></code> must return a pointer to a <code class="docutils literal notranslate"><span class="pre">size_t</span></code> cell
 that belongs to the copy buffer: Pulse validators carry their read position
-<em>inside</em> the input stream, whereas Low* validators take it as an argument.
+<em>inside</em> the input stream, whereas the Low*-compatible validators of
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> take it as an argument.
 The contract is:</p>
 <blockquote>
 <div><ul class="simple">
@@ -2502,7 +2503,7 @@ using a fully qualified name of the form <code class="docutils literal notransla
 <h1>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
 <p>When a validator fails, EverParse supports invoking a user-provided
 callback with contextual information about the failure.</p>
-<p>With <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> or <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, an error handling callback
+<p>With <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, an error handling callback
 is a C procedure with the following seven-argument signature:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">EVERPARSE_ERROR_HANDLER</span><span class="p">)(</span>
 <span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TypeName</span><span class="p">,</span>
@@ -2521,7 +2522,7 @@ in <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;.h</s
 containing the client’s stream <code class="docutils literal notranslate"><span class="pre">base</span></code>, a <code class="docutils literal notranslate"><span class="pre">has_length</span></code> flag and a
 <code class="docutils literal notranslate"><span class="pre">uint64_t</span> <span class="pre">length</span></code>.</p>
 <p>The signature above, and the error codes listed below, describe
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>. Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> the
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>. Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> the
 signature differs but the
 named error kinds retain the same numbers; see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>.</p>
 <p>Every EverParse validator is parameterized by:</p>
@@ -2632,13 +2633,14 @@ there is no position-cell argument: the stream maintains its own
 absolute position, read with <code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code>; subtract
 the supplied origin to obtain the position relative to this validation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">StartPosition</span></code> — the trailing argument, and the one that carries
-the same meaning as under the default backend — is the offset from
+the same meaning as under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> — is the offset from
 the start of the input of the beginning of the field <code class="docutils literal notranslate"><span class="pre">f</span></code>. It is what
 a handler should report.</p></li>
 </ul>
 </div></blockquote>
 <p><strong>The error codes.</strong> <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.h</span></code> defines <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code>
-constants under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> with the same kind numbers as Low*.
+constants under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> with the same kind numbers as
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>.
 The validator still returns a byte, not a packed position/error value.
 The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> pairs are:</p>
 <blockquote>
@@ -2657,7 +2659,7 @@ The <code class="docutils literal notranslate"><span class="pre">ErrorReason</sp
 reported, and <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> exists only under
 <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> (the packed <code class="docutils literal notranslate"><span class="pre">EVERPARSE_VALIDATOR_ERROR_PROBE_FAILED</span></code>
 constant also exists in the Low*-compatible runtime headers).
-Comparisons against the error-kind macros common to all three APIs keep
+Comparisons against the error-kind macros common to both APIs keep
 the same meaning. Earlier Pulse releases used 1
 for action failure and 5, 6, 7 for constraint, padding, and probe failures.
 Clients that hardcoded those Pulse-specific numbers must update them;

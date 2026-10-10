@@ -148,10 +148,10 @@ secret-independence.</p>
 <p>Then, EverParse/3d produces:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">MyFile1.fsti</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.fst</span></code>: the verified F* specification
-and Low* implementation of parsers and validators for your data
+and Pulse implementation of parsers and validators for your data
 format from <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code>, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">MyFile1.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1.h</span></code>: the verified C code generated from the verified
-F* and Low* files, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
+F* and Pulse files, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.c</span></code>, <code class="docutils literal notranslate"><span class="pre">MyFile1Wrapper.h</span></code>: an entrypoint API to call into the
 verified C code, and similarly for <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code>. Note that an entrypoint
 <code class="docutils literal notranslate"><span class="pre">Check</span></code> wrapper accepts an input buffer that holds a valid message
@@ -161,9 +161,10 @@ get, for each entrypoint, a wrapper that rejects those, as described
 <li><p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
 helpers for the implementation of verified validators, common to
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
-<li><p>with <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>, two additional headers, <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code> and
-<code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code>, which play the same role for the Pulse
-backend</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code>: two further headers
+playing the same role for the Pulse backend. They are written under
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>; <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, which is the default, does not emit
+them, as its <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> is self-contained</p></li>
 </ul>
 <ol class="arabic simple" start="3">
 <li><p>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFile1Wrapper.h&quot;</span></code> into any of your C
@@ -314,6 +315,19 @@ the produced C code.</p>
 compile-time flags (see compile-time configuration in the 3D
 language reference.)</p>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--json</span></code></p>
+<p>Print the abstract syntax tree of each input <code class="docutils literal notranslate"><span class="pre">.3d</span></code> file, as it
+stands after name resolution and type-checking, to standard output
+as a JSON value, one per line. This is a debugging aid: the encoding
+follows the shape of the 3d abstract syntax rather than any
+documented schema, and it is not stable across EverParse versions.</p>
+<p>A constructor is encoded as an array whose first element is the
+constructor name followed by one element per argument, so a
+constructor with no argument is a one-element array; a record is
+encoded as an object keyed by the field names; <code class="docutils literal notranslate"><span class="pre">None</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">x</span></code> is the encoding of <code class="docutils literal notranslate"><span class="pre">x</span></code>. Source locations and
+comments are omitted.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--fstar</span> <span class="pre">path/to/fstar.exe</span></code></p>
 <p>Allows to specify the location of the F* executable. The
 <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> script in the EverParse binary
@@ -323,19 +337,12 @@ found from the <code class="docutils literal notranslate"><span class="pre">PATH
 </li>
 </ul>
 <ul id="d-api-option">
-<li><p><code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar|pulse|lowstar</span></code></p>
-<p>Selects the implementation and public C API. <code class="docutils literal notranslate"><span class="pre">legacy_lowstar</span></code> is the
-default and uses the original Low* implementation; explicitly selecting
-it is equivalent to omitting <code class="docutils literal notranslate"><span class="pre">--api</span></code>. <code class="docutils literal notranslate"><span class="pre">pulse</span></code> generates the verified
-validators with the Pulse backend. The entrypoint API in <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Wrapper.h</span></code> is
-unchanged, so client code that only calls the entrypoints ports over
-unchanged; but the validator result representation, the error-handler
-signature, the copy-buffer projections and the <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> client
-primitives differ. Shared named error kinds use the same numbers in all
-three APIs.
-See the <em>Pulse backend primitives</em> part of
-<code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> below, and, in the <a class="reference internal" href="3d-lang.html#d-lang"><span class="std std-ref">3d language reference</span></a>, <a class="reference internal" href="3d-lang.html#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a> and <a class="reference internal" href="3d-lang.html#sec-probing-pulse"><span class="std std-ref">Probing under --api pulse</span></a>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">lowstar</span></code> uses Pulse validators behind verified compatibility adapters,
+<li><p><code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse|lowstar</span></code></p>
+<p>Selects the public C API. Both are implemented with the verified Pulse
+backend. Shared named error kinds use the same numbers in both APIs.</p>
+<p><code class="docutils literal notranslate"><span class="pre">lowstar</span></code> is the default; explicitly selecting it is equivalent to
+omitting <code class="docutils literal notranslate"><span class="pre">--api</span></code>. It uses Pulse validators behind verified compatibility
+adapters,
 preserving the original Low* public C API: scalar buffer positions,
 packed 64-bit validator results, error callbacks, copy-buffer projections,
 and <code class="docutils literal notranslate"><span class="pre">buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">extern</span></code> and <code class="docutils literal notranslate"><span class="pre">static</span></code> input primitives. Existing Low*
@@ -347,23 +354,21 @@ packed-result helpers and separately named internal byte-status helpers;
 no separate <code class="docutils literal notranslate"><span class="pre">EverParsePulseInternal.h</span></code> is needed. During
 per-parser extraction, KaRaMeL uses the shipped runtime without emitting
 another <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>. With
-<code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>, supply this header rather than the original
-Low* header. The <code class="docutils literal notranslate"><span class="pre">legacy_lowstar</span></code> and native <code class="docutils literal notranslate"><span class="pre">pulse</span></code> headers are unchanged.</p>
+<code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>, supply this header, not the one used by
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>; see <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code> below for the runtime
+directory matching each selection.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pulse</span></code> exposes the native Pulse API. See the <em>Pulse backend primitives</em>
+part of <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> below, and, in the <a class="reference internal" href="3d-lang.html#d-lang"><span class="std std-ref">3d language reference</span></a>, <a class="reference internal" href="3d-lang.html#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a> and <a class="reference internal" href="3d-lang.html#sec-probing-pulse"><span class="std std-ref">Probing under --api pulse</span></a>.</p>
 <p>This replaces the former <code class="docutils literal notranslate"><span class="pre">--pulse</span></code> switch, which is no longer accepted.
-<code class="docutils literal notranslate"><span class="pre">--no_api</span></code> resets the selection to <code class="docutils literal notranslate"><span class="pre">legacy_lowstar</span></code>.
-API selection is independent of <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>: all three APIs support
+<code class="docutils literal notranslate"><span class="pre">--no_api</span></code> resets the selection to <code class="docutils literal notranslate"><span class="pre">lowstar</span></code>.
+API selection is independent of <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>: both APIs support
 <code class="docutils literal notranslate"><span class="pre">buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">extern</span></code> and <code class="docutils literal notranslate"><span class="pre">static</span></code>, subject to the native Pulse
 <a class="reference internal" href="3d-lang.html#sec-probing-pulse"><span class="std std-ref">probe restriction</span></a>.</p>
-<p>Generated Makefile commands retain the selected API. Hash checks also
-distinguish all three APIs: existing Low* hashes remain valid, but Pulse
-outputs generated with the former switch must be regenerated.</p>
+<p>Generated Makefile commands retain the selected API, and hash checks
+distinguish the two APIs.</p>
 <p>The Low*-API test corpus lives in <code class="docutils literal notranslate"><span class="pre">share/everparse/tests/3d/lowstar</span></code>.
-Its ordinary builds explicitly select <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>; the CLI default
-remains unchanged. <code class="docutils literal notranslate"><span class="pre">src/3d/tests/pulse-lowstar-diff-tests</span></code> builds the same
-sources in isolated <code class="docutils literal notranslate"><span class="pre">lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">legacy_lowstar</span></code> trees and compares
-returns and outparameters. On Pulse-enabled Linux builds, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">3d-test</span></code>
-runs both the ordinary corpus and this differential gate.
-<code class="docutils literal notranslate"><span class="pre">share/everparse/tests/3d/pulse-lowstar-diff</span></code> separately compares the
+Its ordinary builds explicitly select <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>.
+<code class="docutils literal notranslate"><span class="pre">share/everparse/tests/3d/pulse-lowstar-diff</span></code> compares the
 Low*-compatible and native Pulse APIs, including wrapper returns,
 outparameters, copy buffers, and callback diagnostics. It is also part of
 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">3d-test</span></code> on Pulse-enabled Linux builds.</p>
@@ -399,7 +404,7 @@ So, for that <code class="docutils literal notranslate"><span class="pre">point<
 user-named entrypoints (whose complete-check counterpart is the given
 name suffixed with <code class="docutils literal notranslate"><span class="pre">Complete</span></code>) are described in the <a class="reference internal" href="3d-lang.html#complete-wrappers"><span class="std std-ref">3d language
 reference</span></a>.</p>
-<p>This option works with all three <code class="docutils literal notranslate"><span class="pre">--api</span></code> selections. It is, however,
+<p>This option works with both <code class="docutils literal notranslate"><span class="pre">--api</span></code> selections. It is, however,
 only meaningful with <code class="docutils literal notranslate"><span class="pre">--input_stream</span>
 <span class="pre">buffer</span></code> (the default): with <code class="docutils literal notranslate"><span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code> the wrapper is
 handed an opaque stream rather than a byte array and a length, so it has
@@ -420,11 +425,9 @@ argument a byte array and its length.</p></li>
 user-defined <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> type, representing an
 input byte stream. The client must define that type, and a set of
 functions over it that <strong>depends on the selected API</strong>:
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code> and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> use the same primitives;
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> uses different names and argument types. Both sets
-are given below.</p>
-<p><strong>Low*-compatible primitives</strong> (<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">legacy_lowstar</span></code>, the default,
-or <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>)</p>
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> (the default) and <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> use different names
+and argument types. Both sets are given below.</p>
+<p><strong>Low*-compatible primitives</strong> (<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>)</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">EverParseHas</span><span class="p">(</span>
 <span class="w">  </span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">_extra_t</span><span class="p">,</span>
 <span class="w">  </span><span class="n">EVERPARSE_INPUT_STREAM_BASE</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
@@ -551,14 +554,14 @@ bytes of the stream, advance the stream by <code class="docutils literal notrans
 <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>; if it cannot, it must return <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> and leave <code class="docutils literal notranslate"><span class="pre">*w</span></code>
 alone, in which case the generated code reports a failure. Its F*
 specification constrains neither the pointer written nor the
-stream, so – exactly as for <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code> in Low* – it is the
+stream, so – exactly as for <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code> under <code class="docutils literal notranslate"><span class="pre">--api</span>
+<span class="pre">lowstar</span></code> – it is the
 responsibility of the application to ensure double-fetch freedom on
 the contents of the returned field is preserved.
 <code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code> is the value the generated code stores into
 <code class="docutils literal notranslate"><span class="pre">*w</span></code> before the call.</p>
-<p>Finally, and exactly as in the Low*-compatible APIs, the client supplies the two
-wrapper-level callbacks below. These are common to all three APIs,
-and their signatures are unchanged by <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>:</p>
+<p>Finally, and exactly as in the Low*-compatible API, the client supplies the two
+wrapper-level callbacks below. These are common to both APIs:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EverParseHandleError</span><span class="p">(</span><span class="n">EVERPARSE_EXTRA_T</span><span class="w"> </span><span class="n">extra</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">parsedSize</span><span class="p">,</span>
 <span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">typename</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">fieldname</span><span class="p">,</span>
 <span class="w">                                 </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">reason</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">error_code</span><span class="p">);</span>
@@ -573,11 +576,12 @@ of bytes the validator consumed; a client that makes it genuinely
 rewind the stream must nevertheless <em>not</em> let it rewind
 <code class="docutils literal notranslate"><span class="pre">EverParseStreamGetPosition</span></code>, on which the wrapper’s arithmetic
 depends.</p>
-<p>Three differences from the Low* contract are worth calling out
-when porting a client:</p>
+<p>Three differences from the Low*-compatible contract of <code class="docutils literal notranslate"><span class="pre">--api</span>
+<span class="pre">lowstar</span></code> are worth calling out when porting a client:</p>
 <ul class="simple">
 <li><p><strong>The stream tracks its own position.</strong> The generated
-<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Check&lt;Type&gt;</span></code> wrapper has the same signature as in Low*,
+<code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Check&lt;Type&gt;</span></code> wrapper has the same signature as under
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>,
 but the Pulse validator it calls returns a plain <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>
 error code rather than a packed <code class="docutils literal notranslate"><span class="pre">uint64_t</span></code>, so the wrapper
 cannot read the parsed size out of the result. It recovers that
@@ -588,8 +592,8 @@ cumulative.</p></li>
 <code class="docutils literal notranslate"><span class="pre">void</span></code>, so, unlike <code class="docutils literal notranslate"><span class="pre">EverParseRead</span></code>, it cannot hand back a
 pointer into the client’s own storage.</p></li>
 <li><p><strong>There is no</strong> <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code>. The <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> action is
-restricted to the <code class="docutils literal notranslate"><span class="pre">buffer</span></code> input stream on both Low* and
-Pulse, so nothing is lost there; but <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> is
+restricted to the <code class="docutils literal notranslate"><span class="pre">buffer</span></code> input stream under both APIs, so
+nothing is lost there; but <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> is
 backed by the explicit <code class="docutils literal notranslate"><span class="pre">EverParseFieldPtrAfterImpl</span></code> primitive
 above rather than by <code class="docutils literal notranslate"><span class="pre">EverParsePeep</span></code>, and it needs
 <code class="docutils literal notranslate"><span class="pre">EverParseNullPtr</span></code> as well.</p></li>
@@ -599,7 +603,7 @@ above rather than by <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_STREAM_BASE</span></code> are declared <code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">inline</span></code>
 rather than <code class="docutils literal notranslate"><span class="pre">extern</span></code>, so that the compiler sees each stream
 operation at every validator call site instead of linking against
-it. This holds for all three APIs. The client must therefore
+it. This holds for both APIs. The client must therefore
 <em>define</em> those functions, not merely implement them in a separate
 translation unit: the header named by <code class="docutils literal notranslate"><span class="pre">--input_stream_include</span></code> is
 included into every generated <code class="docutils literal notranslate"><span class="pre">.c</span></code> file, so that is where the
@@ -608,18 +612,17 @@ value, not a function, and stays <code class="docutils literal notranslate"><spa
 streams.</p></li>
 </ul>
 <p>By default, 3d copies the matching <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> and supporting headers
-into the output directory for all three APIs. Add that directory to the
+into the output directory for both APIs. Add that directory to the
 C include path. With <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>, instead use the runtime
 directory matching both <code class="docutils literal notranslate"><span class="pre">--api</span></code> and <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">legacy_lowstar</span></code>: <code class="docutils literal notranslate"><span class="pre">src/3d/prelude/&lt;input_stream_format&gt;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">lowstar</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/lowstar/&lt;input_stream_format&gt;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pulse</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/&lt;input_stream_format&gt;</span></code></p></li>
 </ul>
 <p>These paths are relative to the EverParse package or repository. Also
 include <code class="docutils literal notranslate"><span class="pre">src/3d</span></code> for the supporting headers. Despite preserving the
 Low* public C API, <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> needs its own runtime header, not
-the one in <code class="docutils literal notranslate"><span class="pre">src/3d/prelude</span></code>.</p>
+the Pulse one.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--input_stream_include</span> <span class="pre">myinclude.h</span></code></p>
 <p>With <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>, defines the name of the C include file that

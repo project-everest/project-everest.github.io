@@ -49,7 +49,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#formal-guarantees">Formal guarantees</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#download-and-install">Download and install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-install">Download and install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-layout">Installation layout</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#default-mode">Default mode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#alternate-mode-generating-a-makefile">Alternate mode: generating a Makefile</a></li>
@@ -120,9 +123,8 @@
 <span id="d"></span><h1>3d: Dependent Data Descriptions for Verified Validation<a class="headerlink" href="#d-dependent-data-descriptions-for-verified-validation" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The documentation from this page covers the EverParse/3d releases
-v2025.05.20 or later. Documentations for earlier versions may be
-found in the Git history.</p>
+<p>This page documents the current source tree and package layout.
+Documentation for earlier releases may be found in the Git history.</p>
 </div>
 <p>EverParse/3d lets you write a data format description and
 automatically produces efficient data validation code formally
@@ -140,8 +142,9 @@ secret-independence.</p>
 <li><p>Give MyFile1.3d and MyFile2.3d to EverParse:</p>
 <ul class="simple">
 <li><p>with the Windows binary package: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
-<li><p>with the Linux binary package: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
-<li><p>with the source tree: <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span> <span class="pre">--batch</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
+<li><p>with the Linux or macOS binary package:
+<code class="docutils literal notranslate"><span class="pre">./everparse.sh</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
+<li><p>with the source tree: <code class="docutils literal notranslate"><span class="pre">bin/everparse-3d.exe</span> <span class="pre">--batch</span> <span class="pre">MyFile1.3d</span> <span class="pre">MyFile2.3d</span></code></p></li>
 </ul>
 </li>
 </ol>
@@ -212,32 +215,65 @@ for a wrapper that does not.</p>
 </section>
 <section id="download-and-install">
 <h2>Download and install<a class="headerlink" href="#download-and-install" title="Link to this heading"></a></h2>
-<p>We provide binary (x86_64 only) packages for Windows and Linux.</p>
+<p>We provide binary packages for Windows, Linux and macOS. Choose a package
+matching your operating system and architecture.</p>
 <ol class="arabic simple">
 <li><p>Download the binary package corresponding to your platform, from
 the <a class="reference external" href="https://github.com/project-everest/everparse/releases">latest EverParse/3d release</a>.</p></li>
-<li><p>Extract it (Windows: <code class="docutils literal notranslate"><span class="pre">unzip</span></code>; Linux: <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xzf</span></code>) anywhere you
+<li><p>Extract it (Windows: <code class="docutils literal notranslate"><span class="pre">unzip</span></code>; Linux/macOS: <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xzf</span></code>) anywhere you
 like. No need to configure it anyhow.</p></li>
 </ol>
 <p>Then, everything is contained in a <code class="docutils literal notranslate"><span class="pre">everparse</span></code> directory, whose
-actual entrypoint executable is <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> (for Windows) or
-<code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> (for Linux.)</p>
+entrypoint wrapper is <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> (for Windows) or
+<code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> (for Linux/macOS).</p>
 <p>Binary packages already contain all dependencies required by
 EverParse, such as F*, KaRaMeL and z3, so no need to install anything
 beforehand.</p>
 <p>The Windows binary package contains a <a class="reference external" href="https://llvm.org/builds/">binary snapshot of clang-format</a> to pretty-print the produced <code class="docutils literal notranslate"><span class="pre">.c</span></code> and
-<code class="docutils literal notranslate"><span class="pre">.h</span></code> files. On Linux, you may want to install clang-format (more
+<code class="docutils literal notranslate"><span class="pre">.h</span></code> files. On Linux and macOS, you may want to install clang-format (more
 info at the <a class="reference external" href="https://releases.llvm.org/download.html">LLVM download page</a>), but this is optional.</p>
 <p>The Windows binary package is fully native, in the sense that it does
 not require any POSIX emulation layer such as Cygwin or WSL.</p>
+<section id="installation-layout">
+<h3>Installation layout<a class="headerlink" href="#installation-layout" title="Link to this heading"></a></h3>
+<p>Paths below are relative to the package directory or the installation
+prefix selected with <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span> <span class="pre">PREFIX=/path/to/install</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bin/everparse-3d.exe</span></code>: the 3d frontend.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bin/everparse-qd.exe</span></code>: the QuackyDucky frontend.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bin/everparse-cddl.exe</span></code>: the EverCDDL frontend, when included in the build.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lib/everparse</span></code>: F* libraries, shared Makefile fragments and prebuilt
+EverCBOR object files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lib/everparse/3d</span></code>: 3d runtime headers, extraction libraries and
+<code class="docutils literal notranslate"><span class="pre">Makefile.basic</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">include/everparse</span></code>: public EverCBOR C headers.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">.exe</span></code> suffix on the EverParse frontends is used on all platforms,
+not just Windows. Binary packages additionally contain their dependencies,
+including <code class="docutils literal notranslate"><span class="pre">bin/fstar.exe</span></code>, <code class="docutils literal notranslate"><span class="pre">bin/krml</span></code> (<code class="docutils literal notranslate"><span class="pre">krml.exe</span></code> on Windows), and
+the versioned Z3 installation under <code class="docutils literal notranslate"><span class="pre">lib/fstar</span></code>. The convenience wrappers
+live at the package root; <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> alone does not install them or
+the bundled dependencies.</p>
+<p>The 3d executable finds the installation root relative to its own location
+in <code class="docutils literal notranslate"><span class="pre">bin/</span></code>; it does not use the <code class="docutils literal notranslate"><span class="pre">EVERPARSE_HOME</span></code> environment variable.
+Makefile clients still set <code class="docutils literal notranslate"><span class="pre">EVERPARSE_HOME</span></code> to select the repository or
+installation whose libraries and tools they use.
+Repository tests live under <code class="docutils literal notranslate"><span class="pre">share/everparse/tests</span></code>. To run them against
+a binary package, use
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-C</span> <span class="pre">share/everparse/tests</span> <span class="pre">-j$(nproc)</span> <span class="pre">-k</span> <span class="pre">EVERPARSE_HOME=/absolute/path/to/everparse</span></code>
+(on macOS, use GNU Make as <code class="docutils literal notranslate"><span class="pre">gmake</span></code> and install Coreutils for <code class="docutils literal notranslate"><span class="pre">nproc</span></code>).</p>
+</section>
 </section>
 <section id="run">
 <h2>Run<a class="headerlink" href="#run" title="Link to this heading"></a></h2>
 <p>On Windows: <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> [options] input_files</p>
-<p>On Linux: <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> [options] input_files</p>
-<p>From the source tree: <code class="docutils literal notranslate"><span class="pre">bin/3d.exe</span></code>. Caveat: in that case, no options
-are toggled by default (not even <code class="docutils literal notranslate"><span class="pre">--batch</span></code> or <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>)
-and you need to provide all options by hand.</p>
+<p>On Linux/macOS: <code class="docutils literal notranslate"><span class="pre">./everparse.sh</span></code> [options] input_files</p>
+<p>From the source tree or installation: <code class="docutils literal notranslate"><span class="pre">bin/everparse-3d.exe</span></code>. Unlike the
+package wrappers, direct invocation does not enable <code class="docutils literal notranslate"><span class="pre">--batch</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code> by default. The shell wrapper enables <code class="docutils literal notranslate"><span class="pre">--batch</span></code> and
+enables formatting if <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> is on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. The Windows wrapper
+selects the bundled formatter with <code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code>, which
+implicitly enables both formatting and batch mode.</p>
 <p>Options are treated from left to right, with higher priority on
 right-most options. Thus, any <code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code> will override any
 occurrence of <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code> or <code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code> to
@@ -253,8 +289,8 @@ and their names must start with a capital letter.</p>
 </div>
 <section id="default-mode">
 <h3>Default mode<a class="headerlink" href="#default-mode" title="Link to this heading"></a></h3>
-<p>In default mode, EverParse3d produces C code corresponding to
-validators proven correct with respect to the 3d specification.</p>
+<p>In default mode, EverParse3d produces F* specifications and implementations
+of validators. With <code class="docutils literal notranslate"><span class="pre">--batch</span></code>, it also verifies them and extracts C code.</p>
 <p>Options are treated from left to right:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">--odir</span> <span class="pre">output_directory_name</span></code></p>
@@ -265,7 +301,8 @@ directory)</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code></p>
 <p>Verify the produced F* <code class="docutils literal notranslate"><span class="pre">.fst</span></code> and <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> files and generate C
-<code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files. This is toggled by default.</p>
+<code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files. The package wrappers enable this; direct
+invocation of <code class="docutils literal notranslate"><span class="pre">bin/everparse-3d.exe</span></code> does not.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--no_batch</span></code></p>
 <p>Do not verify the produced F* <code class="docutils literal notranslate"><span class="pre">.fst</span></code> and <code class="docutils literal notranslate"><span class="pre">.fsti</span></code> files or
@@ -274,15 +311,15 @@ generate C <code class="docutils literal notranslate"><span class="pre">.c</span
 <li><p><code class="docutils literal notranslate"><span class="pre">--clang_format</span></code></p>
 <p>Call <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> on extracted .c/.h files. This option
 automatically toggles <code class="docutils literal notranslate"><span class="pre">--batch</span></code>.</p>
-<p>This is toggled by default on Windows, since the Windows binary
-package contains a copy of clang-format. On Linux, this is toggled
-by default only if <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> is reachable through the
+<p>The Windows package wrapper enables this, since the Windows binary
+package contains a copy of clang-format. The Linux/macOS wrapper enables
+it only if <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> is reachable through the
 <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--no_clang_format</span></code></p>
 <p>Do not call clang-format on extracted .c/.h files.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--clang_format_executable</span> <span class="pre">path/to/clang-format</span></code></p>
 <p>Provide the path to clang-format if not reachable through <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
 (or to override the one provided in the Windows binary package.)
 This option automatically toggles <code class="docutils literal notranslate"><span class="pre">--clang_format</span></code> and
@@ -302,8 +339,10 @@ existing <code class="docutils literal notranslate"><span class="pre">.clang-for
 <p>Keep all produced intermediate files. This is toggled by default.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--skip_c_makefiles</span></code></p>
-<p>Skip generating the default Makefiles produced by Karamel to compile
-the produced C code.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span> <span class="pre">--batch</span></code>, skip copying EverParse’s
+<code class="docutils literal notranslate"><span class="pre">Makefile.basic</span></code> into the output directory. KaRaMeL’s Makefiles
+are not generated. To compile generated C directly with either API,
+use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-C</span> <span class="pre">output_directory</span> <span class="pre">-f</span> <span class="pre">/path/to/everparse/lib/everparse/3d/Makefile.basic</span></code>.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--add_include</span> <span class="pre">&lt;myinclude.h&gt;</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">--add_include</span> <span class="pre">&quot;myinclude.h&quot;</span></code></p>
@@ -329,11 +368,19 @@ and <code class="docutils literal notranslate"><span class="pre">Some</span> <sp
 comments are omitted.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--fstar</span> <span class="pre">path/to/fstar.exe</span></code></p>
-<p>Allows to specify the location of the F* executable. The
-<code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> script in the EverParse binary
-package is already configured to use the F* executable provided in
-the package. Otherwise, the default is to use the <code class="docutils literal notranslate"><span class="pre">fstar.exe</span></code>
-found from the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+<p>Specifies the F* executable. By default, EverParse first looks for
+<code class="docutils literal notranslate"><span class="pre">opt/FStar/out/bin/fstar.exe</span></code> relative to its installation root, then
+<code class="docutils literal notranslate"><span class="pre">bin/fstar.exe</span></code>, and finally <code class="docutils literal notranslate"><span class="pre">fstar.exe</span></code> on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. This discovers
+the source-tree or packaged tool without wrapper-supplied paths.
+The <code class="docutils literal notranslate"><span class="pre">FSTAR_EXE</span></code> environment variable is not read by the 3d executable;
+Makefiles can translate it into this option.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--karamel</span> <span class="pre">path/to/krml</span></code></p>
+<p>Specifies the KaRaMeL executable used for C extraction and locating its
+support libraries. By default, EverParse uses
+<code class="docutils literal notranslate"><span class="pre">opt/karamel/out/bin/krml</span></code> in the source tree or <code class="docutils literal notranslate"><span class="pre">bin/krml</span></code> in a binary
+package (<code class="docutils literal notranslate"><span class="pre">krml.exe</span></code> on Windows). The <code class="docutils literal notranslate"><span class="pre">KRML_EXE</span></code> environment variable
+is not used by the 3d executable.</p>
 </li>
 </ul>
 <ul id="d-api-option">
@@ -620,7 +667,9 @@ directory matching both <code class="docutils literal notranslate"><span class="
 <li><p><code class="docutils literal notranslate"><span class="pre">pulse</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/&lt;input_stream_format&gt;</span></code></p></li>
 </ul>
 <p>These paths are relative to the EverParse package or repository. Also
-include <code class="docutils literal notranslate"><span class="pre">src/3d</span></code> for the supporting headers. Despite preserving the
+include <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d</span></code> for <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> and, under
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParsePulse{,Endianness}.h</span></code>.
+Despite preserving the
 Low* public C API, <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> needs its own runtime header, not
 the Pulse one.</p>
 </li>
@@ -640,7 +689,7 @@ implementations of validators, and then calling F* and KaRaMeL on each
 such file to verify and extract them to C. EverParse will issue all
 such calls to F* and KaRaMeL sequentially.</p>
 <p>Alternatively, with <code class="docutils literal notranslate"><span class="pre">everparse.cmd</span> <span class="pre">--makefile</span> <span class="pre">gmake</span> <span class="pre">Test.3d</span></code> (on
-Windows; use <code class="docutils literal notranslate"><span class="pre">./everparse.sh</span></code> on Linux), instead of producing <code class="docutils literal notranslate"><span class="pre">.c</span></code>
+Windows; use <code class="docutils literal notranslate"><span class="pre">./everparse.sh</span></code> on Linux/macOS), instead of producing <code class="docutils literal notranslate"><span class="pre">.c</span></code>
 and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files, EverParse will take <code class="docutils literal notranslate"><span class="pre">Test.3d</span></code> and all of the
 modules it depends on, and produce a GNU Makefile containing all
 recipes and rules to produce <code class="docutils literal notranslate"><span class="pre">.c</span></code> and <code class="docutils literal notranslate"><span class="pre">.h</span></code> files and all
@@ -648,11 +697,11 @@ intermediate files with proper dependencies so that the user can
 leverage GNU Make parallelism for any rules that do not depend on one
 another. Other build systems are supported with variations of the
 <code class="docutils literal notranslate"><span class="pre">--makefile</span></code> option, as stated below.</p>
-<p>The produced Makefile will make use of three variables:</p>
+<p>The produced Makefile uses the following variables:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_CMD</span></code>: the command to run EverParse. This variable must
 contain the path and name of the EverParse executable, and any
-options (<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, etc.) useful to produce .</p></li>
+options (<code class="docutils literal notranslate"><span class="pre">--clang_format</span></code>, etc.) needed for generation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">EVERPARSE_INPUT_DIR</span></code>: the path to the input files.</p></li>
 </ul>
 <div class="admonition note">
@@ -670,7 +719,7 @@ produced C files.</p></li>
 </ul>
 <p>The produced Makefile, by default called <code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>, is
 meant to be included in the main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> of your project. On
-Linux, such a typical main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for use with GNU Make may look
+Linux and macOS, such a typical main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for use with GNU Make may look
 like:</p>
 <p>Also valid in Makefile generation mode are the following options:</p>
 <ul>
@@ -695,7 +744,7 @@ files, and produce a rule to generate <code class="docutils literal notranslate"
 <span class="nf">$(EVERPARSE_OUTPUT_DIR)</span><span class="o">:</span>
 <span class="w">	</span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$@</span>
 
-<span class="nf">$(everparse_makefile)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">source_files</span><span class="k">)</span> <span class="k">$(</span><span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="k">)</span>
+<span class="nf">$(everparse_makefile)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">source_files</span><span class="k">)</span> <span class="p">|</span> <span class="k">$(</span><span class="nv">EVERPARSE_OUTPUT_DIR</span><span class="k">)</span>
 <span class="w">	</span><span class="k">$(</span>EVERPARSE_CMD<span class="k">)</span><span class="w"> </span>--makefile<span class="w"> </span>gmake<span class="w"> </span>--makefile_name<span class="w"> </span><span class="nv">$@</span><span class="w"> </span><span class="k">$(</span>source_files<span class="k">)</span>
 
 <span class="cp">include $(everparse_makefile)</span>
@@ -708,6 +757,9 @@ files, and produce a rule to generate <code class="docutils literal notranslate"
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">test</span> <span class="n">clean</span>
 </pre></div>
 </div>
+<p>The output directory is an order-only prerequisite (after <code class="docutils literal notranslate"><span class="pre">|</span></code>):
+creating files in it must not trigger regeneration of the included
+Makefile, which would otherwise cause repeated Make restarts.</p>
 <p>A fully commented version of that main <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> is available <a class="reference external" href="https://github.com/project-everest/everparse/blob/master/share/everparse/tests/3d/lowstar/modules/Makefile">in
 the EverParse repository</a>.</p>
 <p>EverParse supports the following command-line options relevant to this
@@ -823,7 +875,7 @@ passed to the validator corresponding to the <code class="docutils literal notra
 <code class="docutils literal notranslate"><span class="pre">probe</span></code> pointer field is encountered.</p>
 </li>
 <li><p>with <code class="docutils literal notranslate"><span class="pre">--batch</span></code> (set by default when using the <code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> /
-<code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> script from the binary package), this option
+<code class="docutils literal notranslate"><span class="pre">everparse.cmd</span></code> script from the binary package), this option
 also compiles the C test program into <code class="docutils literal notranslate"><span class="pre">test.exe</span></code> and runs it to
 check whether the generated test cases are actually accepted or
 rejected by the verified validator implementations for the given
@@ -896,7 +948,7 @@ specifications containing probes.</p>
 <section id="options-related-to-the-c-test-program">
 <h4>Options related to the C test program<a class="headerlink" href="#options-related-to-the-c-test-program" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
-used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
+used with <code class="docutils literal notranslate"><span class="pre">--z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">--z3_skip_testcases_c</span></code></p>
 <p>Do not produce the C test program <code class="docutils literal notranslate"><span class="pre">testcases.c</span></code></p>
@@ -911,7 +963,7 @@ field labels, of the form <code class="docutils literal notranslate"><span class
 cases. This option is needed if the code is meant to be used with a
 C++ compiler in a mode older than C++20.</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-z3_use_ptr</span></code></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">--z3_use_ptr</span></code></p>
 <p>In the produced C test program, use pointers rather than array
 indices for probe pointer field values. The architecture-specific
 binary representation of pointers will be used.</p>
@@ -927,18 +979,21 @@ files, which will still use array indices.</p>
 <section id="options-related-to-z3-and-smt2">
 <h4>Options related to Z3 and SMT2<a class="headerlink" href="#options-related-to-z3-and-smt2" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
-used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
+used with <code class="docutils literal notranslate"><span class="pre">--z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">--z3_executable</span> <span class="pre">path/to/z3.exe</span></code></p>
 <p>Specify a path to the Z3 executable that should be used to generate
-the test cases. This option does not affect the verification of the
-generated F* files. EverParse has been tested with Z3 4.13.3 for both
-test case generation and verification of the generated F* files.
-<code class="docutils literal notranslate"><span class="pre">everparse.sh</span></code> / <code class="docutils literal notranslate"><span class="pre">everparse.bat</span></code> already sets
-<code class="docutils literal notranslate"><span class="pre">--z3_executable</span></code> accordingly.</p>
+the test cases and verify the generated F* files. If omitted, both use
+the same executable, located automatically through F* or the local
+versioned Z3 installation under <code class="docutils literal notranslate"><span class="pre">opt/z3</span></code>. The required version is
+recorded in <code class="docutils literal notranslate"><span class="pre">lib/everparse/z3-version.Makefile</span></code> in the source tree
+and installation. Binary packages bundle it under
+<code class="docutils literal notranslate"><span class="pre">lib/fstar/z3-&lt;version&gt;/bin</span></code>. Neither a wrapper-supplied Z3 path nor
+adding Z3 to <code class="docutils literal notranslate"><span class="pre">PATH</span></code> is necessary.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">'option1</span> <span class="pre">...</span> <span class="pre">optionK'</span></code></p>
-<p>Pass command-line options to Z3 verbatim.</p>
+<p>Pass command-line options to Z3 verbatim for test case generation.
+This option does not affect verification of the generated F* files.</p>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">--z3_options</span> <span class="pre">-t:1000</span></code> imposes a per-query timeout of
 <code class="docutils literal notranslate"><span class="pre">1000</span></code> milliseconds.</p>
 </li>
@@ -951,7 +1006,7 @@ Z3 as comments) to the specified <code class="docutils literal notranslate"><spa
 <section id="branch-coverage-analysis">
 <h4>Branch coverage analysis<a class="headerlink" href="#branch-coverage-analysis" title="Link to this heading"></a></h4>
 <p>Unless explicitly specified otherwise, the following options can be
-used with <code class="docutils literal notranslate"><span class="pre">-z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
+used with <code class="docutils literal notranslate"><span class="pre">--z3_test</span></code> or <code class="docutils literal notranslate"><span class="pre">--z3_diff_test</span></code>:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">--z3_branch_depth</span> <span class="pre">n</span></code></p>
 <p>Ask z3 to generate test cases for all possible branches of a 3D
@@ -978,6 +1033,9 @@ version message:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">--version</span></code></p>
 <p>Print the version of EverParse/3d and exit (do not process any
 further options to the right, nor any files at all.)</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--short_version</span></code></p>
+<p>Print only the version number and exit.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code></p>
 <p>Show the usage message and the status of some options given so far,

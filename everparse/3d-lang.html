@@ -211,7 +211,8 @@ following 3d data format description:</p>
 <code class="docutils literal notranslate"><span class="pre">UINT16</span></code> denotes the type of unsigned 16-bit integers, represented
 as little-endian; with the addition of the <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> keyword,
 which tells 3d to expose the validator for the type to the final user.</p>
-<p>Once we run <code class="docutils literal notranslate"><span class="pre">3d</span></code> with this file, we obtain several files:</p>
+<p>Once we run <code class="docutils literal notranslate"><span class="pre">bin/everparse-3d.exe</span> <span class="pre">--batch</span> <span class="pre">HelloWorld.3d</span></code> with this file,
+we obtain several files:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">HelloWorld.c</span></code> and <code class="docutils literal notranslate"><span class="pre">HelloWorld.h</span></code>, which contain the actual verified
 validators;</p></li>
@@ -274,19 +275,19 @@ in <code class="docutils literal notranslate"><span class="pre">TriangleWrapper.
 to preserve the
 Low*-compatible C API described here, including direct validator calls,
 packed results, error callbacks, and copy-buffer projections.
-<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> instead exposes the native Pulse API.
+<code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> instead exposes the native Pulse API.
 <code class="docutils literal notranslate"><span class="pre">--api</span></code> selects the implementation and C API, while
 <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> independently selects <code class="docutils literal notranslate"><span class="pre">buffer</span></code>, <code class="docutils literal notranslate"><span class="pre">extern</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span></code>.
 See <a class="reference internal" href="3d.html#d-api-option"><span class="std std-ref">the –api option</span></a> for the runtime headers required
 by each selection, including when using <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>.</p>
 <p>The entrypoint API is also the same under the native Pulse API:
-<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> generates a <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> declaring the very same
+<code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> generates a <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> declaring the very same
 <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code> prototypes, so client code that only calls the
 entrypoints ports over unchanged.</p>
 <p><code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> includes <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> instead of
 <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>; its named <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> kinds use the
 same numbers (see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>).
-<code class="docutils literal notranslate"><span class="pre">3d</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> accordingly writes two
+<code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--api</span> <span class="pre">pulse</span> <span class="pre">--batch</span></code> accordingly writes two
 extra headers, <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> and <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code>,
 into the output directory alongside the ones listed above, unless
 <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code> is specified. Finally, the
@@ -1209,7 +1210,7 @@ definitions for those flags. Here is a sample config file:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Then, one can invoke <code class="docutils literal notranslate"><span class="pre">3d.exe</span> <span class="pre">--config</span> <span class="pre">Arch.3d.config</span>
+<p>Then, one can invoke <code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--config</span> <span class="pre">Arch.3d.config</span>
 <span class="pre">PointArch_32_64.3d</span> <span class="pre">--batch</span></code>, which produces the following C code as
 output.</p>
 <p>In the header file <code class="docutils literal notranslate"><span class="pre">PointArch_32_64.h</span></code>, we see an include for

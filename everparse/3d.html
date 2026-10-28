@@ -378,7 +378,7 @@ Makefiles can translate it into this option.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">--karamel</span> <span class="pre">path/to/krml</span></code></p>
 <p>Specifies the KaRaMeL executable used for C extraction and locating its
 support libraries. By default, EverParse uses
-<code class="docutils literal notranslate"><span class="pre">opt/karamel/out/bin/krml</span></code> in the source tree or <code class="docutils literal notranslate"><span class="pre">bin/krml</span></code> in a binary
+<code class="docutils literal notranslate"><span class="pre">opt/FStar/karamel/out/bin/krml</span></code> in the source tree or <code class="docutils literal notranslate"><span class="pre">bin/krml</span></code> in a binary
 package (<code class="docutils literal notranslate"><span class="pre">krml.exe</span></code> on Windows). The <code class="docutils literal notranslate"><span class="pre">KRML_EXE</span></code> environment variable
 is not used by the 3d executable.</p>
 </li>
@@ -396,7 +396,7 @@ and <code class="docutils literal notranslate"><span class="pre">buffer</span></
 C clients need no signature changes. Private workers still use byte-sized
 statuses and mutable cursors; they are not part of the public API.
 Its self-contained <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> is generated from the Pulse library in
-<code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/lowstar/&lt;backend&gt;/</span></code>. It includes both the public
+<code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/runtime/lowstar/&lt;backend&gt;/</span></code>. It includes both the public
 packed-result helpers and separately named internal byte-status helpers;
 no separate <code class="docutils literal notranslate"><span class="pre">EverParsePulseInternal.h</span></code> is needed. During
 per-parser extraction, KaRaMeL uses the shipped runtime without emitting
@@ -663,8 +663,8 @@ into the output directory for both APIs. Add that directory to the
 C include path. With <code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code>, instead use the runtime
 directory matching both <code class="docutils literal notranslate"><span class="pre">--api</span></code> and <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">lowstar</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/lowstar/&lt;input_stream_format&gt;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pulse</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/krml/&lt;input_stream_format&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lowstar</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/runtime/lowstar/&lt;input_stream_format&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pulse</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/runtime/&lt;input_stream_format&gt;</span></code></p></li>
 </ul>
 <p>These paths are relative to the EverParse package or repository. Also
 include <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d</span></code> for <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> and, under

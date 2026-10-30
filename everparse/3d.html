@@ -164,10 +164,6 @@ get, for each entrypoint, a wrapper that rejects those, as described
 <li><p><code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>: various EverParse
 helpers for the implementation of verified validators, common to
 <code class="docutils literal notranslate"><span class="pre">MyFile1.3d</span></code> and <code class="docutils literal notranslate"><span class="pre">MyFile2.3d</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code>: two further headers
-playing the same role for the Pulse backend. They are written under
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>; <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, which is the default, does not emit
-them, as its <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> is self-contained</p></li>
 </ul>
 <ol class="arabic simple" start="3">
 <li><p>Insert <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;MyFile1Wrapper.h&quot;</span></code> into any of your C
@@ -667,8 +663,7 @@ directory matching both <code class="docutils literal notranslate"><span class="
 <li><p><code class="docutils literal notranslate"><span class="pre">pulse</span></code>: <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d/runtime/&lt;input_stream_format&gt;</span></code></p></li>
 </ul>
 <p>These paths are relative to the EverParse package or repository. Also
-include <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d</span></code> for <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code> and, under
-<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code>, <code class="docutils literal notranslate"><span class="pre">EverParsePulse{,Endianness}.h</span></code>.
+include <code class="docutils literal notranslate"><span class="pre">lib/everparse/3d</span></code> for <code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>.
 Despite preserving the
 Low* public C API, <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code> needs its own runtime header, not
 the Pulse one.</p>

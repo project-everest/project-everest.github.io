@@ -284,13 +284,9 @@ by each selection, including when using <code class="docutils literal notranslat
 <code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--api</span> <span class="pre">pulse</span></code> generates a <code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> declaring the very same
 <code class="docutils literal notranslate"><span class="pre">ModuleCheckTyp</span></code> prototypes, so client code that only calls the
 entrypoints ports over unchanged.</p>
-<p><code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> includes <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> instead of
-<code class="docutils literal notranslate"><span class="pre">EverParseEndianness.h</span></code>; its named <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> kinds use the
-same numbers (see <a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>).
-<code class="docutils literal notranslate"><span class="pre">everparse-3d.exe</span> <span class="pre">--api</span> <span class="pre">pulse</span> <span class="pre">--batch</span></code> accordingly writes two
-extra headers, <code class="docutils literal notranslate"><span class="pre">EverParsePulseEndianness.h</span></code> and <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code>,
-into the output directory alongside the ones listed above, unless
-<code class="docutils literal notranslate"><span class="pre">--no_copy_everparse_h</span></code> is specified. Finally, the
+<p><code class="docutils literal notranslate"><span class="pre">ModuleWrapper.h</span></code> additionally includes <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>; its named
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> kinds use the same numbers (see
+<a class="reference internal" href="#sec-error-handling-pulse"><span class="std std-ref">Error handling under --api pulse</span></a>). Finally, the
 client primitives that <code class="docutils literal notranslate"><span class="pre">--input_stream</span></code> and <code class="docutils literal notranslate"><span class="pre">extern</span></code> specifications
 require are not the same; those are documented in
 <a class="reference internal" href="3d.html#d"><span class="std std-ref">the 3d user manual</span></a>.</p>
@@ -2594,8 +2590,8 @@ deepest validation failure that occurred.</p>
 <p>The Pulse backend keeps the whole of the design above: the same
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_HANDLER</span></code> typedef in <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>, the same
 <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_FRAME</span></code> structure and <code class="docutils literal notranslate"><span class="pre">EverParseDefaultErrorHandler</span></code>
-(shipped as plain C in <code class="docutils literal notranslate"><span class="pre">EverParsePulse.h</span></code> rather than generated into
-<code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code>), the same per-module <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;EverParseError</span></code> callback, and
+(whose <code class="docutils literal notranslate"><span class="pre">Input</span></code> argument is a plain <code class="docutils literal notranslate"><span class="pre">uint8_t</span> <span class="pre">*</span></code>, unused by the default
+handler), the same per-module <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;EverParseError</span></code> callback, and
 the same stack trace of enclosing types. What changes is the handler’s
 argument list and the width of the error code, not its kind number.</p>
 <p><strong>The handler signature.</strong> Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> the handler takes nine
@@ -2643,6 +2639,10 @@ a handler should report.</p></li>
 constants under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> with the same kind numbers as
 <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>.
 The validator still returns a byte, not a packed position/error value.
+The runtime <code class="docutils literal notranslate"><span class="pre">EverParse.h</span></code> also names these byte-sized codes
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_STATUS_SUCCESS</span></code> and <code class="docutils literal notranslate"><span class="pre">EVERPARSE_STATUS_ERROR_*</span></code>, under both
+APIs; under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_VALIDATOR_*</span></code> remain the packed
+64-bit codes.
 The <code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> pairs are:</p>
 <blockquote>
 <div><ul class="simple">

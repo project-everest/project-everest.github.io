@@ -44,6 +44,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="3d.html">3d: Dependent Data Descriptions for Verified Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asn1.html">everparse-asn1: Verified ASN.1 DER Parsers and Serializers</a></li>
 </ul>
 
         </div>
@@ -93,6 +94,10 @@ full CBOR is work in progress.</p>
 formats for CBOR objects in CDDL, and generates C or Rust data types,
 parsers and serializers. We have used it to generate message
 processing code for COSE signing.</p>
+<p><strong>everparse-asn1</strong>: An experimental frontend for EverParse that accepts
+ASN.1 modules, and generates C data types with validators, zero-copy
+parsers and writers for their DER encodings, verified against a pure F*
+specification of ASN.1 DER.</p>
 <p>EverParse is open-source and available on <a class="reference external" href="https://github.com/project-everest/everparse/">GitHub</a>. EverParse is part
 of <a class="reference external" href="https://project-everest.github.io/">Project Everest</a>.</p>
 <section id="releases">
@@ -107,6 +112,7 @@ package.</p>
 <h2>Manual<a class="headerlink" href="#manual" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="3d.html#d"><span class="std std-ref">3d: Dependent Data Descriptions for Verified Validation</span></a> (includes the full documentation of the EverParse binary package)</p></li>
+<li><p><a class="reference internal" href="asn1.html#asn1"><span class="std std-ref">everparse-asn1: Verified ASN.1 DER Parsers and Serializers</span></a></p></li>
 <li><p>EverCBOR:</p>
 <ul>
 <li><p><a class="reference external" href="https://github.com/project-everest/everparse/blob/master/src/cbor/pulse/det/c/example/main.c">Documented C example</a></p></li>

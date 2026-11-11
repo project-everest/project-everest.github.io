@@ -2655,7 +2655,9 @@ The <code class="docutils literal notranslate"><span class="pre">ErrorReason</sp
 <li><p>“constraint failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> (6uL)</p></li>
 <li><p>“unexpected padding”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code> (7uL)</p></li>
 <li><p>“probe failed”, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_PROBE_FAILED</span></code> (8uL)</p></li>
-<li><p>“unspecified”, with <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">==</span> <span class="pre">1uL</span></code> or <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">&gt;</span> <span class="pre">8uL</span></code></p></li>
+<li><p>“user-defined constraint failed”, with <code class="docutils literal notranslate"><span class="pre">128uL</span> <span class="pre">&lt;=</span> <span class="pre">ErrorCode</span> <span class="pre">&lt;=</span> <span class="pre">255uL</span></code>
+(see <a class="reference internal" href="#sec-custom-error-codes"><span class="std std-ref">custom error codes</span></a>)</p></li>
+<li><p>“unspecified”, with <code class="docutils literal notranslate"><span class="pre">ErrorCode</span> <span class="pre">==</span> <span class="pre">1uL</span></code> or <code class="docutils literal notranslate"><span class="pre">9uL</span> <span class="pre">&lt;=</span> <span class="pre">ErrorCode</span> <span class="pre">&lt;=</span> <span class="pre">127uL</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>In particular, <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_GENERIC</span></code> is not defined and never
@@ -2669,6 +2671,36 @@ Clients that hardcoded those Pulse-specific numbers must update them;
 the callback signatures and byte return type are unchanged.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_*</span></code> codes returned by the probe wrappers are
 unaffected and keep the same values under both backends.</p>
+<p id="sec-custom-error-codes"><strong>Custom error codes.</strong> Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> only, a refined field may
+specify the error code to report when its constraint fails, with an
+<code class="docutils literal notranslate"><span class="pre">{:error-code</span> <span class="pre">...}</span></code> annotation placed after the constraint and before
+any action:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define BAD_KIND 201</span>
+
+<span class="n">entrypoint</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_Header</span><span class="p">(</span><span class="n">mutable</span><span class="w"> </span><span class="n">UINT32</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="o">:</span><span class="n">error</span><span class="o">-</span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="p">};</span>
+<span class="w">  </span><span class="n">UINT8</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">kind</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="o">:</span><span class="n">error</span><span class="o">-</span><span class="n">code</span><span class="w"> </span><span class="n">BAD_KIND</span><span class="p">};</span>
+<span class="w">  </span><span class="n">UINT32</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="o">:</span><span class="n">error</span><span class="o">-</span><span class="n">code</span><span class="w"> </span><span class="mi">203</span><span class="p">}</span>
+<span class="w">    </span><span class="p">{</span><span class="o">:</span><span class="n">on</span><span class="o">-</span><span class="n">success</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Header</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The error code must be an integer literal or a <code class="docutils literal notranslate"><span class="pre">#define</span></code>’d integer
+constant between 128 and 255; codes below 128 are reserved for
+EverParse. When the constraint of such a field fails, the validator
+returns this code instead of <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code>, and
+the error handler receives it as its <code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code> argument, with the
+<code class="docutils literal notranslate"><span class="pre">ErrorReason</span></code> “user-defined constraint failed”, at every enclosing type
+level. Fields without the annotation still report
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code>.</p>
+<p>EverParse may merge the constraints of several fields into one, as with
+bit fields or enum-typed fields; each constraint still reports its own
+code (or <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_CONSTRAINT_FAILED</span></code> if it has none), namely
+the code of the first constraint that fails, in field order.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">{:error-code</span> <span class="pre">...}</span></code> on a field without a constraint, or under
+<code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">lowstar</span></code>, is an error: the Low* API packs error kinds into 4 bits.</p>
 </section>
 </section>
 <section id="fully-worked-examples-tcp-segment-headers">

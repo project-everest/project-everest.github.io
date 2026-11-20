@@ -2000,7 +2000,7 @@
 <a href=#2000 id=2000 data-nosnippet>2000</a>    }
 <a href=#2001 id=2001 data-nosnippet>2001</a>}
 <a href=#2002 id=2002 data-nosnippet>2002</a>
-<a href=#2003 id=2003 data-nosnippet>2003</a><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>cbor_compare_with_depth(x1: cbor_raw, x2: cbor_raw) -&gt; i16
+<a href=#2003 id=2003 data-nosnippet>2003</a><span class="kw">fn </span>cbor_compare_with_depth(x1: cbor_raw, x2: cbor_raw) -&gt; i16
 <a href=#2004 id=2004 data-nosnippet>2004</a>{
 <a href=#2005 id=2005 data-nosnippet>2005</a>    <span class="kw">let </span>ty1: u8 = impl_major_type_with_depth(x1);
 <a href=#2006 id=2006 data-nosnippet>2006</a>    <span class="kw">let </span>ty2: u8 = impl_major_type_with_depth(x2);
@@ -2781,7 +2781,7 @@
 <a href=#2781 id=2781 data-nosnippet>2781</a>    <span class="prelude-val">Some </span>{ v: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[cbor_map_entry &lt;<span class="lifetime">'a</span>&gt;] }
 <a href=#2782 id=2782 data-nosnippet>2782</a>}
 <a href=#2783 id=2783 data-nosnippet>2783</a>
-<a href=#2784 id=2784 data-nosnippet>2784</a><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>siz·_d(x·: cbor_raw, out: <span class="kw-2">&amp;mut </span>[usize]) -&gt; bool
+<a href=#2784 id=2784 data-nosnippet>2784</a><span class="kw">fn </span>siz·_d(x·: cbor_raw, out: <span class="kw-2">&amp;mut </span>[usize]) -&gt; bool
 <a href=#2785 id=2785 data-nosnippet>2785</a>{
 <a href=#2786 id=2786 data-nosnippet>2786</a>    <span class="kw">let </span>deep: bool = compute_deep(x·);
 <a href=#2787 id=2787 data-nosnippet>2787</a>    <span class="kw">if </span>deep
@@ -3299,7 +3299,7 @@
 <a href=#3299 id=3299 data-nosnippet>3299</a>    </span>{ pos· }
 <a href=#3300 id=3300 data-nosnippet>3300</a>}
 <a href=#3301 id=3301 data-nosnippet>3301</a>
-<a href=#3302 id=3302 data-nosnippet>3302</a><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>ser·_d(x·: cbor_raw, out: <span class="kw-2">&amp;mut </span>[u8], offset: usize) -&gt; usize
+<a href=#3302 id=3302 data-nosnippet>3302</a><span class="kw">fn </span>ser·_d(x·: cbor_raw, out: <span class="kw-2">&amp;mut </span>[u8], offset: usize) -&gt; usize
 <a href=#3303 id=3303 data-nosnippet>3303</a>{
 <a href=#3304 id=3304 data-nosnippet>3304</a>    <span class="kw">let </span>deep: bool = compute_deep(x·);
 <a href=#3305 id=3305 data-nosnippet>3305</a>    <span class="kw">if </span>deep
@@ -3851,7 +3851,7 @@
 <a href=#3851 id=3851 data-nosnippet>3851</a><span class="kw">fn </span>cbor_map_entry_raw_compare(x1: cbor_map_entry, x2: cbor_map_entry) -&gt; i16
 <a href=#3852 id=3852 data-nosnippet>3852</a>{ cbor_raw_compare(x1.cbor_map_entry_key, x2.cbor_map_entry_key) }
 <a href=#3853 id=3853 data-nosnippet>3853</a>
-<a href=#3854 id=3854 data-nosnippet>3854</a><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>cbor_raw_sort_aux(a: <span class="kw-2">&amp;mut </span>[cbor_map_entry]) -&gt; bool
+<a href=#3854 id=3854 data-nosnippet>3854</a><span class="kw">fn </span>cbor_raw_sort_aux(a: <span class="kw-2">&amp;mut </span>[cbor_map_entry]) -&gt; bool
 <a href=#3855 id=3855 data-nosnippet>3855</a>{
 <a href=#3856 id=3856 data-nosnippet>3856</a>    <span class="kw">let </span>len: usize = a.len();
 <a href=#3857 id=3857 data-nosnippet>3857</a>    <span class="kw">if </span>len &lt; <span class="number">2usize

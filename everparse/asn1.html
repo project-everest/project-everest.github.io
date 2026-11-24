@@ -281,9 +281,7 @@ compilation take seconds; Custard extraction takes the rest.</p>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h3>
 <p>For each root type <code class="docutils literal notranslate"><span class="pre">T</span></code>:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">custard_init_globals</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w">  </span><span class="cm">/* call once, before anything else */</span>
-
-<span class="kt">bool</span><span class="w"> </span><span class="nf">validate_T</span><span class="p">(</span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">);</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">validate_T</span><span class="p">(</span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">);</span>
 
 <span class="n">T</span><span class="w"> </span><span class="nf">parse_T</span><span class="p">(</span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="w"> </span><span class="n">validated_input</span><span class="p">);</span>
 
@@ -292,8 +290,31 @@ compilation take seconds; Custard extraction takes the rest.</p>
 
 <span class="n">ASN1_Pulse_JitWriter_jit_result</span>
 <span class="nf">write_T_typed</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">pos</span><span class="p">);</span>
+
+<span class="n">ASN1_Pulse_JitWriter_jit_result</span><span class="w"> </span><span class="nf">size_T</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">budget</span><span class="p">);</span>
+
+<span class="n">ASN1_Pulse_JitWriter_jit_result</span><span class="w"> </span><span class="nf">size_T_typed</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">budget</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>For each SEQUENCE OF / SET OF <code class="docutils literal notranslate"><span class="pre">L</span></code> with elements of C type <code class="docutils literal notranslate"><span class="pre">E</span></code>
+reachable from the roots (see <code class="docutils literal notranslate"><span class="pre">src/ASN1/tool/README.md</span></code> for the naming
+of <code class="docutils literal notranslate"><span class="pre">L</span></code>):</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">L_iter</span><span class="w"> </span><span class="nf">L_iter_start</span><span class="p">(</span><span class="n">L_list</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">L_iter_is_empty</span><span class="p">(</span><span class="n">L_iter</span><span class="w"> </span><span class="n">it</span><span class="p">);</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">L_iter_next</span><span class="p">(</span><span class="n">L_iter</span><span class="w"> </span><span class="o">*</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+<span class="kt">size_t</span><span class="w"> </span><span class="nf">L_length</span><span class="p">(</span><span class="n">L_list</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">L_nth</span><span class="p">(</span><span class="n">L_list</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">);</span>
+<span class="n">L_list</span><span class="w"> </span><span class="nf">L_empty</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="n">L_list</span><span class="w"> </span><span class="nf">L_of_slice</span><span class="p">(</span><span class="n">E_slice</span><span class="w"> </span><span class="n">a</span><span class="p">);</span>
+<span class="n">L_list</span><span class="w"> </span><span class="nf">L_append</span><span class="p">(</span><span class="n">L_list</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">L_list</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">L_list</span></code> and <code class="docutils literal notranslate"><span class="pre">E_slice</span></code> stand for the generic C list and slice
+types. <code class="docutils literal notranslate"><span class="pre">L_iter_next</span></code> returns <code class="docutils literal notranslate"><span class="pre">false</span></code> at the end of the list, and
+<code class="docutils literal notranslate"><span class="pre">L_nth</span></code> when <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;=</span> <span class="pre">L_length(x)</span></code>; otherwise they store the element in
+<code class="docutils literal notranslate"><span class="pre">*out</span></code> (parsed zero-copy if the list was parsed). These functions work
+on parsed lists, on lists built with <code class="docutils literal notranslate"><span class="pre">L_empty</span></code>, <code class="docutils literal notranslate"><span class="pre">L_of_slice</span></code> and
+<code class="docutils literal notranslate"><span class="pre">L_append</span></code>, and on mixes of both.</p>
 <p>A byte buffer is a slice:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">elt</span><span class="p">;</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="p">;</span>
 </pre></div>
@@ -327,17 +348,42 @@ encoding does not fit before <code class="docutils literal notranslate"><span cl
 <p>On failure, the bytes of <code class="docutils literal notranslate"><span class="pre">out</span></code> after <code class="docutils literal notranslate"><span class="pre">*pos</span></code> are unchanged. The
 writer also does what DER requires of the encoder: it omits a DEFAULT
 component equal to its default value, and sorts SET components and SET
-OF elements. <code class="docutils literal notranslate"><span class="pre">JIT_RETRY</span></code> is internal and never returned.</p>
+OF elements. It makes a single pass, never reading back what it
+wrote (except to sort SET and SET OF), so it is stricter than DER in
+two corner cases: an ANY value must be exactly one TLV, and an ANY
+DEFINED BY key that selects the fallback must not be one of the keys
+of the table; otherwise it returns <code class="docutils literal notranslate"><span class="pre">JIT_INVALID</span></code>.
+<code class="docutils literal notranslate"><span class="pre">JIT_RETRY</span></code> is internal and never returned.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">write_T_typed</span></code></dt><dd><p>The same C code as <code class="docutils literal notranslate"><span class="pre">write_T</span></code>, with a stronger F* precondition (see
-<a class="reference internal" href="#asn1-pulse-api"><span class="std std-ref">The Pulse API</span></a>), under which it never returns <code class="docutils literal notranslate"><span class="pre">JIT_INVALID</span></code>.</p>
+<a class="reference internal" href="#asn1-pulse-api"><span class="std std-ref">The Pulse API</span></a>), under which it never returns <code class="docutils literal notranslate"><span class="pre">JIT_INVALID</span></code> if <code class="docutils literal notranslate"><span class="pre">T</span></code> contains neither
+ANY nor ANY DEFINED BY with a fallback (for those, <code class="docutils literal notranslate"><span class="pre">JIT_INVALID</span></code> is
+only possible because of the strict checks above, and does not happen
+on values obtained from the typed API in practice).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">size_T</span></code></dt><dd><p>Computes the size of the encoding that <code class="docutils literal notranslate"><span class="pre">write_T</span></code> would write, with the
+same checks and the same results: it is the same C code as <code class="docutils literal notranslate"><span class="pre">write_T</span></code>,
+run on a <em>dry</em> output that only counts bytes (<code class="docutils literal notranslate"><span class="pre">ASN1.Pulse.Sink</span></code>).
+<code class="docutils literal notranslate"><span class="pre">*budget</span></code> plays the role of <code class="docutils literal notranslate"><span class="pre">*pos</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ASN1_PULSE_JITWRITER_JIT_OK</span></code>: the size of the encoding was
+subtracted from <code class="docutils literal notranslate"><span class="pre">*budget</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ASN1_PULSE_JITWRITER_JIT_INVALID</span></code>: as for <code class="docutils literal notranslate"><span class="pre">write_T</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ASN1_PULSE_JITWRITER_JIT_NO_SPACE</span></code>: the encoding is larger than
+<code class="docutils literal notranslate"><span class="pre">*budget</span></code> (<code class="docutils literal notranslate"><span class="pre">x</span></code> may also be invalid, as for <code class="docutils literal notranslate"><span class="pre">write_T</span></code>).</p></li>
+</ul>
+<p>It stops as soon as the budget is exhausted, so its time is bounded by
+the budget even on huge lists. To get the size, start with
+<code class="docutils literal notranslate"><span class="pre">*budget</span> <span class="pre">==</span> <span class="pre">SIZE_MAX</span></code> and compute <code class="docutils literal notranslate"><span class="pre">SIZE_MAX</span> <span class="pre">-</span> <span class="pre">*budget</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">size_T_typed</span></code></dt><dd><p>The same C code as <code class="docutils literal notranslate"><span class="pre">size_T</span></code>, with the F* precondition of
+<code class="docutils literal notranslate"><span class="pre">write_T_typed</span></code>.</p>
 </dd>
 </dl>
 <p>Here is a round trip with <code class="docutils literal notranslate"><span class="pre">Msg</span></code>:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"Small.h"</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">roundtrip</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">buf_len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">custard_init_globals</span><span class="p">();</span>
 <span class="w">  </span><span class="n">Pulse_Lib_Slice_slice__uint8</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="n">elt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="p">};</span>
 <span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">off</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">validate_Msg</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">off</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">off</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">len</span><span class="p">)</span>
@@ -377,31 +423,35 @@ named after their path, e.g. <code class="docutils literal notranslate"><span cl
 <td><p>tagged union <code class="docutils literal notranslate"><span class="pre">T</span></code>: tags <code class="docutils literal notranslate"><span class="pre">M_IMPL_T_ALT</span></code>, union members
 <code class="docutils literal notranslate"><span class="pre">T_alt</span></code>. Nested CHOICEs are not flattened.</p></td>
 </tr>
-<tr class="row-even"><td><p>OPTIONAL or DEFAULT component <code class="docutils literal notranslate"><span class="pre">f</span></code> of <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<tr class="row-even"><td><p>OPTIONAL component <code class="docutils literal notranslate"><span class="pre">f</span></code> of <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
 <td><p>tagged type <code class="docutils literal notranslate"><span class="pre">T_f_opt</span></code>: tags <code class="docutils literal notranslate"><span class="pre">M_IMPL_T_F_ABSENT</span></code> /
-<code class="docutils literal notranslate"><span class="pre">M_IMPL_T_F_PRESENT</span></code>, member <code class="docutils literal notranslate"><span class="pre">T_f_present</span></code>. A parsed DEFAULT
-component equal to its default is <code class="docutils literal notranslate"><span class="pre">ABSENT</span></code>.</p></td>
+<code class="docutils literal notranslate"><span class="pre">M_IMPL_T_F_PRESENT</span></code>, member <code class="docutils literal notranslate"><span class="pre">T_f_present</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>INTEGER, ENUMERATED</p></td>
+<tr class="row-odd"><td><p>DEFAULT component <code class="docutils literal notranslate"><span class="pre">f</span></code> of <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<td><p>the plain type of the component. The parser fills in the default
+value when the component is absent (slices point into a constant
+array); the writer omits a value equal to the default.</p></td>
+</tr>
+<tr class="row-even"><td><p>INTEGER, ENUMERATED</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">int64_t</span></code> if the constraint fits in 64 bits. Otherwise
 <code class="docutils literal notranslate"><span class="pre">ASN1_Pulse_Rel_asn1_int_impl</span></code>: either <code class="docutils literal notranslate"><span class="pre">Small</span></code> (<code class="docutils literal notranslate"><span class="pre">int64_t</span></code>)
 or <code class="docutils literal notranslate"><span class="pre">Big</span></code> (the slice of the minimal two’s-complement content
 bytes).</p></td>
 </tr>
-<tr class="row-even"><td><p>BOOLEAN, NULL</p></td>
+<tr class="row-odd"><td><p>BOOLEAN, NULL</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">unit</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>OCTET STRING, character strings, OBJECT IDENTIFIER, RELATIVE-OID,
+<tr class="row-even"><td><p>OCTET STRING, character strings, OBJECT IDENTIFIER, RELATIVE-OID,
 time types, OID-IRI types</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Pulse_Lib_Slice_slice__uint8</span></code>: the content bytes</p></td>
 </tr>
-<tr class="row-even"><td><p>ANY</p></td>
+<tr class="row-odd"><td><p>ANY</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Pulse_Lib_Slice_slice__uint8</span></code>: the whole TLV</p></td>
 </tr>
-<tr class="row-odd"><td><p>BIT STRING</p></td>
+<tr class="row-even"><td><p>BIT STRING</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">asn1_bitstring_impl</span> <span class="pre">{</span> <span class="pre">uint8_t</span> <span class="pre">unused;</span> <span class="pre">slice</span> <span class="pre">bytes;</span> <span class="pre">}</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>SEQUENCE OF, SET OF</p></td>
+<tr class="row-odd"><td><p>SEQUENCE OF, SET OF</p></td>
 <td><p>LowParse mixed list
 <code class="docutils literal notranslate"><span class="pre">LowParse_PulseParse_Iterator_Type_mixed_list__uintsize_&lt;elt&gt;</span></code>.
 To write one, use its <code class="docutils literal notranslate"><span class="pre">Base</span></code> / <code class="docutils literal notranslate"><span class="pre">Slice</span></code> case over a C array of
@@ -409,19 +459,19 @@ elements. A parsed list is in its <code class="docutils literal notranslate"><sp
 the element count, and the payload (the concatenated, validated
 DER encodings of the elements).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OCTET</span> <span class="pre">STRING</span> <span class="pre">(CONTAINING</span> <span class="pre">U)</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OCTET</span> <span class="pre">STRING</span> <span class="pre">(CONTAINING</span> <span class="pre">U)</span></code></p></td>
 <td><p>the C type of <code class="docutils literal notranslate"><span class="pre">U</span></code>: parsers decode the contents, writers encode
 them.</p></td>
 </tr>
-<tr class="row-even"><td><p>SEQUENCE with an ANY DEFINED BY table</p></td>
+<tr class="row-odd"><td><p>SEQUENCE with an ANY DEFINED BY table</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">T</span></code> with the components before the key, and a tagged
 union <code class="docutils literal notranslate"><span class="pre">T_key</span></code>: one case per table entry (the key is implicit),
 and <code class="docutils literal notranslate"><span class="pre">T_key_other</span> <span class="pre">{</span> <span class="pre">key;</span> <span class="pre">other</span> <span class="pre">}</span></code> for the fallback.</p></td>
 </tr>
-<tr class="row-odd"><td><p>KEEP-BYTES type <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<tr class="row-even"><td><p>KEEP-BYTES type <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">T_kept</span> <span class="pre">{</span> <span class="pre">T</span> <span class="pre">value;</span> <span class="pre">T_raw</span> <span class="pre">raw;</span> <span class="pre">}</span></code>: see <a class="reference internal" href="#asn1-keep-bytes"><span class="std std-ref">KEEP-BYTES</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>Value assignments of INTEGER and OBJECT IDENTIFIER</p></td>
+<tr class="row-odd"><td><p>Value assignments of INTEGER and OBJECT IDENTIFIER</p></td>
 <td><p>constants, e.g. <code class="docutils literal notranslate"><span class="pre">oid_&lt;name&gt;</span></code> (the content bytes)</p></td>
 </tr>
 </tbody>
@@ -555,7 +605,8 @@ OBJECT IDENTIFIER such as <code class="docutils literal notranslate"><span class
 Quadruple and Tuple notations, <code class="docutils literal notranslate"><span class="pre">'..'H</span></code> / <code class="docutils literal notranslate"><span class="pre">'..'B</span></code>, named bits,
 times, IRIs), used in DEFAULT values, constraint bounds and table keys.
 Values of constructed types are parsed and ignored.</p></li>
-<li><p>DEFAULT on terminal types other than RELATIVE-OID, also under one
+<li><p>DEFAULT on terminal types other than OBJECT IDENTIFIER and
+RELATIVE-OID, also under one
 EXPLICIT tag (<code class="docutils literal notranslate"><span class="pre">[0]</span> <span class="pre">EXPLICIT</span> <span class="pre">Version</span> <span class="pre">DEFAULT</span> <span class="pre">v1</span></code>) when unconstrained.
 F* proves by normalization that each default value is valid.</p></li>
 <li><p>Parameterized types (X.683) with type, value, object set and class
@@ -613,7 +664,13 @@ value parsed by the specification</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">arel</span> <span class="pre">false</span> <span class="pre">d</span> <span class="pre">pm</span> <span class="pre">x</span> <span class="pre">v</span></code> and <code class="docutils literal notranslate"><span class="pre">encodable</span> <span class="pre">k</span> <span class="pre">v</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">JIT_OK</span></code>, having written <code class="docutils literal notranslate"><span class="pre">asn1_enc</span> <span class="pre">k</span> <span class="pre">v</span></code>, or <code class="docutils literal notranslate"><span class="pre">JIT_NO_SPACE</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RelKeep.to_writer</span> <span class="pre">d</span> <span class="pre">pm</span> <span class="pre">x</span> <span class="pre">v</span></code> (ghost)</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size_raw_d</span></code> (<code class="docutils literal notranslate"><span class="pre">size_T</span></code>), <code class="docutils literal notranslate"><span class="pre">size_typed_d</span></code> (<code class="docutils literal notranslate"><span class="pre">size_T_typed</span></code>)</p></td>
+<td><p>as <code class="docutils literal notranslate"><span class="pre">write_T</span></code>, <code class="docutils literal notranslate"><span class="pre">write_T_typed</span></code>, with a budget <code class="docutils literal notranslate"><span class="pre">b</span></code> instead of
+an output buffer</p></td>
+<td><p>the same result as the writer on a buffer of size <code class="docutils literal notranslate"><span class="pre">b</span></code>; on
+<code class="docutils literal notranslate"><span class="pre">JIT_OK</span></code>, the budget is decreased by the size of <code class="docutils literal notranslate"><span class="pre">asn1_enc</span> <span class="pre">k</span> <span class="pre">v</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RelKeep.to_writer</span> <span class="pre">d</span> <span class="pre">pm</span> <span class="pre">x</span> <span class="pre">v</span></code> (ghost)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">arel</span> <span class="pre">true</span> <span class="pre">d</span> <span class="pre">pm</span> <span class="pre">x</span> <span class="pre">v</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">arel</span> <span class="pre">false</span> <span class="pre">d</span> <span class="pre">pm</span> <span class="pre">x</span> <span class="pre">v</span></code>, and a trade back to <code class="docutils literal notranslate"><span class="pre">arel</span> <span class="pre">true</span></code></p></td>
 </tr>
@@ -665,7 +722,7 @@ GeneralString and ObjectDescriptor (ISO 2022);</p></li>
 and <code class="docutils literal notranslate"><span class="pre">PATTERN</span></code> constraints are not supported; value sets and single
 values are only supported on INTEGER, ENUMERATED and BOOLEAN.</p></li>
 <li><p>DEFAULT is only supported on terminal types (not on SEQUENCE, SET,
-CHOICE, SEQUENCE OF or SET OF), and not on EXPLICIT-tagged constrained
+CHOICE, SEQUENCE OF or SET OF, OBJECT IDENTIFIER or RELATIVE-OID), and not on EXPLICIT-tagged constrained
 INTEGER or ENUMERATED.</p></li>
 <li><p>ANY cannot be a CHOICE alternative.</p></li>
 </ul>
@@ -699,8 +756,9 @@ by the front end.</p></li>
 <section id="c-api">
 <h3>C API<a class="headerlink" href="#c-api" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>No C iterator is generated for parsed SEQUENCE OF / SET OF lists: the
-caller walks the payload, which is a sequence of validated TLVs.</p></li>
+<li><p>SEQUENCE OF / SET OF values keep the generic <code class="docutils literal notranslate"><span class="pre">mixed_list</span></code> C type;
+only their iterator type <code class="docutils literal notranslate"><span class="pre">L_iter</span></code> gets a per-list name (a typedef).
+No lookup function is generated for SET OF.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">validate_T</span></code>, <code class="docutils literal notranslate"><span class="pre">parse_T</span></code> and the writers are only generated for root
 types (<code class="docutils literal notranslate"><span class="pre">--root</span></code>).</p></li>
 <li><p>The names of the generic C types, such as

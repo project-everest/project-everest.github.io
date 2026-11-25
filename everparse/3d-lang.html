@@ -65,6 +65,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#actions">Actions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#action-basics">Action basics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#restrictions">Restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functional-specification-of-actions-pulse-backend">Functional specification of actions (Pulse backend)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#alignment">Alignment</a><ul>
@@ -798,6 +799,137 @@ the array elements themselves are defined types, in which case they
 can be associated with the fields of that type, if any.</p></li>
 <li><p>Actions cannot be associated with bit fields.</p></li>
 </ul>
+</section>
+<section id="functional-specification-of-actions-pulse-backend">
+<h2>Functional specification of actions (Pulse backend)<a class="headerlink" href="#functional-specification-of-actions-pulse-backend" title="Link to this heading"></a></h2>
+<p>With the Pulse backend, the F* validator generated for a type <code class="docutils literal notranslate"><span class="pre">T</span></code> is
+verified against a purely functional specification of its actions. Its
+type, <code class="docutils literal notranslate"><span class="pre">validator_of</span> <span class="pre">d</span> <span class="pre">eh</span> <span class="pre">&quot;T&quot;</span> <span class="pre">(def'_T</span> <span class="pre">...)</span></code>, includes the ghost spec
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Interpreter.as_vspec</span> <span class="pre">&quot;T&quot;</span> <span class="pre">(def'_T</span> <span class="pre">...)</span></code>, of type
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.vspec</span> <span class="pre">d</span></code>. Given the input and the values of
+the action state (the <code class="docutils literal notranslate"><span class="pre">mutable</span></code> parameters) before validation, the spec
+returns either:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VOk</span> <span class="pre">final</span></code>: validation succeeds, and <code class="docutils literal notranslate"><span class="pre">final</span></code> holds the values of
+the action state afterwards;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VErr</span></code>: validation fails (the data is ill-formed, or an action
+returned <code class="docutils literal notranslate"><span class="pre">false</span></code>). The action state is then unspecified, since actions
+may have run partially.</p></li>
+</ul>
+<p>The spec is exact: the validator succeeds if, and only if, the spec
+returns <code class="docutils literal notranslate"><span class="pre">VOk</span></code>, and it then leaves the action state as the spec says. In
+particular, the spec returns <code class="docutils literal notranslate"><span class="pre">VErr</span></code> whenever the data is ill-formed. Specs are ghost: the generated C
+code is unchanged.</p>
+<p>The spec mirrors the validator: return, <code class="docutils literal notranslate"><span class="pre">field_pos</span></code>, dereference,
+assignment, sequencing, <code class="docutils literal notranslate"><span class="pre">var</span></code> bindings and conditionals all get exact
+specs. Arrays and strings whose element types have actions are specified
+as a left fold (like <code class="docutils literal notranslate"><span class="pre">fold_left</span></code>) of the element spec over the
+elements: the action state after the array is the result of running the
+element spec on each element in turn, stopping at the first failure.</p>
+<p><code class="docutils literal notranslate"><span class="pre">extern</span></code> functions and output-type setters (written in C) are
+specified by uninterpreted, lawless functions on the abstract values of
+the output state. The generated <code class="docutils literal notranslate"><span class="pre">M.ExternalAPI</span></code> module declares an
+abstract type <code class="docutils literal notranslate"><span class="pre">___output_state_values</span></code> of such values, the output state
+<code class="docutils literal notranslate"><span class="pre">___output_state_slprop</span> <span class="pre">:</span> <span class="pre">___output_state_values</span> <span class="pre">-&gt;</span> <span class="pre">slprop</span></code>, and, for
+each extern function <code class="docutils literal notranslate"><span class="pre">f</span></code> (resp. setter <code class="docutils literal notranslate"><span class="pre">set_x</span></code>), a spec
+<code class="docutils literal notranslate"><span class="pre">___spec_f</span></code> (resp. <code class="docutils literal notranslate"><span class="pre">___spec_set_x</span></code>) taking the same arguments and
+mapping the output state to a pair of the result and the new output
+state (resp. to the new output state). The C function is typed as
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Base.external_action_spec</span></code>: it returns
+<code class="docutils literal notranslate"><span class="pre">fst</span> <span class="pre">(___spec_f</span> <span class="pre">args</span> <span class="pre">w)</span></code> and leaves the output state at
+<code class="docutils literal notranslate"><span class="pre">snd</span> <span class="pre">(___spec_f</span> <span class="pre">args</span> <span class="pre">w)</span></code>. Thus, the final output state is an exact
+symbolic log of the calls (e.g. <code class="docutils literal notranslate"><span class="pre">___spec_set_y</span> <span class="pre">o</span> <span class="pre">b</span> <span class="pre">(___spec_set_x</span> <span class="pre">o</span> <span class="pre">a</span>
+<span class="pre">w0)</span></code>.) No law (e.g. that a getter returns what a setter set) is
+assumed, so these specs do not constrain the C code: they can always be
+realized by a prophecy of the outcomes of all calls.</p>
+<p><code class="docutils literal notranslate"><span class="pre">field_ptr</span></code> (buffer backend) is specified as
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.PtrModel.ptr_at</span> <span class="pre">origin</span> <span class="pre">start</span></code>: the pointer <code class="docutils literal notranslate"><span class="pre">start</span></code>
+bytes after <code class="docutils literal notranslate"><span class="pre">origin</span></code>, a ghost pointer to the first byte of the input
+buffer, where <code class="docutils literal notranslate"><span class="pre">start</span></code> is the position of the field. This relies on one
+trusted assumption, <code class="docutils literal notranslate"><span class="pre">EverParse3d.PtrModel.ptr_ext</span></code>: a pointer is
+determined by its base and offset, which holds of C pointers.</p>
+<p>Probes (buffer backend) are specified with respect to a <em>probe world</em>: a
+ghost prophecy of the outcomes of all future probes into a given copy
+buffer, stored as the ghost value of that copy buffer in the action
+state. Each probe-then-validate consumes one outcome
+(<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.probe_outcome</span></code>): the value of the probed
+pointer, whether the probe succeeded, and the bytes it copied. If the
+probe succeeds, the probed type is validated against its own spec on the
+copied bytes, so the spec reflects that the probed memory is read only
+once, even if it is concurrently modified. If the probe or that inner
+validation fails, the result is <code class="docutils literal notranslate"><span class="pre">VErr</span></code>. Since probe-then-validate can
+itself make validation fail, its spec is that of a <em>validating action</em>
+(<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.vaction_spec</span></code>), which returns a validation
+result (<code class="docutils literal notranslate"><span class="pre">VOk</span></code> or <code class="docutils literal notranslate"><span class="pre">VErr</span></code>) rather than a boolean and a state. The
+probe functions themselves (written in C) are unchanged: the outcome
+they produce is whatever the prophecy says it is, so no assumption is
+made on their behavior. This relies on a trusted assumption: a fresh
+probe world can always be introduced
+(<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Base.prophesy_probe_world</span></code>), and the probe world
+is consumed by each probe-then-validate exactly once, in
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Base.probe_then_validate</span></code>, which is not exported.</p>
+<p><code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> (extern and static backends) is specified likewise
+with respect to a <em>peep world</em>: a ghost prophecy
+(<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.peep_tape</span></code>) of the outcomes of all future
+calls to the client’s <code class="docutils literal notranslate"><span class="pre">EverParseStreamPeep</span></code> callback, <code class="docutils literal notranslate"><span class="pre">None</span></code> if it
+fails and <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">p</span></code> if it returns pointer <code class="docutils literal notranslate"><span class="pre">p</span></code>. It is stored in the
+action state under the reserved key <code class="docutils literal notranslate"><span class="pre">&quot;#world&quot;</span></code>, so the generated state
+dictionaries of the types that use <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> include it. Each
+<code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> consumes one outcome: it returns <code class="docutils literal notranslate"><span class="pre">false</span></code> and leaves
+the destination unchanged if the outcome is <code class="docutils literal notranslate"><span class="pre">None</span></code>, and otherwise
+returns <code class="docutils literal notranslate"><span class="pre">true</span></code> and writes <code class="docutils literal notranslate"><span class="pre">p</span></code> to the destination pointer (or, with an
+output-type field, calls the setter, with its spec as above). Since the
+callback may write to its output pointer even when it fails, it writes to
+a local copied to the destination only on success. Thus, the action
+state after <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> is fully specified in both cases. As
+for probes, nothing is assumed about the C callback; the trusted
+assumptions are that a fresh peep world can always be introduced
+(<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Base.prophesy_peep_world</span></code>) and that it is
+consumed only through the non-ghost resolvers of
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Base</span></code> (<code class="docutils literal notranslate"><span class="pre">resolve_peep_world</span></code>,
+<code class="docutils literal notranslate"><span class="pre">resolve_peep_world_ptr</span></code>), whose arguments are the values actually
+returned by the callback, or with a constant <code class="docutils literal notranslate"><span class="pre">None</span></code> outcome
+(<code class="docutils literal notranslate"><span class="pre">resolve_peep_world_none</span></code>).</p>
+<p>Clients can reason about the spec in F*.
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.Test</span></code> proves that a field
+<code class="docutils literal notranslate"><span class="pre">UINT32</span> <span class="pre">x</span> <span class="pre">{:act</span> <span class="pre">*out</span> <span class="pre">=</span> <span class="pre">x;</span> <span class="pre">}</span></code> validates if, and only if, the input starts
+with a 32-bit integer, and that it then stores that integer into
+<code class="docutils literal notranslate"><span class="pre">*out</span></code>; and that for an array <code class="docutils literal notranslate"><span class="pre">T(out)</span> <span class="pre">a[:byte-size</span> <span class="pre">8]</span></code> of two such
+fields, <code class="docutils literal notranslate"><span class="pre">*out</span></code> ends up holding the second integer; and that probing
+a pointer to a 32-bit integer fails exactly when the probe fails or the
+copied bytes do not start with a 32-bit integer; and that
+<code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code> succeeds exactly when the head of the peep world is
+<code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">p</span></code>, in which case it writes <code class="docutils literal notranslate"><span class="pre">p</span></code>, and otherwise leaves the
+destination unchanged.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">as_vspec</span></code> reads input bytes, the spec of the actions is also
+given in terms of the <em>parsed value</em>:
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Interpreter.as_value_spec</span> <span class="pre">&quot;T&quot;</span> <span class="pre">(def'_T</span> <span class="pre">...)</span></code>, of type
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.ValueSpec.value_spec</span> <span class="pre">d</span> <span class="pre">t</span></code> (where <code class="docutils literal notranslate"><span class="pre">t</span></code> is the
+type denotation of <code class="docutils literal notranslate"><span class="pre">T</span></code>), takes the position at which the value starts,
+the parsed value and the action state before validation, and returns the
+result of the actions and the final action state. The positions of
+fields (for <code class="docutils literal notranslate"><span class="pre">field_pos</span></code>) are computed from the parsed values, which is
+well defined since all 3d parsers are injective. The two levels are
+related once and for all by
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Interpreter.as_vspec_value_spec</span></code>: if the parser
+succeeds on the input with value <code class="docutils literal notranslate"><span class="pre">v</span></code>, then the result of <code class="docutils literal notranslate"><span class="pre">as_vspec</span></code>
+is that of <code class="docutils literal notranslate"><span class="pre">as_value_spec</span></code> on <code class="docutils literal notranslate"><span class="pre">v</span></code>; and if the parser fails, then it
+is <code class="docutils literal notranslate"><span class="pre">VErr</span></code>. So clients can reason about the actions of
+<code class="docutils literal notranslate"><span class="pre">T</span></code> purely in terms of its values, without reasoning about bytes (see
+<code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.Spec.Test</span></code>).</p>
+<p>Such client theorems can also be stated about the code generated from a
+<code class="docutils literal notranslate"><span class="pre">.3d</span></code> file. The generated interface keeps <code class="docutils literal notranslate"><span class="pre">def'_T</span></code> abstract, so the
+theorems go in a hand-written module that is a <code class="docutils literal notranslate"><span class="pre">friend</span></code> of the
+generated one (F* requires that module to have an interface, possibly
+empty). <code class="docutils literal notranslate"><span class="pre">share/everparse/tests/3d/spec</span></code> contains examples covering
+<code class="docutils literal notranslate"><span class="pre">field_pos_32</span></code>, <code class="docutils literal notranslate"><span class="pre">field_ptr</span></code>, failing <code class="docutils literal notranslate"><span class="pre">:check</span></code> actions, arrays,
+extern actions (the final output state is the sequence of their
+uninterpreted specs), output setters, probes and <code class="docutils literal notranslate"><span class="pre">field_ptr_after</span></code>.
+Each comes with an <code class="docutils literal notranslate"><span class="pre">expect_failure</span></code> test showing that a wrong claim
+is rejected. <code class="docutils literal notranslate"><span class="pre">EverParse3d.Actions.ValueSpec</span></code> provides helper lemmas
+for such proofs: <code class="docutils literal notranslate"><span class="pre">vsize_UINT8</span></code> … <code class="docutils literal notranslate"><span class="pre">vsize_UINT64BE</span></code> give the sizes
+of integer fields, and <code class="docutils literal notranslate"><span class="pre">vs_nlist_eq</span></code> unfolds arrays to lists
+(<code class="docutils literal notranslate"><span class="pre">nlist_as_list</span></code>).</p>
 </section>
 </section>
 <section id="alignment">

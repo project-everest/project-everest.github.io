@@ -460,6 +460,46 @@ no notion of the end of the input, and the option has no effect.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">--no_complete_wrappers</span></code></p>
 <p>Generate only the plain entrypoint wrappers. This is toggled by default.</p>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--wrapper_error_code</span> <span class="pre">out|return</span></code></p>
+<p id="wrapper-error-code-option">Under <code class="docutils literal notranslate"><span class="pre">--api</span> <span class="pre">pulse</span></code> only (3d rejects it otherwise), convey the error
+code returned by the <code class="docutils literal notranslate"><span class="pre">&lt;Mod&gt;Validate&lt;Typ&gt;</span></code> validator to the caller of
+every entrypoint wrapper, including the <code class="docutils literal notranslate"><span class="pre">Complete</span></code> and probe wrappers.
+That code is 0 on success, an <code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_*</span></code> code otherwise, or a
+<a class="reference internal" href="3d-lang.html#sec-custom-error-codes"><span class="std std-ref">custom error code</span></a>.</p>
+<ul>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">out</span></code>, every wrapper takes a trailing <code class="docutils literal notranslate"><span class="pre">uint8_t</span> <span class="pre">*errorCode</span></code>
+out-parameter, where it stores that code. So, for the <code class="docutils literal notranslate"><span class="pre">point</span></code>
+entrypoint above:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOLEAN</span><span class="w"> </span><span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">errorCode</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">errorCode</span></code> must point to writable memory. The code is the
+validator’s own result, so it stays 0 in two cases where the wrapper
+still fails:</p>
+<ul class="simple">
+<li><p>a <code class="docutils literal notranslate"><span class="pre">Complete</span></code> wrapper rejects unexpected trailing bytes;</p></li>
+<li><p>a probe wrapper fails before validation and returns
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_INCORRECT_SIZE</span></code>, <code class="docutils literal notranslate"><span class="pre">_INIT</span></code> or <code class="docutils literal notranslate"><span class="pre">_PROBE</span></code>.</p></li>
+</ul>
+</li>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">return</span></code> (only with <code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer</span></code>, the default),
+the wrappers return the code itself, instead of a <code class="docutils literal notranslate"><span class="pre">BOOLEAN</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">HelloWorldCheckPoint</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>So the wrapper succeeds if, and only if, it returns 0
+(<code class="docutils literal notranslate"><span class="pre">EVERPARSE_SUCCESS</span></code>). A <code class="docutils literal notranslate"><span class="pre">Complete</span></code> wrapper that rejects
+unexpected trailing bytes returns
+<code class="docutils literal notranslate"><span class="pre">EVERPARSE_ERROR_UNEXPECTED_PADDING</span></code>. A probe wrapper still returns a
+<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>, and returns the validator’s nonzero code (between 1 and
+255) instead of <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_VALIDATION</span></code>, which cannot
+be confused with the other <code class="docutils literal notranslate"><span class="pre">EVERPARSE_PROBE_FAILURE_*</span></code> codes (256 and
+above).</p>
+</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">--no_wrapper_error_code</span></code> restores the default, where the wrappers
+return a <code class="docutils literal notranslate"><span class="pre">BOOLEAN</span></code> and do not convey the code.</p>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--input_stream</span> <span class="pre">buffer|extern|static</span></code></p>
 <p>Specifies the format of validator input buffers:</p>
 <ul>
@@ -761,9 +801,14 @@ the EverParse repository</a>.</p>
 <p>EverParse supports the following command-line options relevant to this
 mode:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">gmake</span></code>: produce a Makefile for use with GNU Make.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">gmake</span></code>: produce a Makefile for use with GNU Make.
+Each EverParse run that produces several files has a grouped-target
+rule (<code class="docutils literal notranslate"><span class="pre">&amp;:</span></code>), which requires GNU Make 4.3 or later and makes
+parallel builds (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-j</span></code>) run it only once.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--makefile</span> <span class="pre">nmake</span></code>: produce a Makefile for use with Microsoft
-NMAKE.</p></li>
+NMAKE. Each EverParse run that produces several files has a rule for
+one of them, and the others depend on it with no recipe. So this
+Makefile also supports parallel builds with GNU Make.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--makefile_name</span> <span class="pre">my_file_name</span></code>: the name of the produced Makefile
 shall be <code class="docutils literal notranslate"><span class="pre">my_file_name</span></code> instead of the default
 <code class="docutils literal notranslate"><span class="pre">EverParse.Makefile</span></code>.</p></li>
